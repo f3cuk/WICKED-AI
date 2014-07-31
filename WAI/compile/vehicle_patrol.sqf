@@ -51,6 +51,7 @@ _wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100]
 _wp setWaypointType "CYCLE";
 _wp setWaypointCompletionRadius 200;
 
+waitUntil{!isNil "clean_running_mission"};
 if(clean_running_mission) then { 
 	
 	deleteVehicle _veh;
