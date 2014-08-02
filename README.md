@@ -10,4 +10,4 @@ Changelog
 
 1.) Add the WAI folder to your dayz_server directory
 
-2.) Add [code]ExecVM "\z\addons\dayz_server\WAI\init.sqf";[/code] to the bottom of server_functions.sqf
+2.) Add "ExecVM "\z\addons\dayz_server\WAI\init.sqf";" to the bottom of server_functions.sqf
