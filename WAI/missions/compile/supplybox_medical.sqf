@@ -17,3 +17,4 @@ _box addMagazineCargoGlobal ["ItemWaterbottle", 10];
 _box addMagazineCargoGlobal ["FoodCanBakedBeans", 15];
 _box addMagazineCargoGlobal ["ItemAntibiotic", 10];
 _box addMagazineCargoGlobal ["ItemBloodbag", 15];
+_box addMagazineCargoGlobal ["ItemHeatpack", 5];

@@ -3,6 +3,7 @@
 _box = _this select 0;
 _box setVariable ["ObjectID","1",true];
 _box setVariable ["permaLoot",true];
+
 PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_box];
 
 clearWeaponCargoGlobal _box;

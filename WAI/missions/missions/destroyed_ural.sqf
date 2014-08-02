@@ -21,44 +21,70 @@ _box = createVehicle ["BAF_VehicleBox",[(_position select 0) + 25,(_position sel
 [_position,"Ural Attack"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 [nil,nil,rTitleText,"Bandits have destroyed a Ural carrying medical supplies and are securing the cargo! Check your map for the location!", "PLAIN",10] call RE;
 	
-_missiontimeout = true;
-_cleanmission = false;
-_playerPresent = false;
-_starttime = floor(time);
+_missiontimeout 	= true;
+_cleanmission 		= false;
+_playerPresent 		= false;
+_starttime 			= floor(time);
+
 while {_missiontimeout} do {
 	sleep 5;
 	_currenttime = floor(time);
-	{if((isPlayer _x) && (_x distance _position <= 150)) then {_playerPresent = true};}forEach playableUnits;
-	if (_currenttime - _starttime >= wai_mission_timeout) then {_cleanmission = true;};
-	if ((_playerPresent) || (_cleanmission)) then {_missiontimeout = false;};
+	
+	{
+		if((isPlayer _x) && (_x distance _position <= 150)) then {
+			_playerPresent = true
+		};
+	} forEach playableUnits;
+
+	if (_currenttime - _starttime >= wai_mission_timeout) then {
+		_cleanmission = true;
+	};
+
+	if ((_playerPresent) || (_cleanmission)) then {
+		_missiontimeout = false;
+	};
 };
+
 if (_playerPresent) then {
+
 	waitUntil
 	{
 		sleep 5;
 		_playerPresent = false;
-		{if((isPlayer _x) && (_x distance _position <= 30)) then {_playerPresent = true};}forEach playableUnits;
+		{
+			if((isPlayer _x) && (_x distance _position <= 30)) then {
+				_playerPresent = true
+			};
+		} forEach playableUnits;
+
 		(_playerPresent)
 	};
-	diag_log format["WAI: Ural Attack Mission Ended At %1",_position];
+
 	[nil,nil,rTitleText,"The medical supplies have been secured by survivors!", "PLAIN",10] call RE;
+
 } else {
-	clean_running_mission = True;
+
+	clean_running_mission = true;
 	deleteVehicle _box;
-	{_cleanunits = _x getVariable "missionclean";
-	if (!isNil "_cleanunits") then {
-		switch (_cleanunits) do {
-			case "ground" :  {ai_ground_units = (ai_ground_units -1);};
-			case "air" :     {ai_air_units = (ai_air_units -1);};
-			case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
-			case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
-		};
-		deleteVehicle _x;
-		sleep 0.05;
-	};	
+	{
+		_cleanunits = _x getVariable "missionclean";
+
+		if (!isNil "_cleanunits") then {
+			switch (_cleanunits) do {
+				case "ground" :  {ai_ground_units = (ai_ground_units -1);};
+				case "air" :     {ai_air_units = (ai_air_units -1);};
+				case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
+				case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
+			};
+			deleteVehicle _x;
+			sleep 0.05;
+		};	
+
 	} forEach allUnits;
 	
 	diag_log format["WAI: Ural Attack Mission Timed Out At %1",_position];
 	[nil,nil,rTitleText,"Survivors did not secure the medical supplies in time!", "PLAIN",10] call RE;
 };
+
+diag_log format["WAI: Ural attack mission ended at %1",_position];
 missionrunning = false;

@@ -1,33 +1,37 @@
-spawn_group 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_group.sqf";
-group_waypoints 	= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\patrol.sqf";
-spawn_static  		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_static.sqf";
-heli_para  			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_para.sqf";
-heli_patrol 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_patrol.sqf";
-vehicle_patrol 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_patrol.sqf";
+if(isServer) then {
 
-on_kill 			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_killed.sqf";
+	spawn_group 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_group.sqf";
+	group_waypoints 	= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\patrol.sqf";
+	spawn_static  		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_static.sqf";
+	heli_para  			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_para.sqf";
+	heli_patrol 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_patrol.sqf";
+	vehicle_patrol 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_patrol.sqf";
 
-ai_monitor 			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_monitor.sqf";
-veh_monitor 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_monitor.sqf";
+	on_kill 			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_killed.sqf";
 
-createCenter east;
-WEST setFriend [EAST,0];
-EAST setFriend [WEST,0];
-WAIconfigloaded = False;
-WAImissionconfig = False;
+	ai_monitor 			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_monitor.sqf";
+	veh_monitor 		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_monitor.sqf";
 
-ai_ground_units = 0;
-ai_emplacement_units = 0;
-ai_air_units = 0;
-ai_vehicle_units = 0;
+	createCenter east;
+	WEST setFriend [EAST,0];
+	EAST setFriend [WEST,0];
+	WAIconfigloaded = false;
+	WAImissionconfig = false;
 
-//Load config
-ExecVM "\z\addons\dayz_server\WAI\ai_config.sqf";
-waitUntil {WAIconfigloaded};
-	diag_log "WAI: AI Config File Loaded";
+	ai_ground_units 		= 0;
+	ai_emplacement_units	= 0;
+	ai_air_units			= 0;
+	ai_vehicle_units		= 0;
 
-[] spawn ai_monitor;
+	//Load config
+	ExecVM "\z\addons\dayz_server\WAI\ai_config.sqf";
+	waitUntil {WAIconfigloaded};
+		diag_log "WAI: AI Config File Loaded";
 
-if (ai_mission_sysyem) then {
-	ExecVM "\z\addons\dayz_server\WAI\missions\mission_ini.sqf";
+	[] spawn ai_monitor;
+
+	if (ai_mission_system) then {
+		ExecVM "\z\addons\dayz_server\WAI\missions\mission_ini.sqf";
+	};
+
 };
