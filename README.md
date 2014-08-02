@@ -8,14 +8,5 @@ Changelog
 
 ## Installation Instructions
 
-Add the WAI folder to your dayz_server directory
-
-### dayz_server PBO Instructions
-
-Go to server_monitor.sqf located in the system folder in your server.pbo
-
-* search for allowConnection = true; and add the line shown below 
-
-    ExecVM "\z\addons\dayz_server\WAI\init.sqf";
-    
-    allowConnection = true;
+1.) Add the WAI folder to your dayz_server directory
+2.) Add "ExecVM "\z\addons\dayz_server\WAI\init.sqf";" to the bottom of server_functions.sqf
