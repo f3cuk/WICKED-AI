@@ -21,4 +21,3 @@ waitUntil {WAImissionconfig};
 	diag_log "WAI: Mission Config File Loaded";
 
 ExecVM "\z\addons\dayz_server\WAI\missions\missions.sqf";
-ExecVM "\z\addons\dayz_server\WAI\missions\static_ammoboxes.sqf";
