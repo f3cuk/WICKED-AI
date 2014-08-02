@@ -1,11 +1,9 @@
 private ["_mission","_mags","_tool","_box","_class","_numberofguns","_numberoftools","_weapon","_namecfg","_numberofitems","_item"];
-_box = _this select 0;
 
-//_box = createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+_box = _this select 0;
 _box setVariable ["ObjectID","1",true];
 _box setVariable ["permaLoot",true];
 PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_box];
-
 
 clearWeaponCargoGlobal _box;
 clearMagazineCargoGlobal _box;

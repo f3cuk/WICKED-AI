@@ -1,33 +1,38 @@
 private ["_mission","_aipack","_class","_position2","_direction","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
-_position = _this select 0;
-_class = _this select 1;
-_skill = _this select 2;
-_skin = _this select 3;
+
+_position 			= _this select 0;
+_class 				= _this select 1;
+_skill 				= _this select 2;
+_skin 				= _this select 3;
+
 if (ai_static_useweapon) then {
-	_gun = _this select 4;
-	_mags = _this select 5;
-	_backpack = _this select 6;
-	_gear = _this select 7;
+	_gun 			= _this select 4;
+	_mags 			= _this select 5;
+	_backpack 		= _this select 6;
+	_gear 			= _this select 7;
 };
+
 if ((count _this == 9) OR (count _this == 5)) then {
 	if (count _this == 9) then {_mission = _this select 8;};
 	if (count _this == 5) then {_mission = _this select 4;};
 } else {
 	_mission = false;
 };
-_position2 = [];
-_aiweapon = [];
-_aigear = [];
-_aiskin = "";
-_aipack = "";
-_skillarray = ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
-_unitGroup = createGroup east;
-_unitnumber = count _position;
+
+_position2 		= [];
+_aiweapon 		= [];
+_aigear 		= [];
+_aiskin 		= "";
+_aipack 		= "";
+
+_skillarray 	= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
+_unitGroup 		= createGroup east;
+_unitnumber 	= count _position;
 
 if (!isServer) exitWith {};
 
-
-{_position2 = _x;
+{
+	_position2 = _x;
 
 	if (_skin == "") then {
 		_aiskin = ai_skin call BIS_fnc_selectRandom;
@@ -36,10 +41,13 @@ if (!isServer) exitWith {};
 	};
 	
 	_unit = _unitGroup createUnit [_aiskin, [0,0,0], [], 10, "PRIVATE"];
+	
 	_static = createVehicle [_class, [(_position2 select 0),(_position2 select 1),(_position2 select 2)], [], 0, "CAN_COLLIDE"];
 	_static setDir round(random 360);
 	_static setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
+	
 	[_unit] joinSilent _unitGroup;
+	
 	_unit enableAI "TARGET";
 	_unit enableAI "AUTOTARGET";
 	_unit enableAI "MOVE";
@@ -47,6 +55,7 @@ if (!isServer) exitWith {};
 	_unit enableAI "FSM";
 	_unit setCombatMode ai_combatmode;
 	_unit setBehaviour ai_behaviour;
+	
 	removeAllWeapons _unit;
 	removeAllItems _unit;
 	
@@ -94,7 +103,9 @@ if (!isServer) exitWith {};
 	_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "static"] call on_kill;}];
 	_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_static];
+	
 	_unit moveingunner _static;
+	
 	if (_mission) then {
 		_unit setVariable ["missionclean", "static"];
 		[_static, True] spawn veh_monitor;

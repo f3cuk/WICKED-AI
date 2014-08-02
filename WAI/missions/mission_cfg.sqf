@@ -1,26 +1,23 @@
-// Time between missions (seconds)
-wai_mission_timer = 600;
-
-// How long before a mission times out (seconds)
-wai_mission_timeout = 2700;
+wai_mission_timer 					= 600; 		// time between missions
+wai_mission_timeout 				= 2700; 	// time each missions take
+wai_mission_fuel 					= .5;		// fuel inside mission spawned vehicles
+wai_mission_numberofguns 			= 8;		// number of guns in dynamic boxes
+wai_mission_numberoftools 			= 5;		// number of tools in dynamic boxes
+wai_mission_numberofitems 			= 10;		// number of items in dynamic boxes
 
 // missions used when selecting the next random mission
 wai_missions = [
 	"bandit_base",
 	"armed_vehicle",
 	"disabled_milchopper",
-	"MV22",
+	"captured_mv22",
 	"weapon_cache",
 	"mayors_mansion",
 	"convoy",
-	//"C130_crash",
 	"ems_cache",
 	"medi_camp",
-	"Ural"
+	"destroyed_ural"
 ];
-
-// fuel the mission vehicles spawn with 0-100.
-wai_mission_fuel = .5;
 
 // armed vehicles to spawn in missions
 armed_vehicle = [
@@ -109,8 +106,6 @@ civil_vehicles = [
 	"SUV_Yellow"
 ];
 
-// Number of guns to spawn in ammo boxes 
-wai_mission_numberofguns = 8;
 // classnames of guns to spawn in ammo boxes (only class weapons)
 ammo_box_guns = [
 	"M9SD",
@@ -139,8 +134,6 @@ ammo_box_guns = [
 	"Sa58V_CCO_EP1"
 ];
 
-// Number of tools to spawn in ammo boxes 
-wai_mission_numberoftools = 5;
 // classnames of tools to spawn in ammo boxes (only toolbelt items or weapon class Eg. "Chainsaw" or "ItemToolbox")
 ammo_box_tools =[
 	"ItemToolbox",
@@ -160,8 +153,6 @@ ammo_box_tools =[
 	"chainsaw"
 ];
 
-// Number of items to spawn in ammo boxes 
-wai_mission_numberofitems = 10;
 // classnames of items to spawn in ammo boxes (only type magazine will work here)
 ammo_box_items =[
 	"ItemBandage",
@@ -169,4 +160,4 @@ ammo_box_items =[
 ];
 
 //////////////////////////////////////////////////////////////////////
-WAImissionconfig = True;
+WAImissionconfig = true;

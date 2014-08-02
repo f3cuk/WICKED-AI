@@ -2,10 +2,10 @@ if(!isServer) exitWith {};
 
 diag_log "WAI: Starting AI Missions Moniter";
 
-markerready = true;
-missionrunning = false;
-_startTime = floor(time);
-_result = 0;
+markerready 			= true;
+missionrunning 			= false;
+_startTime 				= floor(time);
+_result 				= 0;
 
 while {true} do
 {
