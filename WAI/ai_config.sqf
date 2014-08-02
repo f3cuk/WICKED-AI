@@ -17,7 +17,7 @@ ai_add_humanity 			= 50;			// Amount of huminity gained for killing an AI
 ai_banditkills_gain 		= true;			// Add kill to bandit kill score
 
 ai_custom_skills 			= true;			// Allows you to set a custom skill array for units. (true: will use these arrays. false: will use number in spawn array)
-ai_custom_array1 			= [["aimingAccuracy" 1.00], ["aimingShake",0.80], ["aimingSpeed",0.80], ["endurance",1.00], ["spotDistance",0.80], ["spotTime",0.80], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00], ["general",1.00]]; 	// Epic
+ai_custom_array1 			= [["aimingAccuracy",1.00], ["aimingShake",0.80], ["aimingSpeed",0.80], ["endurance",1.00], ["spotDistance",0.80], ["spotTime",0.80], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00], ["general",1.00]]; 	// Epic
 ai_custom_array2 			= [["aimingAccuracy",0.80], ["aimingShake",0.70], ["aimingSpeed",0.70], ["endurance",1.00], ["spotDistance",0.70], ["spotTime",0.70], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00], ["general",1.00]]; 	// Hard
 ai_custom_array3 			= [["aimingAccuracy",0.60], ["aimingShake",0.60], ["aimingSpeed",0.60], ["endurance",1.00], ["spotDistance",0.60], ["spotTime",0.60], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00], ["general",1.00]];	// Medium
 ai_custom_array4 			= [["aimingAccuracy",0.40], ["aimingShake",0.50], ["aimingSpeed",0.50], ["endurance",1.00], ["spotDistance",0.50], ["spotTime",0.50], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00], ["general",1.00]];	// Easy
