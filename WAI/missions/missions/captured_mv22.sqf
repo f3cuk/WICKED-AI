@@ -14,7 +14,7 @@ _box 			= createVehicle ["LocalBasicWeaponsBox",[(_position select 0) - 20,(_pos
 
 //Medical Tent
 _tent 			= createVehicle ["USMC_WarfareBFieldHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_tent 			setVectorUp surfaceNormal position _baserunover;
+_tent 			setVectorUp surfaceNormal position _tent;
 
 //MV22
 _veh 			= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
