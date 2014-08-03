@@ -5,7 +5,7 @@ Our personalized WAI missions with some bugfixes and customized loot
 
 Todo
 - Fix C130 mission
-- 
+
 Changelog
 - 03-08-2014 : Bugfix MV22 mission
 - 02-08-2014 : Restructured and code cleaned
