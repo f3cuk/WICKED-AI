@@ -22,7 +22,7 @@ Things changed in this
 - Removed EMS cache cause its the same as Weapon cache;
 - Dynamic loot on Weapon cache missions;
 - Fixed the heli para backpack issue;
-- Fixed the heli para spawning in after the mission has already been done;
+- Fixed the heli para spawning in after the mission has already been done.
 
 ## Installation Instructions
 
