@@ -13,7 +13,7 @@ _box 			= createVehicle ["LocalBasicWeaponsBox",[(_position select 0) - 20,(_pos
 [_box] 			call Medical_Supply_Box;
 
 //Medical Tent
-_tent 			= createVehicle ["USMC_WarfareBFieldHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
+_tent 			= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
 _tent 			setVectorUp surfaceNormal position _tent;
 
 //MV22
