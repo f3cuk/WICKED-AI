@@ -32,11 +32,11 @@ diag_log format["WAI: Mission MV22 spawned a %1",_vehname];
 
 //Troops
 _rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0], _rndnum, 1, "Random", 4, "", "Random", "Random", true] call spawn_group;
-[[_position select 0, _position select 1, 0], _rndnum, 1, "Random", 4, "", "Random", "Random", true] call spawn_group;
-[[_position select 0, _position select 1, 0], _rndnum, 1, "Random", 4, "", "Random", "Random", true] call spawn_group;
-[[_position select 0, _position select 1, 0], _rndnum, 1, "Random", 4, "", "Random", "Random", true] call spawn_group;
-
+[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
+ 
 //Turrets
 [[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]], "M2StaticMG", 0.8, "Random", 0, 2, "","Random", true] call spawn_static;
 
