@@ -37,6 +37,6 @@ ai_wep2 					= [["M14_EP1","20Rnd_762x51_DMR"],["SCAR_H_LNG_Sniper_SD","20rnd_76
 ai_wep_random 				= [ai_wep0,ai_wep0,ai_wep0,ai_wep1,ai_wep2];	// random weapon 60% chance assault rifle, 20% light machine gun, 20% sniper rifle
 
 ai_packs 					= ["DZ_Czech_Vest_Puch", "DZ_ALICE_Pack_EP1", "DZ_TK_Assault_Pack_EP1", "DZ_British_ACU", "DZ_GunBag_EP1", "DZ_CivilBackpack_EP1", "DZ_Backpack_EP1", "DZ_LargeGunBag_EP1"];
-ai_skin 					= ["GUE_Soldier_2_DZ", GUE_Soldier_CO_DZ", GUE_Soldier_Sniper_DZ", Bandit1_DZ", "BanditW1_DZ", "BanditW2_DZ", "Functionary1_EP1_DZ", "Bandit2_DZ", "GUE_Commander_DZ", "GUE_Soldier_2_DZ", "GUE_Soldier_Crew_DZ", "GUE_Soldier_MG_DZ", "Ins_Soldier_GL_DZ", "TK_INS_Soldier_EP1_DZ", "TK_INS_Warlord_EP1_DZ"];
+ai_skin 					= ["GUE_Soldier_2_DZ", "GUE_Soldier_CO_DZ", "GUE_Soldier_Sniper_DZ", "Bandit1_DZ", "BanditW1_DZ", "BanditW2_DZ", "Functionary1_EP1_DZ", "Bandit2_DZ", "GUE_Commander_DZ", "GUE_Soldier_2_DZ", "GUE_Soldier_Crew_DZ", "GUE_Soldier_MG_DZ", "Ins_Soldier_GL_DZ", "TK_INS_Soldier_EP1_DZ", "TK_INS_Warlord_EP1_DZ"];
 
 WAIconfigloaded 			= true;
