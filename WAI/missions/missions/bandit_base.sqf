@@ -8,7 +8,7 @@ _position 		= [getMarkerPos "center",0,5500,10,0,2000,0] call BIS_fnc_findSafePo
 _box 			= createVehicle ["RUVehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 [_box] 			call Extra_Large_Gun_Box;
  
-diag_log format["WAI: Mission Band BAse Started At %1",_position];
+diag_log format["WAI: Mission bandit base started at %1",_position];
 
 //Buildings 
 _baserunover 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
