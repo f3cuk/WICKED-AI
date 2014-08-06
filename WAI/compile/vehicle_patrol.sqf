@@ -45,11 +45,12 @@ _unitGroup 				setCombatMode "RED";
 
 if(_wpnum > 0) then {
 
-	{
+	for "_x" from 1 to _wpnum do
+	{		
 		_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],_radius];
 		_wp setWaypointType "SAD";
 		_wp setWaypointCompletionRadius 200;
-	} forEach _wpnum;
+	};
 
 };
 
