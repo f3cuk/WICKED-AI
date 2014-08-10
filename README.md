@@ -7,6 +7,7 @@ Todo
 - Fix C130 mission
 
 Changelog
+- 09-08-2014 : Re-added custom spawns
 - 03-08-2014 : Bugfix MV22 mission
 - 02-08-2014 : Restructured and code cleaned
 
