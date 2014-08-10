@@ -30,6 +30,9 @@ if(isServer) then {
 
 	[] spawn ai_monitor;
 
+	//Load custom spawns
+		ExecVM "\z\addons\dayz_server\WAI\custom_spawns.sqf";
+
 	if (ai_mission_system) then {
 		ExecVM "\z\addons\dayz_server\WAI\missions\mission_ini.sqf";
 	};
