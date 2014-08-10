@@ -24,15 +24,15 @@ diag_log format["WAI: Mission Armed Vehicle spawned a %1",_vehname];
 
 //Troops
 _rndnum = round (random 4) + 2;
-[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"medium",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"medium",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"medium",4,"","","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
 
 //Turrets
 [[[(_position select 0), (_position select 1) + 10, 0]], "M2StaticMG", 0.8, "", 0, 2, "","Random", true] call spawn_static;
 
-[_position,format["[Medium] Disabled %1", _vehicle]] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,format["[Medium] Disabled %1", _vehname]] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
 [nil,nil,rTitleText,"Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear! Check your map for the location!", "PLAIN",10] call RE;
 

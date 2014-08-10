@@ -2,7 +2,7 @@
 
 private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position","_num_guns","_num_tools","_num_items"];
 
-_position = [getMarkerPos "center",0,4500,10,0,200,0] call BIS_fnc_findSafePos;
+_position = safepos call BIS_fnc_findSafePos;
 diag_log format["WAI: Ural Attack mission started at %1",_position];
 
 _baserunover = createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];

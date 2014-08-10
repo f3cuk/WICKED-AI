@@ -4,7 +4,7 @@ ai_clean_dead 				= true;			// clear bodies after certain amount of time
 cleanup_time 				= 7200;			// time to clear bodies in seconds
 
 ai_patrol_radius 			= 300;			// radius of ai patrols in meters
-ai_patrol_radius_wp 	a	= 10;			// number of waypoints of patrols
+ai_patrol_radius_wp 		= 10;			// number of waypoints of patrols
 
 ai_combatmode 				= "RED";		// combatmode of AI
 ai_behaviour 				= "SAFE";		// behaviour of AI
