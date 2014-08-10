@@ -3,7 +3,7 @@
 private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 vehclass = military_unarmed call BIS_fnc_selectRandom;
  
-_position = [getMarkerPos "center",0,3200,10,0,20,0] call BIS_fnc_findSafePos;
+_position = safepos call BIS_fnc_findSafePos;
 
 //Large Gun Box
 _box = createVehicle ["BAF_VehicleBox",[(_position select 0) + 15,(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
@@ -12,15 +12,16 @@ _box = createVehicle ["BAF_VehicleBox",[(_position select 0) + 15,(_position sel
 diag_log format["WAI: Mission Medic Camp Started At %1",_position];
 
 //Medical Supply Camp
-_baserunover = createVehicle ["Land_fortified_nest_big",[(_position select 0) +15, (_position select 1) -20,0],[], 0, "CAN_COLLIDE"];
-_baserunover2 = createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
+_baserunover 	= createVehicle ["Land_fortified_nest_big",[(_position select 0) +15, (_position select 1) -20,0],[], 0, "CAN_COLLIDE"];
+_baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
 
 _rndnum = round (random 3) + 4;
 [[_position select 0, _position select 1, 0],4,1,"Random",4,"","TK_INS_Soldier_AT_EP1","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],4,1,"Random",4,"","TK_INS_Soldier_AT_EP1","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],4,1,"Random",4,"","TK_INS_Soldier_AT_EP1","Random",true] call spawn_group;
  
-[_position,"Medical Supply Camp"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,"[Easy] Medical Supply Camp"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+
 [nil,nil,rTitleText,"Bandits have set up a medical re-supply camp! Check your map for the location!", "PLAIN",10] call RE;
 
 _missiontimeout 		= true;
@@ -85,6 +86,8 @@ if (_playerPresent) then {
 				case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
 			};
 
+			deleteVehicle _baserunover;
+			deleteVehicle _baserunover2;
 			deleteVehicle _x;
 			sleep 0.05;
 		};
@@ -95,4 +98,5 @@ if (_playerPresent) then {
 };
 
 diag_log format["WAI: Mission Medic Camp ended at %1",_position];
+
 missionrunning = false;

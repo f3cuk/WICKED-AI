@@ -6,7 +6,7 @@ _vehclass 					= cargo_trucks call BIS_fnc_selectRandom;
 _vehclass2 					= refuel_trucks call BIS_fnc_selectRandom;
 _vehclass3 					= military_unarmed call BIS_fnc_selectRandom;
 
-_position 					= [getMarkerPos "center",0,5500,10,0,2000,0] call BIS_fnc_findSafePos;
+_position 					= safepos call BIS_fnc_findSafePos;
 
 diag_log format["WAI: Mission Convoy Started At %1",_position];
 
@@ -60,7 +60,7 @@ _rndnum = round (random 3) + 5;
 //Heli Para Drop
 [[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,1,"Random",4,"Random","","Random",False] spawn heli_para;
 
-[_position,"Disabled Convoy"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,"[Hard] Disabled Convoy"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 [nil,nil,rTitleText,"An Ikea delivery has been hijacked by bandits, take over the convoy and the building supplies are yours!", "PLAIN",10] call RE;
 
 _missiontimeout 		= true;

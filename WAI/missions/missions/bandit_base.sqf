@@ -2,7 +2,7 @@
  
 private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 
-_position 		= [getMarkerPos "center",0,5500,10,0,2000,0] call BIS_fnc_findSafePos;
+_position 		= safepos call BIS_fnc_findSafePos;
 
 //Extra Large Gun Box
 _box 			= createVehicle ["RUVehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
@@ -40,8 +40,8 @@ _baserunover7 	setVectorUp surfaceNormal position _baserunover7;
 
 //Group Spawning
 _rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"hard",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,1,"hard",4,"","","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],4,1,"Random",4,"","","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],4,1,"Random",4,"","","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],4,1,"Random",4,"","","Random",true] call spawn_group;
@@ -50,15 +50,15 @@ _rndnum = round (random 3) + 4;
 [[(_position select 0) + 40, _position select 1, 0],[(_position select 0) + 40, _position select 1, 0],50,2,"HMMWV_Armored",1] spawn vehicle_patrol;
  
 //Turrets
-[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG",0.8,"GUE_Soldier_MG_DZ",1,2,"","Random",true] call spawn_static;
-[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"GUE_Soldier_MG_DZ",1,2,"","Random",true] call spawn_static;
-[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG",0.8,"GUE_Soldier_MG_DZ",1,2,"","Random",true] call spawn_static;
-[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"GUE_Soldier_MG_DZ",1,2,"","Random",true] call spawn_static;
+[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
+[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
+[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
+[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
 
 //Heli Paradrop
 [[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","","Random",false] spawn heli_para;
 
-[_position,"Bandit Base"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,"[Extrme] Bandit Base"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
 [nil,nil,rTitleText,"A jungle task force have set up a temporary encampment! Go and ambush it to make it yours!", "PLAIN",10] call RE;
 _missiontimeout = true;

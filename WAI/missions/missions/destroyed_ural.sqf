@@ -1,25 +1,30 @@
 //Ural Attack
 
-private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position"];
+private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position","_num_guns","_num_tools","_num_items"];
 
 _position = [getMarkerPos "center",0,4500,10,0,200,0] call BIS_fnc_findSafePos;
-diag_log format["WAI: Ural Attack Mission Started At %1",_position];
+diag_log format["WAI: Ural Attack mission started at %1",_position];
 
 _baserunover = createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
 
-//Small Gun Box
-_box = createVehicle ["BAF_VehicleBox",[(_position select 0) + 25,(_position select 1) + 15,0], [], 0, "CAN_COLLIDE"];
-[_box] call Medium_Gun_Box;
+_num_guns	= 1 + round(rand 3);
+_num_tools	= 3 + round(rand 8);
+_num_items	= 6 + round(rand 36);
 
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","Bandit2_DZ","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","Bandit2_DZ","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","Bandit2_DZ","Random",true] call spawn_group;
+//Medium Gun Box
+_box = createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+[_box,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
 
-//Turrets
-[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"Bandit2_DZ",0,2,"","Random",true] call spawn_static;
+_rndnum 	= round (random 4) + 1;
+_rndgro 	= 1 + round (random 3);
 
-[_position,"Ural Attack"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
-[nil,nil,rTitleText,"Bandits have destroyed a Ural carrying medical supplies and are securing the cargo! Check your map for the location!", "PLAIN",10] call RE;
+for "_i" from 0 to _rndgro do {
+	[[_position select 0, _position select 1, 0], _rndnum, 1, "easy", 4, "", "", "Random", true] call spawn_group;
+};
+
+[_position,"[Easy] Ural Attack"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+
+[nil,nil,rTitleText,"Bandits have destroyed a Ural with supplies and are securing the cargo! Check your map for the location!", "PLAIN",10] call RE;
 	
 _missiontimeout 	= true;
 _cleanmission 		= false;

@@ -4,7 +4,7 @@ private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiont
 
 _vehclass 		= "MV22_DZ";
 _vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-_position		= [getMarkerPos "center",0,5500,10,0,2000,0] call BIS_fnc_findSafePos;
+_position		= safepos call BIS_fnc_findSafePos;
 
 diag_log format["WAI: Mission MV22 Started At %1",_position];
 
@@ -40,7 +40,7 @@ _rndnum = round (random 3) + 4;
 //Turrets
 [[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]], "M2StaticMG", 0.8, "Random", 0, 2, "","Random", true] call spawn_static;
 
-[_position,_vehname] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,"[Medium] Captured MV 22"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 [nil,nil,rTitleText,"Bandits have captured a Red Cross MV-22! An informant has advised there is medical supplies, he has updated the map for the location!", "PLAIN",10] call RE;
 
 _missiontimeout 	= true;

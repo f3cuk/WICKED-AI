@@ -4,7 +4,7 @@ private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiont
 
 _vehclass 					= armed_vehicle call BIS_fnc_selectRandom;
 _vehname					= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-_position 					= [getMarkerPos "center",0,5500,10,0,2000,0] call BIS_fnc_findSafePos;
+_position 					= safepos call BIS_fnc_findSafePos;
 
 diag_log format["WAI: Mission Armed Vehicle Started At %1",_position];
 
@@ -32,7 +32,8 @@ _rndnum = round (random 4) + 2;
 //Turrets
 [[[(_position select 0), (_position select 1) + 10, 0]], "M2StaticMG", 0.8, "", 0, 2, "","Random", true] call spawn_static;
 
-[_position,_vehname] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,format["[Medium] Disabled %1", _vehicle]] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+
 [nil,nil,rTitleText,"Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear! Check your map for the location!", "PLAIN",10] call RE;
 
 _missiontimeout 			= true;

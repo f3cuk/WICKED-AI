@@ -34,7 +34,8 @@ _rndnum = round (random 4) + 2;
 //Turrets
 [[[(_position select 0) + 10, (_position select 1) - 10, 0], [(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",0,2,"","Random",true] call spawn_static;
 
-[_position,_vehname] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,format["[Medium] Disabled %1", _vehname]] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+
 [nil,nil,rTitleText,"A bandit helicopter is taking off with a crate of snipers! Save the cargo and keep the guns for yourself.", "PLAIN",10] call RE;
 
 _missiontimeout 	= true;

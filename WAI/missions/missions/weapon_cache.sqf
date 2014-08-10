@@ -1,22 +1,28 @@
 //Weapon Cache
 
-private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
+private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
-_position 	= [getMarkerPos "center",0,5500,10,0,2000,0] call BIS_fnc_findSafePos;
+_position 	= safepos call BIS_fnc_findSafePos;
 
-diag_log format["WAI: Mission Weapon Cache Started At %1",_position];
+diag_log format["WAI: Mission Weapon cache started at %1",_position];
+
+_num_guns	= 3 + round(rand 12);
+_num_tools	= 0;
+_num_items	= 0;
 
 _box 		= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-[_box] 		call spawn_ammo_box;
+[_box,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
 
-_rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0], _rndnum, 1, "Random", 4, "", "Bandit2_DZ", "Random", true] call spawn_group;
-[[_position select 0, _position select 1, 0], 4, 1, "Random", 4, "", "Bandit2_DZ", "Random", true] call spawn_group;
+_rndnum 	= round (random 7) + 1;
+_rndgro 	= 1 + round (random 3);
 
-[[[(_position select 0), (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1), 0]], "M2StaticMG", 0.8, "Bandit2_DZ", 0, 2, "", "Random", true] call spawn_static;
+for "_i" from 0 to _rndgro do {
+	[[_position select 0, _position select 1, 0], _rndnum, 1, "easy", 4, "", "", "Random", true] call spawn_group;
+};
 
+[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"Bandit2_DZ",0,2,"","Random",true] call spawn_static;
 
-[_position,"Weapon cache"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+[_position,"[Medium] Weapon cache"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
 [nil,nil,rTitleText,"Bandits have obtained a weapon crate! Check your map for the location!", "PLAIN",10] call RE;
 
