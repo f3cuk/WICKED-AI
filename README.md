@@ -1,10 +1,11 @@
 WAI-ZOMBIELAND 1.9.0
 ==============
 
-Our personalized WAI missions with some bugfixes and customized loot
-
+As i really liked the WAI missions and support for them in the latest epoch patches has gone, i decided to dust off the old files and start making these properly 1.0.5+ compatible. It started with a few minor bugfixes and some custom loadout and decided to share for anyone interested. Now planning on taking this to the next level for everyone to enjoy. 
 Todo
+- Add more missions
 - Fix C130 mission
+- Add posibility of multiple missions running at the same time (A redo of markers.sqf, missions.sqf and mission timer should suffice)
 
 Changelog
 - 09-08-2014 : Major dynamic update (1.9.0)
