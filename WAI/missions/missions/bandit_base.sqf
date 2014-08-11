@@ -39,11 +39,11 @@ _baserunover7 	setVectorUp surfaceNormal position _baserunover7;
 
 //Group Spawning
 _rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0],_rndnum,1,"hard",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"hard",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"hard","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
  
 //Humvee Patrol
 [[(_position select 0) + 40, _position select 1, 0],[(_position select 0) + 40, _position select 1, 0],50,2,"HMMWV_Armored",1] spawn vehicle_patrol;

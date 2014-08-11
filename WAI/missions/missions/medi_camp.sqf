@@ -15,9 +15,9 @@ _baserunover 	= createVehicle ["Land_fortified_nest_big",[(_position select 0) +
 _baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
 
 _rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","TK_INS_Soldier_AT_EP1","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","TK_INS_Soldier_AT_EP1","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,1,"Random",4,"","TK_INS_Soldier_AT_EP1","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"easy","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"easy","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
  
 [_position,"[Easy] Medical Supply Camp"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 

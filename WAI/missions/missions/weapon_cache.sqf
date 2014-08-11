@@ -16,7 +16,7 @@ _rndnum 	= (1 + round (random 7));
 _rndgro 	= (1 + round (random 3));
 
 for "_i" from 0 to _rndgro do {
-	[[_position select 0, _position select 1, 0], _rndnum, 1, "easy", 4, "", "", "Random", true] call spawn_group;
+	[[_position select 0, _position select 1, 0], _rndnum, "easy", "Random", 3, "", "", "Random", true] call spawn_group;
 };
 
 [[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"Bandit2_DZ",0,2,"","Random",true] call spawn_static;

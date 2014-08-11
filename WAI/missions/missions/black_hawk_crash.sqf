@@ -16,8 +16,8 @@ _box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position selec
 _baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0)  + 5 + random 15), ((_position select 1)  + 5 + random 15), 0], [], 0, "CAN_COLLIDE"];
 _baserunover 	setVectorUp surfaceNormal position _baserunover;
 
-[[_position select 0, _position select 1, 0],3,1,"Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],3,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],3,"Random","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],3,"Random","Random",4,"","","Random",true] call spawn_group;
 
 //Turrets
 [[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",0,2,"","Random",true] call spawn_static;
