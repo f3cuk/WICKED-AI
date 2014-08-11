@@ -2,32 +2,34 @@
 
 private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
-_vehclass 					= armed_vehicle call BIS_fnc_selectRandom;
-_vehname					= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-_position 					= safepos call BIS_fnc_findSafePos;
+_position 		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Mission Armed Vehicle Started At %1",_position];
 
-diag_log format["WAI: Mission Armed Vehicle Started At %1",_position];
+_vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
+_vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
+
 
 //Chain Bullet Box
-_box 						= createVehicle ["USBasicWeaponsBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+_box 			= createVehicle ["USBasicWeaponsBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 [_box] call chain_bullet_box;
 
 //Armed Land Vehicle
-_veh 						= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
-_vehdir 					= round(random 360);
-_veh 						setDir _vehdir;
-_veh 						setVariable ["ObjectID","1",true];
-PVDZE_serverObjectMonitor 	set [count PVDZE_serverObjectMonitor,_veh];
-_objPosition 				= getPosATL _veh;
+_veh 			= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
+_vehdir 		= round(random 360);
+_veh 			setDir _vehdir;
+_veh 			setVariable ["ObjectID","1",true];
+
+PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_veh];
+_objPosition 	= getPosATL _veh;
 
 diag_log format["WAI: Mission Armed Vehicle spawned a %1",_vehname];
 
 //Troops
-_rndnum = round (random 4) + 2;
-[[_position select 0, _position select 1, 0],_rndnum,1,"medium",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,1,"medium",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,1,"medium",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
+_rndnum = (2 + round (random 4));
+[[_position select 0, _position select 1, 0],_rndnum,1,"medium","Random","","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"medium","Random","","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"medium","Random","","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"Random","Random","","","Random",true] call spawn_group;
 
 //Turrets
 [[[(_position select 0), (_position select 1) + 10, 0]], "M2StaticMG", 0.8, "", 0, 2, "","Random", true] call spawn_static;

@@ -2,16 +2,19 @@
 
 private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position"];
 
-_position 			= safepos call BIS_fnc_findSafePos;
+_position 		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Wrecked Black Hawk mission started at %1",_position];
+
+_num_guns		= round(random 5);
+_num_tools		= round(random 5);
+_num_items		= round(random 10);
 
 //Dynamic Box
-_box 				= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-[_box] 				call spawn_ammo_box;
+_box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+[_box,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
 
-diag_log format["WAI: Wrecked Black Hawk mission started at %1",_position];
-
-_baserunover 		= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0)  + 5 + random 15), ((_position select 1)  + 5 + random 15), 0], [], 0, "CAN_COLLIDE"];
-_baserunover 		setVectorUp surfaceNormal position _baserunover;
+_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0)  + 5 + random 15), ((_position select 1)  + 5 + random 15), 0], [], 0, "CAN_COLLIDE"];
+_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 [[_position select 0, _position select 1, 0],3,1,"Random",4,"","","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],3,1,"Random",4,"","","Random",true] call spawn_group;
@@ -20,6 +23,7 @@ _baserunover 		setVectorUp surfaceNormal position _baserunover;
 [[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",0,2,"","Random",true] call spawn_static;
 
 [_position,"[Medium] Black Hawk Crash"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+
 [nil,nil,rTitleText,"A Black Hawk carrying supplies has crashed and bandits are securing the site! Check your map for the location!", "PLAIN",10] call RE;
 	
 _missiontimeout 		= true;
@@ -54,6 +58,8 @@ if (_playerPresent) then {
 			case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
 			case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
 		};
+		
+		deleteVehicle _baserunover;
 		deleteVehicle _x;
 		sleep 0.05;
 	};	

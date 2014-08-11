@@ -2,13 +2,12 @@
 
 private ["_objPosition3","_objPosition2","_vehclass3","_vehclass2","_veh3","_veh2","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
-_vehclass 					= cargo_trucks call BIS_fnc_selectRandom;
-_vehclass2 					= refuel_trucks call BIS_fnc_selectRandom;
-_vehclass3 					= military_unarmed call BIS_fnc_selectRandom;
+_position		= safepos call BIS_fnc_findSafePos;
+diag_log		format["WAI: Mission Convoy Started At %1",_position];
 
-_position 					= safepos call BIS_fnc_findSafePos;
-
-diag_log format["WAI: Mission Convoy Started At %1",_position];
+_vehclass		= cargo_trucks call BIS_fnc_selectRandom;
+_vehclass2		= refuel_trucks call BIS_fnc_selectRandom;
+_vehclass3		= military_unarmed call BIS_fnc_selectRandom;
 
 //Construction Supply Box
 

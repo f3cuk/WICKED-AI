@@ -2,11 +2,11 @@
 
 private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
+_position 		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Mission MV22 started at %1",_position];
+
 _vehclass 		= "MV22_DZ";
 _vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-_position		= safepos call BIS_fnc_findSafePos;
-
-diag_log format["WAI: Mission MV22 Started At %1",_position];
 
 //Medical Supply Box
 _box 			= createVehicle ["LocalBasicWeaponsBox",[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
@@ -98,6 +98,8 @@ if (_playerPresent) then {
 				case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
 				case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
 			};
+			
+			deleteVehicle _tent;
 			deleteVehicle _x;
 			sleep 0.05;
 		};

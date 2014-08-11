@@ -11,6 +11,7 @@ switch (_type) do {
 };
 
 _unit setVariable ["killedat", time];
+
 if (isPlayer _player) then {
 	private ["_banditkills","_humanity"];
 	_humanity = _player getVariable["humanity",0];

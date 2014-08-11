@@ -1,19 +1,20 @@
-if (!isServer)exitWith{};
-private ["_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+private ["_helipos1", "_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
-_position = _this select 0;
-_startingpos = _this select 1;
-_triggerdis = _this select 2;
-_heli_class = _this select 3;
-_paranumber = _this select 4;
-_skill = _this select 5;
-_gun = _this select 6;
-_mags = _this select 7;
-_backpack = _this select 8;
-_skin = _this select 9;
-_gear = _this select 10;
-_helipatrol = _this select 11;
-_aipack = "";
+if (!isServer)exitWith{};
+
+_position 		= _this select 0;
+_startingpos 	= _this select 1;
+_triggerdis 	= _this select 2;
+_heli_class 	= _this select 3;
+_paranumber 	= _this select 4;
+_skill 			= _this select 5;
+_gun 			= _this select 6;
+_mags 			= _this select 7;
+_backpack 		= _this select 8;
+_skin 			= _this select 9;
+_gear 			= _this select 10;
+_helipatrol 	= _this select 11;
+_aipack 		= "";
 
 if (count _this > 12) then {
 	_mission = _this select 12;
@@ -21,12 +22,11 @@ if (count _this > 12) then {
 	_mission = False;
 };
 
-//_delay = _this select 12;
-_aiweapon = [];
-_aigear = [];
-_aiskin = "";
-_aicskill = [];
-_skillarray = ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
+_aiweapon 		= [];
+_aigear 		= [];
+_aiskin 		= "";
+_aicskill 		= [];
+_skillarray 	= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
 // wait for player to come into area.
 diag_log "WAI: Paradrop waiting for player";

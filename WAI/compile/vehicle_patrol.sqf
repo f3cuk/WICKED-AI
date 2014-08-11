@@ -1,6 +1,7 @@
+private ["_gunner", "_wpnum","_radius","_skillarray","_startingpos","_heli_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+
 if (!isServer)exitWith{};
 
-private ["_heliTurrets","_wpnum","_radius","_gunner2","_skillarray","_startingpos","_heli_class","_startPos","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 _position 				= _this select 0;
 _startingpos 			= _this select 1;
 _radius 				= _this select 2;

@@ -2,13 +2,11 @@
 
 private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position"];
 
-_position 			= [getMarkerPos "center",0,2500,10,0,200,0] call BIS_fnc_findSafePos;
+_position 		= [getMarkerPos "center",0,2500,10,0,200,0] call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Wrecked C130 Mission started at %1",_position];
 
-//Dynamic Box
-_box 				= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-[_box] 				call spawn_ammo_box;
-
-diag_log format["WAI: Wrecked C130 Mission started at %1",_position];
+_box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+[_box] 			call spawn_ammo_box;
 
 _baserunover 		= createVehicle ["C130J_wreck_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
 _baserunover 		setVectorUp surfaceNormal position _baserunover;

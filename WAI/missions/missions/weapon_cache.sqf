@@ -2,19 +2,18 @@
 
 private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
-_position 	= safepos call BIS_fnc_findSafePos;
+_position 		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Mission Weapon cache started at %1",_position];
 
-diag_log format["WAI: Mission Weapon cache started at %1",_position];
+_num_guns		= (3 + round(random 12));
+_num_tools		= 2;
+_num_items		= 2;
 
-_num_guns	= 3 + round(rand 12);
-_num_tools	= 0;
-_num_items	= 0;
-
-_box 		= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+_box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 [_box,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
 
-_rndnum 	= round (random 7) + 1;
-_rndgro 	= 1 + round (random 3);
+_rndnum 	= (1 + round (random 7));
+_rndgro 	= (1 + round (random 3));
 
 for "_i" from 0 to _rndgro do {
 	[[_position select 0, _position select 1, 0], _rndnum, 1, "easy", 4, "", "", "Random", true] call spawn_group;

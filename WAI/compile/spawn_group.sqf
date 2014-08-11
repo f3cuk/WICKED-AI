@@ -28,11 +28,9 @@ if (!isServer) exitWith {};
 for "_x" from 1 to _unitnumber do {
 
 	switch (_gun) do {
-		case 0 : {_aiweapon = ai_wep0;};
-		case 1 : {_aiweapon = ai_wep1;};
-		case 2 : {_aiweapon = ai_wep2;};
-		case 3 : {_aiweapon = ai_wep3;};
-		case 4 : {_aiweapon = ai_wep4;};
+		case 0 : {_aiweapon = ai_wep0;}; // Assault
+		case 1 : {_aiweapon = ai_wep1;}; // LMG
+		case 2 : {_aiweapon = ai_wep2;}; // Sniper
 		case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
 	};
 
@@ -48,14 +46,14 @@ for "_x" from 1 to _unitnumber do {
 		case 4 : {_aigear = ai_gear4;};
 		case "Random" : {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
 	};
-
+	
 	_gearmagazines = _aigear select 0;
 	_geartools = _aigear select 1;
 
 	if (_skin == "") then {
 		_aiskin = ai_skin call BIS_fnc_selectRandom;
 	} else {
-		_aiskin = _skin
+		_aiskin = _skin;
 	};
 
 	_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "PRIVATE"];
@@ -64,9 +62,9 @@ for "_x" from 1 to _unitnumber do {
 	if (_backpack == "") then {
 		_aipack = ai_packs call BIS_fnc_selectRandom;
 	} else {
-		_aipack = _backpack
+		_aipack = _backpack;
 	};
-
+	
 	_unit enableAI "TARGET";
 	_unit enableAI "AUTOTARGET";
 	_unit enableAI "MOVE";
@@ -81,21 +79,21 @@ for "_x" from 1 to _unitnumber do {
 	for "_i" from 1 to _mags do {
 		_unit addMagazine _magazine;
 	};
-
+	
 	_unit addBackpack _aipack;
 
 	{
 		_unit addMagazine _x
-	} count _gearmagazines;
+	} foreach _gearmagazines;
 
 	{
 		_unit addweapon _x
-	} count _geartools;
-
+	} foreach _geartools;
+	
 	if (ai_custom_skills) then {
 
 		switch (_skill) do {
-			case "easy 		: { _aicskill = ai_custom_array4; };
+			case "easy"		: { _aicskill = ai_custom_array4; };
 			case "medium" 	: { _aicskill = ai_custom_array3; };
 			case "hard" 	: { _aicskill = ai_custom_array2; };
 			case "extreme" 	: { _aicskill = ai_custom_array1; };
@@ -104,16 +102,16 @@ for "_x" from 1 to _unitnumber do {
 
 		{
 			_unit setSkill [(_x select 0),(_x select 1)]
-		} count _aicskill;
+		} foreach _aicskill;
 
 	} else {
 
 		{
 			_unit setSkill [_x,_skill]
-		} count _skillarray;
+		} foreach _skillarray;
 
 	};
-
+	
 	ai_ground_units = (ai_ground_units + 1);
 
 	_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
@@ -123,8 +121,9 @@ for "_x" from 1 to _unitnumber do {
 	};
 
 };
+
 _unitGroup selectLeader ((units _unitGroup) select 0);
 
 [_unitGroup, _position, _mission] call group_waypoints;
 
-diag_log format ["WAI: Spawned a group of %1 bandits at %2",_unitnumber,_position];
+diag_log format ["WAI: Spawned a group of %1 bandits at %2", _unitnumber, _position];

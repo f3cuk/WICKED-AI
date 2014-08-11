@@ -1,4 +1,5 @@
-private ["_wpnumber","_radius","_mission","_unitGroup","_postition","_newPos","_center","_wp"];
+private ["_pRange","_pDir","_wpnumber","_radius","_mission","_unitGroup","_postition","_newPos","_center","_wp"];
+
 _unitGroup = _this select 0;
 _postition = _this select 1;
 if (count _this > 2) then {

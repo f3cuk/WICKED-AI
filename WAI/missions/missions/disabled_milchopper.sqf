@@ -2,11 +2,11 @@
 
 private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
-_vehclass 	= armed_chopper call BIS_fnc_selectRandom;
-_vehname	= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-_position 	= [getMarkerPos "center",0,5500,10,0,2000,0] call BIS_fnc_findSafePos;
+_position 		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Mission Armed Chopper Started At %1",_position];
 
-diag_log format["WAI: Mission Armed Chopper Started At %1",_position];
+_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
+_vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 //Sniper Gun Box
 _box 		= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
@@ -26,17 +26,17 @@ diag_log format["WAI: Mission Armed Chopper spawned a %1",_vehname];
 
 //Troops
 _rndnum = round (random 4) + 2;
-[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"hard",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,1,"hard",4,"","","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
 [[_position select 0, _position select 1, 0],_rndnum,1,"Random",4,"","","Random",true] call spawn_group;
 
 //Turrets
-[[[(_position select 0) + 10, (_position select 1) - 10, 0], [(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",0,2,"","Random",true] call spawn_static;
+[[[(_position select 0) + 10, (_position select 1) - 10, 0], [(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG",0.8,"",0,2,"","Random",true] call spawn_static;
 
 [_position,format["[Medium] Disabled %1", _vehname]] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
-[nil,nil,rTitleText,"A bandit helicopter is taking off with a crate of snipers! Save the cargo and keep the guns for yourself.", "PLAIN",10] call RE;
+[nil,nil,rTitleText,"A bandit helicopter is taking off with a crate of snipers! Save the cargo and take their chopper.", "PLAIN",10] call RE;
 
 _missiontimeout 	= true;
 _cleanmission 		= false;

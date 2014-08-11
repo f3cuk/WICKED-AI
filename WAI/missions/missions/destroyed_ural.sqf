@@ -1,15 +1,15 @@
 //Ural Attack
 
-private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position","_num_guns","_num_tools","_num_items"];
+private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
-_position = safepos call BIS_fnc_findSafePos;
-diag_log format["WAI: Ural Attack mission started at %1",_position];
+_position 		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Ural Attack mission started at %1",_position];
 
-_baserunover = createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
+_baserunover 	= createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
 
-_num_guns	= 1 + round(rand 3);
-_num_tools	= 3 + round(rand 8);
-_num_items	= 6 + round(rand 36);
+_num_guns		= (1 + round (random 3));
+_num_tools		= (3 + round (random 8));
+_num_items		= (6 + round (random 36));
 
 //Medium Gun Box
 _box = createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];

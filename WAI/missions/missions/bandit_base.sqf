@@ -3,13 +3,12 @@
 private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 
 _position 		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Mission bandit base started at %1",_position];
 
 //Extra Large Gun Box
 _box 			= createVehicle ["RUVehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 [_box] 			call Extra_Large_Gun_Box;
  
-diag_log format["WAI: Mission bandit base started at %1",_position];
-
 //Buildings 
 _baserunover 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
 _baserunover1 	= createVehicle ["land_fortified_nest_big",[(_position select 0) + 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];

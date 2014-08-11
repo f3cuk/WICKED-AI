@@ -1,9 +1,6 @@
-wai_mission_timer 					= 600; 		// time between missions
-wai_mission_timeout 				= 2700; 	// time each missions take
-wai_mission_fuel 					= .5;		// fuel inside mission spawned vehicles
-wai_mission_numberofguns 			= 8;		// number of guns in dynamic boxes
-wai_mission_numberoftools 			= 5;		// number of tools in dynamic boxes
-wai_mission_numberofitems 			= 10;		// number of items in dynamic boxes
+wai_mission_timer 					= (300 + round(random 600)); 		// time between missions 5-15 minutes
+wai_mission_timeout 				= (1800 + round(random 1800)); 		// time each missions take 30-60 minutes
+wai_mission_fuel 					= ((1 + round(random 10)) / 10);	// fuel inside mission spawned vehicles
 
 // Missions // "c130_crash"
 wai_missions 						= ["black_hawk_crash","armed_vehicle","bandit_base","captured_mv22","ikea_convoy","destroyed_ural","disabled_milchopper","mayors_mansion","medi_camp","weapon_cache"];
@@ -18,8 +15,7 @@ refuel_trucks						= ["KamazRefuel_DZ","MtvrRefuel_DES_EP1_DZ","UralRefuel_TK_EP
 civil_vehicles 						= ["hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open_EP1","SUV_Blue","SUV_Camo","SUV_Charcoal","SUV_Green","SUV_Orange","SUV_Pink","SUV_Red","SUV_Silver","SUV_TK_CIV_EP1","SUV_White","SUV_Yellow"];
 
 // Dynamic box array
-ammo_box_guns 						= ["BAF_L86A2_ACOG","BAF_LRR_scoped","DMR","KSVK_DZE","M110_NVG_EP1","M14_EP1","M16A4_ACG","M240_DZ","M249_EP1_DZ","M40A3","M4A1_AIM_SD_camo","M4A3_CCO_EP1","M8_carbine","M8_sharpshooter","M9","M9SD","Mk_48_DZ","Pecheneg_DZ","RPK_74","Sa58V_CCO_EP1","Sa58V_RCO_EP1","SCAR_H_LNG_Sniper_SD","SVD_CAMO","VSS_vintorez"];
-ammo_box_tools 						= ["Binocular","Binocular_Vector","chainsaw","ItemCompass","ItemCrowbar","ItemEtool","ItemFishingPole","ItemFlashlightRed","ItemGPS","ItemHatchet_DZE","ItemKnife","ItemMachete","ItemMatchbox_DZE","ItemToolbox","NVGoggles"];
-ammo_box_items 						= ["ItemBandage","ItemSodaCoke"];
+ammo_box_tools 						= ["Binocular","Binocular_Vector","ItemCompass","ItemCrowbar","ItemEtool","ItemFishingPole","ItemFlashlightRed","ItemGPS","ItemHatchet_DZE","ItemKnife","ItemMachete","ItemMatchbox_DZE","ItemToolbox","NVGoggles"];
+ammo_box_items 						= ["FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemBandage","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked","ItemAntibiotic","ItemBloodbag","ItemEpinephrin","ItemHeatPack","ItemMorphine","ItemGoldBar","ItemGoldBar10oz","CinderBlocks","ItemCanvas","ItemComboLock","ItemKeyKit","ItemLightBulb","ItemLockbox","ItemSandbag","ItemTankTrap","ItemWire","MortarBucket","PartEngine","PartFueltank","PartGeneric","PartGlass","PartPlankPack","PartVRotor","PartWheel","PartWoodPile"];
 
 WAImissionconfig 					= true;

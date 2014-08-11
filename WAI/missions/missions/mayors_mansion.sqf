@@ -1,15 +1,16 @@
 //Mayors Mansion
 
 private 		["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
-vehclass 		= military_unarmed call BIS_fnc_selectRandom;
+
 _position		= safepos call BIS_fnc_findSafePos;
+diag_log 		format["WAI: Mission Mayors Mansion Started At %1",_position];
+
+vehclass 		= military_unarmed call BIS_fnc_selectRandom;
 
 //Large Gun Box
 _box = createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1), .5], [], 0, "CAN_COLLIDE"];
 [_box] call Large_Gun_Box;
  
-diag_log format["WAI: Mission Mayors Mansion Started At %1",_position];
-
 //Mayors Mansion
 _baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
 
