@@ -1,7 +1,8 @@
-WAI-ZOMBIELAND 1.9.0
+WAI-ZOMBIELAND 1.9.1
 ==============
 
 As i really liked the WAI missions and support for them in the latest epoch patches has gone, i decided to dust off the old files and start making these properly 1.0.5+ compatible. It started with a few minor bugfixes and some custom loadout and decided to share for anyone interested. Now planning on taking this to the next level for everyone to enjoy. 
+
 Todo
 - Add more missions
 - Fix C130 mission
@@ -12,6 +13,9 @@ Changelog
 - 09-08-2014 : Major dynamic update (1.9.0)
 - 03-08-2014 : Bugfix MV22 mission (1.8.2)
 - 02-08-2014 : Restructured and code cleaned (1.8.1)
+
+Changelog 1.9.1
+- Fixed skillset on missions
 
 Changelog 1.9.x
 - Added possibility to blacklist certain area's (default set stary);
