@@ -18,29 +18,35 @@ if(isServer) then {
 	createCenter			EAST;
 	WEST					setFriend [EAST,0];
 	EAST					setFriend [WEST,0];
-	blackslistpos			= [[[5533.00,8445.00],[6911.00,7063.00]]]; // [LEFT TOP COORDS, BOTTOM RIGHT RIGHT] - Currently set @ stary. Multiple area's possible.
+
+	blackslist				= [
+		[[5533.00,8445.00],[6911.00,7063.00]],	// Stary
+		[[0,16000,0],[1000,-0,0]],				// Left
+		[[0,16000,0],[16000.0,14580.3,0]]		// Top
+	];
 	
 	if(use_blacklist) then {
-		safepos				= [getMarkerPos "center",0,6000,0,0,40,0];
+		safepos				= [getMarkerPos "center",5,7000,30,0,1.1,0,blackslist];
 	} else {
-		safepos				= [getMarkerPos "center",0,6000,0,0,40,0,blackslistpos];
+		safepos				= [getMarkerPos "center",0,5000,30,0,1.1,0];
 	};
 	
 	/*
 		Test blacklist settings
-	 
-		for "_i" from 1 to 100 do {
+		This will spawn 2000 markers on server start that will give you a general idea of where the mission will spawn
+
+	for "_i" from 1 to 2000 do {
+	
+		_position = safepos call BIS_fnc_findSafePos;
 		
-			_position = safepos call BIS_fnc_findSafePos;
-			
-			_marker 		= createMarker [format["Mission_%1",_i], _position];
-			_marker 		setMarkerColor "ColorRed";
-			_marker 		setMarkerShape "ELLIPSE";
-			_marker 		setMarkerBrush "Solid";
-			_marker 		setMarkerSize [300,300];
-			
-		};
+		_marker 		= createMarker [format["Mission_%1",_i], _position];
+		_marker 		setMarkerColor "ColorRed";
+		_marker 		setMarkerShape "ELLIPSE";
+		_marker 		setMarkerBrush "Solid";
+		_marker 		setMarkerSize [300,300];
 		
+	};
+
 	*/
 	
 	WAIconfigloaded			= false;
