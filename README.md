@@ -6,6 +6,7 @@ Todo
 - Add more missions
 - Fix C130 mission
 - Add posibility of multiple missions running at the same time (A redo of markers.sqf, missions.sqf and mission timer should suffice)
+- Find a creative way to deal with the vodnik 'abusers' without making making the diffuclty higher for normal player.
 
 Changelog
 - 09-08-2014 : Major dynamic update (1.9.0)
@@ -13,15 +14,15 @@ Changelog
 - 02-08-2014 : Restructured and code cleaned (1.8.1)
 
 Changelog 1.9.x
-- Added possibility to blacklist certain area's (default set stary)
-- Overhaul making missions more dynamic
-- Equipped more missions with dynamic loot
-- Updated the dynamic loot arrays with more items
-- Fixed armed military mission with M2 spawning inside eachoter
-- Fixed crashed blackhawk with loot crate spawning inside helicopter
-- Added difficulty levels to mission titles
-- Re-added custom spawns as per request
-- General code cleanup including removal of unused private vars
+- Added possibility to blacklist certain area's (default set stary);
+- Overhaul making missions more dynamic;
+- Equipped more missions with dynamic loot;
+- Updated the dynamic loot arrays with more items;
+- Fixed armed military mission with M2 spawning inside eachoter;
+- Fixed crashed blackhawk with loot crate spawning inside helicopter;
+- Added difficulty levels to mission titles;
+- Re-added custom spawns as per request;
+- General code cleanup including removal of unused private vars.
 
 Changelog 1.8.x
 - Customized loot;
