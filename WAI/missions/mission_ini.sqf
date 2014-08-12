@@ -1,10 +1,13 @@
 custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\custom_publish_vehicle.sqf";
 spawn_ammo_box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\box_dynamic.sqf";
 
+MissionStartText				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\MissionWarning.sqf";
+MissionEndText					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\MissionWarningEnd.sqf";
+
 //Static Custom Boxes
-Construction_Supply_Box  		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\supplybox_construction.sqf";
+Construction_Supply_Box  			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\supplybox_construction.sqf";
 Chain_Bullet_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\supplybox_chainbullets.sqf";
-Medical_Supply_Box  			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\supplybox_medical.sqf";
+Medical_Supply_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\supplybox_medical.sqf";
 
 //Static Weaponbox
 Sniper_Gun_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\gunbox_sniper.sqf";

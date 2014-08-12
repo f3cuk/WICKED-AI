@@ -23,6 +23,7 @@ if(isServer) then {
 		if((_result == 1) && (_cnt >= 1) && (markerready)) then {
 
 			clean_running_mission = false;
+			AIKilledByVehicle	= 0; // Resets car kill counter
 
 			_mission 		= wai_missions call BIS_fnc_selectRandom;
 

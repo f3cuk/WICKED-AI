@@ -1,6 +1,7 @@
 ai_mission_system 			= true;			// use built in mission system
 ai_clear_body 				= false;		// instantly clear bodies
 ai_clean_dead 				= true;			// clear bodies after certain amount of time
+ai_clean_UnkownDeath  = true;   // Remove gear from AI when a players drives over them
 cleanup_time 				= 7200;			// time to clear bodies in seconds
 
 ai_patrol_radius 			= 300;			// radius of ai patrols in meters
@@ -27,6 +28,7 @@ ai_static_useweapon 		= true;			// Allows AI on static guns to have a loadout
 ai_static_skills 			= true;			// Allows you to set custom array for AI on static weapons. (true: On false: Off) 
 ai_static_array 			= [["aimingAccuracy",0.20], ["aimingShake",0.70], ["aimingSpeed",0.75], ["endurance",1.00], ["spotDistance",0.70], ["spotTime",0.50], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00],["general",1.00]];
 
+ai_use_nvg        = true; // Let then be deadly at night also.
 ai_gear0 					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
 ai_gear1 					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
 ai_gear_random 				= [ai_gear0,ai_gear1];	// Allows the possibility of random gear
