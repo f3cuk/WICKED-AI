@@ -1,18 +1,23 @@
-WAI-ZOMBIELAND 1.9.1
+WAI-ZOMBIELAND 1.9.2
 ==============
 
 As i really liked the WAI missions and support for them in the latest epoch patches has gone, i decided to dust off the old files and start making these properly 1.0.5+ compatible. It started with a few minor bugfixes and some custom loadout and decided to share for anyone interested. Now planning on taking this to the next level for everyone to enjoy. 
 
 Todo
+- Change system to include both bandit and hero missions
 - Add more missions
 - Fix C130 mission
 - Add posibility of multiple missions running at the same time (A redo of markers.sqf, missions.sqf and mission timer should suffice)
 - Find a creative way to deal with the vodnik 'abusers' without making making the diffuclty higher for normal player.
 
 Changelog
+- 12-08-2014 : Small medi camp bugfix
 - 09-08-2014 : Major dynamic update (1.9.0)
 - 03-08-2014 : Bugfix MV22 mission (1.8.2)
 - 02-08-2014 : Restructured and code cleaned (1.8.1)
+
+Changelog 1.9.2
+- Fixed box on medi camp missions
 
 Changelog 1.9.1
 - Fixed skillset on missions
