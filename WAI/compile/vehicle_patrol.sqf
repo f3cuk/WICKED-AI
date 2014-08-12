@@ -1,6 +1,6 @@
-private ["_gunner", "_wpnum","_radius","_skillarray","_startingpos","_heli_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+if (isServer) {
 
-if (!isServer)exitWith{};
+private ["_gunner", "_wpnum","_radius","_skillarray","_startingpos","_heli_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 _position 				= _this select 0;
 _startingpos 			= _this select 1;
@@ -10,9 +10,14 @@ _heli_class 			= _this select 4;
 _skill 					= _this select 5;
 _skillarray 			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
+if(_skill == "Random") {
+	_skill = (round(random 10) / 10);
+};
+
 _unitGroup 				= createGroup east;
 _pilot 					= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 [_pilot] 				joinSilent _unitGroup;
+
 ai_vehicle_units 		= (ai_vehicle_units + 1);
 
 _veh 					= createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
@@ -65,4 +70,6 @@ if(clean_running_mission) then {
 	deleteVehicle _veh;
 	deleteVehicle _gunner;
 	deleteVehicle _pilot;
+};
+
 };

@@ -18,6 +18,7 @@ Changelog
 
 Changelog 1.9.2
 - Fixed box on medi camp missions
+- Update heli and vehicle patrol with possibility of random skill
 
 Changelog 1.9.1
 - Fixed skillset on missions
