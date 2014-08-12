@@ -75,6 +75,7 @@ for "_x" from 1 to _unitnumber do {
 	removeAllWeapons _unit;
 	removeAllItems _unit;
 	_unit addweapon _weapon;
+	if(ai_use_nvg) then {_unit addweapon "NVGoggles";};
 
 	for "_i" from 1 to _mags do {
 		_unit addMagazine _magazine;
