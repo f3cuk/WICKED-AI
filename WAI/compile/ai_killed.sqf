@@ -29,4 +29,14 @@ if (isPlayer _player) then {
 	if (ai_ahare_info) then {
 		{if (((position _x) distance (position _unit)) <= ai_share_distance) then {_x reveal [_player, 4.0];}} forEach allUnits;
 	};
-};
+} else {
+		if (ai_clean_UnkownDeath) then{
+			//Since a player ran them over, or they died from unknown causes Lets strip their gear
+			removeBackpack _unit;
+			removeAllWeapons _unit;
+			{
+				_unit removeMagazine _x
+			} forEach magazines _unit;
+		};
+}
+;
