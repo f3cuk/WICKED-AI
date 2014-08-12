@@ -74,8 +74,8 @@ if (isServer) then {
 	} forEach _skillarray;
 
 	{
-		_gunner setSkill [_x,0.7]
-		_gunner2 setSkill [_x,0.7]
+		_gunner 	setSkill [_x,0.7];
+		_gunner2 	setSkill [_x,0.7];
 	} forEach _skillarray;
 
 	{
