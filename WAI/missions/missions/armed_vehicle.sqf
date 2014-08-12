@@ -36,7 +36,10 @@ _rndnum = (2 + round (random 4));
 
 [_position,format["[Medium] Disabled %1", _vehname]] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
-[nil,nil,rTitleText,"Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear! Check your map for the location!", "PLAIN",10] call RE;
+//[nil,nil,rTitleText,"Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear! Check your map for the location!", "PLAIN",10] call RE;
+
+_text = "Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear!";
+[true, _position,_vehclass,_text] call MissionStartText;
 
 _missiontimeout 			= true;
 _cleanmission 				= false;
@@ -79,13 +82,23 @@ if (_playerPresent) then {
 		(_playerPresent)
 	};
 
-	[nil,nil,rTitleText,"Survivors have secured the armed vehicle!", "PLAIN",10] call RE;
+	//[nil,nil,rTitleText,"Survivors have secured the armed vehicle!", "PLAIN",10] call RE;
+	
+	_text = "Survivors have secured the armed vehicle!";
+	[true, _position, _text] spawn MissionEndText;
+			
+	if(wai_crates_smoke) then {
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		//diag_log format["WAI: popping smoke %1",_dropPosition];
+	};
 
 } else {
 
 	clean_running_mission 	= true;
-	deleteVehicle 			_veh;
-	deleteVehicle 			_box;
+	deleteVehicle 	_veh;
+	deleteVehicle 	_box;
 
 	{
 		_cleanunits = _x getVariable "missionclean";
@@ -103,7 +116,9 @@ if (_playerPresent) then {
 
 	} forEach allUnits;
 	
-	[nil,nil,rTitleText,"Survivors did not secure the armed vehicle in time", "PLAIN",10] call RE;
+	//[nil,nil,rTitleText,"Survivors did not secure the armed vehicle in time", "PLAIN",10] call RE;
+	_text = "Survivors did not secure the armed vehicle in time!";
+	[true, _position, _text] call MissionEndText;
 };
 
 diag_log format["WAI: Mission armed vehicle ended at %1",_position];
