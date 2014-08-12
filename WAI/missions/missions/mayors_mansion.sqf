@@ -23,7 +23,7 @@ _rndnum = round (random 3) + 4;
 //The Mayor Himself
 [[_position select 0, _position select 1, 0],1,1,"Random",4,"","Functionary1_EP1_DZ","Random",true] call spawn_group;
  
-[[[(_position select 0) - 15, (_position select 1) + 15, 8],[(_position select 0) + 15, (_position select 1) - 15, 8]],"M2StaticMG","easy",Random",1,2,"Random","Random",true] call spawn_static;
+[[[(_position select 0) - 15, (_position select 1) + 15, 8],[(_position select 0) + 15, (_position select 1) - 15, 8]],"M2StaticMG","easy","Random",1,2,"Random","Random",true] call spawn_static;
  
 [_position,"[Medium] Mayors Mansion"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
