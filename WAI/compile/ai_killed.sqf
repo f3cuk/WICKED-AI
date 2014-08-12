@@ -11,6 +11,7 @@ switch (_type) do {
 };
 
 _unit setVariable ["killedat", time];
+if(ai_use_nvg) then {_unit removeWeapon "NVGoggles";};
 
 if (isPlayer _player) then {
 	private ["_banditkills","_humanity"];
@@ -31,6 +32,8 @@ if (isPlayer _player) then {
 	};
 } else {
 		if (ai_clean_UnkownDeath) then{
+			// Add 1 to the killed by car counter, when over 3, the box and car will not spawn
+			AIKilledByVehicle = AIKilledByVehicle + 1;
 			//Since a player ran them over, or they died from unknown causes Lets strip their gear
 			removeBackpack _unit;
 			removeAllWeapons _unit;
