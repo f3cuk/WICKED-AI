@@ -6,10 +6,11 @@ _position 		= safepos call BIS_fnc_findSafePos;
 diag_log 		format["WAI: Mission Medic Camp Started At %1",_position];
 
 vehclass 		= military_unarmed call BIS_fnc_selectRandom;
- 
-_box = createVehicle ["BAF_VehicleBox",[(_position select 0) + 15,(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"]; //Large Gun Box
-[_box] call Large_Gun_Box;              
- 
+
+// Medical Supply Box
+_box = createVehicle ["BAF_VehicleBox",[(_position select 0) + 15,(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+[_box] call Medical_Supply_Box;   
+
 //Medical Supply Camp
 _baserunover 	= createVehicle ["Land_fortified_nest_big",[(_position select 0) +15, (_position select 1) -20,0],[], 0, "CAN_COLLIDE"];
 _baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
