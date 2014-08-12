@@ -32,13 +32,13 @@ diag_log format["WAI: Mission MV22 spawned a %1",_vehname];
 
 //Troops
 _rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
  
 //Turrets
-[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]], "M2StaticMG", 0.8, "Random", 0, 2, "","Random", true] call spawn_static;
+[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
 
 [_position,"[Medium] Captured MV 22"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 [nil,nil,rTitleText,"Bandits have captured a Red Cross MV-22! An informant has advised there is medical supplies, he has updated the map for the location!", "PLAIN",10] call RE;

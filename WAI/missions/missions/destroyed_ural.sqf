@@ -19,7 +19,7 @@ _rndnum 	= round (random 4) + 1;
 _rndgro 	= 1 + round (random 3);
 
 for "_i" from 0 to _rndgro do {
-	[[_position select 0, _position select 1, 0],_rndnum,"easy","Random",4,"","","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"easy","Random",4,"Random","Random","Random",true] call spawn_group;
 };
 
 [_position,"[Easy] Ural Attack"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";

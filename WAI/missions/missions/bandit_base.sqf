@@ -39,27 +39,28 @@ _baserunover7 	setVectorUp surfaceNormal position _baserunover7;
 
 //Group Spawning
 _rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,"hard","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
  
 //Humvee Patrol
-[[(_position select 0) + 40, _position select 1, 0],[(_position select 0) + 40, _position select 1, 0],50,2,"HMMWV_Armored",1] spawn vehicle_patrol;
+[[(_position select 0) + 40, _position select 1, 0],[(_position select 0) + 40, _position select 1, 0],50,2,"HMMWV_Armored","Random"] spawn vehicle_patrol;
  
 //Turrets
-[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
-[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
-[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
-[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG",0.8,"",1,2,"","Random",true] call spawn_static;
+[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
+[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
+[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
+[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
 
 //Heli Paradrop
-[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","","Random",false] spawn heli_para;
+[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random",false] spawn heli_para;
 
 [_position,"[Extrme] Bandit Base"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
-[nil,nil,rTitleText,"A jungle task force have set up a temporary encampment! Go and ambush it to make it yours!", "PLAIN",10] call RE;
+[nil,nil,rTitleText,"A jungle task force have set up a temporary encampment! Go and ambush it to make it yours!","PLAIN",10] call RE;
+
 _missiontimeout = true;
 _cleanmission = false;
 _playerPresent = false;
@@ -127,4 +128,5 @@ if (_playerPresent) then {
 };
 
 diag_log format["WAI: Mission bandit base ended at %1 ended",_position];
+
 missionrunning = false;

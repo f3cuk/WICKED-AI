@@ -48,16 +48,16 @@ _objPosition3 = getPosATL _veh3;
 
 //Troops
 _rndnum = round (random 3) + 5;
-[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"","USMC_LHD_Crew_Yellow","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],5,"hard","Random",4,"","USMC_LHD_Crew_Blue","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],5,"Random","Random",4,"","USMC_LHD_Crew_Blue","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],5,"Random","Random",4,"","USMC_LHD_Crew_Blue","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],5,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
 
 //Turrets
-[[[(_position select 0) + 5, (_position select 1) + 10, 0],[(_position select 0) - 5, (_position select 1) - 10, 0],[(_position select 0) - 5, (_position select 1) - 15, 0]], "M2StaticMG",0.7,"",1,2,"","Random",true] call spawn_static;
+[[[(_position select 0) + 5, (_position select 1) + 10, 0],[(_position select 0) - 5, (_position select 1) - 10, 0],[(_position select 0) - 5, (_position select 1) - 15, 0]],"M2StaticMG","easy","Random",1,2,"Random","Random",true] call spawn_static;
 
 //Heli Para Drop
-[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,1,"Random",4,"Random","","Random",False] spawn heli_para;
+[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Random","Random",false] spawn heli_para;
 
 [_position,"[Hard] Disabled Convoy"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 [nil,nil,rTitleText,"An Ikea delivery has been hijacked by bandits, take over the convoy and the building supplies are yours!", "PLAIN",10] call RE;

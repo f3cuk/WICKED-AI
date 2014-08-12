@@ -9,16 +9,16 @@ vehclass 		= military_unarmed call BIS_fnc_selectRandom;
 
 // Medical Supply Box
 _box = createVehicle ["BAF_VehicleBox",[(_position select 0) + 15,(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-[_box] call Medical_Supply_Box;   
+[_box] call Medical_Supply_Box;
 
 //Medical Supply Camp
 _baserunover 	= createVehicle ["Land_fortified_nest_big",[(_position select 0) +15, (_position select 1) -20,0],[], 0, "CAN_COLLIDE"];
 _baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
 
 _rndnum = round (random 3) + 4;
-[[_position select 0, _position select 1, 0],4,"easy","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,"easy","Random",4,"","","Random",true] call spawn_group;
-[[_position select 0, _position select 1, 0],4,"Random","Random",4,"","","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"easy","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"easy","Random",4,"Random","Random","Random",true] call spawn_group;
+[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
  
 [_position,"[Easy] Medical Supply Camp"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
