@@ -1,4 +1,4 @@
-if (isServer) {
+if (isServer) then {
 
 	private ["_gunner", "_wpnum","_radius","_skillarray","_startingpos","_heli_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
@@ -16,7 +16,7 @@ if (isServer) {
 		case "hard" 	: { _aicskill = ai_skill_hard; };
 		case "extreme" 	: { _aicskill = ai_skill_extreme; };
 		case "Random" 	: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
-		default			: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+		default { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
 	};
 
 	_unitGroup 				= createGroup east;

@@ -174,7 +174,7 @@ if (isServer) then {
 					case "hard" 	: { _aicskill = ai_skill_hard; };
 					case "extreme" 	: { _aicskill = ai_skill_extreme; };
 					case "Random" 	: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
-					default			: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+					default { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
 				};
 				
 				{
