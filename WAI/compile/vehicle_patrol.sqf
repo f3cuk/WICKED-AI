@@ -1,12 +1,12 @@
 if (isServer) then {
 
-	private ["_gunner", "_wpnum","_radius","_skillarray","_startingpos","_heli_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
 	_radius 				= _this select 2;
 	_wpnum 					= _this select 3;
-	_heli_class 			= _this select 4;
+	_veh_class 				= _this select 4;
 	_skill 					= _this select 5;
 	_skillarray 			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
@@ -25,7 +25,7 @@ if (isServer) then {
 
 	ai_vehicle_units 		= (ai_vehicle_units + 1);
 
-	_veh 					= createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
+	_veh 					= createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
 	_veh 					setFuel 1;
 	_veh 					engineOn true;
 	_veh 					setVehicleAmmo 1;
@@ -48,7 +48,7 @@ if (isServer) then {
 	} forEach _aicskill;
 
 
-	ai_vehicle_units 		= (ai_vehicle_units + 1);
+	ai_vehicle_units = (ai_vehicle_units + 1);
 
 	{
 		_pilot setSkill [_x,1]
