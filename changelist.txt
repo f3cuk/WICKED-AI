@@ -1,4 +1,5 @@
 Changelist 1.9.4
+
     [enhancement] Added option to clean gear on roadkilled ai @nerdalertdk
     [enhancement] Added option to spawn smoke on mission complete @nerdalertdk
     [enhancement] Added option in % chance to destruct weapons on roadkill @nerdalertdk
