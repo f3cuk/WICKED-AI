@@ -4,6 +4,7 @@ wai_mission_fuel 					= ((1 + round(random 9)) / 10);		// fuel inside mission sp
 wai_crates_smoke 					= true;								// pop smoke on crate when mission is finished
 wai_keep_vehicles					= true;								// save vehicles to database to keep them after restart
 wai_players_online        = 1; // Number of players online before misson starts
+wai_server_fps            = 5; // Missions only starts if server FPS is over wai_server_fps
 // Missions
 wai_missions 						= ["black_hawk_crash","armed_vehicle","bandit_base","captured_mv22","ikea_convoy","destroyed_ural","disabled_milchopper","mayors_mansion","medi_camp","weapon_cache"];
 
