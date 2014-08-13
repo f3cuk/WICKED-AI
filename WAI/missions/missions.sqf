@@ -7,6 +7,7 @@ if(isServer) then {
 	_startTime 				= floor(time);
 	_result 				= 0;
 
+
 	while {true} do
 	{
 	
@@ -21,7 +22,7 @@ if(isServer) then {
 			_startTime = floor(time);
 		};
 		
-		if((_result == 1) && (_cnt >= 1) && (markerready)) then {
+		if((_result == 1) && (_cnt >= wai_players_online) && (markerready)) then {
 
 			clean_running_mission	= false;
 			ai_roadkills			= 0;
