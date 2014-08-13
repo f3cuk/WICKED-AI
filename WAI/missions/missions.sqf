@@ -21,10 +21,10 @@ if(isServer) then {
 			_startTime = floor(time);
 		};
 		
-		if((_result == 1) && (_cnt >= 1) && (markerready)) then {
+		if((_result == 1) && (_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
 
 			clean_running_mission	= false;
-			ai_roadkills			= 0;
+			ai_roadkills		= 0;
 
 			_mission 		= wai_missions call BIS_fnc_selectRandom;
 
