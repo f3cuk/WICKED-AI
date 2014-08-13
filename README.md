@@ -8,7 +8,7 @@ Todo
 - Add more missions
 - Fix C130 mission
 - Add posibility of multiple missions running at the same time (A redo of markers.sqf, missions.sqf and mission timer should suffice)
-- Find a creative way to deal with the vodnik 'abusers' without making making the diffuclty higher for normal player.
+- Find a creative way to deal with the vodnik 'abusers' without making making the diffuclty higher for the non-abusers.
 
 Changelog
 - 12-08-2014 : Normalization update
