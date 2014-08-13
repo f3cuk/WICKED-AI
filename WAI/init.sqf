@@ -3,21 +3,22 @@ if(isServer) then {
 	custom_spawns			= false;
 	use_blacklist			= true;
 
-	spawn_group				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_group.sqf";
+	spawn_group			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_group.sqf";
 	group_waypoints			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\patrol.sqf";
+	spawn_location			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_location.sqf";
 	spawn_static			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_static.sqf";
-	heli_para				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_para.sqf";
-	heli_patrol				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_patrol.sqf";
+	heli_para			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_para.sqf";
+	heli_patrol			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\heli_patrol.sqf";
 	vehicle_patrol			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_patrol.sqf";
 
-	on_kill					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_killed.sqf";
+	on_kill				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_killed.sqf";
 
-	ai_monitor				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_monitor.sqf";
-	veh_monitor				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_monitor.sqf";
+	ai_monitor			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ai_monitor.sqf";
+	veh_monitor			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_monitor.sqf";
 
 	createCenter			EAST;
-	WEST					setFriend [EAST,0];
-	EAST					setFriend [WEST,0];
+	WEST				setFriend [EAST,0];
+	EAST				setFriend [WEST,0];
 
 	blackslist				= [
 		[[5533.00,8445.00],[6911.00,7063.00]],	// Stary
