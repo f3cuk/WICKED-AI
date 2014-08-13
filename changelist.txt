@@ -1,3 +1,10 @@
+Changelist 1.9.4
+    [enhancement] Added option to clean gear on roadkilled ai @nerdalertdk
+    [enhancement] Added option to spawn smoke on mission complete @nerdalertdk
+    [enhancement] Added option in % chance to destruct weapons on roadkill @nerdalertdk
+    [enhancement] Started with merge of weird double folder structure
+    [enhancement] Added option to not save vehicles to database
+
 Changelist 1.9.3
 
     [enhancement] Normalized the use of Random throughout, when you want something random, use "Random" and not "Random" or ""
