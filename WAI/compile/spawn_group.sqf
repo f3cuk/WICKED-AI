@@ -75,6 +75,7 @@ if (isServer) then {
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 		_unit addweapon _weapon;
+		if(ai_use_nvg) then {_unit addweapon "NVGoggles";};
 
 		for "_i" from 1 to _mags do {
 			_unit addMagazine _magazine;
