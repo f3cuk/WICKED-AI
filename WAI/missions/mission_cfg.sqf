@@ -1,6 +1,8 @@
 wai_mission_timer 					= (300 + round(random 600)); 		// time between missions 5-15 minutes
 wai_mission_timeout 				= (1800 + round(random 1800)); 		// time each missions take 30-60 minutes
 wai_mission_fuel 					= ((1 + round(random 9)) / 10);		// fuel inside mission spawned vehicles (10 - 100%)
+wai_crates_smoke 					= true;								// pop smoke on crate when mission is finished
+wai_keep_vehicles					= true;								// save vehicles to database to keep them after restart
 
 // Missions
 wai_missions 						= ["black_hawk_crash","armed_vehicle","bandit_base","captured_mv22","ikea_convoy","destroyed_ural","disabled_milchopper","mayors_mansion","medi_camp","weapon_cache"];

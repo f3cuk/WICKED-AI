@@ -9,6 +9,7 @@ if(isServer) then {
 
 	while {true} do
 	{
+	
 		_cnt 		= {alive _x} count playableUnits;
 		_currTime 	= floor(time);
 
@@ -22,7 +23,8 @@ if(isServer) then {
 		
 		if((_result == 1) && (_cnt >= 1) && (markerready)) then {
 
-			clean_running_mission = false;
+			clean_running_mission	= false;
+			ai_roadkills			= 0;
 
 			_mission 		= wai_missions call BIS_fnc_selectRandom;
 
@@ -38,6 +40,8 @@ if(isServer) then {
 
 			sleep 60;
 
-		};    
+		};
+
 	};
+
 };

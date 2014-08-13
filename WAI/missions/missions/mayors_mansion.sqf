@@ -64,12 +64,21 @@ if (_playerPresent) then {
 		(_playerPresent)
 	};
 
+	if(wai_crates_smoke) then {
+
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		
+	};
+
 	[nil,nil,rTitleText,"The rogue mayor has been taken out, who will be the next Mayor of Cherno?", "PLAIN",10] call RE;
 
 } else {
 
 	clean_running_mission = true;
 	deleteVehicle _box;
+
 	{
 		_cleanunits = _x getVariable "missionclean";
 	

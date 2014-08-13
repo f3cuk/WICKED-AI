@@ -8,7 +8,6 @@ diag_log 		format["WAI: Mission Armed Vehicle Started At %1",_position];
 _vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
 _vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
-
 //Chain Bullet Box
 _box 			= createVehicle ["USBasicWeaponsBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 [_box] call chain_bullet_box;
@@ -44,12 +43,16 @@ _playerPresent				= false;
 _starttime 					= floor(time);
 
 while {_missiontimeout} do {
+
 	sleep 5;
+
 	_currenttime = floor(time);
 	{
+		
 		if((isPlayer _x) && (_x distance _position <= 150)) then {
 			_playerPresent = true
 		};
+
 	} forEach playableUnits;
 
 	if (_currenttime - _starttime >= wai_mission_timeout) then {
@@ -67,7 +70,9 @@ if (_playerPresent) then {
 
 	waitUntil
 	{
+		
 		sleep 5;
+
 		_playerPresent = false;
 
 		{
@@ -79,11 +84,20 @@ if (_playerPresent) then {
 		(_playerPresent)
 	};
 
+	if(wai_crates_smoke) then {
+
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		
+	};
+
 	[nil,nil,rTitleText,"Survivors have secured the armed vehicle!", "PLAIN",10] call RE;
 
 } else {
 
 	clean_running_mission 	= true;
+
 	deleteVehicle 			_veh;
 	deleteVehicle 			_box;
 
@@ -107,4 +121,5 @@ if (_playerPresent) then {
 };
 
 diag_log format["WAI: Mission armed vehicle ended at %1",_position];
+
 missionrunning = false;

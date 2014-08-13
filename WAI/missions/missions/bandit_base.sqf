@@ -92,6 +92,14 @@ if (_playerPresent) then {
 		{if((isPlayer _x) && (_x distance _position <= 30)) then {_playerPresent = true};}forEach playableUnits;
 		(_playerPresent)
 	};
+	
+	if(wai_crates_smoke) then {
+
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		
+	};
 
 	[nil,nil,rTitleText,"Survivors captured the base, HOOAH!!", "PLAIN",10] call RE;
 

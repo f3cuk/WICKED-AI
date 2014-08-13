@@ -32,6 +32,7 @@ _playerPresent 		= false;
 _starttime 			= floor(time);
 
 while {_missiontimeout} do {
+
 	sleep 5;
 	_currenttime = floor(time);
 	
@@ -65,11 +66,20 @@ if (_playerPresent) then {
 		(_playerPresent)
 	};
 
+	if(wai_crates_smoke) then {
+
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		
+	};
+
 	[nil,nil,rTitleText,"The medical supplies have been secured by survivors!", "PLAIN",10] call RE;
 
 } else {
 
 	clean_running_mission = true;
+	
 	deleteVehicle _box;
 	{
 		_cleanunits = _x getVariable "missionclean";
@@ -86,9 +96,9 @@ if (_playerPresent) then {
 		};	
 
 	} forEach allUnits;
-	
-	diag_log format["WAI: Ural Attack Mission Timed Out At %1",_position];
+
 	[nil,nil,rTitleText,"Survivors did not secure the medical supplies in time!", "PLAIN",10] call RE;
+
 };
 
 diag_log format["WAI: Ural attack mission ended at %1",_position];

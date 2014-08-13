@@ -1,6 +1,9 @@
 ai_mission_system 			= true;			// use built in mission system
 ai_clear_body 				= false;		// instantly clear bodies
 ai_clean_dead 				= true;			// clear bodies after certain amount of time
+ai_clean_roadkill			= false; 		// clean bodies that are roadkills
+ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
+
 cleanup_time 				= 7200;			// time to clear bodies in seconds
 
 ai_patrol_radius 			= 300;			// radius of ai patrols in meters
@@ -11,6 +14,7 @@ ai_behaviour 				= "SAFE";		// behaviour of AI
 
 ai_ahare_info 				= true;			// AI share info on player position
 ai_share_distance 			= 300;			// Distance AI share your position
+ai_use_nvg					= true;			// Make AI use nightvision
 
 ai_humanity_gain 			= true;			// Gain humanity for killing AI
 ai_add_humanity 			= 50;			// Amount of huminity gained for killing an AI
@@ -38,4 +42,13 @@ ai_wep_random 				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,
 ai_packs 					= ["DZ_Czech_Vest_Puch", "DZ_ALICE_Pack_EP1", "DZ_TK_Assault_Pack_EP1", "DZ_British_ACU", "DZ_GunBag_EP1", "DZ_CivilBackpack_EP1", "DZ_Backpack_EP1", "DZ_LargeGunBag_EP1"];
 ai_skin 					= ["GUE_Soldier_2_DZ", "GUE_Soldier_CO_DZ", "GUE_Soldier_Sniper_DZ", "Bandit1_DZ", "BanditW1_DZ", "BanditW2_DZ", "Functionary1_EP1_DZ", "Bandit2_DZ", "GUE_Commander_DZ", "GUE_Soldier_2_DZ", "GUE_Soldier_Crew_DZ", "GUE_Soldier_MG_DZ", "Ins_Soldier_GL_DZ", "TK_INS_Soldier_EP1_DZ", "TK_INS_Warlord_EP1_DZ"];
 
-WAIconfigloaded 			= true;
+custom_spawns				= false;		// use custom spawns file
+use_blacklist				= true;			// use blacklist
+
+blacklist					= [
+	[[5533.00,8445.00],[6911.00,7063.00]],	// Stary
+	[[0,16000,0],[1000,-0,0]],				// Left
+	[[0,16000,0],[16000.0,14580.3,0]]		// Top
+];
+
+configloaded 				= true;

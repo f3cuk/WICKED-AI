@@ -38,7 +38,9 @@ while {_missiontimeout} do {
 	if (_currenttime - _starttime >= wai_mission_timeout) then {_cleanmission = true;};
 	if ((_playerPresent) OR (_cleanmission)) then {_missiontimeout = false;};
 };
+
 if (_playerPresent) then {
+
 	waitUntil
 	{
 		sleep 5;
@@ -46,23 +48,39 @@ if (_playerPresent) then {
 		{if((isPlayer _x) AND (_x distance _position <= 30)) then {_playerPresent = true};}forEach playableUnits;
 		(_playerPresent)
 	};
+
+	if(wai_crates_smoke) then {
+
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		
+	};
+
 	[nil,nil,rTitleText,"Survivors have secured the crashed Black Hawk!", "PLAIN",10] call RE;
+
 } else {
+
 	clean_running_mission = True;
 	deleteVehicle _box;
-	{_cleanunits = _x getVariable "missionclean";
-	if (!isNil "_cleanunits") then {
-		switch (_cleanunits) do {
-			case "ground" :  {ai_ground_units = (ai_ground_units -1);};
-			case "air" :     {ai_air_units = (ai_air_units -1);};
-			case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
-			case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
-		};
+
+	{
+		_cleanunits = _x getVariable "missionclean";
+
+		if (!isNil "_cleanunits") then {
+			switch (_cleanunits) do {
+				case "ground" :  {ai_ground_units = (ai_ground_units -1);};
+				case "air" :     {ai_air_units = (ai_air_units -1);};
+				case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
+				case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
+			};
+			
+			deleteVehicle _baserunover;
+			deleteVehicle _x;
+			sleep 0.05;
+
+		};	
 		
-		deleteVehicle _baserunover;
-		deleteVehicle _x;
-		sleep 0.05;
-	};	
 	} forEach allUnits;
 	
 	[nil,nil,rTitleText,"Survivors did not secure the crashed Black Hawk in time", "PLAIN",10] call RE;

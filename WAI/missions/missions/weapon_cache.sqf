@@ -66,6 +66,14 @@ if (_playerPresent) then {
 		(_playerPresent)
 	};
 
+	if(wai_crates_smoke) then {
+
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		
+	};
+
 	[nil,nil,rTitleText,"Survivors have secured the Weapon Cache!", "PLAIN",10] call RE;
 
 } else {

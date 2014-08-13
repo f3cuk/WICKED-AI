@@ -107,19 +107,30 @@ if (_playerPresent) then {
 		(_playerPresent)
 	};
 
+	if(wai_crates_smoke) then {
+
+		_dropPosition = getpos _box;
+		_effectSmoke = "smokeShellPurple" createVehicle _dropPosition;
+		_effectSmoke attachto [_box, [0,0,-0.2]];
+		
+	};
+
 	[nil,nil,rTitleText,"Survivors have secured the building supplies!", "PLAIN",10] call RE;
 
 } else {
 
 	clean_running_mission 	= true;
+
 	deleteVehicle 			_veh;
 	deleteVehicle 			_veh2;
 	deleteVehicle 			_veh3;
 	deleteVehicle 			_box;
+	
 	{
 		_cleanunits = _x getVariable "missionclean";
 
 		if (!isNil "_cleanunits") then {
+
 			switch (_cleanunits) do {
 				case "ground" :  {ai_ground_units = (ai_ground_units -1);};
 				case "air" :     {ai_air_units = (ai_air_units -1);};
@@ -127,8 +138,9 @@ if (_playerPresent) then {
 				case "static" :  {ai_emplacement_units = (ai_emplacement_units -1);};
 			};
 
-		deleteVehicle _x;
-		sleep 0.05;
+			deleteVehicle _x;
+			sleep 0.05;
+
 		};
 
 	} forEach allUnits;
