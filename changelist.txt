@@ -5,6 +5,7 @@ Changelist 1.9.4
     [enhancement] Added option in % chance to destruct weapons on roadkill @nerdalertdk
     [enhancement] Started with merge of weird double folder structure
     [enhancement] Added option to not save vehicles to database
+    [enhancement] Renamed some files to comply with standardisation/normalisation effort
 
 Changelist 1.9.3
 
