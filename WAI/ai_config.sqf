@@ -1,7 +1,9 @@
-ai_mission_system 			= true;			// use built in mission system
+ai_mission_system 		= true;			// use built in mission system
 ai_clear_body 				= false;		// instantly clear bodies
 ai_clean_dead 				= true;			// clear bodies after certain amount of time
 ai_clean_UnkownDeath  = true;   // Remove gear from AI when a players drives over them
+ai_clean_UnkownDeathChance = 0.75; // 1 = 100% 0.5 = 50% 0.25 = 25% change of AI loot is destroyed when killede by vehicle 
+
 cleanup_time 				= 7200;			// time to clear bodies in seconds
 
 ai_patrol_radius 			= 300;			// radius of ai patrols in meters
