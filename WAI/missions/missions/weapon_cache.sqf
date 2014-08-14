@@ -8,6 +8,7 @@ diag_log 		format["WAI: Mission Weapon cache started at %1",_position];
 _num_guns		= (3 + round(random 12));
 _num_tools		= 2;
 _num_items		= 2;
+_numSpawned = "";
 
 _box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 
