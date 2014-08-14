@@ -9,8 +9,6 @@ Type | Description
 `enhancement` | Added option to not save vehicles to database
 `enhancement` | Renamed some files to comply with standardisation/normalisation effort
 
-### Version 1.9.3
-
 Type | Description
 ------------: | -------------
 `enhancement` | Normalized the use of Random throughout, when you want something random, use "Random" and not "Random" or ""
