@@ -1,5 +1,6 @@
 custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\custom_publish_vehicle.sqf";
 spawn_ammo_box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\box_dynamic.sqf";
+loottable_box  					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\LootTableBox.sqf";
 
 //Static Custom Boxes
 Construction_Supply_Box  		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\missions\compile\supplybox_construction.sqf";
