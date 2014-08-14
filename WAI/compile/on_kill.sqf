@@ -1,10 +1,11 @@
 if (isServer) then {
 
-	private ["_unit","_player","_humanity","_banditkills"];
+	private ["_unit","_player","_humanity","_banditkills","_alignment"];
 
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
 	_type 		= _this select 2;
+	_alignment	= _this select 3;
 
 	switch (_type) do {
 		case "ground" : {ai_ground_units = (ai_ground_units -1);};
@@ -24,7 +25,10 @@ if (isServer) then {
 		_banditkills 	= _player getVariable["banditKills",0];
 
 		if (ai_humanity_gain) then {
-			_player setVariable ["humanity",(_humanity + ai_add_humanity),true];
+			switch (_alignment) do {
+			case "bandit" : 	_player setVariable ["humanity",(_humanity + ai_add_humanity),true];};
+			case "hero" : 		_player setVariable ["humanity",(_humanity - ai_add_humanity),true];};
+			default { 		_player setVariable ["humanity",(_humanity + ai_add_humanity),true];};
 		};
 
 		if (ai_banditkills_gain) then {
