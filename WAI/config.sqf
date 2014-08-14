@@ -12,8 +12,8 @@ ai_patrol_radius_wp 		= 10;			// number of waypoints of patrols
 ai_combatmode 				= "RED";		// combatmode of AI
 ai_behaviour 				= "SAFE";		// behaviour of AI
 
-ai_ahare_info 				= true;			// AI share info on player position
-ai_share_distance 			= 300;			// Distance AI share your position
+ai_share_info 				= true;			// AI share info on player position
+ai_share_distance 			= 300;			// Distance from killed AI for AI to share your position
 ai_use_nvg					= true;			// Make AI use nightvision
 
 ai_humanity_gain 			= true;			// Gain humanity for killing AI
