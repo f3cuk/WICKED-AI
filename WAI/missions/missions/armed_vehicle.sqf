@@ -9,7 +9,8 @@ _vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
 _vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 //Chain Bullet Box
-_box 			= createVehicle ["USBasicWeaponsBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+_type = wai_crates call BIS_fnc_selectRandom;
+_box 			= createVehicle [_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 [_box] call chain_bullet_box;
 
 //Armed Land Vehicle
