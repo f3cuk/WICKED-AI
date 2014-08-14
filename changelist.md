@@ -19,16 +19,10 @@ Version | **1.9.3**
 `bug` | Fixed mayors mansion typo
 `bug` | Fixed added _aicskill private var vehicle_patrol.sqf
 Version | **1.9.2**
-Type | Description
-------------: | -------------
 `bug` | Fixed box on medi camp missions
 Version | **1.9.1**
-Type | Description
-------------: | -------------
 `bug` | Fixed skillset on missions
 Version | **1.9.0**
-Type | Description
-------------: | -------------
 `new feature` | Added possibility to blacklist certain area's (default set stary)
 `enhancement` | General code cleanup including removal of unused private vars
 `enhancement` | Overhaul making missions more dynamic
@@ -39,8 +33,6 @@ Type | Description
 `bug` | Fixed armed military mission with M2 spawning inside eachoter
 `bug` | Fixed crashed blackhawk with loot crate spawning inside helicopter
 Version | **1.8.0**
-Type | Description
-------------: | -------------
 `new feature` | Randomized clothes;
 `enhancement` | Customized loot;
 `enhancement` | Tried to nerve the 50 cals a bit, making them less accurate;
