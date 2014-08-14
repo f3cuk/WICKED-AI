@@ -1,6 +1,6 @@
 //Weapon Cache
 
-private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
+private ["_dropPosition","_effectSmoke","_numSpawned","_numKillReq","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
 _position 		= safepos call BIS_fnc_findSafePos;
 diag_log 		format["WAI: Mission Weapon cache started at %1",_position];
@@ -8,9 +8,9 @@ diag_log 		format["WAI: Mission Weapon cache started at %1",_position];
 _num_guns		= (3 + round(random 12));
 _num_tools		= 2;
 _num_items		= 2;
+_numSpawned = "";
 
 _box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-[_box,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
 
 _rndnum 	= (1 + round (random 7));
 _rndgro 	= (1 + round (random 3));
@@ -29,6 +29,9 @@ _missiontimeout 		= true;
 _cleanmission 			= false;
 _playerPresent 			= false;
 _starttime 				= floor(time);
+if(_numSpawned == "") then {
+	_numSpawned = ai_ground_units;
+};
 
 while {_missiontimeout} do {
 
@@ -51,21 +54,25 @@ while {_missiontimeout} do {
 };
 
 if (_playerPresent) then {
-
+	
+	_numKillReq = ceil(wai_RequiredKillPercent * _numSpawned);
+	//diag_log format["WAI: player must kill %1 AI",_numKillReq];
 	waitUntil
 	{
 		sleep 5;
 		_playerPresent = false;
 
 		{
-			if((isPlayer _x) && (_x distance _position <= 30)) then {
+			if((isPlayer _x) && (_x distance _position <= 30) && (ai_ground_units <= (_numSpawned - _numKillReq))) then {
 				_playerPresent = true
 			};
 		} forEach playableUnits;
 
 		(_playerPresent)
 	};
-
+	
+	[_box,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
+	
 	if(wai_crates_smoke) then {
 
 		_dropPosition = getpos _box;
