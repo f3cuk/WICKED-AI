@@ -18,6 +18,10 @@ if(isServer) then {
 	createCenter			EAST;
 	WEST					setFriend [EAST,0];
 	EAST					setFriend [WEST,0];
+	
+	// Make AI Hostile to Zeds
+	EAST 					setFriend [CIVILIAN,0];
+	CIVILIAN 				setFriend [EAST,0];
 
 	blackslist				= [
 		[[5533.00,8445.00],[6911.00,7063.00]],	// Stary
