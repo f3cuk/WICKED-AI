@@ -1,7 +1,7 @@
 # Current version 1.9.4
 
 Type | Description
-:------------: | -------------
+------------: | -------------
 `enhancement` | Added option to clean gear on roadkilled ai @nerdalertdk
 `enhancement` | Added option to spawn smoke on mission complete @nerdalertdk
 `enhancement` | Added option in % chance to destruct weapons on roadkill @nerdalertdk
@@ -12,7 +12,7 @@ Type | Description
 ### Version 1.9.3
 
 Type | Description
-:------------: | -------------
+------------: | -------------
 `enhancement` | Normalized the use of Random throughout, when you want something random, use "Random" and not "Random" or ""
 `enhancement` | Implemented custom_ai_skill throughout. In the future use either "easy", "medium", "hard", "extreme" or "Random" to define a skillset. Numeric skillsets will fallback on "Random".
 `enhancement` | Added IsServer checks on all files that could possibly be used in a harmfull manner (will probably roll this out on more files)
@@ -26,19 +26,19 @@ Type | Description
 ### Version 1.9.2
 
 Type | Description
-:------------: | -------------
+------------: | -------------
 `bug` | Fixed box on medi camp missions
 
 ### Version 1.9.1
 
 Type | Description
-:------------: | -------------
+------------: | -------------
 `bug` | Fixed skillset on missions
 
 ## Version 1.9.0
 
 Type | Description
-:------------: | -------------
+------------: | -------------
 `feature` | Added possibility to blacklist certain area's (default set stary)
 `enhancement` | General code cleanup including removal of unused private vars
 `enhancement` | Overhaul making missions more dynamic
@@ -52,7 +52,7 @@ Type | Description
 ## Version 1.8.0
 
 Type | Description
-:------------: | -------------
+------------: | -------------
 `feature` | Randomized clothes;
 `enhancement` | Customized loot;
 `enhancement` | Tried to nerve the 50 cals a bit, making them less accurate;
