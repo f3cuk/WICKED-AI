@@ -8,9 +8,7 @@ Type | Description
 `enhancement` | Started with merge of weird double folder structure
 `enhancement` | Added option to not save vehicles to database
 `enhancement` | Renamed some files to comply with standardisation/normalisation effort
-
-Type | Description
-------------: | -------------
+Version | **1.9.3**
 `enhancement` | Normalized the use of Random throughout, when you want something random, use "Random" and not "Random" or ""
 `enhancement` | Implemented custom_ai_skill throughout. In the future use either "easy", "medium", "hard", "extreme" or "Random" to define a skillset. Numeric skillsets will fallback on "Random".
 `enhancement` | Added IsServer checks on all files that could possibly be used in a harmfull manner (will probably roll this out on more files)
@@ -20,21 +18,15 @@ Type | Description
 `enhancement` | Changed heli and vehicle patrol with possibility of random skill
 `bug` | Fixed mayors mansion typo
 `bug` | Fixed added _aicskill private var vehicle_patrol.sqf
-
-### Version 1.9.2
-
+Version | **1.9.2**
 Type | Description
 ------------: | -------------
 `bug` | Fixed box on medi camp missions
-
-### Version 1.9.1
-
+Version | **1.9.1**
 Type | Description
 ------------: | -------------
 `bug` | Fixed skillset on missions
-
-## Version 1.9.0
-
+Version | **1.9.0**
 Type | Description
 ------------: | -------------
 `new feature` | Added possibility to blacklist certain area's (default set stary)
@@ -46,9 +38,7 @@ Type | Description
 `enhancement` | Re-added custom spawns as per request
 `bug` | Fixed armed military mission with M2 spawning inside eachoter
 `bug` | Fixed crashed blackhawk with loot crate spawning inside helicopter
-
-## Version 1.8.0
-
+Version | **1.8.0**
 Type | Description
 ------------: | -------------
 `new feature` | Randomized clothes;
