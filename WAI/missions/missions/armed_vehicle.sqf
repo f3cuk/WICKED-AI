@@ -1,6 +1,6 @@
 //Armed Vehicle
 
-private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+private ["_static_gun","_crate_type","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
 _position 		= safepos call BIS_fnc_findSafePos;
 diag_log 		format["WAI: Mission Armed Vehicle Started At %1",_position];
@@ -9,8 +9,8 @@ _vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
 _vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 //Chain Bullet Box
-_type = wai_crates call BIS_fnc_selectRandom;
-_box 			= createVehicle [_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+_crate_type = wai_crates call BIS_fnc_selectRandom;
+_box 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 [_box] call chain_bullet_box;
 
 //Armed Land Vehicle
