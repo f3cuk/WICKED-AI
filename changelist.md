@@ -2,12 +2,12 @@
 
 Type | Description
 ------------ | -------------
-[enhancement] | Added option to clean gear on roadkilled ai @nerdalertdk
-[enhancement] | Added option to spawn smoke on mission complete @nerdalertdk
-[enhancement] | Added option in % chance to destruct weapons on roadkill @nerdalertdk
-[enhancement] | Started with merge of weird double folder structure
-[enhancement] | Added option to not save vehicles to database
-[enhancement] | Renamed some files to comply with standardisation/normalisation effort
+`enhancement` | Added option to clean gear on roadkilled ai @nerdalertdk
+`enhancement` | Added option to spawn smoke on mission complete @nerdalertdk
+`enhancement` | Added option in % chance to destruct weapons on roadkill @nerdalertdk
+`enhancement` | Started with merge of weird double folder structure
+`enhancement` | Added option to not save vehicles to database
+`enhancement` | Renamed some files to comply with standardisation/normalisation effort
 
 ### Version 1.9.3
 
