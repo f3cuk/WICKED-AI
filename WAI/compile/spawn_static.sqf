@@ -135,9 +135,9 @@ if (isServer) then {
 		
 		if (_mission) then {
 			_unit setVariable ["missionclean", "static"];
-			[_static, True] spawn veh_monitor;
+			[_static, True] spawn vehicle_monitor;
 		} else {
-			[_static] spawn veh_monitor;
+			[_static] spawn vehicle_monitor;
 		};
 
 	} forEach _position;
