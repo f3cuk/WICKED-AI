@@ -31,7 +31,8 @@ _rndnum = (2 + round (random 4));
 [[_position select 0, _position select 1, 0],_rndnum,"Random","Random",3,"Random","Random","Random",true] call spawn_group;
 
 //Turrets
-[[[(_position select 0), (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
+_static_gun = ai_static_weapons call BIS_fnc_selectRandom;
+[[[(_position select 0), (_position select 1) + 10, 0]],_static_gun,"easy","Random",0,2,"Random","Random",true] call spawn_static;
 
 [_position,format["[Medium] Disabled %1", _vehname]] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
 
