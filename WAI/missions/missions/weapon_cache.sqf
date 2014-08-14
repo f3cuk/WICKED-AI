@@ -1,6 +1,6 @@
 //Weapon Cache
 
-private ["_numSpawned","_numKillReq","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
+private ["_dropPosition","_effectSmoke","_numSpawned","_numKillReq","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
 _position 		= safepos call BIS_fnc_findSafePos;
 diag_log 		format["WAI: Mission Weapon cache started at %1",_position];
