@@ -39,7 +39,7 @@ Type | Description
 
 Type | Description
 ------------: | -------------
-`feature` | Added possibility to blacklist certain area's (default set stary)
+`new feature` | Added possibility to blacklist certain area's (default set stary)
 `enhancement` | General code cleanup including removal of unused private vars
 `enhancement` | Overhaul making missions more dynamic
 `enhancement` | Equipped more missions with dynamic loot
@@ -53,7 +53,7 @@ Type | Description
 
 Type | Description
 ------------: | -------------
-`feature` | Randomized clothes;
+`new feature` | Randomized clothes;
 `enhancement` | Customized loot;
 `enhancement` | Tried to nerve the 50 cals a bit, making them less accurate;
 `enhancement` | Changed weapons;
