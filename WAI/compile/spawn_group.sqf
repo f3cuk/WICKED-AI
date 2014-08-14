@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+	private ["_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit","_aialignment"];
 
 	_position 			= _this select 0;
 	_unitnumber 		= _this select 1;
@@ -16,7 +16,13 @@ if (isServer) then {
 	} else {
 		_mission = false;
 	};
-
+	
+	if (count _this > 9) then {
+		_aialignment = _this select 9;
+	} else {
+		_aialignment = "bandit";
+	};
+	
 	_aiweapon 			= [];
 	_aigear 			= [];
 	_aiskin 			= "";
@@ -106,7 +112,7 @@ if (isServer) then {
 		
 		ai_ground_units = (ai_ground_units + 1);
 
-		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
+		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground", _aialignment] call on_kill;}];
 
 		if (_mission) then {
 			_unit setVariable ["missionclean", "ground"];
