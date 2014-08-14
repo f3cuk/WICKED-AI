@@ -14,6 +14,7 @@ if (isServer) then {
 	};
 
 	_unit setVariable ["killedat", time];
+	_unit removeWeapon "NVGoggles";
 
 	if (isPlayer _player) then {
 
