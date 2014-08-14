@@ -35,7 +35,7 @@ if (isServer) then {
 			{_unit removeWeapon _x;} forEach (weapons _unit);
 		};
 
-		if (ai_ahare_info) then {
+		if (ai_share_info) then {
 			{if (((position _x) distance (position _unit)) <= ai_share_distance) then {_x reveal [_player, 4.0];}} forEach allUnits;
 		};
 
