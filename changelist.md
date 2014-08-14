@@ -2,6 +2,8 @@
 
 Type | Description
 ------------: | -------------
+`enhancement` | Added nightvision to AI at night @nerdalertdk
+`enhancement` | Randomized the type of static weapon to spawn @nerdalertdk
 `enhancement` | Added option to clean gear on roadkilled ai @nerdalertdk
 `enhancement` | Added option to spawn smoke on mission complete @nerdalertdk
 `enhancement` | Added option in % chance to destruct weapons on roadkill @nerdalertdk
