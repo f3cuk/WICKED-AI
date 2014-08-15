@@ -1,4 +1,4 @@
-if(isServer) {
+if(isServer) then {
 
 	/* GENERAL CONFIG */
 
