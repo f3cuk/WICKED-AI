@@ -29,7 +29,7 @@ if(_num_guns > 0) then {
 if(_num_tools > 0) then {
 
 	for "_i" from 1 to _num_tools do {
-		_tool = ammo_box_tools call BIS_fnc_selectRandom;
+		_tool = box_tools call BIS_fnc_selectRandom;
 		_box addWeaponCargoGlobal [_tool,2];
 	};
 
@@ -38,7 +38,7 @@ if(_num_tools > 0) then {
 if(_num_items > 0) then {
 
 	for "_i" from 1 to _num_items do {
-		_item = ammo_box_items call BIS_fnc_selectRandom;
+		_item = box_items call BIS_fnc_selectRandom;
 		_box addMagazineCargoGlobal [_item,1];
 	};
 

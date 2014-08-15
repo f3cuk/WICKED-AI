@@ -24,7 +24,7 @@ if(isServer) then {
 		[[_position select 0, _position select 1, 0],_rndnum,"easy","Random",4,"Random","Random","Random",true] call spawn_group;
 	};
 
-	[_position,"[Easy] Ural Attack"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+	[_position,"[Easy] Ural Attack"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"Bandits have destroyed a Ural with supplies and are securing the cargo! Check your map for the location!", "PLAIN",10] call RE;
 		

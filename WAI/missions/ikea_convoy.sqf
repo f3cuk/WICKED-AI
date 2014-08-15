@@ -65,7 +65,7 @@ if(isServer) then {
 		[_position] call tank_traps;
 	};
 
-	[_position,"[Hard] Disabled Convoy"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+	[_position,"[Hard] Disabled Convoy"] execVM wai_marker;
 	
 	[nil,nil,rTitleText,"An Ikea delivery has been hijacked by bandits, take over the convoy and the building supplies are yours!", "PLAIN",10] call RE;
 

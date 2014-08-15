@@ -63,7 +63,7 @@ if(isServer) then {
 		[_position] call tank_traps;
 	};
 
-	[_position,"[Extrme] Bandit Base"] execVM "\z\addons\dayz_server\WAI\missions\compile\markers.sqf";
+	[_position,"[Extrme] Bandit Base"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"A jungle task force have set up a temporary encampment! Go and ambush it to make it yours!","PLAIN",10] call RE;
 
