@@ -64,7 +64,7 @@ if (isServer) then {
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
 	} forEach (units _unitgroup);
 
-	[_veh] spawn veh_monitor;
+	[_veh] spawn vehicle_monitor;
 
 	_unitGroup 				allowFleeing 0;
 	_unitGroup 				setBehaviour "AWARE";
