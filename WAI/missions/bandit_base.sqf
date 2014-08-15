@@ -59,7 +59,7 @@ if(isServer) then {
 	//Heli Paradrop
 	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random",false] spawn heli_para;
 
-	if(wai_enable_tank_traps) {
+	if(wai_enable_tank_traps) then {
 		[_position] call tank_traps;
 	};
 

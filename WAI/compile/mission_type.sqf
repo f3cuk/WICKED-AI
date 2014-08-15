@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private [_missiontype,_playerPresent];
+	private ["_missiontype","_playerPresent"];
 
 	_missiontype 	= _this select 0;
 	_playerPresent 	= false;

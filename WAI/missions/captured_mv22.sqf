@@ -42,7 +42,7 @@ if(isServer) then {
 	//Turrets
 	[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
 
-	if(wai_enable_tank_traps) {
+	if(wai_enable_tank_traps) then {
 		[_position] call tank_traps;
 	};
 

@@ -61,7 +61,7 @@ if(isServer) then {
 	//Heli Para Drop
 	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Random","Random",false] spawn heli_para;
 
-	if(wai_enable_tank_traps) {
+	if(wai_enable_tank_traps) then {
 		[_position] call tank_traps;
 	};
 
