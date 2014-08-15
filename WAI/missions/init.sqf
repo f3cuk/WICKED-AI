@@ -21,7 +21,7 @@ if(isServer) then {
 	//Event handlers
 	mission_succes					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_succes.sqf";
 	mission_failure					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_failure.sqf";
-	mission_time					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_type.sqf";
+	mission_type					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_type.sqf";
 
 	tank_traps						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\tank_traps.sqf";
 
