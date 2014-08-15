@@ -79,8 +79,6 @@ if(isServer) then {
 
 		[_veh,[_vehdir,_objPosition],_vehclass,true,"0"] call custom_publish;
 
-		deleteVehicle _sign;
-
 		[_box,"Survivors have secured the armed chopper!"] call mission_succes;	
 
 	} else {

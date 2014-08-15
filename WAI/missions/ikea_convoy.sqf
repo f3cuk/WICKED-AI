@@ -104,8 +104,6 @@ if(isServer) then {
 		[_veh2,[_vehdir,_objPosition2],_vehclass2,true,"0"] 	call custom_publish;
 		[_veh3,[_vehdir,_objPosition3],_vehclass3,true,"0"] 	call custom_publish;
 
-		deletevehicle _sign;
-
 		[_box,"Survivors have secured the building supplies!"] call mission_succes;
 
 	} else {

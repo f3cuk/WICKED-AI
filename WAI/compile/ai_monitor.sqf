@@ -12,7 +12,7 @@ if (isServer) then {
 			{
 				_killedat = _x getVariable "killedat";
 				if (!isNil "_killedat") then {
-					if ((time - _killedat) >= cleanup_time) then {
+					if ((time - _killedat) >= ai_cleanup_time) then {
 						deleteVehicle _x;
 					};
 				};

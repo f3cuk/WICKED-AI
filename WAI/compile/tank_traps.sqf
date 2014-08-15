@@ -1,11 +1,11 @@
 if(isServer) then {
 
-	private ["_trigger", "_trigger_pos", "_trigger_area", "_angle", "_radius", "_distance", "_count", "_step"];
+	private ["_trigger_pos","_angle","_radius","_distance","_count","_step"];
 
 	_trigger_pos 	= _this select 0;
 
 	_angle 			= 0;
-	_radius 		= 400;
+	_radius 		= 75;
 	_distance 		= 1;
 	_count 			= round((2 * 3.14592653589793 * _radius) / _distance);
 	_step 			= 360/_count;

@@ -27,7 +27,7 @@ if(isServer) then {
 	 
 	[[[(_position select 0) - 15, (_position select 1) + 15, 8],[(_position select 0) + 15, (_position select 1) - 15, 8]],"M2StaticMG","easy","Random",1,2,"Random","Random",true] call spawn_static;
 	 
-	[_position,"[Medium] Mayors Mansion",] execVM wai_marker;
+	[_position,"[Medium] Mayors Mansion"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"The Mayor has gone rogue, go take him and his task force out to claim the black market weapons!", "PLAIN",10] call RE;
 
@@ -61,8 +61,6 @@ if(isServer) then {
 	if (_playerPresent) then {
 
 		[0] call mission_type;
-
-		deleteVehicle _baserunover;
 
 		[_box,"The rogue mayor has been taken out, who will be the next Mayor of Cherno?"] call mission_succes;
 			
