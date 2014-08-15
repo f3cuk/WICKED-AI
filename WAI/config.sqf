@@ -71,7 +71,7 @@ if(isServer) then {
 		wai_players_online       	= 1; 								// number of players online before misson starts
 		wai_server_fps            	= 5; 								// missions only starts if server FPS is over wai_server_fps
 		wai_enable_tank_traps		= true;								// enable the possibility of using tanktraps to better defend a mission
-		wai_marker					= "\z\addons\dayz_server\WAI\compile\markers.sqf"
+		wai_marker					= "\z\addons\dayz_server\WAI\compile\markers.sqf";
 
 		// Missions
 		wai_missions 				= ["black_hawk_crash","armed_vehicle","bandit_base","captured_mv22","ikea_convoy","destroyed_ural","disabled_milchopper","mayors_mansion","medi_camp","weapon_cache"];
