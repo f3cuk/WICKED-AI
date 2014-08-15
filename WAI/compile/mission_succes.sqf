@@ -5,7 +5,7 @@ if(isServer) then {
 	_box 			= _this select 0;
 	_statement		= _this select 1;
 
-	_current_time	= floor(time)
+	_current_time	= floor(time);
 
 	if(wai_crates_smoke) then {
 
