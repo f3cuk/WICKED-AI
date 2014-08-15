@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private ["_trigger", "_trigger_pos", "_trigger_area", "_angle", "_radius", "_distance", "_count", "_step"];
 
-	_trigger_pos 	= select 0;
+	_trigger_pos 	= _this select 0;
 
 	_angle 			= 0;
 	_radius 		= 400;

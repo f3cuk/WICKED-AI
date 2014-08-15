@@ -2,9 +2,9 @@ if(isServer) then {
 
 	private["_delete","_name","_marker_add"];
 
-	_delete_leftovers		= select 0;
-	_statement				= select 1;
-	_x						= select 2;
+	_delete_leftovers		= _this select 0;
+	_statement				= _this select 1;
+	_x						= _this select 2;
 
 	clean_running_mission	= true;
 

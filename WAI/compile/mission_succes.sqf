@@ -2,8 +2,8 @@ if(isServer) then {
 
 	private["_box","_name","_marker_add"];
 
-	_box 			= select 0;
-	_statement		= select 1;
+	_box 			= _this select 0;
+	_statement		= _this select 1;
 
 	_current_time	= floor(time)
 

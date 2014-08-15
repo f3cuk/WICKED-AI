@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private [_missiontype,_playerPresent];
 
-	_missiontype 	= select 0;
+	_missiontype 	= _this select 0;
 	_playerPresent 	= false;
 
 	switch _missiontype do {
