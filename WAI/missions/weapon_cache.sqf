@@ -33,6 +33,7 @@ if(isServer) then {
 	while {_missiontimeout} do {
 
 		sleep 5;
+		
 		_currenttime = floor(time);
 
 		{
@@ -48,6 +49,7 @@ if(isServer) then {
 		if ((_playerPresent) || (_cleanmission)) then {
 			_missiontimeout = false;
 		};
+
 	};
 
 	if (_playerPresent) then {
@@ -58,7 +60,7 @@ if(isServer) then {
 
 	} else {
 
-		[[_box],_x,"Survivors did not secure the Weapon Cache in time"] call mission_failure;
+		[[_box],"Survivors did not secure the Weapon Cache in time"] call mission_failure;
 
 	};
 

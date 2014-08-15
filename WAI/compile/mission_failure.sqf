@@ -4,11 +4,12 @@ if(isServer) then {
 
 	_delete_leftovers		= _this select 0;
 	_statement				= _this select 1;
-	_x						= _this select 2;
-
 	clean_running_mission	= true;
 
 	{
+
+		private["_cleanunits"];
+		
 		_cleanunits = _x getVariable "missionclean";
 	
 		if (!isNil "_cleanunits") then {

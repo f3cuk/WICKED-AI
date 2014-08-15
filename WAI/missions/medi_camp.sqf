@@ -34,14 +34,13 @@
 	while {_missiontimeout} do {
 
 		sleep 5;
+		
 		_currenttime = floor(time);
 
 		{
-			
 			if((isPlayer _x) && (_x distance _position <= 150)) then {
 				_playerPresent = true
 			};
-
 		} forEach playableUnits;
 
 		if (_currenttime - _starttime >= wai_mission_timeout) then {
@@ -51,6 +50,7 @@
 		if ((_playerPresent) || (_cleanmission)) then {
 			_missiontimeout = false;
 		};
+
 	};
 
 	if (_playerPresent) then {
@@ -61,7 +61,7 @@
 
 	} else {
 
-		[[_box],_x,"The survivors were unable to capture the medical supply camp"] call mission_failure;
+		[[_box],"The survivors were unable to capture the medical supply camp"] call mission_failure;
 
 	};
 

@@ -39,11 +39,12 @@ if(isServer) then {
 	while {_missiontimeout} do {
 
 		sleep 5;
+		
 		_currenttime = floor(time);
 
 		{
 			if((isPlayer _x) && (_x distance _position <= 150)) then {
-				_playerPresent = true;
+				_playerPresent = true
 			};
 		} forEach playableUnits;
 
@@ -54,6 +55,7 @@ if(isServer) then {
 		if ((_playerPresent) || (_cleanmission)) then {
 			_missiontimeout = false;
 		};
+
 	};
 
 	if (_playerPresent) then {
@@ -66,7 +68,7 @@ if(isServer) then {
 			
 	} else {
 
-		[[_box,_baserunover],_x,"The survivors were unable to capture the mansion, time is up"] call mission_failure;
+		[[_box,_baserunover],"The survivors were unable to capture the mansion, time is up"] call mission_failure;
 
 	};
 

@@ -73,21 +73,25 @@ if(isServer) then {
 	_starttime = floor(time);
 
 	while {_missiontimeout} do {
+
 		sleep 5;
+		
 		_currenttime = floor(time);
+
 		{
 			if((isPlayer _x) && (_x distance _position <= 150)) then {
 				_playerPresent = true
 			};
-		}forEach playableUnits;
+		} forEach playableUnits;
 
-		if ((_currenttime - _starttime) >= wai_mission_timeout) then {
+		if (_currenttime - _starttime >= wai_mission_timeout) then {
 			_cleanmission = true;
 		};
 
 		if ((_playerPresent) || (_cleanmission)) then {
 			_missiontimeout = false;
 		};
+
 	};
 
 	if (_playerPresent) then {
@@ -102,7 +106,7 @@ if(isServer) then {
 
 
 
-		[[_box,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_sign],_x,"Survivors were unable to capture the base"] call mission_failure;
+		[[_box,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_sign],"Survivors were unable to capture the base"] call mission_failure;
 
 	};
 

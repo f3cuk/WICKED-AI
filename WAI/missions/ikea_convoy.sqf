@@ -77,14 +77,13 @@ if(isServer) then {
 	while {_missiontimeout} do {
 
 		sleep 5;
-
+		
 		_currenttime = floor(time);
-		{
 
+		{
 			if((isPlayer _x) && (_x distance _position <= 150)) then {
 				_playerPresent = true
 			};
-
 		} forEach playableUnits;
 
 		if (_currenttime - _starttime >= wai_mission_timeout) then {
@@ -94,6 +93,7 @@ if(isServer) then {
 		if ((_playerPresent) || (_cleanmission)) then {
 			_missiontimeout = false;
 		};
+
 	};
 
 	if (_playerPresent) then {
@@ -110,7 +110,7 @@ if(isServer) then {
 
 	} else {
 		
-		[[_box,_veh,_veh2,_veh3,_sign],_x,"Survivors did not secure the convoy in time!"] call mission_failure;
+		[[_box,_veh,_veh2,_veh3,_sign],"Survivors did not secure the convoy in time!"] call mission_failure;
 		
 	};
 

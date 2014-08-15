@@ -88,7 +88,7 @@ if(isServer) then {
 
 		deleteVehicle _sign;
 
-		[[_box,_veh],_x,"Survivors did not secure the MV-22 in time!"] call mission_failure;
+		[[_box,_veh],"Survivors did not secure the MV-22 in time!"] call mission_failure;
 		
 	};
 
