@@ -1,8 +1,5 @@
 if(isServer) then {
 
-	custom_spawns			= false;
-	use_blacklist			= true;
-
 	spawn_group				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_group.sqf";
 	spawn_static			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_static.sqf";
 	group_waypoints			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\group_waypoints.sqf";
@@ -18,9 +15,10 @@ if(isServer) then {
 	createCenter			EAST;
 	WEST					setFriend [EAST,0];
 	EAST					setFriend [WEST,0];
+	EAST 					setFriend [CIVILIAN,0];
+	CIVILIAN 				setFriend [EAST,0];
 
 	configloaded			= false;
-	WAImissionconfig		= false;
 
 	ai_ground_units			= 0;
 	ai_emplacement_units	= 0;
@@ -41,13 +39,12 @@ if(isServer) then {
 
 	[] spawn ai_monitor;
 
-	//Load custom spawns]
-	if(custom_spawns) then {
-		ExecVM "\z\addons\dayz_server\WAI\custom_spawns.sqf";
+	if(static_missions) then {
+		ExecVM "\z\addons\dayz_server\WAI\static\init.sqf";
 	};
 	
 	if (ai_mission_system) then {
-		ExecVM "\z\addons\dayz_server\WAI\missions\mission_ini.sqf";
+		ExecVM "\z\addons\dayz_server\WAI\missions\init.sqf";
 	};
 
 };

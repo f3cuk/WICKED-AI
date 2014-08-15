@@ -24,6 +24,7 @@ if (isServer) then {
 	_aipack 			= "";
 	_skillarray 		= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 	_unitGroup 			= createGroup east;
+	_current_time		= time;
 
 	for "_x" from 1 to _unitnumber do {
 
@@ -75,7 +76,10 @@ if (isServer) then {
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 		_unit addweapon _weapon;
-		if(ai_use_nvg) then {_unit addweapon "NVGoggles";};
+
+		if (_current_time > 18.5 && _current_time < 6) then {
+			_unit addweapon "NVGoggles";
+		};
 
 		for "_i" from 1 to _mags do {
 			_unit addMagazine _magazine;

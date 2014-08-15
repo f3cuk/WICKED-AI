@@ -1,15 +1,19 @@
-# Current version 1.9.4
+# Current version 2.0.0
 
 Type | Description
 ------------: | -------------
-`enhancement` | Added nightvision to AI at night @nerdalertdk
+`enhancement` | Major code overhaul and folder structure change
+`feature` | Added possibility of rotating static mission per map
+`feature` | Added possibility of tanktrapping missions @f3cuk / @nerdalertdk
+`feature` | Added nightvision to AI at night @nerdalertdk
 `enhancement` | Randomized the type of static weapon to spawn @nerdalertdk
 `enhancement` | Added option to clean gear on roadkilled ai @nerdalertdk
-`enhancement` | Added option to spawn smoke on mission complete @nerdalertdk
+`enhancement` | Added option to spawn smoke/flare (daytime/nighttime) on mission complete @nerdalertdk
 `enhancement` | Added option in % chance to destruct weapons on roadkill @nerdalertdk
 `enhancement` | Started with merge of weird double folder structure
 `enhancement` | Added option to not save vehicles to database
-`enhancement` | Renamed some files to comply with standardisation/normalisation effort
+`enhancement` | Make ai hostile to zombies
+`bug` | Fixed some incorrect varnames @osuapoc / @nerdalertdk
  | 
 Version | **1.9.3**
  | 

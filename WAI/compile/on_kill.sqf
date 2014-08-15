@@ -53,6 +53,8 @@ if (isServer) then {
 				_unit removeMagazine _x
 			} forEach magazines _unit;
 
+			_current_time
+
 		} else {
 
 			if ((random 100) <= ai_roadkill_damageweapon) then {
@@ -61,6 +63,10 @@ if (isServer) then {
 				
 			};
 
+		};
+
+		if(_unit hasWeapon "NVGoggles" && (random 100) < 20) then {
+			_unit removeWeapon "NVGoggles";
 		};
 
 	};
