@@ -77,7 +77,7 @@ if (isServer) then {
 		removeAllItems _unit;
 		_unit addweapon _weapon;
 
-		if (_current_time > 18.5 && _current_time < 6) then {
+		if (sunOrMoon != 1) then {
 			_unit addweapon "NVGoggles";
 		};
 

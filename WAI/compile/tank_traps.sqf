@@ -6,13 +6,13 @@ if(isServer) then {
 
 	_angle 			= 0;
 	_radius 		= 75;
-	_distance 		= 1;
+	_distance 		= 3.5;
 	_count 			= round((2 * 3.14592653589793 * _radius) / _distance);
 	_step 			= 360/_count;
 
 	for "_x" from 0 to _count do
 	{
-		private["_pos", "_sign"];
+		private["_pos","_sign"];
 
 		_a = (_trigger_pos select 0) + (sin(_angle)*_radius);
 		_b = (_trigger_pos select 1) + (cos(_angle)*_radius);
