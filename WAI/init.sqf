@@ -15,9 +15,7 @@ if(isServer) then {
 	createCenter			EAST;
 	WEST					setFriend [EAST,0];
 	EAST					setFriend [WEST,0];
-	EAST 					setFriend [CIVILIAN,0];
-	CIVILIAN 				setFriend [EAST,0];
-
+	
 	configloaded			= false;
 
 	ai_ground_units			= 0;

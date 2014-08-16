@@ -4,6 +4,7 @@ if(isServer) then {
 
 	_delete_leftovers		= _this select 0;
 	_statement				= _this select 1;
+	
 	clean_running_mission	= true;
 
 	{

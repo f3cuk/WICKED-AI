@@ -60,7 +60,10 @@ if(isServer) then {
 	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random",false] spawn heli_para;
 
 	if(wai_enable_tank_traps) then {
-		//[_position] call tank_traps;
+		_tanktraps = [_position] call tank_traps;
+	};
+
+	if(wai_enable_minefield) then {
 		_mines = [_position, "trigger:","Wheeled_APC","side:","WEST", "ammo:","Sh_120_HE", "mine:","MineE", "density:",30, "range:",3] call minefield;
 	};
 
@@ -99,13 +102,12 @@ if(isServer) then {
 
 		[0] call mission_type;
 
-		[_box,"Survivors captured the base, HOOAH!!"] call mission_succes;
+		[_box,"Survivors captured the base, HOOAH!!",[_tanktraps,_mines]] call mission_succes;
 
 	} else {
 
 
-
-		[[_mines,_box,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_sign],"Survivors were unable to capture the base"] call mission_failure;
+		[[_mines,_box,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_tanktraps,_mines],"Survivors were unable to capture the base"] call mission_failure;
 
 	};
 

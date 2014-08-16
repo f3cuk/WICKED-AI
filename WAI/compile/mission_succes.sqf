@@ -1,9 +1,13 @@
 if(isServer) then {
 
-	private["_box","_name","_marker_add"];
+	private["_box","_name","_marker_add","_delete_leftovers"];
 
-	_box 			= _this select 0;
-	_statement		= _this select 1;
+	_box 				= _this select 0;
+	_statement			= _this select 1;
+
+	if(count _this > 2) then {
+		_delete_leftovers	= _this select 2;
+	}
 
 	_current_time	= floor(time);
 
@@ -19,6 +23,16 @@ if(isServer) then {
 			_marker_add attachTo [_box,[0,0,0]];
 		};
 		
+	};
+
+	if(!isNil "_delete_leftovers") then {
+
+		{
+
+			deleteVehicle _x;
+
+		} count _delete_leftovers;
+
 	};
 
 	[nil,nil,rTitleText,format["%1", _statement], "PLAIN",10] call RE;
