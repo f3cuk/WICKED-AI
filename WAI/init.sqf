@@ -30,9 +30,9 @@ if(isServer) then {
 		diag_log "WAI: AI Config File Loaded";
 
 	if(use_blacklist) then {
-		safepos				= [getMarkerPos "center",5,7000,30,0,1.1,0,blacklist];
+		safepos				= [getMarkerPos "center",5,7000,30,0,0.5,0,blacklist];
 	} else {
-		safepos				= [getMarkerPos "center",0,5000,30,0,1.1,0];
+		safepos				= [getMarkerPos "center",0,5000,30,0,0.5,0];
 	};
 
 	[] spawn ai_monitor;

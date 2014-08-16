@@ -2,9 +2,12 @@ if(isServer) then {
 
 	//Bandit Base
 	 
-	private ["_mines","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
+	private ["_tanktraps","_mines","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 
 	_position 		= safepos call BIS_fnc_findSafePos;
+	_tanktraps		= [];
+	_mines			= [];
+	
 	diag_log 		format["WAI: Mission bandit base started at %1",_position];
 
 	//Extra Large Gun Box
@@ -62,7 +65,7 @@ if(isServer) then {
 	if(wai_enable_tank_traps) then {
 		_tanktraps = [_position] call tank_traps;
 	};
-
+	
 	if(wai_enable_minefield) then {
 		_mines = [_position,50,100,50] call minefield;
 	};
@@ -107,7 +110,7 @@ if(isServer) then {
 	} else {
 
 
-		[[_mines,_box,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_tanktraps,_mines],"Survivors were unable to capture the base"] call mission_failure;
+		[[_box,_baserunover,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_tanktraps,_mines],"Survivors were unable to capture the base"] call mission_failure;
 
 	};
 
