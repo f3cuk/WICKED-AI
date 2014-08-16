@@ -24,6 +24,7 @@ if(isServer) then {
 	mission_type					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_type.sqf";
 
 	tank_traps						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\tank_traps.sqf";
+	minefield						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";
 
 	clean_running_mission 			= false;
 	markerready 					= true;

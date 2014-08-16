@@ -2,7 +2,7 @@ if(isServer) then {
 
 	//Bandit Base
 	 
-	private ["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
+	private ["_mines","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 
 	_position 		= safepos call BIS_fnc_findSafePos;
 	diag_log 		format["WAI: Mission bandit base started at %1",_position];
@@ -60,7 +60,8 @@ if(isServer) then {
 	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random",false] spawn heli_para;
 
 	if(wai_enable_tank_traps) then {
-		[_position] call tank_traps;
+		//[_position] call tank_traps;
+		_mines = [_position, "trigger:","Wheeled_APC","side:","WEST", "ammo:","Sh_120_HE", "mine:","MineE", "density:",30, "range:",3] call minefield;
 	};
 
 	[_position,"[Extreme] Bandit Base"] execVM wai_marker;
@@ -104,7 +105,7 @@ if(isServer) then {
 
 
 
-		[[_box,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_sign],"Survivors were unable to capture the base"] call mission_failure;
+		[[_mines,_box,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_sign],"Survivors were unable to capture the base"] call mission_failure;
 
 	};
 
