@@ -17,6 +17,9 @@
 //      height:,number    : The height position of the mine. (Mine:0, MineE:0.025)
 //      showsigns:,string : Create warning signs at the corners of the mined area.
 //      showmarker        : Keep the designation marker visible.
+//
+// nul=["areamarker", "trigger:","Wheeled_APC","side:","EAST", "ammo:","Sh_120_HE", "mine:","MineE", "density:",30, "range:",3] call "minefield.sqf";
+//
 // =========================================================================================================
 
 if !(isServer) exitWith {};
@@ -113,7 +116,7 @@ if (!("SHOWMARKER" in _this) && !("showmarker" in _this)) then {
   _areamarker setMarkerPos [abs(getMarkerPos _areamarker select 0)*-1, abs(getMarkerPos _areamarker select 1)*-1];
 };
 // show warning signs
-_showsigns = ["SHOWSIGNS:","",_this] call _getArg;
+/*_showsigns = ["SHOWSIGNS:","",_this] call _getArg;
 if (_showsigns!="") then {
   _pos = [_centerX,_centerY,_sizeX,_sizeY,_cosdir,_sindir,_areadir,_sizeX*-1,_sizeY*-1] call _rotpoint;
 	[_showsigns,_pos,_areadir] call _makeobj;
@@ -125,7 +128,7 @@ if (_showsigns!="") then {
 	  _pos = [_centerX,_centerY,_sizeX,_sizeY,_cosdir,_sindir,_areadir,_sizeX,_sizeY] call _rotpoint;
 		[_showsigns,_pos,_areadir] call _makeobj;
 	};
-};
+};*/
 
 // are all the object legit?
 _chk=[_mineobj,[0,0,0],0] call _makeobj;
