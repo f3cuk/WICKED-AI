@@ -60,7 +60,8 @@ if(isServer) then {
 	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random",false] spawn heli_para;
 
 	if(wai_enable_tank_traps) then {
-		[_position] call tank_traps;
+		//[_position] call tank_traps;
+		[_position, "trigger:","Wheeled_APC","side:","EAST", "ammo:","Sh_120_HE", "mine:","MineE", "density:",30, "range:",3] call minefield;
 	};
 
 	[_position,"[Extreme] Bandit Base"] execVM wai_marker;
