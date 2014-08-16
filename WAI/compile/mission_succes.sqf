@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private["_box","_name","_marker_add","_delete_leftovers","_flare_light"];
+	private["_box","_name","_marker","_delete_leftovers","_flare_light","_inRange"];
 
 	_box 				= _this select 0;
 	_statement			= _this select 1;
@@ -9,14 +9,24 @@ if(isServer) then {
 	if(wai_crates_smoke) then {
 
 		if (sunOrMoon != 1) then {
-			_marker_add = "RoadFlare" createVehicle getPosATL _box;
-			_marker_add setPosATL (getPosATL _box);
-			_marker_add attachTo [_box, [0,0,0]];
-			_flare_light = [_marker_add,0] spawn object_roadFlare;
+			_marker = "RoadFlare" createVehicle getPosATL _box;
+			_marker setPosATL (getPosATL _box);
+			_marker attachTo [_box, [0,0,0]];
+			_flare_light = [_marker,0] spawn object_roadFlare;
+			
+			_inRange = _box nearEntities ["CAManBase",1250];
+			
+			{
+				if(isPlayer _x && _x != player) then {
+					PVDZE_send = [_x,"RoadFlare",[_marker,0]];
+					publicVariableServer "PVDZE_send";
+				};
+			} count _inRange;
+
 		} else {
-			_marker_add = "smokeShellPurple" createVehicle getPosATL _box;
-			_marker_add setPosATL (getPosATL _box);
-			_marker_add attachTo [_box,[0,0,0]];
+			_marker = "smokeShellPurple" createVehicle getPosATL _box;
+			_marker setPosATL (getPosATL _box);
+			_marker attachTo [_box,[0,0,0]];
 		};
 		
 	};

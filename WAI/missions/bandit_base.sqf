@@ -42,6 +42,14 @@ if(isServer) then {
 	_baserunover6 	setVectorUp surfaceNormal position _baserunover6;
 	_baserunover7 	setVectorUp surfaceNormal position _baserunover7;
 
+	if(wai_enable_tank_traps) then {
+		_tanktraps = [_position] call tank_traps;
+	};
+	
+	if(wai_enable_minefield) then {
+		_mines = [_position,50,100,50] call minefield;
+	};
+	
 	//Group Spawning
 	_rndnum = round (random 3) + 4;
 	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
@@ -51,7 +59,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
 	 
 	//Humvee Patrol
-	[[(_position select 0) + 40, _position select 1, 0],[(_position select 0) + 40, _position select 1, 0],50,2,"HMMWV_Armored","Random"] spawn vehicle_patrol;
+	[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random"] spawn vehicle_patrol;
 	 
 	//Turrets
 	[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
@@ -61,14 +69,6 @@ if(isServer) then {
 
 	//Heli Paradrop
 	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random",false] spawn heli_para;
-
-	if(wai_enable_tank_traps) then {
-		_tanktraps = [_position] call tank_traps;
-	};
-	
-	if(wai_enable_minefield) then {
-		_mines = [_position,50,100,50] call minefield;
-	};
 
 	[_position,"[Extreme] Bandit Base"] execVM wai_marker;
 
