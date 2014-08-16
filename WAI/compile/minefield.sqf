@@ -7,7 +7,7 @@ if(isServer) then {
 	_area_max 	= _this select 2;
 	_num_mines	= _this select 3;
 
-	for "_x" from 1 to _num_mines do
+	for "_x" from 1 to _num_mines do {
 
 		private["_mine_pos","_mine"];
 
