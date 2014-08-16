@@ -11,7 +11,7 @@ if(isServer) then {
 	if(wai_crates_smoke) then {
 
 		if (sunOrMoon != 1) then {
-			_marker_add = "ARTY_Flare_Medium" createVehicle getPosATL _box;
+			_marker_add = "HandRoadFlare" createVehicle getPosATL _box;
 			_marker_add setPosATL (getPosATL _box);
 			_marker_add attachTo [_box, [0,0,0]];
 		} else {
@@ -26,7 +26,7 @@ if(isServer) then {
 
 		deleteVehicle _x;
 
-	} count _delete_leftovers;
+	} forEach _delete_leftovers;
 
 	[nil,nil,rTitleText,format["%1", _statement], "PLAIN",10] call RE;
 

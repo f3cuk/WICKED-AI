@@ -32,7 +32,7 @@ if(isServer) then {
 
 		deleteVehicle _x;
 
-	} count _delete_leftovers;
+	} forEach _delete_leftovers;
 
 	[nil,nil,rTitleText,format["%1", _statement], "PLAIN",10] call RE;
 
