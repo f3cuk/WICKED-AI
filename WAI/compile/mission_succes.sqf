@@ -7,7 +7,7 @@ if(isServer) then {
 
 	if(count _this > 2) then {
 		_delete_leftovers	= _this select 2;
-	}
+	};
 
 	_current_time	= floor(time);
 

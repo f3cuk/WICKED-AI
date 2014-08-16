@@ -64,7 +64,7 @@ if(isServer) then {
 	};
 
 	if(wai_enable_minefield) then {
-		_mines = [_position, "trigger:","Wheeled_APC","side:","WEST", "ammo:","Sh_120_HE", "mine:","MineE", "density:",30, "range:",3] call minefield;
+		_mines = [_position,50,100,50] call minefield;
 	};
 
 	[_position,"[Extreme] Bandit Base"] execVM wai_marker;

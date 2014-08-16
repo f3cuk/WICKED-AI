@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_trigger_pos","_angle","_radius","_distance","_count","_step"];
+	private["_trigger_pos","_angle","_radius","_distance","_count","_step"];
 
 	_trigger_pos 	= _this select 0;
 
@@ -17,9 +17,9 @@ if(isServer) then {
 		_a = (_trigger_pos select 0) + (sin(_angle)*_radius);
 		_b = (_trigger_pos select 1) + (cos(_angle)*_radius);
 
-		_pos = [_a,_b];
-		_angle = _angle + _step;
-		_sign = createVehicle ["Hedgehog", _pos, [], 0, "CAN_COLLIDE"];
+		_pos 	= [_a,_b];
+		_angle 	= _angle + _step;
+		_sign 	= createVehicle ["Hedgehog", _pos, [], 0, "CAN_COLLIDE"];
 
 	};
 
