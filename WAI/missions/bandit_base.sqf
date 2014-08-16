@@ -61,7 +61,7 @@ if(isServer) then {
 
 	if(wai_enable_tank_traps) then {
 		//[_position] call tank_traps;
-		[_position, "trigger:","Wheeled_APC","side:","EAST", "ammo:","Sh_120_HE", "mine:","MineE", "density:",30, "range:",3] call minefield;
+		[_position, "trigger:","Wheeled_APC","side:","WEST", "ammo:","Sh_120_HE", "mine:","MineE", "density:",30, "range:",3] call minefield;
 	};
 
 	[_position,"[Extreme] Bandit Base"] execVM wai_marker;
