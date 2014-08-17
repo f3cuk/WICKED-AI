@@ -117,6 +117,8 @@ if (isServer) then {
 		};
 
 	};
+	// Stops them from killing eachother when they fire..
+	_unitGroup setFormation "ECH LEFT";
 
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
