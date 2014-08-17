@@ -14,7 +14,7 @@ if(isServer) then {
 
 		_mine_pos	= [_position,_area_min,_area_max,5,0,2000,0] call BIS_fnc_findSafePos;
 
-		if(random 2 > 0.99) then {
+		if(floor(random 2) == 1) then {
 			_mine 		= createVehicle ["MineE", _mine_pos, [], 0, "CAN_COLLIDE"];
 		} else {
 			_mine 		= createVehicle ["Mine", _mine_pos, [], 0, "CAN_COLLIDE"];
