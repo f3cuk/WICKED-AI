@@ -13,10 +13,11 @@ As i really liked the WAI missions and support for them in the latest epoch patc
 - [And much more](https://github.com/f3cuk/WAI-ZOMBIELAND/blob/Testbranch/changelist.md)
 
 ### Upcoming in 2.1.0+
-- Change system to include both bandit and hero missions
-- Add more missions
-- C130 mission
+- Bandit and hero missions
+- More missions
+- C130 will be back (and better then ever)
 - Multi mission support
+- Better markers
 
 ### Changelog
 - 17-08-2014 : Major update to 2.0.0
