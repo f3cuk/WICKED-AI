@@ -32,3 +32,12 @@ As I really like (read love) the WAI missions and support for them has gone in t
 
 1. Add the WAI folder to your dayz_server directory
 2. Add `ExecVM "\z\addons\dayz_server\WAI\init.sqf";` to the bottom of server_functions.sqf
+ 
+### Versioning
+
+For transparency into our release cycle and in striving to maintain backward compatibility, Bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes we screw up, but we'll adhere to those rules whenever possible.
+
+### Creators
+**f3cuk** - Lead developer
+
+**nerdalertdk / itsatrap** - Helping hand
