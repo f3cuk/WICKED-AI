@@ -10,6 +10,7 @@ Type | Description
 `feature` | Added possibility for different type of missions (capture the crate / kill all ai)
 `feature` | Eased up mission coding, hopefully allowing more people to join in and create new missions
 `enhancement` | Randomized the type of static weapon to spawn @nerdalertdk
+`enhancement` | Changed mission to kill al ai on easy missions
 `enhancement` | Added option to clean gear on roadkilled ai @nerdalertdk
 `enhancement` | Added option to spawn smoke/flare (daytime/nighttime) on mission complete @nerdalertdk / @f3cuk
 `enhancement` | Added option in % chance to destruct weapons on roadkill @nerdalertdk
