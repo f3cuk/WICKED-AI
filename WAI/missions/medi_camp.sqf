@@ -53,7 +53,7 @@ if(isServer) then {
 
 	if (_playerPresent) then {
 
-		[0] call mission_type;
+		[1] call mission_type;
 
 		[_box,"Survivors have taken control of the medical supply camp!"] call mission_succes;
 

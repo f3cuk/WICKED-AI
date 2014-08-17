@@ -23,7 +23,7 @@ if(isServer) then {
 
 	[_position,"[Medium] Weapon cache"] execVM wai_marker;
 
-	[nil,nil,rTitleText,"Bandits have obtained a weapon crate! Check your map for the location!", "PLAIN",10] call RE;
+	[nil,nil,rTitleText,"Bandits have obtained a weapon crate. Check your map for the location!", "PLAIN",10] call RE;
 
 	_missiontimeout 		= true;
 	_cleanmission 			= false;
@@ -56,15 +56,15 @@ if(isServer) then {
 
 		[0] call mission_type;
 
-		[_box,"Survivors have secured the Weapon Cache!"] call mission_succes;
+		[_box,"Survivors have secured the weapon cache!"] call mission_succes;
 
 	} else {
 
-		[[_box],"Survivors did not secure the Weapon Cache in time"] call mission_failure;
+		[[_box],"Survivors did not secure the weapon cache in time"] call mission_failure;
 
 	};
 
-	diag_log format["WAI: Mission Weapon cache ended at %1",_position];
+	diag_log format["WAI: Mission weapon cache ended at %1",_position];
 
 	missionrunning = false;
 
