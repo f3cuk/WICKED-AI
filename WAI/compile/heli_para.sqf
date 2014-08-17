@@ -167,7 +167,11 @@ if (isServer) then {
 				{
 					_para addweapon _x
 				} forEach _geartools;
-							
+				
+				if (sunOrMoon != 1) then {
+					_unit addweapon "NVGoggles";
+				};
+				
 				switch (_skill) do {
 					case "easy"		: { _aicskill = ai_skill_easy; };
 					case "medium" 	: { _aicskill = ai_skill_medium; };

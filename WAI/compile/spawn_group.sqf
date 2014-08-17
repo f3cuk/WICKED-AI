@@ -24,6 +24,7 @@ if (isServer) then {
 	_aipack 			= "";
 	_skillarray 		= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 	_unitGroup 			= createGroup east;
+	_current_time		= time;
 
 	for "_x" from 1 to _unitnumber do {
 
@@ -76,6 +77,10 @@ if (isServer) then {
 		removeAllItems _unit;
 		_unit addweapon _weapon;
 
+		if (sunOrMoon != 1) then {
+			_unit addweapon "NVGoggles";
+		};
+
 		for "_i" from 1 to _mags do {
 			_unit addMagazine _magazine;
 		};
@@ -112,6 +117,8 @@ if (isServer) then {
 		};
 
 	};
+	// Stops them from killing eachother when they fire..
+	_unitGroup setFormation "ECH LEFT";
 
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
