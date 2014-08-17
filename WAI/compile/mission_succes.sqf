@@ -4,8 +4,11 @@ if(isServer) then {
 
 	_box 				= _this select 0;
 	_statement			= _this select 1;
-	_delete_leftovers	= _this select 2;
 
+	if(count _this > 2) then {
+		_delete_leftovers	= _this select 2;
+	};
+	
 	if(wai_crates_smoke) then {
 
 		if (sunOrMoon != 1) then {
@@ -31,7 +34,7 @@ if(isServer) then {
 		
 	};
 
-	if(count _delete_leftovers > 0) then {
+	if(count _this > 2) then {
 
 		{
 			if(typeName _x == "ARRAY") then {
