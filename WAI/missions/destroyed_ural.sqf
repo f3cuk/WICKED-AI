@@ -13,7 +13,7 @@ if(isServer) then {
 	_num_items		= (6 + round (random 36));
 
 	//Medium Gun Box
-	_box = createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_box = createVehicle ["BAF_VehicleBox",[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
 	[_box,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
 
 	_rndnum 	= round (random 4) + 1;
@@ -56,7 +56,7 @@ if(isServer) then {
 
 	if (_playerPresent) then {
 
-		[0] call mission_type;
+		[1] call mission_type;
 
 		[_box,"The supplies have been secured by survivors!"] call mission_succes;	
 
