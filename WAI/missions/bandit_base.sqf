@@ -1,6 +1,4 @@
 if(isServer) then {
-
-	//Bandit Base
 	 
 	private ["_tanktraps","_mines","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 
@@ -42,6 +40,7 @@ if(isServer) then {
 	_baserunover6 	setVectorUp surfaceNormal position _baserunover6;
 	_baserunover7 	setVectorUp surfaceNormal position _baserunover7;
 
+	// deploy roadkill defense (or not)
 	if(wai_enable_tank_traps) then {
 		_tanktraps = [_position] call tank_traps;
 	};

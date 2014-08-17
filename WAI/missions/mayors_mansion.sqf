@@ -1,10 +1,11 @@
 if(isServer) then {
 
-	//Mayors Mansion
-
-	private 		["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
+	private["_tanktraps","_mines","_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 
 	_position		= safepos call BIS_fnc_findSafePos;
+	_tanktraps		= [];
+	_mines			= [];
+
 	diag_log 		format["WAI: Mission Mayors Mansion Started At %1",_position];
 
 	vehclass 		= military_unarmed call BIS_fnc_selectRandom;
@@ -16,6 +17,16 @@ if(isServer) then {
 	//Mayors Mansion
 	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
 
+	// deploy roadkill defense (or not)
+	if(wai_enable_tank_traps) then {
+		_tanktraps = [_position] call tank_traps;
+	};
+	
+	if(wai_enable_minefield) then {
+		_mines = [_position,50,100,50] call minefield;
+	};
+	
+	//Troops
 	_rndnum = round (random 3) + 4;
 	[[_position select 0, _position select 1, 0],4,"medium","Random",4,"Random","Random","Random",true] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"medium","Random",4,"Random","Random","Random",true] call spawn_group;
@@ -62,11 +73,11 @@ if(isServer) then {
 
 		[0] call mission_type;
 
-		[_box,"The rogue mayor has been taken out, who will be the next Mayor of Cherno?"] call mission_succes;
+		[_box,"The rogue mayor has been taken out, who will be the next Mayor of Cherno?",[_tanktraps,_mines]] call mission_succes;
 			
 	} else {
 
-		[[_box,_baserunover],"The survivors were unable to capture the mansion, time is up"] call mission_failure;
+		[[_box,_baserunover,_tanktraps,_mines],"The survivors were unable to capture the mansion, time is up"] call mission_failure;
 
 	};
 

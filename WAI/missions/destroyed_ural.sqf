@@ -1,10 +1,9 @@
 if(isServer) then {
 
-	//Ural Attack
-
-	private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
+	private["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
 	_position 		= safepos call BIS_fnc_findSafePos;
+	
 	diag_log 		format["WAI: Ural Attack mission started at %1",_position];
 
 	_baserunover 	= createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
@@ -59,11 +58,11 @@ if(isServer) then {
 
 		[0] call mission_type;
 
-		[_box,"The medical supplies have been secured by survivors!"] call mission_succes;	
+		[_box,"The supplies have been secured by survivors!"] call mission_succes;	
 
 	} else {
 
-		[[_box],"Survivors did not secure the medical supplies in time!"] call mission_failure;
+		[[_box,_baserunover],"Survivors did not secure the supplies in time"] call mission_failure;
 
 	};
 

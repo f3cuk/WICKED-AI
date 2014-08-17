@@ -1,10 +1,11 @@
 if(isServer) then {
 
-	//Medical Supply
-
-	private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+	private["_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
 	_position 		= safepos call BIS_fnc_findSafePos;
+	_tanktraps		= [];
+	_mines			= [];	
+
 	diag_log 		format["WAI: Mission MV22 started at %1",_position];
 
 	_vehclass 		= "MV22_DZ";
@@ -29,9 +30,18 @@ if(isServer) then {
 	_veh 			setVariable ["ObjectID","1",true];
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_veh];
 	_objPosition 	= getPosATL _veh;
-
+	
 	diag_log format["WAI: Mission MV22 spawned a %1",_vehname];
 
+	// deploy roadkill defense (or not)
+	if(wai_enable_tank_traps) then {
+		_tanktraps = [_position] call tank_traps;
+	};
+	
+	if(wai_enable_minefield) then {
+		_mines = [_position,50,100,50] call minefield;
+	};
+	
 	//Troops
 	_rndnum = round (random 3) + 4;
 	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
@@ -78,17 +88,13 @@ if(isServer) then {
 
 		[0] call mission_type;
 
-		deleteVehicle _sign;
-
 		[_veh,[_vehdir,_objPosition],_vehclass,true,"0"] call custom_publish;
 
-		[_box,"Survivors have secured the MV-22!"] call mission_succes;
+		[_box,"Survivors have secured the MV-22!",[_tanktraps,_mines]] call mission_succes;
 
 	} else {
 
-		deleteVehicle _sign;
-
-		[[_box,_veh],"Survivors did not secure the MV-22 in time!"] call mission_failure;
+		[[_box,_veh,_tanktraps,_mines],"Survivors did not secure the MV-22 in time!"] call mission_failure;
 		
 	};
 

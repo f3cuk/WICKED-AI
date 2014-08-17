@@ -1,33 +1,42 @@
 if(isServer) then {
 
-	//Military Chopper
-
-	private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+	private ["_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
 	_position 		= safepos call BIS_fnc_findSafePos;
+	_tanktraps		= [];
+	_mines			= [];	
+	
 	diag_log 		format["WAI: Mission Armed Chopper Started At %1",_position];
-
-	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
-	_vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 	//Sniper Gun Box
 	_box 		= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 	[_box] 		call Sniper_Gun_Box;
 
 	//Military Chopper
-	_veh 		= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
-	_vehdir 	= round(random 360);
-	_veh 		setDir _vehdir;
-	clearWeaponCargoGlobal _veh;
-	clearMagazineCargoGlobal _veh;
-	_veh 		setVariable ["ObjectID","1",true];
+	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
+	_vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
-
+	_veh 			= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
+	_vehdir 		= round(random 360);
+	_veh 			setDir _vehdir;
+	clearWeaponCargoGlobal 		_veh;
+	clearMagazineCargoGlobal 	_veh;
+	_veh 			setVariable ["ObjectID","1",true];
+	
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_veh];
 	_objPosition = getPosATL _veh;
 
 	diag_log format["WAI: Mission Armed Chopper spawned a %1",_vehname];
-
+	
+	// deploy roadkill defense (or not)
+	if(wai_enable_tank_traps) then {
+		_tanktraps = [_position] call tank_traps;
+	};
+	
+	if(wai_enable_minefield) then {
+		_mines = [_position,50,100,50] call minefield;
+	};
+	
 	//Troops
 	_rndnum = round (random 4) + 2;
 	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
@@ -79,11 +88,11 @@ if(isServer) then {
 
 		[_veh,[_vehdir,_objPosition],_vehclass,true,"0"] call custom_publish;
 
-		[_box,"Survivors have secured the armed chopper!"] call mission_succes;	
+		[_box,"Survivors have secured the armed chopper!",[_tanktraps,_mines]] call mission_succes;	
 
 	} else {
 
-		[[_box,_veh,_sign],"Survivors did not secure the armed chopper in time!"] call mission_failure;
+		[[_box,_veh,_tanktraps,_mines],"Survivors did not secure the armed chopper in time!"] call mission_failure;
 
 	};
 

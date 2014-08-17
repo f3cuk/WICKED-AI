@@ -1,6 +1,4 @@
-	if(isServer) then {
-
-	//Medical Supply Camp
+if(isServer) then {
 
 	private 		["_position","_box","_missiontimeout","_cleanmission","_playerPresent","_starttime","_currenttime","_cleanunits","_rndnum"];
 
@@ -61,7 +59,7 @@
 
 	} else {
 
-		[[_box],"The survivors were unable to capture the medical supply camp"] call mission_failure;
+		[[_box,_baserunover2,_baserunover],"The survivors were unable to capture the medical supply camp"] call mission_failure;
 
 	};
 

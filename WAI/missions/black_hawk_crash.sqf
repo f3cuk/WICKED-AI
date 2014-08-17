@@ -1,10 +1,9 @@
-	if(isServer) then {
-
-	//Black Hawk Crash
+if(isServer) then {
 
 	private ["_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_position"];
 
 	_position 		= safepos call BIS_fnc_findSafePos;
+	
 	diag_log 		format["WAI: Wrecked Black Hawk mission started at %1",_position];
 
 	_num_guns		= round(random 5);
@@ -63,7 +62,7 @@
 
 	} else {
 
-		[[_box],"Survivors did not secure the crashed Black Hawk in time"] call mission_failure;
+		[[_box,_baserunover],"Survivors did not secure the crashed Black Hawk in time"] call mission_failure;
 		
 	};
 
