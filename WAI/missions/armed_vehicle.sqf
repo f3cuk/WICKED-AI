@@ -36,7 +36,7 @@ if(isServer) then {
 	_static_gun = ai_static_weapons call BIS_fnc_selectRandom;
 	[[[(_position select 0), (_position select 1) + 10, 0]],_static_gun,"easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
 
-	[_position,format["[Medium] Disabled %1", _vehname],"Bandit"] execVM wai_marker;
+	[_position,"Medium",format["Disabled %1", _vehname],"Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear! Check your map for the location!", "PLAIN",10] call RE;
 

@@ -69,7 +69,7 @@ if(isServer) then {
 	//Heli Paradrop
 	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random","Bandit",false] spawn heli_para;
 
-	[_position,"[Extreme] Bandit Base","Bandit"] execVM wai_marker;
+	[_position,"Extreme","Bandit Base","Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"A jungle task force have set up a temporary encampment! Go and ambush it to make it yours!","PLAIN",10] call RE;
 

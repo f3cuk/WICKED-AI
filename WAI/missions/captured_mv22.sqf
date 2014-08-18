@@ -56,7 +56,7 @@ if(isServer) then {
 		[_position] call tank_traps;
 	};
 
-	[_position,"[Medium] Captured MV 22","Bandit"] execVM wai_marker;
+	[_position,"Medium","Captured MV 22","Bandit"] execVM wai_marker;
 	
 	[nil,nil,rTitleText,"Bandits have captured a Red Cross MV-22! An informant has advised there is medical supplies, he has updated the map for the location!", "PLAIN",10] call RE;
 

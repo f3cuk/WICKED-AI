@@ -23,7 +23,7 @@ if(isServer) then {
 	//Turrets
 	[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
 
-	[_position,"[Medium] Black Hawk Crash","Bandit"] execVM wai_marker;
+	[_position,"Medium","Black Hawk Crash","Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"A Black Hawk carrying supplies has crashed and bandits are securing the site! Check your map for the location!", "PLAIN",10] call RE;
 		

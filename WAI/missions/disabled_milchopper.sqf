@@ -51,7 +51,7 @@ if(isServer) then {
 		[_position] call tank_traps;
 	};
 
-	[_position,format["[Medium] Disabled %1", _vehname],"Bandit"] execVM wai_marker;
+	[_position,"Medium",format["Disabled %1", _vehname],"Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"A bandit helicopter is taking off with a crate of snipers! Save the cargo and take their chopper.", "PLAIN",10] call RE;
 

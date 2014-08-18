@@ -63,7 +63,7 @@ if(isServer) then {
 
 	/* WAI MISSIONS CONFIG */
 
-		wai_mission_timer 			= 1; //(300 + round(random 600)); 		// time between missions 5-15 minutes
+		wai_mission_timer 			= (300 + round(random 600)); 		// time between missions 5-15 minutes
 		wai_mission_timeout 		= (1800 + round(random 1800)); 		// time each missions take 30-60 minutes
 		wai_mission_fuel 			= ((1 + round(random 9)) / 10);		// fuel inside mission spawned vehicles (10 - 100%)
 		wai_crates                	= ["TKSpecialWeapons_EP1","UNBasicAmmunitionBox_EP1","CZBasicWeapons_EP1","TKVehicleBox_EP1","USVehicleBox_EP1","USBasicAmmunitionBox_EP1","GERBasicWeapons_EP1","GuerillaCacheBox_EP1","TKOrdnanceBox_EP1","USSpecialWeapons_EP1","SpecialWeaponsBox"];

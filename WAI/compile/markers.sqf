@@ -2,18 +2,26 @@ if(isServer) then {
 
 	private ["_color","_dot","_position","_marker","_name"];
 	_position 	= _this select 0;
-	_name 		= _this select 1;
-	_type		= _this select 2;
+	_difficulty = _this select 1;
+	_name 		= _this select 2;
+	_type		= _this select 3;
 
-	switch (_type) do {
-		case "Bandit":	{ _color = "ColorRed"; };
-		case "Hero":	{ _color = "ColorGreen"; };
-		case "":		{ _color = "ColorBlack"; };
-	};
-	if (isNil "_color") then { _color = "ColorBlack"; };
 	_marker 	= "";
 	_dot 		= "";
 	markerready = false;
+	_color		= "ColorBlack";
+	
+	switch (_difficulty) do {
+		case "Easy":	{_color = "ColorGreen"};
+		case "Medium":	{_color = "ColorYellow"};
+		case "Hard":	{_color = "ColorOrange"};
+		case "Extreme": {_color = "ColorRed"};
+	};
+	switch (_type) do {
+		case "Bandit":	{ _name = "[B] " + _name; };
+		case "Hero":	{ _name = "[H] " + _name; };
+	};
+
 
 	while {missionrunning} do {
 
