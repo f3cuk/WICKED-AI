@@ -169,7 +169,7 @@ if (isServer) then {
 				} forEach _geartools;
 				
 				if (sunOrMoon != 1) then {
-					_unit addweapon "NVGoggles";
+					_para addweapon "NVGoggles";
 				};
 				
 				switch (_skill) do {

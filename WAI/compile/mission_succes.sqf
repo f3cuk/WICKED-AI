@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private["_box","_name","_marker","_delete_leftovers","_flare_light","_inRange"];
+	private["_box","_name","_marker","_delete_leftovers","_inRange"];
 
 	_box 				= _this select 0;
 	_statement			= _this select 1;
@@ -15,7 +15,6 @@ if(isServer) then {
 			_marker = "RoadFlare" createVehicle getPosATL _box;
 			_marker setPosATL (getPosATL _box);
 			_marker attachTo [_box, [0,0,0]];
-			_flare_light = [_marker,0] spawn object_roadFlare;
 			
 			_inRange = _box nearEntities ["CAManBase",1250];
 			
