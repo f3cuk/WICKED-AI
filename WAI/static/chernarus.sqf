@@ -13,7 +13,8 @@ if(isServer) then {
 		4,									// Number of magazines
 		"Random",							// Backpack classname, use "Random" or classname here
 		"Random",							// Skin classname, use "Random" or classname here
-		"Random"							// Gearset number. "Random" for random gear set
+		"Random",							// Gearset number. "Random" for random gear set
+		"Bandit"							// AI Type, "Hero" or "Bandit".
 	] call spawn_group;
 
 	Place your custom group spawns below
@@ -37,7 +38,8 @@ if(isServer) then {
 		"Random",							// Primary gun set number. "Random" for random weapon set
 		2,									// Number of magazines
 		"Random",							// Backpack classname, use "Random" or classname here
-		"Random"							// Gearset classname, use "Random" or classname here
+		"Random",							// Gearset classname, use "Random" or classname here
+		"Bandit"							// AI Type, "Hero" or "Bandit".
 	] call spawn_static;
 
 	Place your custom static weapon spawns below
@@ -56,7 +58,8 @@ if(isServer) then {
 		2000,								// Radius of patrol
 		10,									// Number of waypoints to give
 		"UH1H_DZ",							// Classname of vehicle (make sure it has driver and two gunners)
-		"Random"							// Skill level of units (easy, medium, hard, extreme, Random)
+		"Random",							// Skill level of units (easy, medium, hard, extreme, Random)
+		"Bandit"							// AI Type, "Hero" or "Bandit".
 	] spawn heli_patrol;
 
 	Place your heli patrols below
@@ -75,7 +78,8 @@ if(isServer) then {
 		200,								// Radius of patrol
 		10,									// Number of waypoints to give
 		"HMMWV_Armored",					// Classname of vehicle (make sure it has driver and gunner)
-		"Random"							// Skill level of units (easy, medium, hard, extreme, Random)
+		"Random",							// Skill level of units (easy, medium, hard, extreme, Random)
+		"Bandit"							// AI Type, "Hero" or "Bandit".
 	] spawn vehicle_patrol;
 
 	Place your vehicle patrols below this line
@@ -100,6 +104,7 @@ if(isServer) then {
 		"Random",							// Backpack classname, use "Random" or classname here
 		"Bandit2_DZ",						// Skin classname, use "Random" or classname here
 		"Random",							// Gearset number. "Random" for random gear set.
+		"Bandit",							// AI Type, "Hero" or "Bandit".
 		true								// true: Aircraft will stay at position and fight. false: Heli will leave if not under fire. 
 	] spawn heli_para;
 

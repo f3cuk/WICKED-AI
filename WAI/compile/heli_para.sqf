@@ -13,11 +13,12 @@ if (isServer) then {
 	_backpack 		= _this select 8;
 	_skin 			= _this select 9;
 	_gear 			= _this select 10;
-	_helipatrol 	= _this select 11;
+	_aitype			= _this select 11;
+	_helipatrol 	= _this select 12;
 	_aipack 		= "";
 
-	if (count _this > 12) then {
-		_mission = _this select 12;
+	if (count _this > 13) then {
+		_mission = _this select 13;
 	} else {
 		_mission = False;
 	};
@@ -44,6 +45,10 @@ if (isServer) then {
 	_unitGroup = createGroup east;
 	_pilot = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	[_pilot] joinSilent _unitGroup;
+	switch (_aitype) do {
+		case "Bandit":	{ _pilot setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _pilot setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	ai_air_units = (ai_air_units +1);
 
 	_helicopter = createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 100], [], 0, "FLY"];
@@ -60,13 +65,20 @@ if (isServer) then {
 	_gunner assignAsGunner _helicopter;
 	_gunner moveInTurret [_helicopter,[0]];
 	[_gunner] joinSilent _unitGroup;
+	switch (_aitype) do {
+		case "Bandit":	{ _gunner setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	ai_air_units = (ai_air_units +1);
 
 	_gunner2 = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	_gunner2 assignAsGunner _helicopter;
 	_gunner2 moveInTurret [_helicopter,[1]];
 	[_gunner2] joinSilent _unitGroup;
-
+	switch (_aitype) do {
+		case "Bandit":	{ _gunner2 setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _gunner2 setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	ai_air_units = (ai_air_units +1);
 
 	{
@@ -190,6 +202,10 @@ if (isServer) then {
 				_chute = createVehicle ["ParachuteEast", [(_helipos select 0), (_helipos select 1), (_helipos select 2)], [], 0, "NONE"];
 				_para moveInDriver _chute;
 				[_para] joinSilent _pgroup;
+				switch (_aitype) do {
+					case "Bandit":	{ _para setVariable ["humanity", ai_add_humanity, true]; };
+					case "Hero":	{ _para setVariable ["humanity", -ai_remove_humanity, true]; };
+				};
 				sleep 1.5;
 			};
 			_drop = false;

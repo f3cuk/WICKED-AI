@@ -51,25 +51,25 @@ if(isServer) then {
 	
 	//Group Spawning
 	_rndnum = round (random 3) + 4;
-	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"hard","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
 	 
 	//Humvee Patrol
-	[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random"] spawn vehicle_patrol;
+	[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random","Bandit"] spawn vehicle_patrol;
 	 
 	//Turrets
-	[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
-	[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
-	[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
-	[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
+	[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
+	[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
+	[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
+	[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
 
 	//Heli Paradrop
-	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random",false] spawn heli_para;
+	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,1,"Random",4,"Random","Random","Random","Bandit",false] spawn heli_para;
 
-	[_position,"[Extreme] Bandit Base"] execVM wai_marker;
+	[_position,"Extreme","Bandit Base","Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"A jungle task force have set up a temporary encampment! Go and ambush it to make it yours!","PLAIN",10] call RE;
 

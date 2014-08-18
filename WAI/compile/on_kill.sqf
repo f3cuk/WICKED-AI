@@ -1,7 +1,7 @@
 if (isServer) then {
 
-	private ["_unit","_player","_humanity","_banditkills"];
-
+	private ["_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
 	_type 		= _this select 2;
@@ -21,14 +21,18 @@ if (isServer) then {
 		private ["_banditkills","_humanity"];
 
 		_humanity 		= _player getVariable["humanity",0];
+		_humanitygain	= _unit getVariable["humanity",0];
 		_banditkills 	= _player getVariable["banditKills",0];
+		_humankills 	= _player getVariable["humanKills",0];
 
 		if (ai_humanity_gain) then {
-			_player setVariable ["humanity",(_humanity + ai_add_humanity),true];
+			_player setVariable ["humanity",(_humanity + _humanitygain),true];
 		};
 
-		if (ai_banditkills_gain) then {
-			_player setVariable ["banditKills",(_banditkills + 1),true];
+		if (ai_kills_gain) then {
+			if (_humanitygain > 0) then {_player setVariable ["banditKills",(_banditkills + 1),true];};
+			if (_humanitygain < 0) then {_player setVariable ["humanKills",(_humankills + 1),true];};
+			
 		};
 
 		if (ai_clear_body) then {

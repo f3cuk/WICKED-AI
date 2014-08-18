@@ -59,22 +59,22 @@ if(isServer) then {
 	
 	//Troops
 	_rndnum = round (random 3) + 5;
-	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],5,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],5,"hard","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
 
 	//Turrets
-	[[[(_position select 0) + 5, (_position select 1) + 10, 0],[(_position select 0) - 5, (_position select 1) - 10, 0],[(_position select 0) - 5, (_position select 1) - 15, 0]],"M2StaticMG","easy","Random",1,2,"Random","Random",true] call spawn_static;
+	[[[(_position select 0) + 5, (_position select 1) + 10, 0],[(_position select 0) - 5, (_position select 1) - 10, 0],[(_position select 0) - 5, (_position select 1) - 15, 0]],"M2StaticMG","easy","Random",1,2,"Random","Random","Bandit",true] call spawn_static;
 
 	//Heli Para Drop
-	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Random","Random",false] spawn heli_para;
+	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Random","Random","Bandit",false] spawn heli_para;
 
 	if(wai_enable_tank_traps) then {
 		[_position] call tank_traps;
 	};
 
-	[_position,"[Hard] Disabled Convoy"] execVM wai_marker;
+	[_position,"Hard","Disabled Convoy","Bandit"] execVM wai_marker;
 	
 	[nil,nil,rTitleText,"An Ikea delivery has been hijacked by bandits, take over the convoy and the building supplies are yours!", "PLAIN",10] call RE;
 

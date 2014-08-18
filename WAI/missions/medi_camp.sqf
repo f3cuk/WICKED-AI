@@ -16,11 +16,11 @@ if(isServer) then {
 	_baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
 
 	_rndnum = round (random 3) + 4;
-	[[_position select 0, _position select 1, 0],4,"easy","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"easy","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"easy","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"easy","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
 	 
-	[_position,"[Easy] Medical Supply Camp"] execVM wai_marker;
+	[_position,"Easy","Medical Supply Camp","Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"Bandits have set up a medical re-supply camp! Check your map for the location!", "PLAIN",10] call RE;
 

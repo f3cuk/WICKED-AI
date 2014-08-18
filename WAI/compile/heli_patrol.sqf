@@ -8,6 +8,7 @@ if (isServer) then {
 	_wpnum 				= _this select 3;
 	_heli_class 		= _this select 4;
 	_skill 				= _this select 5;
+	_aitype				= _this select 6;
 
 	_skillarray			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
@@ -24,7 +25,10 @@ if (isServer) then {
 	};
 
 	[_pilot] joinSilent _unitGroup;
-
+	switch (_aitype) do {
+		case "Bandit":	{ _pilot setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _pilot setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	ai_air_units 		= (ai_air_units +1);
 
 	_helicopter 		= createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 200], [], 0, "FLY"];
@@ -43,14 +47,20 @@ if (isServer) then {
 	_gunner 			moveInTurret [_helicopter,[0]];
 
 	[_gunner] 			joinSilent _unitGroup;
-
+	switch (_aitype) do {
+		case "Bandit":	{ _gunner setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	ai_air_units 		= (ai_air_units + 1);
 
 	_gunner2 			= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	_gunner2			assignAsGunner _helicopter;
 	_gunner2 			moveInTurret [_helicopter,[1]];
 	[_gunner2] 			joinSilent _unitGroup;
-
+	switch (_aitype) do {
+		case "Bandit":	{ _gunner2 setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _gunner2 setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	ai_air_units 		= (ai_air_units + 1);
 
 	{

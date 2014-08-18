@@ -27,16 +27,16 @@ if(isServer) then {
 
 	//Troops
 	_rndnum = (2 + round (random 4));
-	[[_position select 0, _position select 1, 0],_rndnum,"medium","Random",3,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"medium","Random",3,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",3,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",3,"Random","Random","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"medium","Random",3,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"medium","Random",3,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",3,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",3,"Random","Random","Random","Bandit",true] call spawn_group;
 
 	//Turrets
 	_static_gun = ai_static_weapons call BIS_fnc_selectRandom;
-	[[[(_position select 0), (_position select 1) + 10, 0]],_static_gun,"easy","Random",0,2,"Random","Random",true] call spawn_static;
+	[[[(_position select 0), (_position select 1) + 10, 0]],_static_gun,"easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
 
-	[_position,format["[Medium] Disabled %1", _vehname]] execVM wai_marker;
+	[_position,"Medium",format["Disabled %1", _vehname],"Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear! Check your map for the location!", "PLAIN",10] call RE;
 
