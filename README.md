@@ -28,5 +28,5 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 For transparency into our release cycle and in striving to maintain backward compatibility, bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes we screw up, but we'll adhere to those rules whenever possible.
 
 ### Creators
-**f3cuk** - Lead developer
-**nerdalertdk / itsatrap** - Helping hand
+- Lead developer **f3cuk**
+- Helping hand **nerdalertdk / itsatrap** - 
