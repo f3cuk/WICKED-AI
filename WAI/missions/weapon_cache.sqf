@@ -16,12 +16,12 @@ if(isServer) then {
 	_rndgro 	= (1 + round (random 3));
 
 	for "_i" from 0 to _rndgro do {
-		[[_position select 0, _position select 1, 0],_rndnum,"easy","Random",3,"Random","Random","Random",true] call spawn_group;
+		[[_position select 0, _position select 1, 0],_rndnum,"easy","Random",3,"Random","Random","Random","Bandit",true] call spawn_group;
 	};
 
-	[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
+	[[[(_position select 0) + 10, (_position select 1) + 10, 0],[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
 
-	[_position,"[Medium] Weapon cache"] execVM wai_marker;
+	[_position,"[Medium] Weapon cache","Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"Bandits have obtained a weapon crate. Check your map for the location!", "PLAIN",10] call RE;
 

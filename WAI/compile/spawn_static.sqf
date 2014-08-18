@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+	private ["_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_class 				= _this select 1;
@@ -13,10 +13,12 @@ if (isServer) then {
 		_backpack 		= _this select 6;
 		_gear 			= _this select 7;
 	};
+	
+	_aitype				= _this select 8;
 
-	if ((count _this == 9) OR (count _this == 5)) then {
-		if (count _this == 9) then {_mission = _this select 8;};
-		if (count _this == 5) then {_mission = _this select 4;};
+	if ((count _this == 10) OR (count _this == 6)) then {
+		if (count _this == 10) then {_mission = _this select 9;};
+		if (count _this == 6) then {_mission = _this select 5;};
 	} else {
 		_mission = false;
 	};
@@ -48,6 +50,11 @@ if (isServer) then {
 		_static setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
 		
 		[_unit] joinSilent _unitGroup;
+
+		switch (_aitype) do {
+			case "Bandit":	{ _unit setVariable ["humanity", ai_add_humanity, true]; };
+			case "Hero":	{ _unit setVariable ["humanity", -ai_remove_humanity, true]; };
+		};
 		
 		_unit enableAI "TARGET";
 		_unit enableAI "AUTOTARGET";
