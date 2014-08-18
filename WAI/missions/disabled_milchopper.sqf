@@ -39,19 +39,19 @@ if(isServer) then {
 	
 	//Troops
 	_rndnum = round (random 4) + 2;
-	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
 
 	//Turrets
-	[[[(_position select 0) + 10, (_position select 1) - 10, 0],[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random",true] call spawn_static;
+	[[[(_position select 0) + 10, (_position select 1) - 10, 0],[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
 
 	if(wai_enable_tank_traps) then {
 		[_position] call tank_traps;
 	};
 
-	[_position,format["[Medium] Disabled %1", _vehname]] execVM wai_marker;
+	[_position,format["[Medium] Disabled %1", _vehname],"Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"A bandit helicopter is taking off with a crate of snipers! Save the cargo and take their chopper.", "PLAIN",10] call RE;
 

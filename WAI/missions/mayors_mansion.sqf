@@ -28,17 +28,17 @@ if(isServer) then {
 	
 	//Troops
 	_rndnum = round (random 3) + 4;
-	[[_position select 0, _position select 1, 0],4,"medium","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"medium","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"medium","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"medium","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
 
 	//The Mayor Himself
-	[[_position select 0, _position select 1, 0],1,1,"Random",4,"","Functionary1_EP1_DZ","Random",true] call spawn_group;
+	[[_position select 0, _position select 1, 0],1,1,"Random",4,"","Functionary1_EP1_DZ","Random","Bandit",true] call spawn_group;
 	 
-	[[[(_position select 0) - 15, (_position select 1) + 15, 8],[(_position select 0) + 15, (_position select 1) - 15, 8]],"M2StaticMG","easy","Random",1,2,"Random","Random",true] call spawn_static;
+	[[[(_position select 0) - 15, (_position select 1) + 15, 8],[(_position select 0) + 15, (_position select 1) - 15, 8]],"M2StaticMG","easy","Random",1,2,"Random","Random","Bandit",true] call spawn_static;
 	 
-	[_position,"[Medium] Mayors Mansion"] execVM wai_marker;
+	[_position,"[Medium] Mayors Mansion","Bandit"] execVM wai_marker;
 
 	[nil,nil,rTitleText,"The Mayor has gone rogue, go take him and his task force out to claim the black market weapons!", "PLAIN",10] call RE;
 

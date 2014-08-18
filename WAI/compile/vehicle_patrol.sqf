@@ -8,6 +8,8 @@ if (isServer) then {
 	_wpnum 					= _this select 3;
 	_veh_class 				= _this select 4;
 	_skill 					= _this select 5;
+	_aitype					= _this select 6;
+	
 	_skillarray 			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
 	switch (_skill) do {
@@ -22,7 +24,10 @@ if (isServer) then {
 	_unitGroup 				= createGroup east;
 	_pilot 					= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	[_pilot] 				joinSilent _unitGroup;
-
+	switch (_aitype) do {
+		case "Bandit":	{ _pilot setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _pilot setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	ai_vehicle_units 		= (ai_vehicle_units + 1);
 
 	_veh 					= createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
@@ -42,7 +47,10 @@ if (isServer) then {
 	_gunner 				assignAsGunner _veh;
 	_gunner 				moveInTurret [_veh,[0]];
 	[_gunner] 				joinSilent _unitGroup;
-	
+	switch (_aitype) do {
+		case "Bandit":	{ _gunner setVariable ["humanity", ai_add_humanity, true]; };
+		case "Hero":	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
+	};
 	{
 		_gunner setSkill [(_x select 0),(_x select 1)];
 	} forEach _aicskill;

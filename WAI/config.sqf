@@ -30,9 +30,10 @@ if(isServer) then {
 		ai_share_info 				= true;			// AI share info on player position
 		ai_share_distance 			= 300;			// distance from killed AI for AI to share your position
 
+		ai_kills_gain		 		= true;			// add kill to bandit/human kill score
 		ai_humanity_gain 			= true;			// gain humanity for killing AI
-		ai_add_humanity 			= 50;			// amount of huminity gained for killing an AI
-		ai_banditkills_gain 		= true;			// add kill to bandit kill score
+		ai_add_humanity 			= 50;			// amount of humanity gained for killing a bandit AI
+		ai_remove_humanity 			= 50;			// amount of humanity lost for killing a soldier AI
 
 		ai_skill_extreme	 		= [["aimingAccuracy",1.00], ["aimingShake",0.80], ["aimingSpeed",0.80], ["endurance",1.00], ["spotDistance",0.80], ["spotTime",0.80], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00], ["general",1.00]]; 	// Extreme
 		ai_skill_hard 				= [["aimingAccuracy",0.80], ["aimingShake",0.70], ["aimingSpeed",0.70], ["endurance",1.00], ["spotDistance",0.70], ["spotTime",0.70], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00], ["general",1.00]]; 	// Hard
@@ -62,7 +63,7 @@ if(isServer) then {
 
 	/* WAI MISSIONS CONFIG */
 
-		wai_mission_timer 			= (300 + round(random 600)); 		// time between missions 5-15 minutes
+		wai_mission_timer 			= 1; //(300 + round(random 600)); 		// time between missions 5-15 minutes
 		wai_mission_timeout 		= (1800 + round(random 1800)); 		// time each missions take 30-60 minutes
 		wai_mission_fuel 			= ((1 + round(random 9)) / 10);		// fuel inside mission spawned vehicles (10 - 100%)
 		wai_crates                	= ["TKSpecialWeapons_EP1","UNBasicAmmunitionBox_EP1","CZBasicWeapons_EP1","TKVehicleBox_EP1","USVehicleBox_EP1","USBasicAmmunitionBox_EP1","GERBasicWeapons_EP1","GuerillaCacheBox_EP1","TKOrdnanceBox_EP1","USSpecialWeapons_EP1","SpecialWeaponsBox"];

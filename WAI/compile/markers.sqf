@@ -1,9 +1,16 @@
 if(isServer) then {
 
-	private ["_dot","_position","_marker","_name"];
+	private ["_color","_dot","_position","_marker","_name"];
 	_position 	= _this select 0;
 	_name 		= _this select 1;
+	_type		= _this select 2;
 
+	switch (_type) do {
+		case "Bandit":	{ _color = "ColorRed"; };
+		case "Hero":	{ _color = "ColorGreen"; };
+		case "":		{ _color = "ColorBlack"; };
+	};
+	if (isNil "_color") then { _color = "ColorBlack"; };
 	_marker 	= "";
 	_dot 		= "";
 	markerready = false;
@@ -11,7 +18,7 @@ if(isServer) then {
 	while {missionrunning} do {
 
 		_marker 		= createMarker ["Mission", _position];
-		_marker 		setMarkerColor "ColorRed";
+		_marker 		setMarkerColor _color;
 		_marker 		setMarkerShape "ELLIPSE";
 		_marker 		setMarkerBrush "Solid";
 		_marker 		setMarkerSize [300,300];
