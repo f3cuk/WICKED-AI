@@ -1,7 +1,12 @@
-# Current version 2.0.0
+# Current version 2.0.1
 
 Type | Description
 ------------: | -------------
+`bug` | Fixed bug with nightvision on paratroops
+`bug` | Fixed bug with roadflare on mission succes
+ | 
+Version | **2.0.0**
+ | 
 `enhancement` | Major code overhaul and folder structure change
 `feature` | Added possibility of rotating static mission per map
 `feature` | Added possibility of tanktrapping missions @f3cuk / @nerdalertk
