@@ -10,6 +10,8 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - 
 
 ### Changelog
+- 19-08-2014 : Dynamic box bugfixes
+- 19-08-2014 : Overhauled vehicle spawn and hive save methods
 - 18-08-2014 : Vehicles now only save to DB if a player enters it
 - 18-08-2014 : Marker colors now reflect mission difficulty
 - 18-08-2014 : Hero/Bandit AI Support added

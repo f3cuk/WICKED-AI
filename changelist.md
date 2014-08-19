@@ -2,6 +2,9 @@
 
 Type | Description
 ------------: | -------------
+`bug` | Fixed typos in dynamic ammo box, ItemEpinephin(e) and trying to spawn ItemKeyKit as magazine @Jossy
+`enhancement` | Map markers now clear once mission is cleared @Jossy
+`enhancement` | Cleaned up the vehicle spawn code, vehicles now generate damage taken during fire @Jossy
 `enhancement` | Vehicle hive save method changed to a GetIn eventhandler @Jossy
 `enhancement` | Changed mission marker colors to resemble mission difficulty @Jossy
 `feature` | Added Hero and Bandit AI support @Jossy
