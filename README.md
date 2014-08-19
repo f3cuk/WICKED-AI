@@ -1,23 +1,13 @@
-WICKED AI 2.0.1
+WICKED AI 2.1.0
 ==============
 
-As I really like (read love) the WAI missions and support for them has gone in the latest patched, I decided to dust off the old files and start making these properly 1.0.5+ compatible. It started with a few minor bugfixes and some custom loadout and then turned into a proper redo with awesome help of the - very much alive - mod community!
+Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.5+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.0.1
-- Namechange to **WICKED AI**
-- Major code overhaul and folder structure change
-- Better anti vehicle abuse protection
-- Different mission types
-- Nightvision AI
-- More settings for admins to better finetune
-- [And much more](https://github.com/f3cuk/WAI-ZOMBIELAND/blob/Testbranch/changelist.md)
+### Release 2.1.0
+- 
 
-### Upcoming in 2.1.0+
-- Bandit and hero missions
-- More missions
-- C130 will be back (and better then ever)
-- Multi mission support
-- Better markers
+### Upcoming in 2.2.0+
+- 
 
 ### Changelog
 - 17-08-2014 : Major update to 2.0.1
@@ -35,9 +25,8 @@ As I really like (read love) the WAI missions and support for them has gone in t
  
 ### Versioning
 
-For transparency into our release cycle and in striving to maintain backward compatibility, Bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes we screw up, but we'll adhere to those rules whenever possible.
+For transparency into our release cycle and in striving to maintain backward compatibility, bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes we screw up, but we'll adhere to those rules whenever possible.
 
-### Creators
-**f3cuk** - Lead developer
-
-**nerdalertdk / itsatrap** - Helping hand
+### Dev team
+- Lead developer **f3cuk**
+- Helping hand **nerdalertdk / itsatrap** - 
