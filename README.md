@@ -10,6 +10,9 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - 
 
 ### Changelog
+- 18-08-2014 : Vehicles now only save to DB if a player enters it
+- 18-08-2014 : Marker colors now reflect mission difficulty
+- 18-08-2014 : Hero/Bandit AI Support added
 - 17-08-2014 : Major update to 2.0.1
 - 13-08-2014 : Added anti abuse options
 - 12-08-2014 : Normalization update
