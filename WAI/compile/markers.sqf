@@ -11,15 +11,15 @@ if(isServer) then {
 	markerready = false;
 	_color		= "ColorBlack";
 	
-	switch (_difficulty) do {
-		case "Easy":	{_color = "ColorGreen"};
-		case "Medium":	{_color = "ColorYellow"};
-		case "Hard":	{_color = "ColorOrange"};
-		case "Extreme": {_color = "ColorRed"};
+	call {
+		if (_difficulty == "Easy")		exitWith {_color = "ColorGreen"};
+		if (_difficulty == "Medium")	exitWith {_color = "ColorYellow"};
+		if (_difficulty == "Hard")		exitWith {_color = "ColorOrange"};
+		if (_difficulty == "Extreme") 	exitWith {_color = "ColorRed"};
 	};
-	switch (_type) do {
-		case "Bandit":	{ _name = "[B] " + _name; };
-		case "Hero":	{ _name = "[H] " + _name; };
+	call {
+		if (_type == "Bandit")	exitWith { _name = "[B] " + _name; };
+		if (_type == "Hero")	exitWith { _name = "[H] " + _name; };
 	};
 
 
