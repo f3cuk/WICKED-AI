@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_aicskill","_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 			= _this select 0;
 	_startingpos 		= _this select 1;
@@ -83,7 +83,7 @@ if (isServer) then {
 	} forEach (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
-	[_helicopter] spawn veh_monitor;
+	[_helicopter] spawn vehicle_monitor;
 
 	_unitGroup allowFleeing 0;
 	_unitGroup setBehaviour "AWARE";
