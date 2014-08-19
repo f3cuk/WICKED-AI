@@ -18,11 +18,8 @@ if(isServer) then {
 	_veh 			= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
 	_vehdir 		= round(random 360);
 	_veh 			setDir _vehdir;
-	_veh 			setVariable ["ObjectID","1",true];
-
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_veh];
-	_objPosition 	= getPosATL _veh;
-
+	[_veh,true] 	call custom_publish;
+	
 	diag_log format["WAI: Mission Armed Vehicle spawned a %1",_vehname];
 
 	//Troops
@@ -70,8 +67,6 @@ if(isServer) then {
 	if (_playerPresent) then {
 
 		[0] call mission_type;
-
-		[_veh,[_vehdir,_objPosition],_vehclass,true,"0"] call custom_publish;
 
 		[_box,"Survivors have secured the armed vehicle!"] call mission_succes;
 

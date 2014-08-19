@@ -1,65 +1,56 @@
 if (isServer) then {
 
-	if(wai_keep_vehicles) then {
+	private ["_object","_worldspace","_location","_dir","_class","_uid","_dam","_hitpoints","_selection","_array","_damage","_fuel","_key","_totaldam","_spawnDMG","_characterID"];
 
-		private ["_object","_worldspace","_location","_dir","_class","_uid","_dam","_hitpoints","_selection","_array","_damage","_fuel","_key","_totaldam","_spawnDMG","_characterID"];
+	_object 			= _this select 0;
+	_spawnDMG 			= _this select 1;
+	_class 				= typeOf _object;
 
-		_object 			= _this select 0;
-		_worldspace 		= _this select 1;
-		_class 				= _this select 2;
-		_spawnDMG 			= _this select 3;
-		_characterID 		= _this select 4;
+	_fuel 				= 1;
+	_damage 			= 0;
+	_array 				= [];
 
-		_fuel 				= 1;
-		_damage 			= 0;
-		_array 				= [];
+	if (_spawnDMG) then { 
+		_fuel = 0;
+		if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
 
-		_object setVariable ["CharacterID", _characterID, true];
+			// Create randomly damaged parts
+		
+			_totaldam = 0;
+			_hitpoints = _object call vehicle_getHitpoints;
+			{
+				// generate damage on all parts
+				_dam = call generate_new_damage;
 
-		if (_spawnDMG) then { 
-			_fuel = 0;
-			if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
-
-				// Create randomly damaged parts
-			
-				_totaldam = 0;
-				_hitpoints = _object call vehicle_getHitpoints;
-				{
-					// generate damage on all parts
-					_dam = call generate_new_damage;
-
-					_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
-					
-					if (_dam > 0) then {
-						_array set [count _array,[_selection,_dam]];
-						_totaldam = _totaldam + _dam;
-					};
-				} forEach _hitpoints;
+				_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
 				
+				if (_dam > 0) then {
+					_array set [count _array,[_selection,_dam]];
+					_totaldam = _totaldam + _dam;
+				};
+			} forEach _hitpoints;
 
-				// just set low base dmg - may change later
-				_damage = 0;
-				_fuel = wai_mission_fuel;
-			};
+			// just set low base dmg - may change later
+			_damage = 0;
+			_fuel = wai_mission_fuel;
+			diag_log("WAI FUEL: " +str(_fuel));
 		};
-		
-		{
-			_selection = _x select 0;
-			_dam = _x select 1;
+	};
 
-			if (_selection in dayZ_explosiveParts and _dam > 0.8) then {
-				_dam = 0.8
-			};
+	clearWeaponCargoGlobal _object;
+	clearMagazineCargoGlobal _object;
+	_object setVariable ["ObjectID","1",true];
+	_object setVariable ["CharacterID","0",true];
+	
+	_object setFuel _fuel;
+	_object setvelocity [0,0,1];
+	_object setVectorUp surfaceNormal position _object;
+	
+	_object addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
+	
+	PVDZE_serverObjectMonitor	set [count PVDZE_serverObjectMonitor,_object];
 
-			[_object,_selection,_dam] call object_setFixServer;
-
-		} forEach _array;
-		
-		_object setVariable ["damagearray", _array, true];
-				
-		_object setFuel _fuel;
-		_object setvelocity [0,0,1];
-		_object setVectorUp surfaceNormal position _object;
+	if(wai_keep_vehicles) then {
 		
 		_object addEventHandler ["GetIn", {
 			_object = _this select 0;
@@ -68,7 +59,15 @@ if (isServer) then {
 			_damage = 0;
 			_characterID = _object getVariable ["CharacterID", "0"];
 			_worldspace = [getDir _object, getPosATL _object];
-			_array = _object getVariable ["damagearray", []];
+			_hitpoints = _object call vehicle_getHitpoints;
+			_damage = damage _object;
+			_array = [];
+			{
+				_hit = [_object,_x] call object_getHit;
+				_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
+				if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+				_object setHit ["_selection", _hit];
+			} count _hitpoints;
 			_fuel = fuel _object;
 			_uid = _worldspace call dayz_objectUID2;
 
@@ -77,7 +76,7 @@ if (isServer) then {
 			diag_log ("HIVE: WRITE: "+ str(_key));
 			_key call server_hiveWrite;
 
-			PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
+			//PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
 			
 			[_object,_uid,_fuel,_damage,_array,_characterID,_class] spawn {
 
@@ -126,7 +125,6 @@ if (isServer) then {
 				_object setVariable ["lastUpdate",time];
 
 				_object call fnc_veh_ResetEH;
-
 				PVDZE_veh_Init = _object;
 				publicVariable "PVDZE_veh_Init";
 

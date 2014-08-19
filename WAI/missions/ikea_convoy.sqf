@@ -20,31 +20,21 @@ if(isServer) then {
 	_veh 						= createVehicle [_vehclass,[(_position select 0) - 15,(_position select 1),0], [], 0, "CAN_COLLIDE"];
 	_vehdir 					= round(random 360);
 	_veh 						setDir _vehdir;
-	clearWeaponCargoGlobal 		_veh;
-	clearMagazineCargoGlobal 	_veh;
-	_veh 						setVariable ["ObjectID","1",true];
-	PVDZE_serverObjectMonitor	set [count PVDZE_serverObjectMonitor,_veh];
-	_objPosition 				= getPosATL _veh;
+	[_veh,true] 				call custom_publish;
 
 	diag_log format["WAI: Mission Convoy spawned a %1",_vehclass];
 
 	_veh2 						= createVehicle [_vehclass2,[(_position select 0) + 15,(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_vehdir 					= round(random 360);
 	_veh2 						setDir _vehdir;
-	clearWeaponCargoGlobal 		_veh2;
-	clearMagazineCargoGlobal 	_veh2;
-	_veh2 						setVariable ["ObjectID","1",true];
-	PVDZE_serverObjectMonitor 	set [count PVDZE_serverObjectMonitor,_veh2];
-	_objPosition2				= getPosATL _veh2;
+	[_veh2,true] 				call custom_publish;
 
 	diag_log format["WAI: Mission Convoy spawned a %1",_vehclass2];
 
 	_veh3 						= createVehicle [_vehclass3,[(_position select 0) + 30,(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_vehdir 					= round(random 360);
 	_veh3 						setDir _vehdir;
-	clearWeaponCargoGlobal 		_veh3;
-	clearMagazineCargoGlobal 	_veh3;
-	_veh3 						setVariable ["ObjectID","1",true];
-	PVDZE_serverObjectMonitor 	set [count PVDZE_serverObjectMonitor,_veh3];
-	_objPosition3 				= getPosATL _veh3;
+	[_veh3,true] 				call custom_publish;
 
 	diag_log format["WAI: Mission convoy spawned a %1",_vehclass3];
 
@@ -108,10 +98,6 @@ if(isServer) then {
 	if (_playerPresent) then {
 
 		[0] call mission_type;
-
-		[_veh,[_vehdir,_objPosition],_vehclass,true,"0"] 		call custom_publish;
-		[_veh2,[_vehdir,_objPosition2],_vehclass2,true,"0"] 	call custom_publish;
-		[_veh3,[_vehdir,_objPosition3],_vehclass3,true,"0"] 	call custom_publish;
 
 		[_box,"Survivors have secured the building supplies!",[_tanktraps,_mines]] call mission_succes;
 
