@@ -33,7 +33,6 @@ if (isServer) then {
 			// just set low base dmg - may change later
 			_damage = 0;
 			_fuel = wai_mission_fuel;
-			diag_log("WAI FUEL: " +str(_fuel));
 		};
 	};
 
