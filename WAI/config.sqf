@@ -69,6 +69,8 @@ if(isServer) then {
 		wai_crates                	= ["TKSpecialWeapons_EP1","UNBasicAmmunitionBox_EP1","CZBasicWeapons_EP1","TKVehicleBox_EP1","USVehicleBox_EP1","USBasicAmmunitionBox_EP1","GERBasicWeapons_EP1","GuerillaCacheBox_EP1","TKOrdnanceBox_EP1","USSpecialWeapons_EP1","SpecialWeaponsBox"];
 		wai_crates_smoke 			= true;								// pop smoke on crate when mission is finished
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
+		wai_min_damage				= 50;								// minimum damage in % to spawn vehicles with
+		wai_max_damage				= 100;								// maximum damage in % to spawn vehicles with
 		wai_players_online       	= 1; 								// number of players online before misson starts
 		wai_server_fps            	= 5; 								// missions only starts if server FPS is over wai_server_fps
 		wai_enable_tank_traps		= true;								// enable the possibility of using tanktraps to better defend a mission

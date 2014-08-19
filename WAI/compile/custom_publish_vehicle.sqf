@@ -1,73 +1,76 @@
 if (isServer) then {
 
-	private ["_object","_worldspace","_location","_dir","_class","_uid","_dam","_hitpoints","_selection","_array","_damage","_fuel","_key","_totaldam","_spawnDMG","_characterID"];
+	private ["_vehicle","_position_fixed","_object","_position","_dir","_class","_uid","_dam","_hitpoints","_selection","_array","_fuel","_key","_totaldam","_spawnDMG","_characterID"];
 
-	_object 			= _this select 0;
-	_spawnDMG 			= _this select 1;
-	_class 				= typeOf _object;
-
-	_fuel 				= 1;
-	_damage 			= 0;
-	_array 				= [];
-
-	if (_spawnDMG) then { 
-		_fuel = 0;
-		if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
-
-			// Create randomly damaged parts
-		
-			_totaldam = 0;
-			_hitpoints = _object call vehicle_getHitpoints;
-			{
-				// generate damage on all parts
-				_dam = call generate_new_damage;
-
-				_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
-				
-				if (_dam > 0) then {
-					_array set [count _array,[_selection,_dam]];
-					_totaldam = _totaldam + _dam;
-				};
-			} forEach _hitpoints;
-
-			// just set low base dmg - may change later
-			_damage = 0;
-			_fuel = wai_mission_fuel;
-		};
+	_classnames = _this select 0;
+	if (typeName(_classnames) == "ARRAY") then {
+		_class = _classnames call BIS_fnc_selectRandom;
+	} else {
+		_class = _classnames;
 	};
+	_position = _this select 1;
+	_count = count _this;
 
-	clearWeaponCargoGlobal _object;
-	clearMagazineCargoGlobal _object;
-	_object setVariable ["ObjectID","1",true];
-	_object setVariable ["CharacterID","0",true];
+	if(_count > 2) then {
+		_position_fixed = _this select 2;
+		if(_count > 3) then {
+			_dir = _this select 3;
+		} else {
+			_dir = floor(round(random 360));
+		};
+	} else {
+		_position_fixed = false;
+		_dir = floor(round(random 360));
+	};
 	
-	_object setFuel _fuel;
-	_object setvelocity [0,0,1];
-	_object setVectorUp surfaceNormal position _object;
+	if (!_position_fixed) then { _position = _position findEmptyPosition [0,25,_class]; };
 	
-	_object addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
+	_vehicle = createVehicle [_class,_position, [], 0, "FORM"];
 	
-	PVDZE_serverObjectMonitor	set [count PVDZE_serverObjectMonitor,_object];
+	_vehicle setVariable ["ObjectID","1",true];
+	_vehicle setVariable ["CharacterID","0",true];
+	
+	clearWeaponCargoGlobal _vehicle;
+	clearMagazineCargoGlobal _vehicle;
+	
+	_fuel = 0;
+	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
+		_totaldam = 0;
+		_hitpoints = _vehicle call vehicle_getHitpoints;
+		{
+			_dam = (wai_min_damage + random(wai_max_damage - wai_min_damage)) / 100;
+			_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
+			if (_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};			
+			[_vehicle, _selection, _dam] call vehicle_handleDamage;
+		} forEach _hitpoints;
+		_fuel = wai_mission_fuel;
+	};
+	
+	_vehicle setFuel _fuel;
+	_vehicle setvelocity [0,0,1];
+	_vehicle setVectorUp surfaceNormal position _vehicle;
+	
+	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
+	
+	PVDZE_serverObjectMonitor	set [count PVDZE_serverObjectMonitor,_vehicle];
 
 	if(wai_keep_vehicles) then {
 		
-		_object addEventHandler ["GetIn", {
-			_object = _this select 0;
-			diag_log ("PUBLISH: Attempt " + str(_object));
-			_class = typeOf _object;
-			_damage = 0;
-			_characterID = _object getVariable ["CharacterID", "0"];
-			_worldspace = [getDir _object, getPosATL _object];
-			_hitpoints = _object call vehicle_getHitpoints;
-			_damage = damage _object;
+		_vehicle addEventHandler ["GetIn", {
+			_vehicle = _this select 0;
+			diag_log ("PUBLISH: Attempt " + str(_vehicle));
+			_class = typeOf _vehicle;
+			_characterID = _vehicle getVariable ["CharacterID", "0"];
+			_worldspace = [getDir _vehicle, getPosATL _vehicle];
+			_hitpoints = _vehicle call vehicle_getHitpoints;
+			_damage = damage _vehicle;
 			_array = [];
 			{
-				_hit = [_object,_x] call object_getHit;
-				_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
+				_hit = [_vehicle,_x] call object_getHit;
+				_selection = getText (configFile >> "CfgVehicles" >> (typeOf _vehicle) >> "HitPoints" >> _x >> "name");
 				if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
-				_object setHit ["_selection", _hit];
 			} count _hitpoints;
-			_fuel = fuel _object;
+			_fuel = fuel _vehicle;
 			_uid = _worldspace call dayz_objectUID2;
 
 			_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, _damage , _characterID, _worldspace, [], _array, _fuel,_uid];
@@ -77,11 +80,11 @@ if (isServer) then {
 
 			//PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
 			
-			[_object,_uid,_fuel,_damage,_array,_characterID,_class] spawn {
+			[_vehicle,_uid,_fuel,_damage,_array,_characterID,_class] spawn {
 
-				private["_object","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_selection","_dam","_class"];
+				private["_vehicle","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_selection","_dam","_class"];
 
-				_object 		= _this select 0;
+				_vehicle 		= _this select 0;
 				_uid 			= _this select 1;
 				_fuel 			= _this select 2;
 				_damage 		= _this select 3;
@@ -92,7 +95,6 @@ if (isServer) then {
 				_retry 			= 0;
 
 				while {_retry < 10} do {
-					
 					sleep 1;
 					_key 		= format["CHILD:388:%1:",_uid];
 					_result 	= _key call server_hiveReadWrite;
@@ -101,30 +103,25 @@ if (isServer) then {
 
 					if (_outcome == "PASS") then {
 						_oid 	= _result select 1;
-						_object setVariable ["ObjectID", _oid, true];
-
+						_vehicle setVariable ["ObjectID", _oid, true];
 						diag_log("CUSTOM: Selected " + str(_oid));
-
 						_done 	= true;
 						_retry 	= 100;
-
 					} else {
-
 						diag_log("CUSTOM: trying again to get id for: " + str(_uid));
-
 						_done 	= false;
 						_retry 	= _retry + 1;
 					};
 				};
 
 				if(!_done) exitWith { 
-					deleteVehicle _object; diag_log("CUSTOM: failed to get id for : " + str(_uid));
+					deleteVehicle _vehicle; diag_log("CUSTOM: failed to get id for : " + str(_uid));
 				};
 
-				_object setVariable ["lastUpdate",time];
+				_vehicle setVariable ["lastUpdate",time];
 
-				_object call fnc_veh_ResetEH;
-				PVDZE_veh_Init = _object;
+				_vehicle call fnc_veh_ResetEH;
+				PVDZE_veh_Init = _vehicle;
 				publicVariable "PVDZE_veh_Init";
 
 				diag_log ("PUBLISH: Created " + (_class) + " with ID " + str(_uid));

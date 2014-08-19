@@ -9,18 +9,13 @@ if(isServer) then {
 	diag_log 		format["WAI: Mission Armed Chopper Started At %1",_position];
 
 	//Sniper Gun Box
-	_box 		= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-	[_box] 		call Sniper_Gun_Box;
+	_box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+	[_box] 			call Sniper_Gun_Box;
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
-	_vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-
-	_veh 			= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
-	_vehdir 		= round(random 360);
-	_veh 			setDir _vehdir;
-	[_veh,true] 	call custom_publish;
-	
+	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
+	[_vehclass,_position] call custom_publish;
 	diag_log format["WAI: Mission Armed Chopper spawned a %1",_vehname];
 	
 	// deploy roadkill defense (or not)

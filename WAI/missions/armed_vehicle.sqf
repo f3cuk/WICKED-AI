@@ -6,20 +6,15 @@ if(isServer) then {
 	
 	diag_log 		format["WAI: Mission Armed Vehicle Started At %1",_position];
 
-	_vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
-	_vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-
 	//Chain Bullet Box
 	_crate_type 	= wai_crates call BIS_fnc_selectRandom;
 	_box 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 	[_box] call chain_bullet_box;
 
 	//Armed Land Vehicle
-	_veh 			= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
-	_vehdir 		= round(random 360);
-	_veh 			setDir _vehdir;
-	[_veh,true] 	call custom_publish;
-	
+	_vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
+	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
+	[_vehclass,_position] call custom_publish;
 	diag_log format["WAI: Mission Armed Vehicle spawned a %1",_vehname];
 
 	//Troops
