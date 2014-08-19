@@ -2,6 +2,9 @@
 
 Type | Description
 ------------: | -------------
+`enhancement` | Vehicle hive save method changed to a GetIn eventhandler @Jossy
+`enhancement` | Changed mission marker colors to resemble mission difficulty @Jossy
+`feature` | Added Hero and Bandit AI support @Jossy
 `bug` | Fixed bug with nightvision on paratroops
 `bug` | Fixed bug with roadflare on mission succes
  | 
