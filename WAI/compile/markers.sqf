@@ -36,7 +36,10 @@ if(isServer) then {
 		_dot 			setMarkerType "mil_dot";
 		_dot 			setMarkerText _name;
 
-		sleep 30;
+		for "_i" from 0 to 30 do {
+			sleep 1;
+			if !(missionrunning) exitWith {};
+		};
 
 		deleteMarker 	_marker;
 		deleteMarker 	_dot;
