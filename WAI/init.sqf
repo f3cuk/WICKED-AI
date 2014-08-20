@@ -41,7 +41,7 @@ if(isServer) then {
 		ExecVM "\z\addons\dayz_server\WAI\static\init.sqf";
 	};
 	
-	if (ai_mission_system) then {
+	if (wai_mission_system) then {
 		ExecVM "\z\addons\dayz_server\WAI\missions\init.sqf";
 	};
 
