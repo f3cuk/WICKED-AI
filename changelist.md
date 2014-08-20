@@ -3,7 +3,13 @@
 Type | Description
 ------------: | ------------
 `bug` | Fixed bug with tanktraps not disappearing on MV-22 mission
+ | 
+Version | **2.0.2**
+ | 
 `bug` | Fixed bug with nightvision on paratroops
+ | 
+Version | **2.0.1**
+ | 
 `bug` | Fixed bug with roadflare on mission succes
  | 
 Version | **2.0.0**
