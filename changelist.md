@@ -1,7 +1,8 @@
-# Current version 2.0.1
+# Current version 2.0.3
 
 Type | Description
-------------: | -------------
+------------: | ------------
+`bug` | Fixed bug with tanktraps not disappearing on MV-22 mission
 `bug` | Fixed bug with nightvision on paratroops
 `bug` | Fixed bug with roadflare on mission succes
  | 
