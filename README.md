@@ -1,4 +1,4 @@
-WICKED AI 2.0.2
+WICKED AI 2.0.3
 ==============
 
 As I really like (read love) the WAI missions and support for them has gone in the latest patched, I decided to dust off the old files and start making these properly 1.0.5+ compatible. It started with a few minor bugfixes and some custom loadout and then turned into a proper redo with awesome help of the - very much alive - mod community!
@@ -20,8 +20,9 @@ As I really like (read love) the WAI missions and support for them has gone in t
 - Better markers
 
 ### Version history
+- 20-08-2014 : Minor bugfixes (2.0.3)
 - 19-08-2014 : Minor bugfixes (2.0.2)
-- 17-08-2014 : Minor bufixes (2.0.1)
+- 17-08-2014 : Minor bugfixes (2.0.1)
 - 17-08-2014 : Major update to (2.0.0)
 - 13-08-2014 : Added anti abuse options (1.9.3)
 - 12-08-2014 : Normalization update (1.9.2)
