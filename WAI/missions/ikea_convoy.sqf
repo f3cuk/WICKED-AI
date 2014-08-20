@@ -16,7 +16,7 @@ if(isServer) then {
 	_vehclass 		= cargo_trucks call BIS_fnc_selectRandom;
 	[_vehclass,_position] call custom_publish;
 	diag_log format["WAI: Mission Convoy spawned a %1",_vehclass];
-	
+
 	// Refuel Truck
 	_vehclass2 		= refuel_trucks call BIS_fnc_selectRandom;
 	[_vehclass2,_position] call custom_publish;

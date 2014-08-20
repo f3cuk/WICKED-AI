@@ -65,11 +65,12 @@ if(isServer) then {
 
 		wai_mission_timer 			= (300 + round(random 600)); 		// time between missions 5-15 minutes
 		wai_mission_timeout 		= (1800 + round(random 1800)); 		// time each missions take 30-60 minutes
-		wai_mission_fuel 			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
+		wai_mission_fuel 			= ((1 + round(random 9)) / 10);		// fuel inside mission spawned vehicles (10 - 100%)
 		wai_crates                	= ["TKSpecialWeapons_EP1","UNBasicAmmunitionBox_EP1","CZBasicWeapons_EP1","TKVehicleBox_EP1","USVehicleBox_EP1","USBasicAmmunitionBox_EP1","GERBasicWeapons_EP1","GuerillaCacheBox_EP1","TKOrdnanceBox_EP1","USSpecialWeapons_EP1","SpecialWeaponsBox"];
 		wai_crates_smoke 			= true;								// pop smoke on crate when mission is finished
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
-		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
+		wai_min_damage				= 50;								// minimum damage in % to spawn vehicles with
+		wai_max_damage				= 100;								// maximum damage in % to spawn vehicles with
 		wai_players_online       	= 1; 								// number of players online before misson starts
 		wai_server_fps            	= 5; 								// missions only starts if server FPS is over wai_server_fps
 		wai_enable_tank_traps		= true;								// enable the possibility of using tanktraps to better defend a mission

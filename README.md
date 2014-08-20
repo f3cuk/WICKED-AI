@@ -10,7 +10,6 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - 
 
 ### Changelog
-- 19-08-2014 : Added dynamic vehicle damage numbers in config
 - 19-08-2014 : Dynamic box bugfixes
 - 19-08-2014 : Overhauled vehicle spawn and hive save methods
 - 18-08-2014 : Vehicles now only save to DB if a player enters it
