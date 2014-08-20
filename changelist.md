@@ -1,7 +1,10 @@
-# Current version 2.0.3
+# Current version 2.0.4
 
 Type | Description
 ------------: | ------------
+`bug` | Fixed bug with tanktraps not disappearing on Ikea mission
+ | 
+Version | **2.0.3**
 `bug` | Fixed bug with tanktraps not disappearing on MV-22 mission
  | 
 Version | **2.0.2**
