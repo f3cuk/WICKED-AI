@@ -70,10 +70,6 @@ if(isServer) then {
 	//Heli Para Drop
 	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Random","Random",false] spawn heli_para;
 
-	if(wai_enable_tank_traps) then {
-		[_position] call tank_traps;
-	};
-
 	[_position,"[Hard] Disabled Convoy"] execVM wai_marker;
 	
 	[nil,nil,rTitleText,"An Ikea delivery has been hijacked by bandits, take over the convoy and the building supplies are yours!", "PLAIN",10] call RE;
