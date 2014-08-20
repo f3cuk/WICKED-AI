@@ -65,10 +65,11 @@ if(isServer) then {
 
 		wai_mission_timer 			= (300 + round(random 600)); 		// time between missions 5-15 minutes
 		wai_mission_timeout 		= (1800 + round(random 1800)); 		// time each missions take 30-60 minutes
-		wai_mission_fuel 			= ((1 + round(random 9)) / 10);		// fuel inside mission spawned vehicles (10 - 100%)
+		wai_mission_fuel 			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
 		wai_crates                	= ["TKSpecialWeapons_EP1","UNBasicAmmunitionBox_EP1","CZBasicWeapons_EP1","TKVehicleBox_EP1","USVehicleBox_EP1","USBasicAmmunitionBox_EP1","GERBasicWeapons_EP1","GuerillaCacheBox_EP1","TKOrdnanceBox_EP1","USSpecialWeapons_EP1","SpecialWeaponsBox"];
 		wai_crates_smoke 			= true;								// pop smoke on crate when mission is finished
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
+		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
 		wai_players_online       	= 1; 								// number of players online before misson starts
 		wai_server_fps            	= 5; 								// missions only starts if server FPS is over wai_server_fps
 		wai_enable_tank_traps		= true;								// enable the possibility of using tanktraps to better defend a mission
@@ -88,12 +89,12 @@ if(isServer) then {
 		civil_vehicles 				= ["hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open_EP1","SUV_Blue","SUV_Camo","SUV_Charcoal","SUV_Green","SUV_Orange","SUV_Pink","SUV_Red","SUV_Silver","SUV_TK_CIV_EP1","SUV_White","SUV_Yellow"];
 
 		// Dynamic box array
-		box_tools 					= ["Binocular","Binocular_Vector","ItemCompass","ItemCrowbar","ItemEtool","ItemFishingPole","ItemFlashlightRed","ItemGPS","ItemHatchet_DZE","ItemKnife","ItemMachete","ItemMatchbox_DZE","ItemToolbox","NVGoggles"];
-		box_items 					= ["FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemBandage","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked","ItemAntibiotic","ItemBloodbag","ItemEpinephrin","ItemHeatPack","ItemMorphine","ItemGoldBar","ItemGoldBar10oz","CinderBlocks","ItemCanvas","ItemComboLock","ItemKeyKit","ItemLightBulb","ItemLockbox","ItemSandbag","ItemTankTrap","ItemWire","MortarBucket","PartEngine","PartFueltank","PartGeneric","PartGlass","PartPlankPack","PartVRotor","PartWheel","PartWoodPile"];
+		box_tools 					= ["ItemKeyKit","Binocular","Binocular_Vector","ItemCompass","ItemCrowbar","ItemEtool","ItemFishingPole","ItemFlashlightRed","ItemGPS","ItemHatchet_DZE","ItemKnife","ItemMachete","ItemMatchbox_DZE","ItemToolbox","NVGoggles"];
+		box_items 					= ["FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemBandage","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked","ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine","ItemGoldBar","ItemGoldBar10oz","CinderBlocks","ItemCanvas","ItemComboLock","ItemLightBulb","ItemLockbox","ItemSandbag","ItemTankTrap","ItemWire","MortarBucket","PartEngine","PartFueltank","PartGeneric","PartGlass","PartPlankPack","PartVRotor","PartWheel","PartWoodPile"];
 		box_food					= ["FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked"];
-		box_buildables				= ["CinderBlocks","ItemCanvas","ItemComboLock","ItemKeyKit","ItemLightBulb","ItemLockbox","ItemSandbag","ItemTankTrap","ItemWire","MortarBucket","PartPlankPack","PartWoodPile"];
+		box_buildables				= ["CinderBlocks","ItemCanvas","ItemComboLock","ItemLightBulb","ItemLockbox","ItemSandbag","ItemTankTrap","ItemWire","MortarBucket","PartPlankPack","PartWoodPile"]; // ItemKeyKit removed, is not magazine
 		box_vehicle_repair			= ["PartEngine","PartFueltank","PartGeneric","PartGlass","PartVRotor","PartWheel"];
-		box_medical					= ["ItemAntibiotic","ItemBloodbag","ItemEpinephrin","ItemHeatPack","ItemMorphine"];
+		box_medical					= ["ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine"];
 		box_random					= [box_tools,box_items,box_food,box_buildables,box_vehicle_repair,box_medical];
 
 	/* END WAI MISSIONS CONFIG */

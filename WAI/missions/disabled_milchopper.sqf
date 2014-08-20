@@ -9,23 +9,13 @@ if(isServer) then {
 	diag_log 		format["WAI: Mission Armed Chopper Started At %1",_position];
 
 	//Sniper Gun Box
-	_box 		= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-	[_box] 		call Sniper_Gun_Box;
+	_box 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+	[_box] 			call Sniper_Gun_Box;
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
-	_vehname		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
-
-	_veh 			= createVehicle [_vehclass,_position, [], 0, "CAN_COLLIDE"];
-	_vehdir 		= round(random 360);
-	_veh 			setDir _vehdir;
-	clearWeaponCargoGlobal 		_veh;
-	clearMagazineCargoGlobal 	_veh;
-	_veh 			setVariable ["ObjectID","1",true];
-	
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_veh];
-	_objPosition = getPosATL _veh;
-
+	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
+	[_vehclass,_position] call custom_publish;
 	diag_log format["WAI: Mission Armed Chopper spawned a %1",_vehname];
 	
 	// deploy roadkill defense (or not)
@@ -85,8 +75,6 @@ if(isServer) then {
 	if (_playerPresent) then {
 
 		[0] call mission_type;
-
-		[_veh,[_vehdir,_objPosition],_vehclass,true,"0"] call custom_publish;
 
 		[_box,"Survivors have secured the armed chopper!",[_tanktraps,_mines]] call mission_succes;	
 
