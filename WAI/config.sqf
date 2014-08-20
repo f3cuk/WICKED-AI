@@ -13,8 +13,6 @@ if(isServer) then {
 
 	/* AI CONFIG */
 
-		ai_mission_system 			= true;			// use built in mission system
-		
 		ai_clear_body 				= false;		// instantly clear bodies
 		ai_clean_dead 				= true;			// clear bodies after certain amount of time
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
@@ -61,6 +59,8 @@ if(isServer) then {
 	/* END AI CONFIG */
 
 	/* WAI MISSIONS CONFIG */
+	
+		wai_mission_system 		= true;			// use built in mission system
 
 		wai_mission_timer 			= (300 + round(random 600)); 		// time between missions 5-15 minutes
 		wai_mission_timeout 		= (1800 + round(random 1800)); 		// time each missions take 30-60 minutes
