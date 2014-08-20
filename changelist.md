@@ -5,15 +5,12 @@ Type | Description
 `bug` | Fixed bug with tanktraps not disappearing on MV-22 mission
  | 
 Version | **2.0.2**
- | 
 `bug` | Fixed bug with nightvision on paratroops
  | 
 Version | **2.0.1**
- | 
 `bug` | Fixed bug with roadflare on mission succes
  | 
 Version | **2.0.0**
- | 
 `enhancement` | Major code overhaul and folder structure change
 `feature` | Added possibility of rotating static mission per map
 `feature` | Added possibility of tanktrapping missions @f3cuk / @nerdalertk
@@ -31,7 +28,6 @@ Version | **2.0.0**
 `bug` | Less chance of AI killing eachother @nerdalertdk
  | 
 Version | **1.9.3**
- | 
 `enhancement` | Normalized the use of Random throughout, when you want something random, use "Random" and not "Random" or ""
 `enhancement` | Implemented custom_ai_skill throughout. In the future use either "easy", "medium", "hard", "extreme" or "Random" to define a skillset. Numeric skillsets will fallback on "Random".
 `enhancement` | Added IsServer checks on all files that could possibly be used in a harmfull manner (will probably roll this out on more files)
@@ -43,15 +39,12 @@ Version | **1.9.3**
 `bug` | Fixed added _aicskill private var vehicle_patrol.sqf
  | 
 Version | **1.9.2**
- | 
 `bug` | Fixed box on medi camp missions
  | 
 Version | **1.9.1**
- | 
 `bug` | Fixed skillset on missions
  | 
 Version | **1.9.0**
- | 
 `new feature` | Added possibility to blacklist certain area's (default set stary)
 `enhancement` | General code cleanup including removal of unused private vars
 `enhancement` | Overhaul making missions more dynamic
@@ -63,7 +56,6 @@ Version | **1.9.0**
 `bug` | Fixed crashed blackhawk with loot crate spawning inside helicopter
  | 
 Version | **1.8.0**
- | 
 `new feature` | Randomized clothes;
 `enhancement` | Customized loot;
 `enhancement` | Tried to nerve the 50 cals a bit, making them less accurate;
