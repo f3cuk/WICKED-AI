@@ -1,16 +1,13 @@
 if (isServer) then {
-
-	private ["_vehicle","_position_fixed","_object","_position","_dir","_class","_uid","_dam","_hitpoints","_selection","_array","_fuel","_key","_totaldam","_spawnDMG","_characterID"];
-
+	private ["_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
+	_count = count _this;
 	_classnames = _this select 0;
+	_position = _this select 1;
 	if (typeName(_classnames) == "ARRAY") then {
 		_class = _classnames call BIS_fnc_selectRandom;
 	} else {
 		_class = _classnames;
 	};
-	_position = _this select 1;
-	_count = count _this;
-
 	if(_count > 2) then {
 		_position_fixed = _this select 2;
 		if(_count > 3) then {
@@ -22,10 +19,12 @@ if (isServer) then {
 		_position_fixed = false;
 		_dir = floor(round(random 360));
 	};
-	
-	if (!_position_fixed) then { _position = _position findEmptyPosition [0,25,_class]; };
-	
+	if (!_position_fixed) then { _position = _position findEmptyPosition [10,25,_class]; };
+
 	_vehicle = createVehicle [_class,_position, [], 0, "FORM"];
+	_vehicle setDir _dir;
+	_vehicle setVectorUp surfaceNormal position _vehicle;
+	_vehicle setvelocity [0,0,1];
 	
 	_vehicle setVariable ["ObjectID","1",true];
 	_vehicle setVariable ["CharacterID","0",true];
@@ -35,20 +34,20 @@ if (isServer) then {
 	
 	_fuel = 0;
 	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
-		_totaldam = 0;
+		_damage = (wai_vehicle_damage select 0) / 100;
+		_vehicle setDamage _damage;
 		_hitpoints = _vehicle call vehicle_getHitpoints;
 		{
-			_dam = (wai_min_damage + random(wai_max_damage - wai_min_damage)) / 100;
+			_dam = ((wai_vehicle_damage select 0) + random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0))) / 100;
 			_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
 			if (_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};			
 			[_vehicle, _selection, _dam] call vehicle_handleDamage;
 		} forEach _hitpoints;
-		_fuel = wai_mission_fuel;
+		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;;
 	};
+	diag_log("WAI: Spawned " +str(_class) + " at " + str(_position) + " with " + str(_fuel) + " fuel and " + str(_damage) + " damage.");
 	
 	_vehicle setFuel _fuel;
-	_vehicle setvelocity [0,0,1];
-	_vehicle setVectorUp surfaceNormal position _vehicle;
 	
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
 	
@@ -129,4 +128,5 @@ if (isServer) then {
 
 		}];
 	};
+	sleep .5;
 };
