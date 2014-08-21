@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
@@ -9,7 +9,13 @@ if (isServer) then {
 	_veh_class 				= _this select 4;
 	_skill 					= _this select 5;
 	_aitype					= _this select 6;
-	
+
+	if (count _this > 7) then {
+		_mission = _this select 7;
+	} else {
+		_mission = false;
+	};
+
 	_skillarray 			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
 	switch (_skill) do {
@@ -24,6 +30,7 @@ if (isServer) then {
 	_unitGroup 				= createGroup east;
 	_pilot 					= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	[_pilot] 				joinSilent _unitGroup;
+	
 	switch (_aitype) do {
 		case "Bandit":	{ _pilot setVariable ["humanity", ai_add_humanity, true]; };
 		case "Hero":	{ _pilot setVariable ["humanity", -ai_remove_humanity, true]; };
@@ -47,14 +54,15 @@ if (isServer) then {
 	_gunner 				assignAsGunner _veh;
 	_gunner 				moveInTurret [_veh,[0]];
 	[_gunner] 				joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _gunner setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
+	
+	call {
+		if (_aitype == "Bandit") exitWith { _gunner setVariable ["humanity", ai_add_humanity, true]; };
+		if (_aitype == "Hero") exitWith	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
 	};
+	
 	{
 		_gunner setSkill [(_x select 0),(_x select 1)];
 	} forEach _aicskill;
-
 
 	ai_vehicle_units = (ai_vehicle_units + 1);
 
@@ -72,7 +80,7 @@ if (isServer) then {
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
 	} forEach (units _unitgroup);
 
-	[_veh] spawn vehicle_monitor;
+	[_veh,_mission] spawn vehicle_monitor;
 
 	_unitGroup 				allowFleeing 0;
 	_unitGroup 				setBehaviour "AWARE";
@@ -92,13 +100,4 @@ if (isServer) then {
 	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100];
 	_wp setWaypointType "CYCLE";
 	_wp setWaypointCompletionRadius 200;
-
-	waitUntil{clean_running_mission};
-
-	if(clean_running_mission) then { 
-		deleteVehicle _veh;
-		deleteVehicle _gunner;
-		deleteVehicle _pilot;
-	};
-
 };

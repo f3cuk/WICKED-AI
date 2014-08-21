@@ -22,7 +22,7 @@ if (isServer) then {
 		if ((_mission) && (clean_running_mission)) then {
 			_veh setDamage 1;
 			_veh setVariable ["killedat", time];
-			deleteVehicle _veh;
+			{deleteVehicle _x;} forEach (crew _veh) + [_veh];
 		};
 		sleep 30;
 	};

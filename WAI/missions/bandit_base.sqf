@@ -58,7 +58,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Random","Random","Bandit",true] call spawn_group;
 	 
 	//Humvee Patrol
-	[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random","Bandit"] spawn vehicle_patrol;
+	[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random","Bandit",true] call vehicle_patrol;
 	 
 	//Turrets
 	[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","Random",0,2,"Random","Random","Bandit",true] call spawn_static;
