@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	private ["_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
@@ -13,26 +13,37 @@ if (isServer) then {
 		case "static" : {ai_emplacement_units = (ai_emplacement_units -1);};
 	};
 
+	_mission = _unit getVariable ["mission", nil];
+	if (!isNil "_mission") then {
+		if (typeName(wai_mission_data select _mission) == "ARRAY") then {
+			wai_mission_data select _mission set [0, ((wai_mission_data select _mission) select 0) - 1];
+		};
+	};
 	_unit setVariable ["killedat", time];
 	_unit removeWeapon "NVGoggles";
 
 	if (isPlayer _player) then {
 
-		private ["_banditkills","_humanity"];
+		private ["_banditkills","_humanity","_humankills"];
 
 		_humanity 		= _player getVariable["humanity",0];
-		_humanitygain	= _unit getVariable["humanity",0];
 		_banditkills 	= _player getVariable["banditKills",0];
 		_humankills 	= _player getVariable["humanKills",0];
 
 		if (ai_humanity_gain) then {
-			_player setVariable ["humanity",(_humanity + _humanitygain),true];
+			call {
+				if (_unit getVariable ["Hero", false]) exitWith { _player setVariable ["humanity",(_humanity - ai_remove_humanity),true]; };
+				if (_unit getVariable ["Bandit", false]) exitWith { _player setVariable ["humanity",(_humanity + ai_add_humanity),true]; };					
+				if (_unit getVariable ["Special", false]) exitWith { if (_humanity < 0) then { _player setVariable ["humanity",(_humanity - ai_special_humanity),true]; } else { _player setVariable ["humanity",(_humanity + ai_special_humanity),true]; }; };
+			};
 		};
 
 		if (ai_kills_gain) then {
-			if (_humanitygain > 0) then {_player setVariable ["banditKills",(_banditkills + 1),true];};
-			if (_humanitygain < 0) then {_player setVariable ["humanKills",(_humankills + 1),true];};
-			
+			if (_unit getVariable ["Hero", false]) then {
+				_player setVariable ["humanKills",(_humankills + 1),true];
+			} else {
+				_player setVariable ["banditKills",(_banditkills + 1),true];
+			};
 		};
 
 		if (ai_clear_body) then {
