@@ -20,7 +20,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],4,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//The President Himself
-	_president = [[_position select 0, _position select 1, 0],1,"Extreme","Random",4,"Random",["Special",500],"Random","Hero",_mission] call spawn_group;
+	_president = [[_position select 0, _position select 1, 0],1,"Extreme","Random",4,"Random","Special","Random",["Hero",500],_mission] call spawn_group;
 
 	//Static mounted guns
 	[[
