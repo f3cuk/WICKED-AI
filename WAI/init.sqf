@@ -29,19 +29,13 @@ if(isServer) then {
 	waitUntil {configloaded};
 		diag_log "WAI: AI Config File Loaded";
 
-	if(use_blacklist) then {
-		safepos				= [getMarkerPos "center",5,7000,30,0,0.5,0,blacklist];
-	} else {
-		safepos				= [getMarkerPos "center",0,5000,30,0,0.5,0];
-	};
-
 	[] spawn ai_monitor;
 
 	if(static_missions) then {
 		ExecVM "\z\addons\dayz_server\WAI\static\init.sqf";
 	};
 	
-	if (ai_mission_system) then {
+	if (wai_mission_system) then {
 		ExecVM "\z\addons\dayz_server\WAI\missions\init.sqf";
 	};
 
