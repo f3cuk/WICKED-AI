@@ -1,6 +1,6 @@
 /********************************************************************************************
 Usage:			|	[classname,position,(boolean),(direction)] call custom_publish;
-Parameters		|	classname:	Class of vehicle to spawn
+Parameters		|	classname:	Class or array of classnames of vehicle to spawn
 in brackets		|	position:	Position to spawn vehicle
 are optional	|	boolean:	True, or False by default to spawn vehicle static at position
 				|	direction:	Direction to face vehicle, random by default
@@ -87,8 +87,7 @@ if (isServer) then {
 			//PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
 			
 			[_vehicle,_uid,_fuel,_damage,_array,_characterID,_class] spawn {
-
-				private["_vehicle","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_selection","_dam","_class"];
+				private["_vehicle","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_class"];
 
 				_vehicle 		= _this select 0;
 				_uid 			= _this select 1;
@@ -106,7 +105,6 @@ if (isServer) then {
 					_result 	= _key call server_hiveReadWrite;
 					_outcome 	= _result select 0;
 					diag_log ("HIVE: WRITE: "+ str(_key));
-
 					if (_outcome == "PASS") then {
 						_oid 	= _result select 1;
 						_vehicle setVariable ["ObjectID", _oid, true];
@@ -123,17 +121,14 @@ if (isServer) then {
 				if(!_done) exitWith { 
 					deleteVehicle _vehicle; diag_log("CUSTOM: failed to get id for : " + str(_uid));
 				};
-
 				_vehicle setVariable ["lastUpdate",time];
-
-				_vehicle call fnc_veh_ResetEH;
-				PVDZE_veh_Init = _vehicle;
-				publicVariable "PVDZE_veh_Init";
-
-				diag_log ("PUBLISH: Created " + (_class) + " with ID " + str(_uid));
 			};
+			_vehicle call fnc_veh_ResetEH;
+			PVDZE_veh_Init = _vehicle;
+			publicVariable "PVDZE_veh_Init";
 
+			diag_log ("PUBLISH: Created " + (_class) + " with ID " + str(_uid));
 		}];
 	};
-	sleep .5;
+	_vehicle
 };
