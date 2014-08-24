@@ -49,6 +49,7 @@ if(isServer) then {
 			wai_hero_mission set [count wai_hero_mission, _x select 0];
 		};
 	} count wai_hero_missions;
+
 	{
 		for "_i" from 1 to (_x select 1) do {
 			wai_bandit_mission set [count wai_bandit_mission, _x select 0];
@@ -83,7 +84,7 @@ if(isServer) then {
 		if((_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
 			if (_result == 1) then {
 				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\%1.sqf",_mission];
+				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
 
 				ai_roadkills		= 0;
 				h_missionrunning 	= true;
@@ -93,7 +94,7 @@ if(isServer) then {
 			};
 			if (_result == 2) then {
 				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\%1.sqf",_mission];
+				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
 
 				ai_roadkills		= 0;
 				b_missionrunning 	= true;
@@ -103,7 +104,7 @@ if(isServer) then {
 			};
 			/*if (_result == 3) then {
 				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\%1.sqf",_mission];
+				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];
 
 				ai_roadkills		= 0;
 				b_missionrunning 	= true;
