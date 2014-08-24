@@ -80,9 +80,9 @@ if (isServer) then {
 	[_gunner2] joinSilent _unitGroup;
 
 	call {
-		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true,true]; } forEach [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true,true]; } forEach [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true,true]; } forEach [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity", ai_add_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity", ai_remove_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity", ai_special_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
 	};
 	
 	ai_air_units = (ai_air_units +1);
@@ -117,31 +117,38 @@ if (isServer) then {
 
 	_drop = True;
 	_helipos = getpos _helicopter;
+
 	while {(alive _helicopter) && (_drop)} do {
+
 		private ["_magazine","_weapon","_weaponandmag","_chute","_para","_pgroup"];
 		sleep 1;
 		_helipos = getpos _helicopter;
+
 		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
+
 			_pgroup = createGroup east;
+
 			for "_x" from 1 to _paranumber do {
+
 				_helipos = getpos _helicopter;
+
 				switch (_gun) do {
 					case 0 : {_aiweapon = ai_wep_assault;};
 					case 1 : {_aiweapon = ai_wep_machine;};
 					case 2 : {_aiweapon = ai_wep_sniper;};
 					case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
 				};
+
 				_weaponandmag = _aiweapon call BIS_fnc_selectRandom;
 				_weapon = _weaponandmag select 0;
 				_magazine = _weaponandmag select 1;
+
 				switch (_gear) do {
 					case 0 : {_aigear = ai_gear0;};
 					case 1 : {_aigear = ai_gear1;};
-					case 2 : {_aigear = ai_gear2;};
-					case 3 : {_aigear = ai_gear3;};
-					case 4 : {_aigear = ai_gear4;};
 					case "Random" : {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
 				};
+
 				_gearmagazines 		= _aigear select 0;
 				_geartools 			= _aigear select 1;
 				
@@ -166,9 +173,15 @@ if (isServer) then {
 				_para enableAI "MOVE";
 				_para enableAI "ANIM";
 				_para enableAI "FSM";
-				_para setCombatMode ai_combatmode;
-				_para setBehaviour ai_behaviour;
-				
+
+				if(_aitype == "Hero") then {
+					_para setCombatMode ai_hero_combatmode;
+					_para setBehaviour ai_hero_behaviour;
+				} else {
+					_para setCombatMode ai_bandit_combatmode;
+					_para setBehaviour ai_bandit_behaviour;
+				};
+
 				removeAllWeapons _para;
 				removeAllItems _para;
 				
@@ -226,31 +239,47 @@ if (isServer) then {
 			[_pgroup, _position,_mission] call group_waypoints;
 		};
 	};
+
 	if (_helipatrol) then { 
+		
 		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)], 100];
 		_wp1 setWaypointType "SAD";
 		_wp1 setWaypointCompletionRadius 150;
 		_unitGroup setBehaviour "AWARE";
 		_unitGroup setSpeedMode "FULL";
 		_unitGroup setCombatMode "RED";
-		{_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];} forEach (units _unitgroup);
+
+		{
+			_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
+		} forEach (units _unitgroup);
+
 	} else {
-		{_x doMove [(_startingpos select 0), (_startingpos select 1), 100]} forEach (units _unitGroup);
+
+		{
+			_x doMove [(_startingpos select 0), (_startingpos select 1), 100]
+		} forEach (units _unitGroup);
+		
 		_unitGroup setBehaviour "CARELESS";
 		_unitGroup setSpeedMode "FULL";
 		_unitGroup setCombatMode "RED";
 		_cleanheli = true;
+
 		while {_cleanheli} do {
-			sleep 20;
+
+			sleep 5;
 			_helipos1 = getpos _helicopter;
+
 			if ((_helipos1 distance [(_startingpos select 0),(_startingpos select 1),100] <= 200) || (!alive _helicopter)) then {
+				
 				deleteVehicle _helicopter;
-				{deleteVehicle _x} forEach (units _unitgroup);
-				sleep 10;
+				{
+					deleteVehicle _x
+					ai_air_units = (ai_air_units -1);
+				} forEach (units _unitgroup);
+
 				deleteGroup _unitGroup;
-				ai_air_units = (ai_air_units -3);
 				diag_log "WAI: Paradrop helicopter cleaned up";
-				_cleanheli = False;
+				_cleanheli = false;
 			};
 
 		};

@@ -86,6 +86,7 @@ if (isServer) then {
 		_unit enableAI "MOVE";
 		_unit enableAI "ANIM";
 		_unit enableAI "FSM";
+
 		if(_aitype == "Hero") then {
 			_unit setCombatMode ai_hero_combatmode;
 			_unit setBehaviour ai_hero_behaviour;
@@ -93,6 +94,7 @@ if (isServer) then {
 			_unit setCombatMode ai_bandit_combatmode;
 			_unit setBehaviour ai_bandit_behaviour;
 		};
+		
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 
