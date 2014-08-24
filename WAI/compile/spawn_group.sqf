@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+	private ["_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_unitnumber 		= _this select 1;
@@ -15,7 +15,7 @@ if (isServer) then {
 	if (count _this > 9) then {
 		_mission = _this select 9;
 	} else {
-		_mission = false;
+		_mission = nil;
 	};
 
 	_aiweapon 			= [];
@@ -23,7 +23,6 @@ if (isServer) then {
 	_aiskin 			= "";
 	_aicskill 			= [];
 	_aipack 			= "";
-	_skillarray 		= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 	_unitGroup 			= createGroup east;
 	_current_time		= time;
 
@@ -52,18 +51,21 @@ if (isServer) then {
 		_gearmagazines = _aigear select 0;
 		_geartools = _aigear select 1;
 
-		if (_skin == "Random") then {
-			_aiskin = ai_skin call BIS_fnc_selectRandom;
-		} else {
+		call {
+			if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+			if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+			if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+			if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
 		};
 
 		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "PRIVATE"];
 		[_unit] joinSilent _unitGroup;
 
-		switch (_aitype) do {
-			case "Bandit":	{ _unit setVariable ["humanity", ai_add_humanity, true]; };
-			case "Hero":	{ _unit setVariable ["humanity", -ai_remove_humanity, true]; };
+		call {
+			if (_aitype == "Hero") 		exitWith { _unit setVariable ["Hero",true,true]; };
+			if (_aitype == "Bandit") 	exitWith { _unit setVariable ["Bandit",true,true]; };
+			if (_aitype == "Special") 	exitWith { _unit setVariable ["Special",true,true]; };
 		};
 
 		if (_backpack == "Random") then {
@@ -118,8 +120,11 @@ if (isServer) then {
 
 		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
 
-		if (_mission) then {
+		if (!isNil "_mission") then {
+			_ainum = (wai_mission_data select _mission) select 0;
+			wai_mission_data select _mission set [0, (_ainum + 1)];
 			_unit setVariable ["missionclean", "ground"];
+			_unit setVariable ["mission", _mission, true];
 		};
 
 	};
@@ -131,5 +136,6 @@ if (isServer) then {
 	[_unitGroup, _position, _mission] call group_waypoints;
 
 	diag_log format ["WAI: Spawned a group of %1 bandits at %2", _unitnumber, _position];
-
+	
+	_unitGroup
 };
