@@ -38,15 +38,14 @@ if (isServer) then {
 			case 1 : {_aiweapon = ai_wep_machine;};
 			case 2 : {_aiweapon = ai_wep_sniper;};
 			case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
-			case "none"	: {_aiweapon = "none"} ;
 		};
 
-		if(_aiweapon != "none") then {
-
+		if(count _aiweapon != 0) then {
 			_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
-			_weapon 		= _weaponandmag select 0;
-			_magazine 		= _weaponandmag select 1;
-		
+			if(count _weaponandmag == 2) then {
+				_weapon 		= _weaponandmag select 0;
+				_magazine 		= _weaponandmag select 1;
+			};
 		};
 
 		switch (_gear) do {
@@ -96,9 +95,12 @@ if (isServer) then {
 			_unit addweapon "NVGoggles";
 		};
 
-		if(_aiweapon != "none") then {
+		if(!isNil _weapon) then {
 
 			_unit addweapon _weapon;
+		};
+
+		if(!isNil _magazine && _mags >= 1) then {
 
 			for "_i" from 1 to _mags do {
 				_unit addMagazine _magazine;
@@ -106,9 +108,7 @@ if (isServer) then {
 		};
 
 		if(_aipack != "none") then {
-		
 			_unit addBackpack _aipack;
-	
 		};
 
 		{
