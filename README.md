@@ -10,6 +10,8 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - 
 
 ### Changelog
+- 24-08-2014 : Added bandit missions and redesigned mission code
+- 24-08-2014 : Turned on landminds!
 - 20-08-2014 : Added dynamic vehicle damage numbers in config
 - 19-08-2014 : Dynamic box bugfixes
 - 19-08-2014 : Overhauled vehicle spawn and hive save methods

@@ -2,6 +2,9 @@
 
 Type | Description
 ------------: | -------------
+`enhancement` | Added Bandit missions, more to come in future updates @Jossy
+`enhancement` | Turned on landmines! @Jossy
+`bug` | Removed tank traps due to stupid AI engaging them @Jossy
 `enhancement` | Changed the way damage and fuel values are read from config, fuel will now be random per vehicle @Jossy
 `enhancement` | Added min/max damage values for published vehicles in config @Jossy
 `bug` | Fixed typos in dynamic ammo box, ItemEpinephin(e) and trying to spawn ItemKeyKit as magazine @Jossy
