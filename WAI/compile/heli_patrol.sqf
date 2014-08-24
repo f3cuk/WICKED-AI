@@ -8,12 +8,10 @@ if (isServer) then {
 	_wpnum 				= _this select 3;
 	_heli_class 		= _this select 4;
 	_skill 				= _this select 5;
-	_aitype				= _this select 6;
+	_skin				= _this select 6;
+	_aitype				= _this select 7;
 
 	_skillarray			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
-
-	_unitGroup 			= createGroup east;
-	_pilot 				= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 
 	switch (_skill) do {
 		case "easy"		: { _aicskill = ai_skill_easy; };
@@ -24,11 +22,25 @@ if (isServer) then {
 		default	{ _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
 	};
 
-	[_pilot] joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _pilot setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _pilot setVariable ["humanity", -ai_remove_humanity, true]; };
+	call {
+		if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+		_aiskin = _skin;
 	};
+
+	_unitGroup 			= createGroup east;
+	_pilot 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	
+	[_pilot] joinSilent _unitGroup;
+	
+	call {
+		if (_aitype == "Hero") 		exitWith { _pilot setVariable ["Hero",true,true]; };
+		if (_aitype == "Bandit") 	exitWith { _pilot setVariable ["Bandit",true,true]; };
+		if (_aitype == "Special") 	exitWith { _pilot setVariable ["Special",true,true]; };
+	};
+	
 	ai_air_units 		= (ai_air_units +1);
 
 	_helicopter 		= createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 200], [], 0, "FLY"];
@@ -42,25 +54,31 @@ if (isServer) then {
 	_pilot 				assignAsDriver _helicopter;
 	_pilot 				moveInDriver _helicopter;
 
-	_gunner 			= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	_gunner 			assignAsGunner _helicopter;
 	_gunner 			moveInTurret [_helicopter,[0]];
 
 	[_gunner] 			joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _gunner setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
+
+	call {
+		if (_aitype == "Hero") 		exitWith { _gunner setVariable ["Hero",true,true]; };
+		if (_aitype == "Bandit") 	exitWith { _gunner setVariable ["Bandit",true,true]; };
+		if (_aitype == "Special") 	exitWith { _gunner setVariable ["Special",true,true]; };
 	};
+	
 	ai_air_units 		= (ai_air_units + 1);
 
-	_gunner2 			= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner2 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	_gunner2			assignAsGunner _helicopter;
 	_gunner2 			moveInTurret [_helicopter,[1]];
 	[_gunner2] 			joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _gunner2 setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _gunner2 setVariable ["humanity", -ai_remove_humanity, true]; };
+
+	call {
+		if (_aitype == "Hero") 		exitWith { _gunner2 setVariable ["Hero",true,true]; };
+		if (_aitype == "Bandit") 	exitWith { _gunner2 setVariable ["Bandit",true,true]; };
+		if (_aitype == "Special") 	exitWith { _gunner2 setVariable ["Special",true,true]; };
 	};
+
 	ai_air_units 		= (ai_air_units + 1);
 
 	{
