@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+	private ["_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_unitnumber 		= _this select 1;
@@ -11,6 +11,11 @@ if (isServer) then {
 	_skin 				= _this select 6;
 	_gear 				= _this select 7;
 	_aitype				= _this select 8;
+	
+	if (typeName _aitype == "ARRAY") then {
+		_gain = _aitype select 1;
+		_aitype = _aitype select 0;
+	};
 	
 	if (count _this > 9) then {
 		_mission = _this select 9;
@@ -63,10 +68,11 @@ if (isServer) then {
 		[_unit] joinSilent _unitGroup;
 
 		call {
-			if (_aitype == "Hero") 		exitWith { _unit setVariable ["Hero",true,true]; };
-			if (_aitype == "Bandit") 	exitWith { _unit setVariable ["Bandit",true,true]; };
-			if (_aitype == "Special") 	exitWith { _unit setVariable ["Special",true,true]; };
+			if (_aitype == "Hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_add_humanity]; };
+			if (_aitype == "Bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
+			if (_aitype == "Special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["humanity", ai_special_humanity]; };
 		};
+		if (!isNil "_gain") then { _unit setVariable ["humanity", _gain]; };
 
 		if (_backpack == "Random") then {
 			_aipack = ai_packs call BIS_fnc_selectRandom;

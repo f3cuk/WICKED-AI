@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	private ["_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
@@ -31,10 +31,11 @@ if (isServer) then {
 		_humankills 	= _player getVariable["humanKills",0];
 
 		if (ai_humanity_gain) then {
+			_gain = _unit getVariable ["humanity", 0];
 			call {
-				if (_unit getVariable ["Hero", false]) exitWith { _player setVariable ["humanity",(_humanity - ai_remove_humanity),true]; };
-				if (_unit getVariable ["Bandit", false]) exitWith { _player setVariable ["humanity",(_humanity + ai_add_humanity),true]; };					
-				if (_unit getVariable ["Special", false]) exitWith { if (_humanity < 0) then { _player setVariable ["humanity",(_humanity - ai_special_humanity),true]; } else { _player setVariable ["humanity",(_humanity + ai_special_humanity),true]; }; };
+				if (_unit getVariable ["Hero", false]) exitWith { _player setVariable ["humanity",(_humanity - _gain),true]; };
+				if (_unit getVariable ["Bandit", false]) exitWith { _player setVariable ["humanity",(_humanity + _gain),true]; };					
+				if (_unit getVariable ["Special", false]) exitWith { if (_humanity < 0) then { _player setVariable ["humanity",(_humanity - _gain),true]; } else { _player setVariable ["humanity",(_humanity + _gain),true]; }; };
 			};
 		};
 

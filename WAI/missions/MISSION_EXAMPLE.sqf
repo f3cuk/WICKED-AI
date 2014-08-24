@@ -42,10 +42,10 @@ if(isServer) then {
 	//				5: Backpack ("Random" or "classname")
 	//				6: Skin ("Hero","Bandit","Random","Special" or "classname")
 	//				7: Gear (0:ai_gear0, 1:ai_gear1, 2:ai_gear2, 3:ai_gear3, 4:ai_gear4 or "Random")
-	//				8: AI Type ("Bandit","Hero" or "Special") ***Used to determine humanity gain or loss***
+	//				8: AI Type ("Bandit","Hero","Special" or ["type", #] format to overwrite default gain amount) ***Used to determine humanity gain or loss***
 	//				9: Mission variable from line 9 (_mission)
 	_num = round (random 3) + 4;
-	[[_position select 0, _position select 1, 0],_num,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],_num,"Extreme","Random",4,"Random","Bandit","Random",["Bandit",150],_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
