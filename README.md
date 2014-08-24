@@ -20,6 +20,7 @@ As I really like (read love) the WAI missions and support for them has gone in t
 - Better markers
 
 ### Version history
+- 24-08-2014 : Minor bugfixes (2.0.5)
 - 20-08-2014 : Minor bugfixes (2.0.4)
 - 20-08-2014 : Minor bugfixes (2.0.3)
 - 19-08-2014 : Minor bugfixes (2.0.2)
