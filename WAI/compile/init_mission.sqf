@@ -4,9 +4,9 @@ if(isServer) then {
 		waitUntil {markerready};
 		markerready = false;
 		if(use_blacklist) then {
-			safepos				= [getMarkerPos "center",5,12000,(_this select 0),0,0.5,0,blacklist];
+			safepos				= [getMarkerPos "center",5,7000,(_this select 0),0,0.5,0,blacklist];
 		} else {
-			safepos				= [getMarkerPos "center",0,12000,(_this select 0),0,0.5,0];
+			safepos				= [getMarkerPos "center",0,5000,(_this select 0),0,0.5,0];
 		};
 		_position = safepos call BIS_fnc_findSafePos;
 		//diag_log("Checking markers: " + str(wai_mission_markers));
