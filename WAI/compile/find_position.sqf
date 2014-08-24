@@ -12,10 +12,10 @@ if(isServer) then {
 		_safepos		= [getMarkerPos "center",0,5000,(_this select 0),0,0.5,0];
 	};
 
-	_position = safepos call BIS_fnc_findSafePos;
+	_position = _safepos call BIS_fnc_findSafePos;
 	//diag_log("Checking markers: " + str(wai_mission_markers));
 	for "_i" from 0 to 1000 do {
-		_position = safepos call BIS_fnc_findSafePos;
+		_position = _safepos call BIS_fnc_findSafePos;
 		_validspot = true;
 		{
 			if (getMarkerColor _x == "") exitWith {};
