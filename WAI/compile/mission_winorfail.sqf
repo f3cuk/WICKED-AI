@@ -1,14 +1,10 @@
 if(isServer) then {
 
-	private ["_allunits","_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
+	private ["_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
 
 	_mission	= (_this select 0) select 0;
 	_crate		= (_this select 0) select 1;
-	_objectives	= _this select 1;
-	_type	= _objectives select 0;
-	if (count _objectives > 1) then {
-		_objectivetarget = _objectives select 1;
-	};
+	_type		= _this select 1;
 	_baseclean	= _this select 2;
 	_msgstart	= _this select 3;
 	_msgwin		= _this select 4;
@@ -42,15 +38,28 @@ if(isServer) then {
 
 			if (_type == "crate") exitWith {
 
-				_killpercent = _max_ai - (_max_ai * (_objectivetarget / 100));
+				if(wai_kill_percent == 0) then {
 
-				if(((wai_mission_data select _mission) select 0) >= _killpercent) then {
 					{
 						if((isPlayer _x) && (_x distance _position <= 20)) then {
 							_complete = true
 						};
 					} forEach playableUnits;
+
+				} else {
+
+					_killpercent = _max_ai - (_max_ai * (wai_kill_percent / 100));
+
+					if(((wai_mission_data select _mission) select 0) >= _killpercent) then {
+						{
+							if((isPlayer _x) && (_x distance _position <= 20)) then {
+								_complete = true
+							};
+						} forEach playableUnits;
+					};
+
 				};
+
 			};
 
 			if (_type == "kill") exitWith {
@@ -94,6 +103,7 @@ if(isServer) then {
 		};
 
 		_delete_mines = ((wai_mission_data select _mission) select 2);
+
 		if(count _delete_mines > 0) then {
 			{
 				if(typeName _x == "ARRAY") then {
@@ -116,8 +126,6 @@ if(isServer) then {
 
 	if (_timeout) then {
 
-		_allunits = set [count allUnits,vehicles];
-
 		{
 			_cleanunits = _x getVariable ["missionclean",nil];
 		
@@ -136,7 +144,7 @@ if(isServer) then {
 				deleteVehicle _x;
 			};
 
-		} forEach _allunits;
+		} forEach allUnits + vehicles;
 		
 		{
 			if(typeName _x == "ARRAY") then {

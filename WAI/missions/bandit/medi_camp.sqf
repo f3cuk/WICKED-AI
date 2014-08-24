@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private 		["_mission","_position","_crate","_playerPresent","_baserunover","_baserunover2"];
 
-	_position		= [30] call init_mission;
+	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Medical Supply Camp","MainBandit",true] call init_mission;
 	diag_log 		format["WAI: Mission Medic Camp Started At %1",_position];
 
@@ -20,7 +20,7 @@ if(isServer) then {
 
 	[
 		[_mission,_crate],				// mission number and crate
-		["kill",wai_kill_percent],		// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
+		["kill"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover,_baserunover2], 	// cleanup objects
 		"A soldier squad have set up a medical re-supply camp! Check your map for the location!",	// mission announcement
 		"Survivors have taken control of the medical supply camp!",									// mission success

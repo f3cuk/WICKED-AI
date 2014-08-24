@@ -44,18 +44,18 @@ if(isServer) then {
 		ai_static_weapons 			= ["KORD_high_TK_EP1","DSHKM_Ins","M2StaticMG"]; // static guns
 
 		ai_static_skills 			= false;		// Allows you to set custom array for AI on static weapons. (true: On false: Off) 
-		ai_static_array 			= [["aimingAccuracy",0.20], ["aimingShake",0.70], ["aimingSpeed",0.75], ["endurance",1.00], ["spotDistance",0.70], ["spotTime",0.50], ["courage",1.00], ["reloadSpeed",1.00], ["commanding",1.00],["general",1.00]];
+		ai_static_array 			= [["aimingAccuracy",0.20],["aimingShake",0.70],["aimingSpeed",0.75],["endurance",1.00],["spotDistance",0.70],["spotTime",0.50],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];
 
 		ai_gear0 					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
 		ai_gear1 					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
 		ai_gear_random 				= [ai_gear0,ai_gear1];	// Allows the possibility of random gear
 
-		ai_wep_assault				= [["M16A4_ACG","30Rnd_556x45_Stanag"], ["Sa58V_RCO_EP1","30Rnd_762x39_AK47"], ["SCAR_L_STD_Mk4CQT","30Rnd_556x45_Stanag"], ["M8_sharpshooter","30Rnd_556x45_Stanag"], ["M4A1_HWS_GL_camo","30Rnd_556x45_Stanag"], ["SCAR_L_STD_HOLO","30Rnd_556x45_Stanag"], ["M4A3_CCO_EP1","30Rnd_556x45_Stanag"], ["M4A3_CCO_EP1","30Rnd_556x45_Stanag"], ["M4A1_AIM_SD_camo","30Rnd_556x45_StanagSD"], ["M16A4","30Rnd_556x45_Stanag"], ["m8_carbine","30Rnd_556x45_Stanag"], ["BAF_L85A2_RIS_Holo","30Rnd_556x45_Stanag"], ["Sa58V_CCO_EP1","30Rnd_762x39_AK47"]];	// Assault
-		ai_wep_machine				= [["RPK_74","75Rnd_545x39_RPK"], ["MK_48_DZ","100Rnd_762x51_M240"], ["M249_EP1_DZ","200Rnd_556x45_M249"], ["Pecheneg_DZ","100Rnd_762x54_PK"], ["M240_DZ","100Rnd_762x51_M240"]];	// Light machine guns
-		ai_wep_sniper				= [["M14_EP1","20Rnd_762x51_DMR"],["SCAR_H_LNG_Sniper_SD","20Rnd_762x51_SB_SCAR"], ["M110_NVG_EP1","20rnd_762x51_B_SCAR"], ["SVD_CAMO","10Rnd_762x54_SVD"], ["VSS_Vintorez","20Rnd_9x39_SP5_VSS"], ["DMR","20Rnd_762x51_DMR"], ["M40A3","5Rnd_762x51_M24"]];	// Sniper rifles
-		ai_wep_random 				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle, 20% light machine gun, 20% sniper rifle
+		ai_wep_assault				= [["M16A4_ACG","30Rnd_556x45_Stanag"],["Sa58V_RCO_EP1","30Rnd_762x39_AK47"],["SCAR_L_STD_Mk4CQT","30Rnd_556x45_Stanag"],["M8_sharpshooter","30Rnd_556x45_Stanag"],["M4A1_HWS_GL_camo","30Rnd_556x45_Stanag"],["SCAR_L_STD_HOLO","30Rnd_556x45_Stanag"],["M4A3_CCO_EP1","30Rnd_556x45_Stanag"],["M4A3_CCO_EP1","30Rnd_556x45_Stanag"],["M4A1_AIM_SD_camo","30Rnd_556x45_StanagSD"],["M16A4","30Rnd_556x45_Stanag"],["m8_carbine","30Rnd_556x45_Stanag"],["BAF_L85A2_RIS_Holo","30Rnd_556x45_Stanag"],["Sa58V_CCO_EP1","30Rnd_762x39_AK47"]];	// Assault
+		ai_wep_machine				= [["RPK_74","75Rnd_545x39_RPK"],["MK_48_DZ","100Rnd_762x51_M240"],["M249_EP1_DZ","200Rnd_556x45_M249"],["Pecheneg_DZ","100Rnd_762x54_PK"],["M240_DZ","100Rnd_762x51_M240"]];	// Light machine guns
+		ai_wep_sniper				= [["M14_EP1","20Rnd_762x51_DMR"],["SCAR_H_LNG_Sniper_SD","20Rnd_762x51_SB_SCAR"],["M110_NVG_EP1","20rnd_762x51_B_SCAR"],["SVD_CAMO","10Rnd_762x54_SVD"],["VSS_Vintorez","20Rnd_9x39_SP5_VSS"],["DMR","20Rnd_762x51_DMR"],["M40A3","5Rnd_762x51_M24"]];	// Sniper rifles
+		ai_wep_random 				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
 
-		ai_packs 					= ["DZ_Czech_Vest_Puch", "DZ_ALICE_Pack_EP1", "DZ_TK_Assault_Pack_EP1", "DZ_British_ACU", "DZ_GunBag_EP1", "DZ_CivilBackpack_EP1", "DZ_Backpack_EP1", "DZ_LargeGunBag_EP1"];
+		ai_packs 					= ["DZ_Czech_Vest_Puch","DZ_ALICE_Pack_EP1","DZ_TK_Assault_Pack_EP1","DZ_British_ACU","DZ_GunBag_EP1","DZ_CivilBackpack_EP1","DZ_Backpack_EP1","DZ_LargeGunBag_EP1"];
 		ai_hero_skin				= ["FR_AC","FR_AR","FR_Corpsman","FR_GL","FR_Marksman","FR_R","FR_Sapper","FR_TL"];
 		ai_bandit_skin 				= ["Ins_Soldier_GL_DZ","TK_INS_Soldier_EP1_DZ","TK_INS_Warlord_EP1_DZ","GUE_Commander_DZ","GUE_Soldier_Sniper_DZ","GUE_Soldier_MG_DZ","GUE_Soldier_Crew_DZ","GUE_Soldier_2_DZ","GUE_Soldier_CO_DZ","BanditW1_DZ","BanditW2_DZ","Bandit1_DZ","Bandit2_DZ"];
 		ai_special_skin 			= ["Functionary1_EP1_DZ"];
@@ -67,8 +67,8 @@ if(isServer) then {
 		wai_mission_system 			= true;			// use built in mission system
 
 		wai_mission_markers			= [
-										"NeutralTraderCity","FriendlyTraderCity","HeroVendor","BanditVendor","West Wholesaler","NorthWholesaler","NorthBoatVendor","SouthBoatVendor","NeutralTraderCity","NeutralTraderCIty2","UnarmedAirVehicles", // Napf
-										"Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader", // Chernarus
+										"NeutralTraderCity","FriendlyTraderCity","HeroVendor","BanditVendor","West Wholesaler","NorthWholesaler","NorthBoatVendor","SouthBoatVendor","NeutralTraderCity","NeutralTraderCIty2","UnarmedAirVehicles",// Napf
+										"Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader",// Chernarus
 										"DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker" //DZAI
 									];
 
@@ -84,27 +84,35 @@ if(isServer) then {
 		wai_crates_smoke 			= true;								// pop smoke on crate when mission is finished during daytime
 		wai_crates_flares			= true;								// pop flare on crate when mission is finished during nighttime
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
-		wai_kill_percent			= 80;								// percentage of AI players must kill at "kill" missions to trigger a completion
+		wai_kill_percent			= 0;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
 		wai_players_online       	= 1; 								// number of players online before misson starts
 		wai_server_fps            	= 5; 								// missions only starts if server FPS is over wai_server_fps
 		wai_enable_minefield		= true;								// enable the possibility of using minefields to better defend a mission
 
 		// Missions
-		wai_hero_missions	 		= [ 								// ["mission filename", % chance of picking this mission], Make sure the chances add up to 100, or it will not be accurate percentages
-									["black_hawk_crash",12],
-									["armed_vehicle",12],
-									["bandit_base",8],
-									["captured_mv22",10],
-									["ikea_convoy",8],
-									["destroyed_ural",12],
-									["disabled_milchopper",12],
-									["mayors_mansion",10],
-									["weapon_cache",12]
+		wai_hero_missions	 		= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
+										["black_hawk_crash",12],
+										["armed_vehicle",13],
+										["bandit_base",8],
+										["captured_mv22",8],
+										["ikea_convoy",8],
+										["destroyed_ural",18],
+										["disabled_milchopper",10],
+										["mayors_mansion",10],
+										["weapon_cache",13]
 									];
 		wai_bandit_missions			= [
-									["presidents_mansion",50],
-									["medi_camp",50]
+										["armed_vehicle",12],
+										["black_hawk_crash",14],
+										["captured_mv22",6],
+										["broken_down_ural",14],
+										["hero_base",6],
+										["ikea_convoy",8],
+										["medi_camp",16],
+										["presidents_mansion",6],
+										["sniper_extraction",8],
+										["weapon_cache",10]
 									];
 /*
 		wai_special_missions		= [
@@ -135,7 +143,7 @@ if(isServer) then {
 
 		static_missions				= false;		// use static mission file
 		custom_per_world			= false;		// use a custom mission file per world
-		debug_mode					= false;		// enable debug
+		debug_mode					= true;			// enable debug
 
 	/* END STATIC MISSIONS CONFIG */
 

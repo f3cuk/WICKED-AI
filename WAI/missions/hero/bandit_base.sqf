@@ -2,7 +2,7 @@ if(isServer) then {
 	 
 	private 		["_baserunover","_mission","_directions","_position","_crate","_num"];
 
-	_position		= [80] call init_mission;
+	_position		= [80] call find_position;
 	_mission 		= [_position,"Hard","Bandit Base","MainHero",true] call init_mission;
 	diag_log 		format["WAI: Mission bandit base started at %1",_position];
 
@@ -48,7 +48,7 @@ if(isServer) then {
 
 	[
 		[_mission,_crate],	// mission number and crate
-		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
+		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 	// cleanup objects
 		"A jungle task force have set up a temporary encampment! Go and ambush it to make it yours!",	// mission announcement
 		"Survivors captured the base, HOOAH!!",															// mission success
