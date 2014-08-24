@@ -45,7 +45,7 @@ if (isServer) then {
 		};
 
 		call {
-			if (_class = "Random") exitWith { _class = ai_static_weapons call BIS_fnc_selectRandom; };
+			if (_class == "Random") exitWith { _class = ai_static_weapons call BIS_fnc_selectRandom; };
 		};
 
 		_unit = _unitGroup createUnit [_aiskin, [0,0,0], [], 10, "PRIVATE"];
