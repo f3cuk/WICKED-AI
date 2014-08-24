@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
@@ -8,8 +8,15 @@ if (isServer) then {
 	_wpnum 					= _this select 3;
 	_veh_class 				= _this select 4;
 	_skill 					= _this select 5;
-	_aitype					= _this select 6;
-	
+	_skin					= _this select 6;
+	_aitype					= _this select 7;
+
+	if (count _this > 8) then {
+		_mission = _this select 8;
+	} else {
+		_mission = nil;
+	};
+
 	_skillarray 			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
 	switch (_skill) do {
@@ -21,40 +28,53 @@ if (isServer) then {
 		default { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
 	};
 
-	_unitGroup 				= createGroup east;
-	_pilot 					= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
-	[_pilot] 				joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _pilot setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _pilot setVariable ["humanity", -ai_remove_humanity, true]; };
+	call {
+		if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+		_aiskin = _skin;
 	};
+
+	_unitGroup 				= createGroup east;
+	_pilot 					= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	[_pilot] 				joinSilent _unitGroup;
+	
+	call {
+		if (_aitype == "Hero") 		exitWith { _pilot setVariable ["Hero",true,true]; };
+		if (_aitype == "Bandit") 	exitWith { _pilot setVariable ["Bandit",true,true]; };
+		if (_aitype == "Special") 	exitWith { _pilot setVariable ["Special",true,true]; };
+	};
+	
 	ai_vehicle_units 		= (ai_vehicle_units + 1);
 
-	_veh 					= createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
-	_veh 					setFuel 1;
-	_veh 					engineOn true;
-	_veh 					setVehicleAmmo 1;
-	_veh 					addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
-	_veh 					allowCrewInImmobile true; 
-	_veh 					lock true;
+	_vehicle 				= createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
+	_vehicle 				setFuel 1;
+	_vehicle 				engineOn true;
+	_vehicle 				setVehicleAmmo 1;
+	_vehicle 				addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
+	_vehicle 				allowCrewInImmobile true; 
+	_vehicle 				lock true;
 
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_veh];
+	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_vehicle];
 
-	_pilot assignAsDriver 	_veh;
-	_pilot moveInDriver 	_veh;
+	_pilot assignAsDriver 	_vehicle;
+	_pilot moveInDriver 	_vehicle;
 
-	_gunner 				= _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
-	_gunner 				assignAsGunner _veh;
-	_gunner 				moveInTurret [_veh,[0]];
+	_gunner 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	_gunner 				assignAsGunner _vehicle;
+	_gunner 				moveInTurret [_vehicle,[0]];
 	[_gunner] 				joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _gunner setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
+	
+	call {
+		if (_aitype == "Hero") 		exitWith { _gunner setVariable ["Hero",true,true]; };
+		if (_aitype == "Bandit") 	exitWith { _gunner setVariable ["Bandit",true,true]; };
+		if (_aitype == "Special") 	exitWith { _gunner setVariable ["Special",true,true]; };
 	};
+	
 	{
 		_gunner setSkill [(_x select 0),(_x select 1)];
 	} forEach _aicskill;
-
 
 	ai_vehicle_units = (ai_vehicle_units + 1);
 
@@ -72,7 +92,12 @@ if (isServer) then {
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
 	} forEach (units _unitgroup);
 
-	[_veh] spawn vehicle_monitor;
+	if (!isNil "_mission") then {
+		_vehicle setVariable ["missionclean", "vehicle"];
+		[_vehicle,_mission] spawn vehicle_monitor;
+	} else {
+		[_vehicle] spawn vehicle_monitor;
+	};
 
 	_unitGroup 				allowFleeing 0;
 	_unitGroup 				setBehaviour "AWARE";
@@ -92,13 +117,4 @@ if (isServer) then {
 	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100];
 	_wp setWaypointType "CYCLE";
 	_wp setWaypointCompletionRadius 200;
-
-	waitUntil{clean_running_mission};
-
-	if(clean_running_mission) then { 
-		deleteVehicle _veh;
-		deleteVehicle _gunner;
-		deleteVehicle _pilot;
-	};
-
 };

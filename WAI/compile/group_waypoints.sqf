@@ -8,13 +8,13 @@ if (isServer) then {
 	if (count _this > 2) then {
 		_mission 	= _this select 2;
 	} else {
-		_mission 	= false;
+		_mission 	= nil;
 	};
 
 	_radius 		= ai_patrol_radius;
 	_wpnumber 		= ai_patrol_radius_wp;
 
-	if (_mission) then {
+	if (!isNil "_mission") then {
 		_radius 	= 1;
 		_wpnumber	= 2;
 	};

@@ -1,7 +1,11 @@
 # Current version 2.1.0
 
 Type | Description
-------------: | -------------
+------------: | ------------
+`enhancement` | Added new type of mission objective, Assassination! @Jossy
+`enhancement` | Added Bandit missions, more to come in future updates @Jossy
+`enhancement` | Turned on landmines, Beware! @Jossy
+`bug` | Removed tank traps due to stupid AI engaging them @Jossy
 `enhancement` | Changed the way damage and fuel values are read from config, fuel will now be random per vehicle @Jossy
 `enhancement` | Added min/max damage values for published vehicles in config @Jossy
 `bug` | Fixed typos in dynamic ammo box, ItemEpinephin(e) and trying to spawn ItemKeyKit as magazine @Jossy
@@ -10,7 +14,18 @@ Type | Description
 `enhancement` | Vehicle hive save method changed to a GetIn eventhandler @Jossy
 `enhancement` | Changed mission marker colors to resemble mission difficulty @Jossy
 `feature` | Added Hero and Bandit AI support @Jossy
+ |
+Version | **2.0.4**
+ |
+``bug` | Fixed bug with tanktraps not disappearing on Ikea mission
+ | 
+Version | **2.0.3**
+`bug` | Fixed bug with tanktraps not disappearing on MV-22 mission
+ | 
+Version | **2.0.2**
 `bug` | Fixed bug with nightvision on paratroops
+ | 
+Version | **2.0.1**
 `bug` | Fixed bug with roadflare on mission succes
  | 
 Version | **2.0.0**

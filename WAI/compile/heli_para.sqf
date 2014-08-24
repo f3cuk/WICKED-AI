@@ -20,7 +20,7 @@ if (isServer) then {
 	if (count _this > 13) then {
 		_mission = _this select 13;
 	} else {
-		_mission = False;
+		_mission = nil;
 	};
 
 	_aiweapon 		= [];
@@ -39,16 +39,22 @@ if (isServer) then {
 		(_playerPresent)
 	};
 
-	if(clean_running_mission)exitWith{diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position];};
+	call {
+		if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+		if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+		_aiskin = _skin;
+	};
+
+	_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
+	if(!_missionrunning)exitWith{diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position];};
 
 	diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position];
 	_unitGroup = createGroup east;
 	_pilot = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	[_pilot] joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _pilot setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _pilot setVariable ["humanity", -ai_remove_humanity, true]; };
-	};
+
 	ai_air_units = (ai_air_units +1);
 
 	_helicopter = createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 100], [], 0, "FLY"];
@@ -65,20 +71,20 @@ if (isServer) then {
 	_gunner assignAsGunner _helicopter;
 	_gunner moveInTurret [_helicopter,[0]];
 	[_gunner] joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _gunner setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _gunner setVariable ["humanity", -ai_remove_humanity, true]; };
-	};
+
 	ai_air_units = (ai_air_units +1);
 
 	_gunner2 = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	_gunner2 assignAsGunner _helicopter;
 	_gunner2 moveInTurret [_helicopter,[1]];
 	[_gunner2] joinSilent _unitGroup;
-	switch (_aitype) do {
-		case "Bandit":	{ _gunner2 setVariable ["humanity", ai_add_humanity, true]; };
-		case "Hero":	{ _gunner2 setVariable ["humanity", -ai_remove_humanity, true]; };
+
+	call {
+		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true,true]; } forEach [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true,true]; } forEach [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true,true]; } forEach [_pilot, _gunner, _gunner2]; };
 	};
+	
 	ai_air_units = (ai_air_units +1);
 
 	{
@@ -128,7 +134,7 @@ if (isServer) then {
 				_weaponandmag = _aiweapon call BIS_fnc_selectRandom;
 				_weapon = _weaponandmag select 0;
 				_magazine = _weaponandmag select 1;
-					switch (_gear) do {
+				switch (_gear) do {
 					case 0 : {_aigear = ai_gear0;};
 					case 1 : {_aigear = ai_gear1;};
 					case 2 : {_aigear = ai_gear2;};
@@ -145,11 +151,13 @@ if (isServer) then {
 					_aipack = _backpack;
 				};
 					
-				if (_skin == "" || _skin == "Random") then {
-					_aiskin = ai_skin call BIS_fnc_selectRandom;
-				} else {
+				call {
+					if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+					if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+					if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+					if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 					_aiskin = _skin;
-				};		
+				};
 
 				_para = _pgroup createUnit [_aiskin, [0,0,0], [], 1, "PRIVATE"];
 				
@@ -202,12 +210,16 @@ if (isServer) then {
 				_chute = createVehicle ["ParachuteEast", [(_helipos select 0), (_helipos select 1), (_helipos select 2)], [], 0, "NONE"];
 				_para moveInDriver _chute;
 				[_para] joinSilent _pgroup;
-				switch (_aitype) do {
-					case "Bandit":	{ _para setVariable ["humanity", ai_add_humanity, true]; };
-					case "Hero":	{ _para setVariable ["humanity", -ai_remove_humanity, true]; };
-				};
+
 				sleep 1.5;
 			};
+
+			call {
+				if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true,true]; } count (units _pgroup); };
+				if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true,true]; } count (units _pgroup); };
+				if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true,true]; } count (units _pgroup); };
+			};
+			
 			_drop = false;
 			_pgroup selectLeader ((units _pgroup) select 0);
 			diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber];
