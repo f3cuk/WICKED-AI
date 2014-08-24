@@ -2,6 +2,7 @@
 
 Type | Description
 ------------: | ------------
+`enhancement` | Added new type of mission objective, Assassination! @Jossy
 `enhancement` | Added Bandit missions, more to come in future updates @Jossy
 `enhancement` | Turned on landmines, Beware! @Jossy
 `bug` | Removed tank traps due to stupid AI engaging them @Jossy
