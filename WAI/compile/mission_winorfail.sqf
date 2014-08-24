@@ -4,7 +4,7 @@ if(isServer) then {
 
 	_mission	= (_this select 0) select 0;
 	_crate		= (_this select 0) select 1;
-	_type		= _this select 1;
+	_type		= (_this select 1) select 0;
 	_baseclean	= _this select 2;
 	_msgstart	= _this select 3;
 	_msgwin		= _this select 4;
@@ -69,6 +69,7 @@ if(isServer) then {
 			};
 
 			if (_type == "assassinate") exitWith {
+				_objectivetarget = (_this select 1) select 1;
 				{
 					_complete = true;
 					if (alive _x) exitWith {_complete = false;};

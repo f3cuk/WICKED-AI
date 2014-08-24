@@ -22,8 +22,11 @@ if(isServer) then {
 		ai_patrol_radius 			= 300;			// radius of ai patrols in meters
 		ai_patrol_radius_wp 		= 10;			// number of waypoints of patrols
 
-		ai_combatmode 				= "RED";		// combatmode of AI
-		ai_behaviour 				= "SAFE";		// behaviour of AI
+		ai_bandit_combatmode 		= "RED";		// combatmode of bandit AI
+		ai_bandit_behaviour 		= "CARELESS";	// behaviour of bandit AI
+
+		ai_hero_combatmode 			= "GREEN";		// combatmode of bandit AI
+		ai_hero_behaviour 			= "COMBAT";		// behaviour of bandit AI
 
 		ai_share_info 				= true;			// AI share info on player position
 		ai_share_distance 			= 300;			// distance from killed AI for AI to share your position

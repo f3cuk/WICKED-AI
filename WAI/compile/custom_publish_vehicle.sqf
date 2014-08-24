@@ -6,29 +6,37 @@ are optional	|	boolean:	True, or False by default to spawn vehicle static at pos
 				|	direction:	Direction to face vehicle, random by default
 /********************************************************************************************/
 if (isServer) then {
+
 	private ["_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
-	_count = count _this;
-	_classnames = _this select 0;
-	_position = _this select 1;
+
+	_count 			= count _this;
+	_classnames 	= _this select 0;
+	_position 		= _this select 1;
+
 	if (typeName(_classnames) == "ARRAY") then {
 		_class = _classnames call BIS_fnc_selectRandom;
 	} else {
 		_class = _classnames;
 	};
+
 	if(_count > 2) then {
+
 		_position_fixed = _this select 2;
+
 		if(_count > 3) then {
 			_dir = _this select 3;
 		} else {
 			_dir = floor(round(random 360));
 		};
+
 	} else {
 		_position_fixed = false;
 		_dir = floor(round(random 360));
 	};
-	if (!_position_fixed) then { _position = _position findEmptyPosition [10,25,_class]; };
 
-	_vehicle = createVehicle [_class,_position, [], 0, "FORM"];
+	if (!_position_fixed) then { _position = _position findEmptyPosition [10,35,_class]; };
+
+	_vehicle = createVehicle [_class,_position,[],15,"FORM"];
 	_vehicle setDir _dir;
 	_vehicle setVectorUp surfaceNormal position _vehicle;
 	_vehicle setvelocity [0,0,1];
@@ -40,6 +48,7 @@ if (isServer) then {
 	clearMagazineCargoGlobal _vehicle;
 	
 	_fuel = 0;
+
 	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
 		_damage = (wai_vehicle_damage select 0) / 100;
 		_vehicle setDamage _damage;
@@ -52,10 +61,10 @@ if (isServer) then {
 		} forEach _hitpoints;
 		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;;
 	};
+
 	diag_log("WAI: Spawned " +str(_class) + " at " + str(_position) + " with " + str(_fuel) + " fuel and " + str(_damage) + " damage.");
 	
 	_vehicle setFuel _fuel;
-	
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
 	
 	PVDZE_serverObjectMonitor	set [count PVDZE_serverObjectMonitor,_vehicle];
@@ -63,30 +72,33 @@ if (isServer) then {
 	if(wai_keep_vehicles) then {
 		
 		_vehicle addEventHandler ["GetIn", {
-			_vehicle = _this select 0;
-			diag_log ("PUBLISH: Attempt " + str(_vehicle));
-			_class = typeOf _vehicle;
-			_characterID = _vehicle getVariable ["CharacterID", "0"];
-			_worldspace = [getDir _vehicle, getPosATL _vehicle];
-			_hitpoints = _vehicle call vehicle_getHitpoints;
-			_damage = damage _vehicle;
-			_array = [];
+			_vehicle 		= _this select 0;
+				diag_log ("PUBLISH: Attempt " + str(_vehicle));
+
+			_class 			= typeOf _vehicle;
+			_characterID 	= _vehicle getVariable ["CharacterID", "0"];
+			_worldspace		= [getDir _vehicle, getPosATL _vehicle];
+			_hitpoints 		= _vehicle call vehicle_getHitpoints;
+			_damage 		= damage _vehicle;
+			_array 			= [];
+
 			{
 				_hit = [_vehicle,_x] call object_getHit;
 				_selection = getText (configFile >> "CfgVehicles" >> (typeOf _vehicle) >> "HitPoints" >> _x >> "name");
 				if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
 			} count _hitpoints;
-			_fuel = fuel _vehicle;
-			_uid = _worldspace call dayz_objectUID2;
 
-			_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, _damage , _characterID, _worldspace, [], _array, _fuel,_uid];
+			_fuel 	= fuel _vehicle;
+			_uid 	= _worldspace call dayz_objectUID2;
+
+			_key 	= format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance,_class,_damage,_characterID,_worldspace,[],_array,_fuel,_uid];
 
 			diag_log ("HIVE: WRITE: "+ str(_key));
-			_key call server_hiveWrite;
 
-			//PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
+			_key call server_hiveWrite;
 			
 			[_vehicle,_uid,_fuel,_damage,_array,_characterID,_class] spawn {
+
 				private["_vehicle","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_class"];
 
 				_vehicle 		= _this select 0;
@@ -123,12 +135,17 @@ if (isServer) then {
 				};
 				_vehicle setVariable ["lastUpdate",time];
 			};
+
 			_vehicle call fnc_veh_ResetEH;
 			PVDZE_veh_Init = _vehicle;
+
 			publicVariable "PVDZE_veh_Init";
 
 			diag_log ("PUBLISH: Created " + (_class) + " with ID " + str(_uid));
 		}];
+
 	};
+
 	_vehicle
+
 };

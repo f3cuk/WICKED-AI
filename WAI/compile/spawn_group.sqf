@@ -86,8 +86,13 @@ if (isServer) then {
 		_unit enableAI "MOVE";
 		_unit enableAI "ANIM";
 		_unit enableAI "FSM";
-		_unit setCombatMode ai_combatmode;
-		_unit setBehaviour ai_behaviour;
+		if(_aitype == "Hero") then {
+			_unit setCombatMode ai_hero_combatmode;
+			_unit setBehaviour ai_hero_behaviour;
+		} else {
+			_unit setCombatMode ai_bandit_combatmode;
+			_unit setBehaviour ai_bandit_behaviour;
+		};
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 
@@ -95,12 +100,12 @@ if (isServer) then {
 			_unit addweapon "NVGoggles";
 		};
 
-		if(!isNil _weapon) then {
+		if(!isNil "_weapon") then {
 
 			_unit addweapon _weapon;
 		};
 
-		if(!isNil _magazine && _mags >= 1) then {
+		if(!isNil "_magazine" && _mags >= 1) then {
 
 			for "_i" from 1 to _mags do {
 				_unit addMagazine _magazine;
@@ -146,12 +151,11 @@ if (isServer) then {
 	};
 	// Stops them from killing eachother when they fire..
 	_unitGroup setFormation "ECH LEFT";
-
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
 	[_unitGroup, _position, _mission] call group_waypoints;
 
-	diag_log format ["WAI: Spawned a group of %1 bandits at %2", _unitnumber, _position];
+	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2", _unitnumber,_position,_aitype];
 	
 	_unitGroup
 };
