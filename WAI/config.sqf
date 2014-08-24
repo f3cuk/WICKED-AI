@@ -135,6 +135,7 @@ if(isServer) then {
 
 		static_missions				= false;		// use static mission file
 		custom_per_world			= false;		// use a custom mission file per world
+		debug_mode					= false;		// enable debug
 
 	/* END STATIC MISSIONS CONFIG */
 

@@ -1,6 +1,5 @@
 if (isServer) then {
 
-
 	private["_killedat"];
 
 	diag_log "WAI: AI Monitor Started";
@@ -18,11 +17,14 @@ if (isServer) then {
 				};
 			} forEach allDead;
 		};
-		
-		diag_log format ["%1 Active ground units", ai_ground_units];
-		diag_log format ["%1 Active emplacement units", ai_emplacement_units];
-		diag_log format ["%1 Active chopper patrol units (Crew)", ai_air_units];
-		diag_log format ["%1 Active vehicle patrol units (Crew)", ai_vehicle_units];
+
+		if(debug_mode) then {
+			
+			diag_log format ["WAI: %1 Active ground units", ai_ground_units];
+			diag_log format ["WAI: %1 Active emplacement units", ai_emplacement_units];
+			diag_log format ["WAI: %1 Active chopper patrol units (Crew)", ai_air_units];
+			diag_log format ["WAI: %1 Active vehicle patrol units (Crew)", ai_vehicle_units];
+		};
 
 		sleep 600;
 

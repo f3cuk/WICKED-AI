@@ -24,17 +24,17 @@ if(isServer) then {
 
 	//Static mounted guns
 	[[
-		[(_position select 0) - 13.135, (_position select 1) + 5.254, 5.27],
+		[(_position select 0) - 13.135, (_position select 1) + 5.025, 5.27],
 		[(_position select 0) + 14.225, (_position select 1) + 5.025, 5.27],
 		[(_position select 0) + 1.97, (_position select 1) - 2.368, 11.54]
 	],"M2StaticMG","Extreme","Hero","Hero",1,2,"Random","Random",_mission] call spawn_static;
 
 	[
 		[_mission,_crate],			// mission number and crate
-		["assassinate",_president], // ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
+		["assassinate",_president], // ["crate",wai_kill_percent], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 			// cleanup objects
 		"The President has claimed his leadership, who will assassinate him?",	// mission announcement
-		"The President has been Assassinated!",									// mission success
+		"The President has been assassinated!",									// mission success
 		"The president lives to see another day."								// mission fail
 	] call mission_winorfail;
 

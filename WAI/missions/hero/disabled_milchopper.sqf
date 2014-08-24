@@ -29,7 +29,7 @@ if(isServer) then {
 	[[
 		[(_position select 0) + 10, (_position select 1) - 10, 0],
 		[(_position select 0) - 10, (_position select 1) + 10, 0]
-	],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
+	],"M2StaticMG","easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	[
 		[_mission,_crate],	// mission number and crate
