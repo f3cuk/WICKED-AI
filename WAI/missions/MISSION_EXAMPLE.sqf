@@ -3,7 +3,7 @@ if(isServer) then {
 	private 		["_baserunover","_mission","_directions","_position","_crate","_num"];
 
 	// Get a safe position 80 meters from the nearest object
-	_position		= [80] call mission_init;
+	_position		= [80] call find_position;
 	
 	// Initialise the mission variable with the following options, [position, difficulty, mission name, mission type (MainHero/MainBandit), minefield (true or false)] call mission_init;
 	_mission 		= [_position,"Hard","Test Mission","MainHero",true] call mission_init;
