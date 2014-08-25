@@ -13,8 +13,8 @@ if (isServer) then {
 	_aitype				= _this select 8;
 	
 	if (typeName _aitype == "ARRAY") then {
-		_aitype 	= _aitype select 0;
 		_gain 		= _aitype select 1;
+		_aitype 	= _aitype select 0;
 	};
 	
 	if (count _this > 9) then {
