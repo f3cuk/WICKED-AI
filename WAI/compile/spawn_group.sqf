@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+	private ["_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_unitnumber 		= _this select 1;
@@ -23,6 +23,7 @@ if (isServer) then {
 		_mission = nil;
 	};
 
+	_unarmed 			= false;
 	_aiweapon 			= [];
 	_aigear 			= [];
 	_aiskin 			= "";
@@ -37,15 +38,14 @@ if (isServer) then {
 			case 0 : {_aiweapon = ai_wep_assault;};
 			case 1 : {_aiweapon = ai_wep_machine;};
 			case 2 : {_aiweapon = ai_wep_sniper;};
+			case "Unarmed" : {_unarmed = true;};
 			case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
 		};
 
-		if(count _aiweapon != 0) then {
+		if (!_unarmed) then {
 			_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
-			if(count _weaponandmag == 2) then {
-				_weapon 		= _weaponandmag select 0;
-				_magazine 		= _weaponandmag select 1;
-			};
+			_weapon 		= _weaponandmag select 0;
+			_magazine 		= _weaponandmag select 1;
 		};
 
 		switch (_gear) do {
@@ -98,17 +98,15 @@ if (isServer) then {
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 
+		if (!_unarmed) then {
+			_unit addweapon _weapon;
+		};
+		
 		if (sunOrMoon != 1) then {
 			_unit addweapon "NVGoggles";
 		};
 
-		if(!isNil "_weapon") then {
-
-			_unit addweapon _weapon;
-		};
-
-		if(!isNil "_magazine" && _mags >= 1) then {
-
+		if (!_unarmed) then {
 			for "_i" from 1 to _mags do {
 				_unit addMagazine _magazine;
 			};
