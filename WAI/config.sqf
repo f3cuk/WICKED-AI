@@ -81,6 +81,7 @@ if(isServer) then {
 		
 		wai_mission_timer 			= [300,900];						// time between missions 5-15 minutes
 		wai_mission_timeout 		= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
+		wai_special_mission_timer	= [900,1500]; 						// time between special missions 15-25 minutes
 		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
 
 		wai_mission_fuel 			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
@@ -121,11 +122,9 @@ if(isServer) then {
 										["sniper_extraction",8],
 										["weapon_cache",10]
 									];
-/*
 		wai_special_missions		= [
-									[]
+										["bunny_ranch",100]
 									];
-*/
 		// Vehicle arrays
 		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Offroad_DSHKM_Gue_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
 		armed_chopper 				= ["CH_47F_EP1_DZE","UH1H_DZE","Mi17_DZE","UH60M_EP1_DZE","UH1Y_DZE","MH60S_DZE"];

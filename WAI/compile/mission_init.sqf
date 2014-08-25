@@ -1,6 +1,6 @@
 if(isServer) then {
 	
-	private ["_validspot","_mission","_aitype","_type","_color","_dot","_position","_marker","_name"];
+	private ["_difficulty","_mission","_type","_color","_dot","_position","_marker","_name"];
 
 	_position 	= _this select 0;
 	_difficulty = _this select 1;
@@ -14,34 +14,32 @@ if(isServer) then {
 	
 	wai_mission_data = wai_mission_data + [[0,_type,[]]];
 
-	if (_type == "MainHero" || _type == "SideHero") then { _aitype = "Bandit"; };
-	if (_type == "MainBandit" || _type == "SideBandit") then { _aitype = "Hero"; };
-
 	if(wai_enable_minefield && _mines) then {
 		call {
-			if (_difficulty == "easy") exitWith {_mines = [_position,25,50,10] call minefield;};
-			if (_difficulty == "medium") exitWith {_mines = [_position,50,75,25] call minefield;};
-			if (_difficulty == "hard") exitWith {_mines = [_position,50,100,50] call minefield;};
-			if (_difficulty == "extreme") exitWith {_mines = [_position,50,100,75] call minefield;};
+			if (_difficulty == "Easy") exitWith {_mines = [_position,25,50,10] call minefield;};
+			if (_difficulty == "Medium") exitWith {_mines = [_position,50,75,25] call minefield;};
+			if (_difficulty == "Hard") exitWith {_mines = [_position,50,100,50] call minefield;};
+			if (_difficulty == "Extreme") exitWith {_mines = [_position,50,100,75] call minefield;};
 		};
 		wai_mission_data select _mission set [2, _mines];
 	};
 	
 	_marker 	= "";
 	_dot 		= "";
-	_color		= "ColorBlack";
+	_color		= "";
 	
 	call {
 		if (_difficulty == "Easy")		exitWith {_color = "ColorGreen"};
 		if (_difficulty == "Medium")	exitWith {_color = "ColorYellow"};
 		if (_difficulty == "Hard")		exitWith {_color = "ColorOrange"};
 		if (_difficulty == "Extreme") 	exitWith {_color = "ColorRed"};
+		_color = _difficulty;
 	};
 	
 	call {
-		if (_aitype == "Bandit")	exitWith { _name = "[H] " + _name; };
-		if (_aitype == "Hero")		exitWith { _name = "[B] " + _name; };
-		if (_aitype == "Special")	exitWith { _name = "[S] " + _name; };
+		if (_type == "MainHero")	exitWith { _name = "[H] " + _name; };
+		if (_type == "MainBandit")	exitWith { _name = "[B] " + _name; };
+		if (_type == "Special")		exitWith { _name = "[S] " + _name; };
 	};
 
 	[_position, _color, _name, _mission] spawn {

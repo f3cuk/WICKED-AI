@@ -30,6 +30,7 @@ if (isServer) then {
 	_aipack 			= "";
 	_unitGroup 			= createGroup east;
 	_current_time		= time;
+	_unarmed			= false;
 
 	for "_x" from 1 to _unitnumber do {
 
@@ -37,15 +38,14 @@ if (isServer) then {
 			case 0 : {_aiweapon = ai_wep_assault;};
 			case 1 : {_aiweapon = ai_wep_machine;};
 			case 2 : {_aiweapon = ai_wep_sniper;};
+			case "Unarmed" : {_unarmed = true;};
 			case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
 		};
 
-		if(count _aiweapon != 0) then {
+		if (!_unarmed) then {
 			_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
-			if(count _weaponandmag == 2) then {
-				_weapon 		= _weaponandmag select 0;
-				_magazine 		= _weaponandmag select 1;
-			};
+			_weapon 		= _weaponandmag select 0;
+			_magazine 		= _weaponandmag select 1;
 		};
 
 		switch (_gear) do {
@@ -102,12 +102,9 @@ if (isServer) then {
 			_unit addweapon "NVGoggles";
 		};
 
-		if(!isNil "_weapon") then {
+		if (!_unarmed) then {
 
 			_unit addweapon _weapon;
-		};
-
-		if(!isNil "_magazine" && _mags >= 1) then {
 
 			for "_i" from 1 to _mags do {
 				_unit addMagazine _magazine;
