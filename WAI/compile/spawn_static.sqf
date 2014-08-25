@@ -158,9 +158,9 @@ if (isServer) then {
 
 		if (!isNil "_mission") then {
 			_static setVariable ["missionclean", "static"];
-			_unit setVariable ["mission", _mission];
 			_static setVariable ["mission", _mission];
-			[_static,_mission] spawn vehicle_monitor;
+			_unit setVariable ["mission", _mission];
+			[_static] spawn vehicle_monitor;
 		} else {
 			[_static] spawn vehicle_monitor;
 		};
