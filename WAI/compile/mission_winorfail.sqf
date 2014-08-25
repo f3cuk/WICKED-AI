@@ -50,7 +50,7 @@ if(isServer) then {
 
 					_killpercent = _max_ai - (_max_ai * (wai_kill_percent / 100));
 
-					if(((wai_mission_data select _mission) select 0) >= _killpercent) then {
+					if(((wai_mission_data select _mission) select 0) <= _killpercent) then {
 						{
 							if((isPlayer _x) && (_x distance _position <= 20)) then {
 								_complete = true
@@ -63,7 +63,7 @@ if(isServer) then {
 			};
 
 			if (_type == "kill") exitWith {
-				if(((wai_mission_data select _mission) select 0) == _max_ai) then {
+				if(((wai_mission_data select _mission) select 0) == 0) then {
 					_complete = true
 				};
 			};
