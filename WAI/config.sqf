@@ -121,9 +121,12 @@ if(isServer) then {
 										["sniper_extraction",8],
 										["weapon_cache",10]
 									];
+		/*
 		wai_special_missions		= [
 										["bunny_ranch",100]
 									];
+		*/
+		
 		// Vehicle arrays
 		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Offroad_DSHKM_Gue_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
 		armed_chopper 				= ["CH_47F_EP1_DZE","UH1H_DZE","Mi17_DZE","UH60M_EP1_DZE","UH1Y_DZE","MH60S_DZE"];
@@ -148,7 +151,7 @@ if(isServer) then {
 
 		static_missions				= false;		// use static mission file
 		custom_per_world			= false;		// use a custom mission file per world
-		debug_mode					= true;			// enable debug
+		debug_mode					= false;		// enable debug
 
 	/* END STATIC MISSIONS CONFIG */
 

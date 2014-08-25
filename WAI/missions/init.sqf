@@ -9,7 +9,7 @@ if(isServer) then {
 	Chain_Bullet_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_chainbullets.sqf";
 	Medical_Supply_Box  			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_medical.sqf";
 	spawn_ammo_box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\box_dynamic.sqf";
-	Ranch_Safe						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ranch_safe.sqf";
+	ranch_safe						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ranch_safe.sqf";
 
 	//Static Weaponbox
 	Sniper_Gun_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_sniper.sqf";
@@ -37,13 +37,13 @@ if(isServer) then {
 	wai_special_mission				= [];
 	h_missionrunning				= false;
 	b_missionrunning				= false;
-	s_missionrunning				= false;
+	//s_missionrunning				= false;
 	_h_startTime 					= floor(time);
 	_b_startTime 					= floor(time);
-	_s_startTime					= floor(time);
+	//_s_startTime					= floor(time);
 	_h_missionTime					= nil;
 	_b_missionTime					= nil;
-	_s_missionTime					= nil;
+	//_s_missionTime					= nil;
 	_mission						= "";
 	_result 						= 0;
 
@@ -60,11 +60,15 @@ if(isServer) then {
 		};
 	} count wai_bandit_missions;
 
+	/*
+
 	{
 		for "_i" from 1 to (_x select 1) do {
 			wai_special_mission set [count wai_special_mission, _x select 0];
 		};
 	} count wai_special_missions;
+
+	*/
 
 	// Start mission monitor
 	while {true} do
@@ -74,15 +78,15 @@ if(isServer) then {
 
 		if (isNil "_h_missionTime") then { _h_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
 		if (isNil "_b_missionTime") then { _b_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
-		if (isNil "_s_missionTime") then { _s_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
+		//if (isNil "_s_missionTime") then { _s_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
 
 		if((_currTime - _h_startTime >= _h_missionTime) && (!h_missionrunning)) then { _result = 1; };
 		if((_currTime - _b_startTime >= _b_missionTime) && (!b_missionrunning)) then { _result = 2; };
-		if((_currTime - _s_startTime >= _s_missionTime) && (!s_missionrunning)) then { _result = 3; };
+		//if((_currTime - _s_startTime >= _s_missionTime) && (!s_missionrunning)) then { _result = 3; };
 
 		if(h_missionrunning) then { _h_startTime = floor(time); };
 		if(b_missionrunning) then { _b_startTime = floor(time); };
-		if(s_missionrunning) then { _s_startTime = floor(time); };
+		//if(s_missionrunning) then { _s_startTime = floor(time); };
 
 		if((_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
 
@@ -108,6 +112,8 @@ if(isServer) then {
 				_result 			= 0;
 			};
 
+			/*
+
 			if (_result == 3) then {
 				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
 				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];
@@ -118,6 +124,8 @@ if(isServer) then {
 				_s_missionTime		= nil;
 				_result 			= 0;
 			};
+
+			*/
 		};
 		sleep 1;
 	};
