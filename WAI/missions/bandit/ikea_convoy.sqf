@@ -4,7 +4,7 @@ if(isServer) then {
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Lunchbreak Convoy","MainBandit",true] call mission_init;	
-	diag_log		format["WAI: Mission Convoy Started At %1",_position];
+	diag_log		format["WAI: Mission Lunchbreak Convoy Started At %1",_position];
 
 	//Construction Supply Box
 	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
@@ -48,7 +48,7 @@ if(isServer) then {
 		[_vehicle,_vehicle2,_vehicle3],	// cleanup objects
 		"A heavily guarded Ikea convoy is taking a lunch break, heroes are securing the parameter",	// mission announcement
 		"Bandits have ambushed the Ikea convoy and have secured the building supplies!",			// mission success
-		"Bandits were unable to suprise the heroes"													// mission fail
+		"Bandits were unable to surprise the heroes"													// mission fail
 	] call mission_winorfail;
 
 	diag_log format["WAI: Mission Ikea convoy ended at %1",_position];
