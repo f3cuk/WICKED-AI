@@ -3,7 +3,8 @@ if(isServer) then {
 	private			["_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Easy","Ural Attack","MainHero",true] call init_mission;	
+	_mission		= [_position,"Easy","Ural Attack","MainHero",true] call mission_init;
+	
 	diag_log 		format["WAI: [Hero] destroyed_ural started at %1",_position];
 
 	_num_guns		= (1 + round (random 3));

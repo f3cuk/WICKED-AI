@@ -7,7 +7,8 @@ if(isServer) then {
 	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Medium",format["Disabled %1", _vehname],"MainHero",true] call init_mission;	
+	_mission		= [_position,"Medium",format["Disabled %1", _vehname],"MainHero",true] call mission_init;
+	
 	diag_log 		format["WAI: [Hero] disabled_milchopper started At %1",_position];
 
 	//Sniper Gun Box

@@ -8,7 +8,8 @@ if(isServer) then {
 	private ["_mission","_baserunover","_position","_crate"];
 	 
 	_position		= [10] call find_position;
-	_mission		= [_position,"ColorPink","Bunny Ranch","Special",false] call mission_init;	
+	_mission		= [_position,"ColorPink","Bunny Ranch","Special",false] call mission_init;
+		
 	diag_log format	["WAI: Mission Bunny Ranch Started At %1",_position];
 
 	//Large Gun Box

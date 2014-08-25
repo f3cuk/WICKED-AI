@@ -3,7 +3,8 @@ if(isServer) then {
 	private 		["_mission","_position","_crate","_playerPresent","_baserunover","_baserunover2"];
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Easy","Medical Supply Camp","MainBandit",true] call init_mission;
+	_mission		= [_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
+	
 	diag_log 		format["WAI: [Bandit] medi_camp started at %1",_position];
 
 	// Medical Supply Box

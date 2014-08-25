@@ -7,7 +7,7 @@ if(isServer) then {
 	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Hard",format["Sniper extraction %1", _vehname],"MainBandit",true] call init_mission;	
+	_mission		= [_position,"Hard",format["Sniper extraction %1", _vehname],"MainBandit",true] call mission_init;	
 	
 	diag_log 		format["WAI: [Bandit] sniper_extraction started At %1",_position];
 

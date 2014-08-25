@@ -65,31 +65,27 @@ if(isServer) then {
 			wai_special_mission set [count wai_special_mission, _x select 0];
 		};
 	} count wai_special_missions;
+
 	// Start mission monitor
 	while {true} do
 	{
-	
 		_cnt 		= {alive _x} count playableUnits;
 		_currTime 	= floor(time);
 
-		if (isNil "_h_missionTime") then { _h_missionTime = ((wai_main_mission_timer select 0) + random((wai_main_mission_timer select 1) - (wai_main_mission_timer select 0))); };
-		if (isNil "_b_missionTime") then { _b_missionTime = ((wai_main_mission_timer select 0) + random((wai_main_mission_timer select 1) - (wai_main_mission_timer select 0))); };
-		if (isNil "_s_missionTime") then { _s_missionTime = ((wai_special_mission_timer select 0) + random((wai_special_mission_timer select 1) - (wai_special_mission_timer select 0))); };
-		
+		if (isNil "_h_missionTime") then { _h_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
+		if (isNil "_b_missionTime") then { _b_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
+		if (isNil "_s_missionTime") then { _s_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
+
 		if((_currTime - _h_startTime >= _h_missionTime) && (!h_missionrunning)) then { _result = 1; };
 		if((_currTime - _b_startTime >= _b_missionTime) && (!b_missionrunning)) then { _result = 2; };
 		if((_currTime - _s_startTime >= _s_missionTime) && (!s_missionrunning)) then { _result = 3; };
 
-		if(h_missionrunning) then {
-			_h_startTime = floor(time);
-		};
-		if(b_missionrunning) then {
-			_b_startTime = floor(time);
-		};
-		if(s_missionrunning) then {
-			_s_startTime = floor(time);
-		};
+		if(h_missionrunning) then { _h_startTime = floor(time); };
+		if(b_missionrunning) then { _b_startTime = floor(time); };
+		if(s_missionrunning) then { _s_startTime = floor(time); };
+
 		if((_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
+
 			if (_result == 1) then {
 				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
 				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
@@ -100,6 +96,7 @@ if(isServer) then {
 				_h_missionTime		= nil;
 				_result 			= 0;
 			};
+
 			if (_result == 2) then {
 				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
 				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
@@ -110,6 +107,7 @@ if(isServer) then {
 				_b_missionTime		= nil;
 				_result 			= 0;
 			};
+
 			if (_result == 3) then {
 				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
 				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];

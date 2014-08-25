@@ -31,8 +31,8 @@ if(isServer) then {
 	call {
 		if (_difficulty == "Easy")		exitWith {_color = "ColorGreen"};
 		if (_difficulty == "Medium")	exitWith {_color = "ColorYellow"};
-		if (_difficulty == "Hard")		exitWith {_color = "ColorOrange"};
-		if (_difficulty == "Extreme") 	exitWith {_color = "ColorRed"};
+		if (_difficulty == "Hard")		exitWith {_color = "ColorRed"};
+		if (_difficulty == "Extreme") 	exitWith {_color = "ColorBlack"};
 		_color = _difficulty;
 	};
 	

@@ -37,7 +37,7 @@ if(isServer) then {
 	// Parameters:	0: Position
 	//				1: Unit Count
 	//				2: Unit Skill ("easy","medium","hard","extreme" or "random")
-	//				3: Gun (0:ai_wep_assault 1:ai_wep_machine 2:ai_wep_sniper or "Random")
+	//				3: Gun (0 = ai_wep_assault, 1 = ai_wep_machine, 2 = ai_wep_sniper, "Random" = random weapon, "Unarmed" = no weapon)
 	//				4: Magazine Count
 	//				5: Backpack ("Random" or "classname")
 	//				6: Skin ("Hero","Bandit","Random","Special" or "classname")

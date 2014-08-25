@@ -3,7 +3,7 @@ if(isServer) then {
 	private 		["_mission","_playerPresent","_position","_crate","_baserunover"];
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Medium","Black Hawk Crash","MainHero",true] call init_mission;	
+	_mission		= [_position,"Medium","Black Hawk Crash","MainHero",true] call mission_init;	
 	
 	diag_log 		format["WAI: [Hero] black_hawk_crash started at %1",_position];
 

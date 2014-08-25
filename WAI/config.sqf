@@ -79,9 +79,8 @@ if(isServer) then {
 		wai_near_road				= 50;								// make missions check for roads around this radius
 		wai_near_water				= 50;								// nearest water allowed near missions
 		
-		wai_mission_timer 			= [300,900];						// time between missions 5-15 minutes
+		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
 		wai_mission_timeout 		= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
-		wai_special_mission_timer	= [900,1500]; 						// time between special missions 15-25 minutes
 		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
 
 		wai_mission_fuel 			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
