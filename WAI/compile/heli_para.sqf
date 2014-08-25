@@ -273,7 +273,7 @@ if (isServer) then {
 				
 				deleteVehicle _helicopter;
 				{
-					deleteVehicle _x
+					deleteVehicle _x;
 					ai_air_units = (ai_air_units -1);
 				} forEach (units _unitgroup);
 

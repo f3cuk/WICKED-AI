@@ -3,7 +3,7 @@ if(isServer) then {
 	private 		["_baserunover","_mission","_directions","_position","_crate","_num"];
 
 	_position		= [80] call find_position;
-	_mission 		= [_position,"Hard","Hero Base","MainHero",true] call init_mission;
+	_mission 		= [_position,"Hard","Hero Base","MainHero",true] call mission_init;
 	diag_log 		format["WAI: Mission hero base started at %1",_position];
 
 	//Extra Large Gun Box

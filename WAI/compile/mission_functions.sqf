@@ -49,3 +49,24 @@ isSlope = {
 	_result = ((_max - _min) > _gradient);
 	_result
 };
+
+inDebug = {
+	_result = false;
+	_position = _this;
+	_noboundary = false;
+	_leftX = 0;
+	_topY = 0;
+	_rightX = 0;
+	_bottomY = 0;
+	
+	call {
+		if (worldName == "Chernarus") exitWith {_leftX = 200; _topY = 15100;};
+		if (worldName == "Napf") exitWith {_noboundary = true;};
+	};
+	
+	if (_noboundary) exitWith {_result};
+	
+	if (_position select 0 < _leftX) exitWith { _result = true; _result };
+	if (_position select 1 > _topY) exitWith { _result = true; _result };
+
+};

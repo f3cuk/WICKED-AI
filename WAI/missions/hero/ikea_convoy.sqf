@@ -3,7 +3,7 @@ if(isServer) then {
 	private			["_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
 	_position		= [40] call find_position;
-	_mission		= [_position,"Hard","Disabled Convoy","MainHero",true] call init_mission;	
+	_mission		= [_position,"Hard","Disabled Convoy","MainHero",true] call mission_init;	
 	diag_log		format["WAI: Mission Convoy Started At %1",_position];
 
 	//Construction Supply Box

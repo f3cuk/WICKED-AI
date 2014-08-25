@@ -3,7 +3,7 @@ if(isServer) then {
 	private			["_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Easy","Ural Attack","MainHero",true] call init_mission;	
+	_mission		= [_position,"Easy","Ural Attack","MainHero",true] call mission_init;	
 	diag_log 		format["WAI: Ural Attack mission started at %1",_position];
 
 	_baserunover 	= createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
