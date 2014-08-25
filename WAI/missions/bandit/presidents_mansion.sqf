@@ -1,9 +1,9 @@
 if(isServer) then {
 
-	private			["_mission","_position","_crate","_playerPresent","_rndnum","_baserunover","_president","_firstlady"];
+	private			["_mission","_position","_crate","_playerPresent","_rndnum","_baserunover","_president"];
 
 	_position		= [50] call find_position;
-	_mission		= [_position,"Extreme","Presidents in Town","MainBandit",true] call init_mission;
+	_mission		= [_position,"Extreme","Presidents in Town","MainBandit",true] call mission_init;
 	diag_log 		format["WAI: Mission Presidents in Town Started At %1",_position];
 
 	//Large Gun Box
@@ -36,7 +36,7 @@ if(isServer) then {
 		[_baserunover], 			// cleanup objects
 		"The President is in town for a visit, rumour has it bandits are planning his assasination",	// mission announcement
 		"The President has been assassinated, a day of mourning has been announced",					// mission success
-		"The President managed to get away from the assasination attempt"		// mission fail
+		"The President managed to get away from the assassination attempt"		// mission fail
 	] call mission_winorfail;
 
 	diag_log format["WAI: Mission Presidents in Town ended at %1",_position];

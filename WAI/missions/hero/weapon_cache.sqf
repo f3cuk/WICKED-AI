@@ -3,7 +3,7 @@ if(isServer) then {
 	private 		["_mission","_position","_crate","_playerPresent","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Medium","Weapon Cache","MainHero",true] call init_mission;
+	_mission		= [_position,"Medium","Weapon Cache","MainHero",true] call mission_init;
 	diag_log 		format["WAI: Mission Weapon cache started at %1",_position];
 
 	_num_guns		= (3 + round(random 12));

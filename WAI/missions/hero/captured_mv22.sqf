@@ -3,7 +3,7 @@ if(isServer) then {
 	private			["_mission","_playerPresent","_vehname","_vehicle","_position","_vehclass","_crate","_tent","_rndnum"];
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Hard","Captured MV 22","MainHero",true] call init_mission;	
+	_mission		= [_position,"Hard","Captured MV 22","MainHero",true] call mission_init;	
 	diag_log		format["WAI: Mission MV22 started at %1",_position];
 
 	//Medical Supply Box

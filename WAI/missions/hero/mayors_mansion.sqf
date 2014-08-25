@@ -3,7 +3,7 @@ if(isServer) then {
 	private			["_mission","_position","_crate","_playerPresent","_baserunover","_mayor"];
 
 	_position		= [40] call find_position;
-	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call init_mission;
+	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
 	diag_log 		format["WAI: Mission Mayors Mansion Started At %1",_position];
 
 	//Large Gun Box
