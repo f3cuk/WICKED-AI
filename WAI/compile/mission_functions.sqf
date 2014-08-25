@@ -60,8 +60,8 @@ inDebug = {
 	_bottomY = 0;
 	
 	call {
-		if (missionName == "DayZ_Epoch_11") exitWith {_leftX = 200; _topY = 15100;};
-		if (missionName == "DayZ_Epoch_24") exitWith {_noboundary = true;};
+		if (worldName == "Chernarus") exitWith {_leftX = 200; _topY = 15100;};
+		if (worldName == "Napf") exitWith {_noboundary = true;};
 	};
 	
 	if (_noboundary) exitWith {_result};
