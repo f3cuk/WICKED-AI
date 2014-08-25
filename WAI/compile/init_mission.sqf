@@ -9,13 +9,13 @@ if(isServer) then {
 	_mines		= _this select 4;
 	
 	_mission 	= count wai_mission_data;
-	//diag_log("WAI: Starting Mission number " + str(_mission + 1));
+	
+	if(debug_mode) then { diag_log("WAI: Starting Mission number " + str(_mission + 1)); };
+	
 	wai_mission_data = wai_mission_data + [[0,_type,[]]];
-
 
 	if (_type == "MainHero" || _type == "SideHero") then { _aitype = "Bandit"; };
 	if (_type == "MainBandit" || _type == "SideBandit") then { _aitype = "Hero"; };
-
 
 	if(wai_enable_minefield && _mines) then {
 		call {
@@ -70,7 +70,8 @@ if(isServer) then {
 		};
 	};
 	
-	//diag_log("WAI: Mission Data: " + str(wai_mission_data));
+	if(debug_mode) then { diag_log("WAI: Mission Data: " + str(wai_mission_data)); };
+	
 	markerready = true;
 	_mission
 };

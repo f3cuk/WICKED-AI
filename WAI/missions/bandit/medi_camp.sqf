@@ -4,7 +4,7 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Medical Supply Camp","MainBandit",true] call init_mission;
-	diag_log 		format["WAI: Mission Medic Camp Started At %1",_position];
+	diag_log 		format["WAI: [Bandit] medi_camp started at %1",_position];
 
 	// Medical Supply Box
 	_crate = createVehicle ["BAF_VehicleBox",[(_position select 0) + 15,(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
@@ -24,9 +24,9 @@ if(isServer) then {
 		[_baserunover,_baserunover2], 	// cleanup objects
 		"A soldier squad have set up a medical re-supply camp! Check your map for the location!",	// mission announcement
 		"Survivors have taken control of the medical supply camp!",									// mission success
-		"The survivors were unable to capture the medical supply camp"								// mission fail
+		"Survivors were unable to capture the medical supply camp"									// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Mission Medic Camp ended at %1",_position];
+	diag_log format["WAI: [Bandit] medi_camp ended at %1",_position];
 	b_missionrunning = false;
 };

@@ -4,7 +4,8 @@ if(isServer) then {
 
 	_position		= [80] call find_position;
 	_mission 		= [_position,"Hard","Bandit Base","MainHero",true] call init_mission;
-	diag_log 		format["WAI: Mission bandit base started at %1",_position];
+	
+	diag_log 		format["WAI: [Hero] bandit_base started at %1",_position];
 
 	//Extra Large Gun Box
 	_crate 			= createVehicle ["RUVehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
@@ -55,6 +56,6 @@ if(isServer) then {
 		"Survivors were unable to capture the base"														// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Mission bandit base ended at %1 ended",_position];
+	diag_log format["WAI: [Hero] bandit_base ended at %1 ended",_position];
 	h_missionrunning = false;
 };

@@ -13,7 +13,7 @@ if(isServer) then {
 	};
 
 	_position = _safepos call BIS_fnc_findSafePos;
-	//diag_log("Checking markers: " + str(wai_mission_markers));
+
 	for "_i" from 0 to 1000 do {
 		_position = _safepos call BIS_fnc_findSafePos;
 		_validspot = true;

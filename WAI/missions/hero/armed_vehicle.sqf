@@ -9,16 +9,13 @@ if(isServer) then {
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium",format["Disabled %1",_vehname],"MainHero",true] call init_mission;
 	
-	diag_log		format["WAI: Mission Armed Vehicle spawned a %1 at %2",_vehname,_position];
+	diag_log		format["WAI: [Bandit] armed_vehicle started at %1",_position];
 
 	//Chain Bullet Box
 	_crate_type 	= wai_crates call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 	[_crate] call chain_bullet_box;
 
-	//Spawn Vehicle
-	_vehicle		= [_vehclass,_position] call custom_publish;
-	
 	//Troops
 	_rndnum = (2 + round (random 4));
 	[[_position select 0, _position select 1, 0],_rndnum,"Medium","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
@@ -31,7 +28,14 @@ if(isServer) then {
 	[[
 		[(_position select 0), (_position select 1) + 10, 0]
 	],_static_gun,"Medium","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
-
+	
+	//Spawn Vehicle
+	_vehicle		= [_vehclass,_position] call custom_publish;
+	
+	if(debug_mode) then {
+		diag_log format["WAI: [Hero] armed_vehicle spawned a %1",_vehname];
+	};
+	
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
@@ -41,6 +45,6 @@ if(isServer) then {
 		"Survivors did not secure the armed vehicle in time"																// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Mission armed vehicle ended at %1",_position];
+	diag_log format["WAI: [Bandit] armed_vehicle ended at %1",_position];
 	h_missionrunning = false;
 };

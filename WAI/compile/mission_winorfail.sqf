@@ -75,13 +75,12 @@ if(isServer) then {
 					if (alive _x) exitWith {_complete = false;};
 				} count units _objectivetarget;
 			};
-
 		};
 	};
 
 	if (_complete) then {
 
-		if(wai_crates_smoke) then {
+		if(wai_crates_smoke && sunOrMoon == 1) then {
 			_marker = "smokeShellPurple" createVehicle getPosATL _crate;
 			_marker setPosATL (getPosATL _crate);
 			_marker attachTo [_crate,[0,0,0]];
@@ -106,6 +105,7 @@ if(isServer) then {
 		_delete_mines = ((wai_mission_data select _mission) select 2);
 
 		if(count _delete_mines > 0) then {
+		
 			{
 				if(typeName _x == "ARRAY") then {
 				
@@ -114,11 +114,13 @@ if(isServer) then {
 					} forEach _x;
 				
 				} else {
-				
+
 					deleteVehicle _x;
+					
 				};
 				
 			} forEach _delete_mines;
+			
 		};
 		
 		wai_mission_data set [_mission, -1];
@@ -128,20 +130,21 @@ if(isServer) then {
 	if (_timeout) then {
 
 		{
-			_cleanunits = _x getVariable ["missionclean",nil];
 		
-			if (!isNil "_cleanunits") then {
-
-				switch (_cleanunits) do {
-					case "ground" : {ai_ground_units = (ai_ground_units -1);};
-					case "air" : {ai_air_units = (ai_air_units -1);};
-					case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
-					case "static" : {ai_emplacement_units = (ai_emplacement_units -1);};
-				};
-				sleep .1;
-			};
-
 			if (_x getVariable ["mission", nil] == _mission) then {
+			
+				_cleanunits = _x getVariable ["missionclean",nil];
+		
+				if (!isNil "_cleanunits") then {
+			
+					switch (_cleanunits) do {
+						case "ground" : {ai_ground_units = (ai_ground_units -1);};
+						case "air" : {ai_air_units = (ai_air_units -1);};
+						case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
+						case "static" : {ai_emplacement_units = (ai_emplacement_units -1);};
+					};
+				};
+				
 				deleteVehicle _x;
 			};
 
@@ -162,6 +165,7 @@ if(isServer) then {
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 			
 		wai_mission_data set [_mission, -1];
+		
 		[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;
 	};
 

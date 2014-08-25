@@ -70,7 +70,6 @@ if(isServer) then {
 		wai_mission_system 			= true;			// use built in mission system
 
 		wai_mission_markers			= [
-										"NeutralTraderCity","FriendlyTraderCity","HeroVendor","BanditVendor","West Wholesaler","NorthWholesaler","NorthBoatVendor","SouthBoatVendor","NeutralTraderCity","NeutralTraderCIty2","UnarmedAirVehicles",// Napf
 										"Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader",// Chernarus
 										"DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker" //DZAI
 									];
@@ -79,19 +78,24 @@ if(isServer) then {
 		wai_near_town				= 300;								// make missions check for towns around this radius
 		wai_near_road				= 50;								// make missions check for roads around this radius
 		wai_near_water				= 50;								// nearest water allowed near missions
+		
 		wai_mission_timer 			= [300,900];						// time between missions 5-15 minutes
 		wai_mission_timeout 		= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
-		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't timeout
+		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
+
 		wai_mission_fuel 			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
+		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
+		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
+
 		wai_crates                	= ["TKSpecialWeapons_EP1","UNBasicAmmunitionBox_EP1","CZBasicWeapons_EP1","TKVehicleBox_EP1","USVehicleBox_EP1","USBasicAmmunitionBox_EP1","GERBasicWeapons_EP1","GuerillaCacheBox_EP1","TKOrdnanceBox_EP1","USSpecialWeapons_EP1","SpecialWeaponsBox"];
 		wai_crates_smoke 			= true;								// pop smoke on crate when mission is finished during daytime
 		wai_crates_flares			= true;								// pop flare on crate when mission is finished during nighttime
-		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
-		wai_kill_percent			= 0;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
-		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
-		wai_players_online       	= 1; 								// number of players online before misson starts
+		
+		wai_players_online       	= 1; 								// number of players online before mission starts
 		wai_server_fps            	= 5; 								// missions only starts if server FPS is over wai_server_fps
+		
 		wai_enable_minefield		= true;								// enable the possibility of using minefields to better defend a mission
+		wai_kill_percent			= 10;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 
 		// Missions
 		wai_hero_missions	 		= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
@@ -124,8 +128,8 @@ if(isServer) then {
 */
 		// Vehicle arrays
 		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Offroad_DSHKM_Gue_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
-		armed_chopper 				= ["CH_47F_EP1_DZE","Mi17_DZE","UH1H_DZE","UH1Y_DZE","UH60M_EP1_DZE"];
-		civil_aircraft 				= ["AH6X_DZ","AN2_DZ","MH6J_DZ","Mi17_Civilian_DZ"];
+		armed_chopper 				= ["CH_47F_EP1_DZE","UH1H_DZE","Mi17_DZE","UH60M_EP1_DZE","UH1Y_DZE","MH60S_DZE"];
+		civil_chopper 				= ["AH6X_DZ","BAF_Merlin_DZE","MH6J_DZ","Mi17_Civilian_DZ"];
 		military_unarmed 			= ["GAZ_Vodnik_MedEvac","HMMWV_Ambulance","HMMWV_Ambulance_CZ_DES_EP1","HMMWV_DES_EP1","HMMWV_DZ","HMMWV_M1035_DES_EP1","LandRover_CZ_EP1","LandRover_TK_CIV_EP1","UAZ_CDF","UAZ_INS","UAZ_RU","UAZ_Unarmed_TK_CIV_EP1","UAZ_Unarmed_TK_EP1","UAZ_Unarmed_UN_EP1"];
 		cargo_trucks 				= ["Kamaz","MTVR_DES_EP1","Ural_CDF","Ural_TK_CIV_EP1","Ural_UN_EP1","V3S_Open_TK_CIV_EP1","V3S_Open_TK_EP1"];
 		refuel_trucks				= ["KamazRefuel_DZ","MtvrRefuel_DES_EP1_DZ","UralRefuel_TK_EP1_DZ","V3S_Refuel_TK_GUE_EP1_DZ"];

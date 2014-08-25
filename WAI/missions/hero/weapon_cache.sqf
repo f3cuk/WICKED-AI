@@ -4,7 +4,7 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium","Weapon Cache","MainHero",true] call init_mission;
-	diag_log 		format["WAI: Mission Weapon cache started at %1",_position];
+	diag_log 		format["WAI: [Hero] weapon_cache started at %1",_position];
 
 	_num_guns		= (3 + round(random 12));
 	_num_tools		= 2;
@@ -28,12 +28,12 @@ if(isServer) then {
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
-		[], 	// cleanup objects
+		[], 				// cleanup objects
 		"Bandits have obtained a weapon crate. Check your map for the location!",	// mission announcement
 		"Survivors have secured the weapon cache!",									// mission success
 		"Survivors did not secure the weapon cache in time"							// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Mission weapon cache ended at %1",_position];
+	diag_log format["WAI: [Hero] weapon_cache ended at %1",_position];
 	h_missionrunning = false;
 };

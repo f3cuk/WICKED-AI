@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+	private ["_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
@@ -8,16 +8,13 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Hard",format["Sniper extraction %1", _vehname],"MainBandit",true] call init_mission;	
-	diag_log 		format["WAI: Mission Sniper Extraction Started At %1",_position];
+	
+	diag_log 		format["WAI: [Bandit] sniper_extraction started At %1",_position];
 
 	//Sniper Gun Box
 	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 	[_crate] 		call Sniper_Gun_Box;
 
-	//Spawn vehicle
-	_vehicle		= [_vehclass,_position] call custom_publish;
-	diag_log format["WAI: Mission Sniper Extraction spawned a %1",_vehname];
-	
 	//Troops
 	_rndnum = round (random 4) + 2;
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
@@ -32,7 +29,14 @@ if(isServer) then {
 		[(_position select 0) - 10, (_position select 1) - 10, 0],
 		[(_position select 0) - 10, (_position select 1) + 10, 0]
 	],"M2StaticMG","medium","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
-
+	
+	//Spawn vehicle
+	_vehicle		= [_vehclass,_position] call custom_publish;
+	
+	if(debug_mode) then {
+		diag_log format["WAI: [Bandit] sniper_extraction spawned a %1",_vehname];
+	};
+	
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -42,6 +46,6 @@ if(isServer) then {
 		"Bandits did not secure the sniper rifles in time"				// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Mission Sniper Extraction ended at %1",_position];
+	diag_log format["WAI: [Bandit] sniper_extraction ended at %1",_position];
 	b_missionrunning = false;
 };

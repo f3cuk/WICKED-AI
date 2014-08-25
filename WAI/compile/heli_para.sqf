@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_helipos1", "_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+	private ["_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 	_position 		= _this select 0;
 	_startingpos 	= _this select 1;
@@ -48,6 +48,7 @@ if (isServer) then {
 	};
 
 	_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
+	
 	if(!_missionrunning)exitWith{diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position];};
 
 	diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position];
@@ -225,6 +226,13 @@ if (isServer) then {
 				[_para] joinSilent _pgroup;
 
 				sleep 1.5;
+				
+				if (!isNil "_mission") then {
+					_ainum = (wai_mission_data select _mission) select 0;
+					wai_mission_data select _mission set [0, (_ainum + 1)];
+					_para setVariable ["missionclean", "ground"];
+					_para setVariable ["mission", _mission, true];
+				};
 			};
 
 			call {
@@ -273,7 +281,7 @@ if (isServer) then {
 				
 				deleteVehicle _helicopter;
 				{
-					deleteVehicle _x
+					deleteVehicle _x;
 					ai_air_units = (ai_air_units -1);
 				} forEach (units _unitgroup);
 

@@ -3,13 +3,13 @@ if(isServer) then {
 	private 		["_baserunover","_mission","_directions","_position","_crate","_num"];
 
 	_position		= [80] call find_position;
-	_mission 		= [_position,"Hard","Hero Base","MainHero",true] call init_mission;
-	diag_log 		format["WAI: Mission hero base started at %1",_position];
+	_mission 		= [_position,"Hard","Hero Base","MainBandit",true] call init_mission;
+	diag_log 		format["WAI: [Bandit] hero_base started at %1",_position];
 
 	//Extra Large Gun Box
 	_crate 			= createVehicle ["RUVehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 	[_crate] 		call Extra_Large_Gun_Box;
-	 
+	
 	//Buildings
 	_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
 	_baserunover1 	= createVehicle ["land_fortified_nest_big",[(_position select 0) + 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
@@ -55,6 +55,6 @@ if(isServer) then {
 		"Bandits did not capture the base in time"									// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Mission hero base ended at %1 ended",_position];
+	diag_log format["WAI: [Bandit] hero_base ended at %1 ended",_position];
 	b_missionrunning = false;
 };

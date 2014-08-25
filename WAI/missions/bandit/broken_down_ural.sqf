@@ -4,9 +4,7 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Ural Attack","MainBandit",true] call init_mission;	
-	diag_log 		format["WAI: Ural Attack mission started at %1",_position];
-
-	_baserunover 	= createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
+	diag_log 		format["WAI: [Bandit] broken_down_ural started at %1",_position];
 
 	_num_guns		= (1 + round (random 3));
 	_num_tools		= (3 + round (random 8));
@@ -22,16 +20,19 @@ if(isServer) then {
 	for "_i" from 0 to _rndgro do {
 		[[_position select 0, _position select 1, 0],_rndnum,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	};
+	
+	//Spawn vehicles
+	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],14,"FORM"];
 
 	[
 		[_mission,_crate],			// mission number and crate
-		["kill"], 	// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
+		["kill"], 					// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 			// cleanup objects
 		"Heroes are defending a broken down Ural! Check your map for the location!",	// mission announcement
 		"The supplies have been secured by bandits!",									// mission success
 		"Bandits failed to secure the supplies"											// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Ural attack mission ended at %1",_position];
+	diag_log format["WAI: [Bandit] broken_down_ural ended at %1",_position];
 	b_missionrunning = false;
 };

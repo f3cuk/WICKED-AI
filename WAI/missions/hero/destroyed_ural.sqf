@@ -4,9 +4,7 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Ural Attack","MainHero",true] call init_mission;	
-	diag_log 		format["WAI: Ural Attack mission started at %1",_position];
-
-	_baserunover 	= createVehicle ["UralWreck",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
+	diag_log 		format["WAI: [Hero] destroyed_ural started at %1",_position];
 
 	_num_guns		= (1 + round (random 3));
 	_num_tools		= (3 + round (random 8));
@@ -22,6 +20,9 @@ if(isServer) then {
 	for "_i" from 0 to _rndgro do {
 		[[_position select 0, _position select 1, 0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	};
+	
+	//Spawn vehicles
+	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],15,"FORM"];
 
 	[
 		[_mission,_crate],			// mission number and crate
@@ -32,6 +33,6 @@ if(isServer) then {
 		"Survivors did not secure the supplies in time"														// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: Ural attack mission ended at %1",_position];
+	diag_log format["WAI: [Hero] destroyed_ural ended at %1",_position];
 	h_missionrunning = false;
 };

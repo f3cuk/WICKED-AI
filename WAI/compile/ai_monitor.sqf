@@ -4,9 +4,8 @@ if (isServer) then {
 
 	diag_log "WAI: AI Monitor Started";
 
-	sleep 120;
-
 	while {true} do {
+	
 		if (ai_clean_dead) then {
 			{
 				_killedat = _x getVariable "killedat";
@@ -26,7 +25,7 @@ if (isServer) then {
 			diag_log format ["WAI: %1 Active vehicle patrol units (Crew)", ai_vehicle_units];
 		};
 
-		sleep 600;
+		sleep 30;
 
 	};
 

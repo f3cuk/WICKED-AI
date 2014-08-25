@@ -2,16 +2,18 @@
 Usage:			|	[classname,position,(boolean),(direction)] call custom_publish;
 Parameters		|	classname:	Class or array of classnames of vehicle to spawn
 in brackets		|	position:	Position to spawn vehicle
-are optional	|	boolean:	True, or False by default to spawn vehicle static at position
+are optional	|	boolean:	trie, or false by default to spawn vehicle static at position
 				|	direction:	Direction to face vehicle, random by default
 /********************************************************************************************/
 if (isServer) then {
 
-	private ["_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
+	private ["_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
 
 	_count 			= count _this;
 	_classnames 	= _this select 0;
 	_position 		= _this select 1;
+	_max_distance 	= 35;
+	_vehpos			= [];
 
 	if (typeName(_classnames) == "ARRAY") then {
 		_class = _classnames call BIS_fnc_selectRandom;
@@ -34,9 +36,16 @@ if (isServer) then {
 		_dir = floor(round(random 360));
 	};
 
-	if (!_position_fixed) then { _position = _position findEmptyPosition [10,35,_class]; };
+	if (!_position_fixed) then {	
+		while{count _vehpos < 1} do { 
+			_vehpos = _position findEmptyPosition[10,_max_distance,_class]; 
+			_max_distance = (_max_distance + 15);
+		};
+	} else {
+		_vehpos = _position;
+	};
 
-	_vehicle = createVehicle [_class,_position,[],15,"FORM"];
+	_vehicle = createVehicle [_class,_vehpos,[],5,"FORM"];
 	_vehicle setDir _dir;
 	_vehicle setVectorUp surfaceNormal position _vehicle;
 	_vehicle setvelocity [0,0,1];

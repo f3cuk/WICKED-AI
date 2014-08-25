@@ -12,15 +12,16 @@ if (isServer) then {
 		case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
 		case "static" : {ai_emplacement_units = (ai_emplacement_units -1);};
 	};
-
-	_mission = _unit getVariable ["mission", nil];
+	
+	_unit setVariable["missionclean", nil];
+	
+	_mission = _unit getVariable ["mission", nil];	
 	if (!isNil "_mission") then {
 		if (typeName(wai_mission_data select _mission) == "ARRAY") then {
 			wai_mission_data select _mission set [0, ((wai_mission_data select _mission) select 0) - 1];
 		};
 	};
 	_unit setVariable ["killedat", time];
-	_unit removeWeapon "NVGoggles";
 
 	if (isPlayer _player) then {
 
@@ -81,7 +82,7 @@ if (isServer) then {
 
 		};
 
-		if(_unit hasWeapon "NVGoggles" && (random 100) < 20) then {
+		if(_unit hasWeapon "NVGoggles" && floor(random 100) < 20) then {
 			_unit removeWeapon "NVGoggles";
 		};
 
