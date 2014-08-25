@@ -13,8 +13,8 @@ if (isServer) then {
 	_aitype				= _this select 8;
 	
 	if (typeName _aitype == "ARRAY") then {
-		_gain = _aitype select 1;
-		_aitype = _aitype select 0;
+		_aitype 	= _aitype select 0;
+		_gain 		= _aitype select 1;
 	};
 	
 	if (count _this > 9) then {
@@ -40,16 +40,17 @@ if (isServer) then {
 			case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
 		};
 
-		_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
-		_weapon 		= _weaponandmag select 0;
-		_magazine 		= _weaponandmag select 1;
+		if(count _aiweapon != 0) then {
+			_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
+			if(count _weaponandmag == 2) then {
+				_weapon 		= _weaponandmag select 0;
+				_magazine 		= _weaponandmag select 1;
+			};
+		};
 
 		switch (_gear) do {
 			case 0 : {_aigear = ai_gear0;};
 			case 1 : {_aigear = ai_gear1;};
-			case 2 : {_aigear = ai_gear2;};
-			case 3 : {_aigear = ai_gear3;};
-			case 4 : {_aigear = ai_gear4;};
 			case "Random" : {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
 		};
 		
@@ -85,21 +86,37 @@ if (isServer) then {
 		_unit enableAI "MOVE";
 		_unit enableAI "ANIM";
 		_unit enableAI "FSM";
-		_unit setCombatMode ai_combatmode;
-		_unit setBehaviour ai_behaviour;
+
+		if(_aitype == "Hero") then {
+			_unit setCombatMode ai_hero_combatmode;
+			_unit setBehaviour ai_hero_behaviour;
+		} else {
+			_unit setCombatMode ai_bandit_combatmode;
+			_unit setBehaviour ai_bandit_behaviour;
+		};
+		
 		removeAllWeapons _unit;
 		removeAllItems _unit;
-		_unit addweapon _weapon;
 
 		if (sunOrMoon != 1) then {
 			_unit addweapon "NVGoggles";
 		};
 
-		for "_i" from 1 to _mags do {
-			_unit addMagazine _magazine;
+		if(!isNil "_weapon") then {
+
+			_unit addweapon _weapon;
 		};
-		
-		_unit addBackpack _aipack;
+
+		if(!isNil "_magazine" && _mags >= 1) then {
+
+			for "_i" from 1 to _mags do {
+				_unit addMagazine _magazine;
+			};
+		};
+
+		if(_aipack != "none") then {
+			_unit addBackpack _aipack;
+		};
 
 		{
 			_unit addMagazine _x
@@ -136,12 +153,11 @@ if (isServer) then {
 	};
 	// Stops them from killing eachother when they fire..
 	_unitGroup setFormation "ECH LEFT";
-
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
 	[_unitGroup, _position, _mission] call group_waypoints;
 
-	diag_log format ["WAI: Spawned a group of %1 bandits at %2", _unitnumber, _position];
+	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2", _unitnumber,_position,_aitype];
 	
 	_unitGroup
 };

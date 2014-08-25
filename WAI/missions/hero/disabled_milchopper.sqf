@@ -6,13 +6,13 @@ if(isServer) then {
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
 	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
-	_position		= [30] call init_mission;
+	_position		= [30] call find_position;
 	_mission		= [_position,"Medium",format["Disabled %1", _vehname],"MainHero",true] call init_mission;	
 	diag_log 		format["WAI: Mission Armed Chopper Started At %1",_position];
 
 	//Sniper Gun Box
 	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-	[_crate] 			call Sniper_Gun_Box;
+	[_crate] 		call Sniper_Gun_Box;
 
 	//Spawn vehicle
 	_vehicle		= [_vehclass,_position] call custom_publish;
@@ -29,7 +29,7 @@ if(isServer) then {
 	[[
 		[(_position select 0) + 10, (_position select 1) - 10, 0],
 		[(_position select 0) - 10, (_position select 1) + 10, 0]
-	],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
+	],"M2StaticMG","easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	[
 		[_mission,_crate],	// mission number and crate

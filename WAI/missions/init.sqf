@@ -22,10 +22,12 @@ if(isServer) then {
 
 	init_mission					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\init_mission.sqf";
 	mission_winorfail				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_winorfail.sqf";
-	tank_traps						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\tank_traps.sqf";
 	minefield						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";
 	
-	{ wai_mission_markers set [count wai_mission_markers, _x]; } count ["MainHero","MainBandit","Side1Hero","Side1Bandit","Side2Hero","Side2Bandit","SideSpecial"];
+	{
+		wai_mission_markers set [count wai_mission_markers, _x]; 
+	} count ["MainHero","MainBandit","Side1Hero","Side1Bandit","Side2Hero","Side2Bandit","SideSpecial"];
+
 	markerready 					= true;
 	wai_mission_data				= [];
 	wai_hero_mission				= [];

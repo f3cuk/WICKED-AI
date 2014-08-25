@@ -2,21 +2,23 @@
 
 Type | Description
 ------------: | ------------
-`enhancement` | Added new type of mission objective, Assassination! @Jossy
-`enhancement` | Added Bandit missions, more to come in future updates @Jossy
-`enhancement` | Turned on landmines, Beware! @Jossy
-`bug` | Removed tank traps due to stupid AI engaging them @Jossy
+`feature` | Added Hero and Bandit AI support @Jossy
+`enhancement` | Added new type of mission objective, assassination! @Jossy
+`enhancement` | Added Bandit missions, more to come in future updates @Jossy/@f3cuk
+`enhancement` | Turned on landmines, beware! @Jossy
 `enhancement` | Changed the way damage and fuel values are read from config, fuel will now be random per vehicle @Jossy
 `enhancement` | Added min/max damage values for published vehicles in config @Jossy
-`bug` | Fixed typos in dynamic ammo box, ItemEpinephin(e) and trying to spawn ItemKeyKit as magazine @Jossy
-`enhancement` | Map markers now clear once mission is cleared @Jossy
-`enhancement` | Cleaned up the vehicle spawn code, vehicles now generate damage taken during fire @Jossy
-`enhancement` | Vehicle hive save method changed to a GetIn eventhandler @Jossy
+`enhancement` | Map markers now instantly clear once mission is cleared @Jossy
+`enhancement` | Cleaned up the vehicle spawn code, vehicles now generate damage taken @Jossy
+`enhancement` | Vehicles will only be saved to the database when they are entered @Jossy
 `enhancement` | Changed mission marker colors to resemble mission difficulty @Jossy
-`feature` | Added Hero and Bandit AI support @Jossy
+`bug` | Removed tank traps due to stupid AI engaging them @Jossy
+`bug` | Fixed typos in dynamic ammo box, ItemEpinephin(e) and trying to spawn ItemKeyKit as magazine @Jossy
+ |
+Version | **2.0.5**
+``bug` | Fixed missing ; on ikea_convoy.sqf
  |
 Version | **2.0.4**
- |
 ``bug` | Fixed bug with tanktraps not disappearing on Ikea mission
  | 
 Version | **2.0.3**
@@ -29,7 +31,6 @@ Version | **2.0.1**
 `bug` | Fixed bug with roadflare on mission succes
  | 
 Version | **2.0.0**
- | 
 `enhancement` | Major code overhaul and folder structure change
 `feature` | Added possibility of rotating static mission per map
 `feature` | Added possibility of tanktrapping missions @f3cuk / @nerdalertk
@@ -47,7 +48,6 @@ Version | **2.0.0**
 `bug` | Less chance of AI killing eachother @nerdalertdk
  | 
 Version | **1.9.3**
- | 
 `enhancement` | Normalized the use of Random throughout, when you want something random, use "Random" and not "Random" or ""
 `enhancement` | Implemented custom_ai_skill throughout. In the future use either "easy", "medium", "hard", "extreme" or "Random" to define a skillset. Numeric skillsets will fallback on "Random".
 `enhancement` | Added IsServer checks on all files that could possibly be used in a harmfull manner (will probably roll this out on more files)
@@ -59,15 +59,12 @@ Version | **1.9.3**
 `bug` | Fixed added _aicskill private var vehicle_patrol.sqf
  | 
 Version | **1.9.2**
- | 
 `bug` | Fixed box on medi camp missions
  | 
 Version | **1.9.1**
- | 
 `bug` | Fixed skillset on missions
  | 
 Version | **1.9.0**
- | 
 `new feature` | Added possibility to blacklist certain area's (default set stary)
 `enhancement` | General code cleanup including removal of unused private vars
 `enhancement` | Overhaul making missions more dynamic
@@ -79,7 +76,6 @@ Version | **1.9.0**
 `bug` | Fixed crashed blackhawk with loot crate spawning inside helicopter
  | 
 Version | **1.8.0**
- | 
 `new feature` | Randomized clothes;
 `enhancement` | Customized loot;
 `enhancement` | Tried to nerve the 50 cals a bit, making them less accurate;

@@ -3,7 +3,7 @@ if(isServer) then {
 	private			["_mission","_playerPresent","_vehname","_vehicle","_position","_vehclass","_crate","_tent","_rndnum"];
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Hard","Captured MV 22","MainHero",true] call init_mission;	
+	_mission		= [_position,"Hard","Captured MV 22","MainBandit",true] call init_mission;	
 	diag_log		format["WAI: Mission MV22 started at %1",_position];
 
 	//Medical Supply Box
@@ -21,10 +21,11 @@ if(isServer) then {
 	
 	//Troops
 	_rndnum = round (random 3) + 4;
-	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	
+	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Doctor","Random",["Hero",200],_mission] call spawn_group;
 	 
 	//Turrets
 	[[
@@ -36,11 +37,11 @@ if(isServer) then {
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_vehicle], 		// cleanup objects
-		"Bandits have captured a Red Cross MV-22! An informant has advised there is medical supplies, he has updated the map for the location!",	// mission announcement
-		"Survivors have secured the MV-22!",																										// mission success
-		"Survivors did not secure the MV-22 in time"																								// mission fail
+		"A group of red cross volunteers are giving away medical supplies",		// mission announcement
+		"Bandits have murdered the volunteers, shame on them!",					// mission success
+		"The medical supplies have been given away"								// mission fail
 	] call mission_winorfail;
 
 	diag_log format["WAI: Mission captured MV-22 ended at %1",_position];
-	h_missionrunning = false;
+	b_missionrunning = false;
 };
