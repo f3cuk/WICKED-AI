@@ -31,9 +31,11 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Installation Instructions
 
-1. Add the WAI folder to your dayz_server directory
-2. In `server_monitor.sqf` find `allowConnection = true;` add above `ExecVM "\z\addons\dayz_server\WAI\init.sqf";`
- 
+1. Unpack `dayz_server.pbo`
+2. Add the WAI folder to your dayz_server directory
+3. In `server_monitor.sqf` find `allowConnection = true;` add above `ExecVM "\z\addons\dayz_server\WAI\init.sqf";`
+4. Repack `dayz_server.pbo`
+
 ### Versioning
 
 For transparency into our release cycle and in striving to maintain backward compatibility, bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes we screw up, but we'll adhere to those rules whenever possible.
