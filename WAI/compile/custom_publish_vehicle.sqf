@@ -2,7 +2,7 @@
 Usage:			|	[classname,position,(boolean),(direction)] call custom_publish;
 Parameters		|	classname:	Class or array of classnames of vehicle to spawn
 in brackets		|	position:	Position to spawn vehicle
-are optional	|	boolean:	trie, or false by default to spawn vehicle static at position
+are optional	|	boolean:	true, or false by default to spawn vehicle static at position
 				|	direction:	Direction to face vehicle, random by default
 /********************************************************************************************/
 if (isServer) then {
