@@ -69,8 +69,8 @@ if (isServer) then {
 		[_unit] joinSilent _unitGroup;
 
 		call {
-			if (_aitype == "Hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_add_humanity]; };
-			if (_aitype == "Bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
+			if (_aitype == "Hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
+			if (_aitype == "Bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_add_humanity]; };
 			if (_aitype == "Special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["humanity", ai_special_humanity]; };
 		};
 		if (!isNil "_gain") then { _unit setVariable ["humanity", _gain]; };
