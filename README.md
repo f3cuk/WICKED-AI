@@ -15,7 +15,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - Dynamic loot revisited
 
 ### Version history
-- 25-08-2014 : BETA release (2.1.0)
+- 26-08-2014 : BETA release (2.1.0)
 - 24-08-2014 : Minor bugfixes (2.0.5)
 - 20-08-2014 : Minor bugfixes (2.0.4)
 - 20-08-2014 : Minor bugfixes (2.0.3)
