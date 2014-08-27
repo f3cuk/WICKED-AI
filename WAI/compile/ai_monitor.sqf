@@ -25,7 +25,7 @@ if (isServer) then {
 			diag_log format ["WAI: %1 Active vehicle patrol units (Crew)", ai_vehicle_units];
 		};
 
-		sleep 30;
+		sleep 60;
 
 	};
 

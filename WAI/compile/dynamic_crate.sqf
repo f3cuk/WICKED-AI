@@ -33,7 +33,7 @@ if(typeName (_this select 4) == "ARRAY") then {
 	_backpack_array = (_this select 4) select 1;
 } else {
 	_num_backpacks = _this select 4;
-	_backpack_array = crate_backpacks;
+	_backpack_array = crate_backpacks_all;
 };
 
 if(debug_mode) then {

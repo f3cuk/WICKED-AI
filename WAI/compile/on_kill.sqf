@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	private ["_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;

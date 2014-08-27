@@ -1,6 +1,6 @@
 if(isServer) then {
 	 
-	private 		["_baserunover","_mission","_directions","_position","_crate","_num","_crate_type","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7"];
+	private 		["_i","_baserunover","_mission","_directions","_position","_crate","_num","_crate_type","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7"];
 
 	_position		= [80] call find_position;
 	_mission 		= [_position,"Hard","Bandit Base","MainHero",true] call mission_init;
@@ -32,7 +32,7 @@ if(isServer) then {
     } forEach _baserunover;
 	
 	//Group Spawning
-	_num = round (random 3) + 4;
+	_num = 4 + round (random 3);
 	[[_position select 0, _position select 1, 0],_num,"hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;

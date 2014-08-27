@@ -104,7 +104,7 @@ if (isServer) then {
 	} forEach (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
-	[_helicopter] spawn veh_monitor;
+	[_helicopter] spawn vehicle_monitor;
 
 	_unitGroup allowFleeing 0;
 	_unitGroup setBehaviour "CARELESS";

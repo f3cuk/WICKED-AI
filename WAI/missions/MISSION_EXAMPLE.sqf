@@ -20,7 +20,7 @@ if(isServer) then {
 	//				2: Max number of tools OR [MAX number of tools,tool_array]
 	//				3: Max number of items OR [MAX number of items,item_array]
 	//				4: Max number of backpacks OR [MAX number of backpacks,backpack_array]
-	[_crate,16,[8,crate_tools_sniper],[3,crate_high_value],[4,crate_backpacks_large]] call dynamic_crate;
+	[_crate,16,[8,crate_tools_sniper],[3,crate_items_high_value],[4,crate_backpacks_large]] call dynamic_crate;
 	 
 	// Create some Buildings
 	_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
