@@ -1,15 +1,15 @@
-private ["_tool","_crate","_weapon","_item","_backpack","_num_guns","_num_tools","_num_items","_num_backpacks","_weaponarray","_gun_array","_tool_array","_item_array","_backpack_array"];
+private ["_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array"];
 
 _crate = _this select 0;
 _crate setVariable ["ObjectID","1",true];
 _crate setVariable ["permaLoot",true];
 
 if(typeName (_this select 1) == "ARRAY") then {
-	_num_guns	= (_this select 1) select 0;
-	_gun_array	= (_this select 1) select 1;
+	_num_weapons	= (_this select 1) select 0;
+	_weapons_array	= (_this select 1) select 1;
 } else {
-	_num_guns	= _this select 1;
-	_gun_array	= ai_wep_random;
+	_num_weapons	= _this select 1;
+	_weapons_array	= ai_wep_random call BIS_fnc_selectRandom;;
 };
 
 if(typeName (_this select 2) == "ARRAY") then {
@@ -50,8 +50,7 @@ if(_num_guns > 0) then {
 	_num_guns	= (ceil((_num_guns) / 2) + floor(random (_num_guns / 2)));
 
 	for "_i" from 1 to _num_guns do {
-		_weaponarray = _gun_array call BIS_fnc_selectRandom;
-		_weapon = _weaponarray call BIS_fnc_selectRandom;
+		_weapon = _weapons_array call BIS_fnc_selectRandom;
 		_crate addWeaponCargoGlobal [(_weapon select 0),1];
 		_crate addMagazineCargoGlobal [(_weapon select 1), (1 + floor(random 5))];
 	};
