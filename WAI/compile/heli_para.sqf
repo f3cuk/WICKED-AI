@@ -227,7 +227,7 @@ if (isServer) then {
 
 				sleep 1.5;
 				
-				if (!isNil "_mission") then {
+				if (!isNil "_mission" && typeName _mission == "ARRAY") then {
 					_ainum = (wai_mission_data select _mission) select 0;
 					wai_mission_data select _mission set [0, (_ainum + 1)];
 					_para setVariable ["missionclean", "ground"];

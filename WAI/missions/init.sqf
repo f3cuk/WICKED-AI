@@ -4,15 +4,11 @@ if(isServer) then {
 
 	diag_log "WAI: Initialising missions";
 
-	//Static Custom Boxes
 	dynamic_crate 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\dynamic_crate.sqf";
-	//ranch_safe						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ranch_safe.sqf";
-
-	// Vehicle Publish
 	custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\custom_publish_vehicle.sqf";
 
 	// Mission functions
-	call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_functions.sqf";
+	call 							compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_functions.sqf";
 	mission_init					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_init.sqf";
 	mission_winorfail				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_winorfail.sqf";
 	minefield						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";

@@ -71,7 +71,7 @@ if (isServer) then {
 		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;;
 	};
 
-	diag_log("WAI: Spawned " +str(_class) + " at " + str(_position) + " with " + str(_fuel) + " fuel and " + str(_damage) + " damage.");
+	if(debug_mode) then { diag_log("WAI: Spawned " +str(_class) + " at " + str(_position) + " with " + str(_fuel) + " fuel and " + str(_damage) + " damage."); };
 	
 	_vehicle setFuel _fuel;
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
@@ -82,7 +82,7 @@ if (isServer) then {
 		
 		_vehicle addEventHandler ["GetIn", {
 			_vehicle 		= _this select 0;
-				diag_log ("PUBLISH: Attempt " + str(_vehicle));
+			if(debug_mode) then { diag_log ("PUBLISH: Attempt " + str(_vehicle)); };
 
 			_class 			= typeOf _vehicle;
 			_characterID 	= _vehicle getVariable ["CharacterID", "0"];
@@ -102,7 +102,7 @@ if (isServer) then {
 
 			_key 	= format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance,_class,_damage,_characterID,_worldspace,[],_array,_fuel,_uid];
 
-			diag_log ("HIVE: WRITE: "+ str(_key));
+			if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
 
 			_key call server_hiveWrite;
 			
@@ -125,24 +125,26 @@ if (isServer) then {
 					_key 		= format["CHILD:388:%1:",_uid];
 					_result 	= _key call server_hiveReadWrite;
 					_outcome 	= _result select 0;
-					diag_log ("HIVE: WRITE: "+ str(_key));
-					if (_outcome == "PASS") then {
+					if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
+					if(_outcome == "PASS") then {
 						_oid 	= _result select 1;
 						_vehicle setVariable ["ObjectID", _oid, true];
-						diag_log("CUSTOM: Selected " + str(_oid));
+						if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
 						_done 	= true;
-						_retry 	= 100;
+						_retry 	= 11;
 					} else {
-						diag_log("CUSTOM: trying again to get id for: " + str(_uid));
+						if(debug_mode) then { diag_log("CUSTOM: trying again to get id for: " + str(_uid)); };
 						_done 	= false;
 						_retry 	= _retry + 1;
 					};
 				};
 
-				if(!_done) exitWith { 
-					deleteVehicle _vehicle; diag_log("CUSTOM: failed to get id for : " + str(_uid));
+				if(!_done) then { 
+					deleteVehicle _vehicle;
+					if(debug_mode) then { diag_log("CUSTOM: failed to get id for : " + str(_uid)); };
+				} else {
+					_vehicle setVariable ["lastUpdate",time];
 				};
-				_vehicle setVariable ["lastUpdate",time];
 			};
 
 			_vehicle call fnc_veh_ResetEH;
@@ -150,7 +152,7 @@ if (isServer) then {
 
 			publicVariable "PVDZE_veh_Init";
 
-			diag_log ("PUBLISH: Created " + (_class) + " with ID " + str(_uid));
+			if(debug_mode) then { diag_log ("PUBLISH: Created " + (_class) + " with ID " + str(_uid)); };
 		}];
 
 	};
