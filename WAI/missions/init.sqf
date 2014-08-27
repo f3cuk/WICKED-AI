@@ -5,17 +5,8 @@ if(isServer) then {
 	diag_log "WAI: Initialising missions";
 
 	//Static Custom Boxes
-	Construction_Supply_Box  		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_construction.sqf";
-	Chain_Bullet_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_chainbullets.sqf";
-	Medical_Supply_Box  			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_medical.sqf";
-	spawn_ammo_box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\box_dynamic.sqf";
-	ranch_safe						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ranch_safe.sqf";
-
-	//Static Weaponbox
-	Sniper_Gun_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_sniper.sqf";
-	Extra_Large_Gun_Box				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_extra_large.sqf";
-	Large_Gun_Box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_large.sqf";
-	Medium_Gun_Box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_medium.sqf";
+	dynamic_crate 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\dynamic_crate.sqf";
+	//ranch_safe						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ranch_safe.sqf";
 
 	// Vehicle Publish
 	custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\custom_publish_vehicle.sqf";

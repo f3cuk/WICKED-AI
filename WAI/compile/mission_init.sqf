@@ -16,10 +16,10 @@ if(isServer) then {
 
 	if(wai_enable_minefield && _mines) then {
 		call {
-			if (_difficulty == "Easy") exitWith {_mines = [_position,25,50,10] call minefield;};
-			if (_difficulty == "Medium") exitWith {_mines = [_position,50,75,25] call minefield;};
-			if (_difficulty == "Hard") exitWith {_mines = [_position,50,100,50] call minefield;};
-			if (_difficulty == "Extreme") exitWith {_mines = [_position,50,100,75] call minefield;};
+			if (_difficulty == "Easy") 		exitWith {_mines = [_position,25,50,10] call minefield;};
+			if (_difficulty == "Medium") 	exitWith {_mines = [_position,50,75,25] call minefield;};
+			if (_difficulty == "Hard") 		exitWith {_mines = [_position,50,100,50] call minefield;};
+			if (_difficulty == "Extreme") 	exitWith {_mines = [_position,50,100,75] call minefield;};
 		};
 		wai_mission_data select _mission set [2, _mines];
 	};
@@ -37,8 +37,8 @@ if(isServer) then {
 	};
 	
 	call {
-		if (_type == "MainHero")	exitWith { _name = "[H] " + _name; };
-		if (_type == "MainBandit")	exitWith { _name = "[B] " + _name; };
+		if (_type == "MainHero")	exitWith { _name = "[B] " + _name; };
+		if (_type == "MainBandit")	exitWith { _name = "[H] " + _name; };
 		if (_type == "Special")		exitWith { _name = "[S] " + _name; };
 	};
 
@@ -48,6 +48,7 @@ if(isServer) then {
 		_name 		= _this select 2;
 		_mission 	= _this select 3;
 		_running 	= true;
+		
 		while {_running} do {
 			_type	= (wai_mission_data select _mission) select 1;
 			_marker 		= createMarker [_type, _position];

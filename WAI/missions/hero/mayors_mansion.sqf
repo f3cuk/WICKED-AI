@@ -7,9 +7,11 @@ if(isServer) then {
 	
 	diag_log 		format["WAI: [Hero] mayors_mansion started at %1",_position];
 
-	//Large Gun Box
-	_crate = createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1), .5], [], 0, "CAN_COLLIDE"];
-	[_crate] call Large_Gun_Box;
+	//Setup the crate
+	_crate_type 	= crates_large call BIS_fnc_selectRandom;
+	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1), .5], [], 0, "CAN_COLLIDE"];
+	
+	[_crate,20,4,0,4] call dynamic_crate;
 	 
 	//Mayors Mansion
 	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
@@ -21,7 +23,8 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 	//The Mayor Himself
-	_mayor = [[_position select 0, _position select 1, 0],1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
+	_mayor = [[(_position select 0) + 10, (_position select 1) - 10, 4.1],1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
+	_mayor disableAI "MOVE";
 
 	//Static mounted guns
 	[[
@@ -35,9 +38,10 @@ if(isServer) then {
 		[_baserunover], 		// cleanup objects
 		"The Mayor has gone rogue, go take him and his task force out to claim the black market weapons!",	// mission announcement
 		"The rogue mayor has been taken out, who will be the next Mayor of Cherno?",						// mission success
-		"The survivors were unable to capture the mansion, time is up"										// mission fail
+		"Survivors were unable to capture the mansion, time is up"										// mission fail
 	] call mission_winorfail;
 
 	diag_log format["WAI: [Hero] mayors_mansion ended at %1",_position];
+
 	h_missionrunning = false;
 };

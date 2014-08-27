@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+	private 		["_crate_type","_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
@@ -11,9 +11,11 @@ if(isServer) then {
 	
 	diag_log 		format["WAI: [Hero] disabled_milchopper started At %1",_position];
 
-	//Sniper Gun Box
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-	[_crate] 		call Sniper_Gun_Box;
+	//Setup the crate
+	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+	
+	[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],2] call dynamic_crate;
 
 	//Troops
 	_rndnum = round (random 4) + 2;
@@ -45,5 +47,6 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	diag_log format["WAI: [Hero] disabled_milchopper ended at %1",_position];
+	
 	h_missionrunning = false;
 };

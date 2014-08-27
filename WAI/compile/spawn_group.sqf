@@ -28,7 +28,7 @@ if (isServer) then {
 	_aiskin 			= "";
 	_aicskill 			= [];
 	_aipack 			= "";
-	_unitGroup 			= createGroup east;
+	_unitGroup 			= createGroup EAST;
 	_current_time		= time;
 	_unarmed			= false;
 
@@ -65,7 +65,7 @@ if (isServer) then {
 			_aiskin = _skin;
 		};
 
-		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "PRIVATE"];
+		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "FORM"];
 		[_unit] joinSilent _unitGroup;
 
 		call {

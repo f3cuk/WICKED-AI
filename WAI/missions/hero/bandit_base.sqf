@@ -1,15 +1,17 @@
 if(isServer) then {
 	 
-	private 		["_baserunover","_mission","_directions","_position","_crate","_num"];
+	private 		["_baserunover","_mission","_directions","_position","_crate","_num","_crate_type"];
 
 	_position		= [80] call find_position;
 	_mission 		= [_position,"Hard","Bandit Base","MainHero",true] call mission_init;
 	
 	diag_log 		format["WAI: [Hero] bandit_base started at %1",_position];
 
-	//Extra Large Gun Box
-	_crate 			= createVehicle ["RUVehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	[_crate] 		call Extra_Large_Gun_Box;
+	//Setup the crate
+	_crate_type 	= crates_large call BIS_fnc_selectRandom;
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+
+	[_crate,16,[8,crate_tools_sniper],[3,crate_high_value],[4,crate_backpacks_large]] call dynamic_crate;
 	 
 	//Buildings
 	_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
@@ -57,5 +59,6 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	diag_log format["WAI: [Hero] bandit_base ended at %1 ended",_position];
+
 	h_missionrunning = false;
 };
