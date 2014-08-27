@@ -1,10 +1,10 @@
-private ["_mags","_tool","_crate","_weapon","_item","_num_guns","_num_tools","_num_items","_num_backpacks","_weaponarray","_gun_array","_tool_array","_item_array","_backpack_array"];
+private ["_tool","_crate","_weapon","_item","_backpack","_num_guns","_num_tools","_num_items","_num_backpacks","_weaponarray","_gun_array","_tool_array","_item_array","_backpack_array"];
 
 _crate = _this select 0;
 _crate setVariable ["ObjectID","1",true];
 _crate setVariable ["permaLoot",true];
 
-if(typeName (_this select 1) == "ARRAY") {
+if(typeName (_this select 1) == "ARRAY") then {
 	_num_guns	= (_this select 1) select 0;
 	_gun_array	= (_this select 1) select 1;
 } else {
@@ -12,8 +12,7 @@ if(typeName (_this select 1) == "ARRAY") {
 	_gun_array	= ai_wep_random;
 };
 
-if(typeName (_this select 2) == "ARRAY")
-{
+if(typeName (_this select 2) == "ARRAY") then {
 	_num_tools	= (_this select 2) select 0;
 	_tool_array = (_this select 2) select 1;
 } else {

@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_mission","_baserunover","_position","_crate"];
+	private ["_mission","_baserunover","_position","_crate","_crate_type","_girls1","_girls2","_girls3","_girls4","_dirtyowner"];
 	 
 	_position		= [10] call find_position;
 	_mission		= [_position,"ColorPink","Bunny Ranch","Special",false] call mission_init;

@@ -7,7 +7,7 @@ are optional	|	boolean:	true, or false by default to spawn vehicle static at pos
 /********************************************************************************************/
 if (isServer) then {
 
-	private ["_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
+    private ["_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
 
 	_count 			= count _this;
 	_classnames 	= _this select 0;

@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
+	private			["_baserunover","_crate_type","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Ural Attack","MainBandit",true] call mission_init;
@@ -13,7 +13,7 @@ if(isServer) then {
 
 	[_crate,4,8,36,2] call dynamic_crate;
 
-	_rndnum 	= round (random 4) + 1;
+	_rndnum 	= 1 + round (random 4);
 	_rndgro 	= 1 + round (random 3);
 
 	for "_i" from 0 to _rndgro do {

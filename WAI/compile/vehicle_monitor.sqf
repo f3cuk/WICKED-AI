@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_veh"];
+	private ["_veh","_mission","_player_present"];
 	
 	_veh = _this select 0;
 
@@ -26,13 +26,13 @@ if (isServer) then {
 	waitUntil
 	{
 		sleep 1;
-		_playerPresent = false;
+		_player_present = false;
 		{
 			if((isPlayer _x) && (_x distance _veh <= 2000)) exitWith {
-				_playerPresent = true
+				_player_present = true
 			};
 		} forEach playableUnits;
-		(!_playerPresent)
+		(!_player_present)
 	};
 	{deleteVehicle _x;} forEach (crew _veh) + [_veh];
 

@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_mission","_position","_crate","_playerPresent","_baserunover","_mayor"];
+	private			["_crate_type","_mission","_position","_crate","_playerPresent","_baserunover","_mayor"];
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;

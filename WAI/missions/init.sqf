@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private["_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
+	private["_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
 
 	diag_log "WAI: Initialising missions";
 

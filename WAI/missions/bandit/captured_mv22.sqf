@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_mission","_playerPresent","_vehname","_vehicle","_position","_vehclass","_crate","_tent","_rndnum"];
+	private			["_crate_type","_mission","_playerPresent","_vehname","_vehicle","_position","_vehclass","_crate","_tent","_rndnum"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Hard","Captured MV22","MainBandit",true] call mission_init;
@@ -15,10 +15,9 @@ if(isServer) then {
 
 	//Medical Tent
 	_tent 			= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-	_tent 			setVectorUp surfaceNormal position _tent;
 	
 	//Troops
-	_rndnum = round (random 3) + 4;
+	_rndnum = 4 + round (random 3);
 	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;

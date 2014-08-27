@@ -82,8 +82,6 @@ if (isServer) then {
 				_unit removeMagazine _x
 			} forEach magazines _unit;
 
-			_current_time
-
 		} else {
 
 			if ((random 100) <= ai_roadkill_damageweapon) then {

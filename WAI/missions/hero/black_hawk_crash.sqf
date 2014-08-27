@@ -8,7 +8,7 @@ if(isServer) then {
 	diag_log 		format["WAI: [Hero] black_hawk_crash started at %1",_position];
 
 	//Setup the crate
-	_crate_type 	= crate_medium call BIS_fnc_selectRandom;
+	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 	
 	[_crate,5,5,10,2] call dynamic_crate;

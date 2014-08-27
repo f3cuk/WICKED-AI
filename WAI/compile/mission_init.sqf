@@ -1,6 +1,6 @@
 if(isServer) then {
 	
-	private ["_difficulty","_mission","_type","_color","_dot","_position","_marker","_name"];
+	private ["_mines","_difficulty","_mission","_type","_color","_dot","_position","_marker","_name"];
 
 	_position 	= _this select 0;
 	_difficulty = _this select 1;
@@ -43,6 +43,7 @@ if(isServer) then {
 	};
 
 	[_position, _color, _name, _mission] spawn {
+        private["_position","_color","_name","_running","_mission","_type","_marker","_dot"];
 		_position	= _this select 0;
 		_color 		= _this select 1;
 		_name 		= _this select 2;

@@ -1,18 +1,14 @@
 if(isServer) then {
 
-	private 		["_mission","_playerPresent","_position","_crate","_baserunover"];
+	private 		["_crate_type","_mission","_playerPresent","_position","_crate","_baserunover"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium","Black Hawk Crash","MainBandit",true] call mission_init;
 
 	diag_log 		format["WAI: [Bandit] black_hawk_crash started at %1",_position];
-
-	_num_guns		= round(random 5);
-	_num_tools		= round(random 5);
-	_num_items		= round(random 10);
-
+    
 	//Setup the crate
-	_crate_type 	= crate_medium call BIS_fnc_selectRandom;
+	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 	
 	[_crate,5,5,10,2] call dynamic_crate;

@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_mission","_position","_crate","_playerPresent","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
+	private 		["_crate_type","_mission","_position","_crate","_playerPresent","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium","Weapon Cache","MainBandit",true] call mission_init;
