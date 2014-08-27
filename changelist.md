@@ -3,6 +3,9 @@
 Type | Description
 ------------: | ------------
 `feature` | Added Hero and Bandit AI support @Jossy
+`feature` | Added possibility to add AI skin to inventory
+`feature` | Added posibily of finding a high value item in any crate
+`enhancement` | Redone all the missions to included dynamic loot
 `enhancement` | Added new type of mission objective, assassination! @Jossy
 `enhancement` | Added Bandit missions, more to come in future updates @Jossy/@f3cuk
 `enhancement` | Turned on landmines, beware! @Jossy
