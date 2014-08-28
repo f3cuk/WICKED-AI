@@ -5,7 +5,7 @@ if(isServer) then {
 	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
 	
-	diag_log 		format["WAI: [Bandit] medi_camp started at %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Medical Supply Camp]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
@@ -19,10 +19,12 @@ if(isServer) then {
 
 	{ _x setVectorUp surfaceNormal position  _x; } foreach _baserunover;
 
+	//Troops
 	[[_position select 0, _position select 1, 0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
+	//Condition
 	[
 		[_mission,_crate],				// mission number and crate
 		["kill"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
@@ -32,7 +34,7 @@ if(isServer) then {
 		"Survivors were unable to capture the medical supply camp"									// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Bandit] medi_camp ended at %1",_position];
+	diag_log format["WAI: [Mission:[Bandit] Medical Supply Camp]: Ended at %1",_position];
 	
 	b_missionrunning = false;
 };

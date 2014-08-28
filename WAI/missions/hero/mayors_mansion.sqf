@@ -5,7 +5,7 @@ if(isServer) then {
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
 	
-	diag_log 		format["WAI: [Hero] mayors_mansion started at %1",_position];
+	diag_log 		format["WAI: [Mission:[Hero] Mayors Mansion]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
@@ -44,7 +44,7 @@ if(isServer) then {
 		"Survivors were unable to capture the mansion, time is up"										// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Hero] mayors_mansion ended at %1",_position];
+	diag_log format["WAI: [Mission:[Hero] Mayors Mansion]: Ended at %1",_position];
 
 	h_missionrunning = false;
 };

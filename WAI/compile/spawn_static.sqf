@@ -161,13 +161,12 @@ if (isServer) then {
 		_unit moveingunner _static;
 
 		if (!isNil "_mission") then {
-			_static setVariable ["missionclean", "static"];
-			_unit setVariable ["mission", _mission];
-			_static setVariable ["mission", _mission];
-			[_static] spawn vehicle_monitor;
-		} else {
-			[_static] spawn vehicle_monitor;
+			_static setVariable ["missionclean","static"];
+			_static setVariable ["mission",_mission];
+			_unit setVariable ["mission",_mission];
 		};
+
+		[_static] spawn vehicle_monitor;
 
 	} forEach _position;
 

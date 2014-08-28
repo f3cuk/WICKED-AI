@@ -9,7 +9,7 @@ if(isServer) then {
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium",format["Disabled %1", _vehname],"MainHero",true] call mission_init;
 	
-	diag_log 		format["WAI: [Hero] disabled_milchopper started At %1",_position];
+	diag_log 		format["WAI: [Mission:[Hero] Disabled Military Chopper]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
@@ -24,7 +24,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
 		[(_position select 0) + 30, (_position select 1) - 30, 0],
 		[(_position select 0) + 30, (_position select 1) + 30, 0],
@@ -39,6 +39,7 @@ if(isServer) then {
 		diag_log format["WAI: [Hero] disabled_milchopper spawned a %1",_vehname];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -48,7 +49,7 @@ if(isServer) then {
 		"Survivors did not secure the armed chopper in time"													// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Hero] disabled_milchopper ended at %1",_position];
+	diag_log format["WAI: [Mission:[Hero] Disabled Military Chopper]: Ended at %1",_position];
 	
 	h_missionrunning = false;
 };

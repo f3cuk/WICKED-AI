@@ -5,7 +5,7 @@ if(isServer) then {
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Disabled Convoy","MainHero",true] call mission_init;
 
-	diag_log		format["WAI: [Hero] ikea_convoy started At %1",_position];
+	diag_log 		format["WAI: [Mission:[Hero] Disabled Convoy]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
@@ -20,7 +20,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0],
@@ -45,6 +45,7 @@ if(isServer) then {
 		diag_log format["WAI: [Hero] ikea_convoy spawned a %1",_vehclass2];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],				// mission number and crate
 		["crate"], 						// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -54,7 +55,7 @@ if(isServer) then {
 		"Survivors did not secure the convoy in time"																// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Hero] ikea_convoy ended at %1",_position];
+	diag_log format["WAI: [Mission:[Hero] Disabled Convoy]: Ended at %1",_position];
 	
 	h_missionrunning = false;
 };
