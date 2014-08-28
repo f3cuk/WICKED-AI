@@ -1,24 +1,26 @@
 if(isServer) then {
 
-	private			["_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
+	private			["_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Disabled Convoy","MainHero",true] call mission_init;
 
-	diag_log		format["WAI: [Hero] ikea_convoy started At %1",_position];
+	diag_log 		format["WAI: [Mission:[Hero] Disabled Convoy]: Starting... %1",_position];
 
-	//Construction Supply Box
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	[_crate] 		call Construction_Supply_box;
+	//Setup the crate
+	_crate_type 	= crates_large call BIS_fnc_selectRandom;
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	
+	[_crate,[2,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],4] call dynamic_crate;
 
 	//Troops
-	_rndnum = round (random 3) + 5;
+	_rndnum = 5 + round (random 3);
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],5,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0],
@@ -43,6 +45,7 @@ if(isServer) then {
 		diag_log format["WAI: [Hero] ikea_convoy spawned a %1",_vehclass2];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],				// mission number and crate
 		["crate"], 						// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -52,6 +55,7 @@ if(isServer) then {
 		"Survivors did not secure the convoy in time"																// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Hero] ikea_convoy ended at %1",_position];
+	diag_log format["WAI: [Mission:[Hero] Disabled Convoy]: Ended at %1",_position];
+	
 	h_missionrunning = false;
 };

@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	private ["_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
@@ -15,13 +15,25 @@ if (isServer) then {
 	
 	_unit setVariable["missionclean", nil];
 	
-	_mission = _unit getVariable ["mission", nil];	
+	_mission = _unit getVariable ["mission", nil];
+		
 	if (!isNil "_mission") then {
 		if (typeName(wai_mission_data select _mission) == "ARRAY") then {
 			wai_mission_data select _mission set [0, ((wai_mission_data select _mission) select 0) - 1];
 		};
 	};
 	_unit setVariable ["killedat", time];
+
+	if(ai_add_skin) then {
+
+		_skin = (typeOf _unit);
+		_skin = "Skin_" + _skin;
+
+		if (isClass (configFile >> "CfgMagazines" >> _skin)) then {
+			[_unit,_skin] call BIS_fnc_invAdd;
+		};
+
+	};
 
 	if (isPlayer _player) then {
 
@@ -61,16 +73,12 @@ if (isServer) then {
 
 		if (ai_clean_roadkill) then {
 
-			ai_roadkills = (ai_roadkills + 1);
-
 			removeBackpack _unit;
 			removeAllWeapons _unit;
 
 			{
 				_unit removeMagazine _x
 			} forEach magazines _unit;
-
-			_current_time
 
 		} else {
 
@@ -82,10 +90,10 @@ if (isServer) then {
 
 		};
 
-		if(_unit hasWeapon "NVGoggles" && floor(random 100) < 20) then {
-			_unit removeWeapon "NVGoggles";
-		};
+	};
 
+	if(_unit hasWeapon "NVGoggles" && floor(random 100) < 20) then {
+		_unit removeWeapon "NVGoggles";
 	};
 
 };

@@ -1,33 +1,35 @@
 if(isServer) then {
 
-	private ["_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+	private ["_vehicle","_rndnum","_crate_type","_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
 	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Hard",format["Sniper extraction %1", _vehname],"MainBandit",true] call mission_init;	
+	_mission		= [_position,"Hard",format["Sniper Extraction %1", _vehname],"MainBandit",true] call mission_init;	
 	
-	diag_log 		format["WAI: [Bandit] sniper_extraction started At %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Sniper Extraction]: Starting... %1",_position];
 
-	//Sniper Gun Box
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-	[_crate] 		call Sniper_Gun_Box;
+	//Setup the crate
+	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+	
+	[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],2] call dynamic_crate;
 
 	//Troops
-	_rndnum = round (random 4) + 2;
+	_rndnum = 2 + round (random 4);
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
-		[(_position select 0) + 10, (_position select 1) - 10, 0],
-		[(_position select 0) + 10, (_position select 1) + 10, 0],
-		[(_position select 0) - 10, (_position select 1) - 10, 0],
-		[(_position select 0) - 10, (_position select 1) + 10, 0]
+		[(_position select 0) + 30, (_position select 1) - 30, 0],
+		[(_position select 0) + 30, (_position select 1) + 30, 0],
+		[(_position select 0) - 30, (_position select 1) - 30, 0],
+		[(_position select 0) - 30, (_position select 1) + 30, 0]
 	],"M2StaticMG","medium","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
 	
 	//Spawn vehicle
@@ -37,6 +39,7 @@ if(isServer) then {
 		diag_log format["WAI: [Bandit] sniper_extraction spawned a %1",_vehname];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -46,6 +49,7 @@ if(isServer) then {
 		"Bandits did not secure the sniper rifles in time"				// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Bandit] sniper_extraction ended at %1",_position];
+	diag_log format["WAI: [Mission:[Bandit] Sniper Extraction]: Ended at %1",_position];
+	
 	b_missionrunning = false;
 };

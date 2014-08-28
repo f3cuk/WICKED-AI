@@ -1,31 +1,34 @@
 if(isServer) then {
 
-	private 		["_mission","_playerPresent","_position","_crate","_baserunover"];
+	private 		["_crate_type","_mission","_position","_crate","_baserunover"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium","Black Hawk Crash","MainHero",true] call mission_init;	
 	
-	diag_log 		format["WAI: [Hero] black_hawk_crash started at %1",_position];
+	diag_log 		format["WAI: [Mission:[Hero] Black Hawk Crash]: Starting... %1",_position];
 
-	_num_guns		= round(random 5);
-	_num_tools		= round(random 5);
-	_num_items		= round(random 10);
+	//Setup the crate
+	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	
+	[_crate,5,5,10,2] call dynamic_crate;
 
-	//Dynamic Box
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	[_crate,_num_guns,_num_tools,_num_items] call spawn_ammo_box;
-
+	//Base
 	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0)  + 15), ((_position select 1)  + 15), 0], [], 15, "FORM"];
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
-	[[_position select 0, _position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	//Troops
+	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0]
 	],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
+	//Condition
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
@@ -35,6 +38,7 @@ if(isServer) then {
 		"Survivors did not secure the crashed Black Hawk in time"															// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Hero] black_hawk_crash ended at %1",_position];
+	diag_log format["WAI: [Mission:[Hero] Black Hawk Crash]: Ended at %1",_position];
+
 	h_missionrunning = false;
 };

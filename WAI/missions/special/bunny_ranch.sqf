@@ -1,20 +1,17 @@
-//****************Bunny Ranch*****************
-//*********Created by HollowAddiction*********
-//**********http://www.craftdoge.com**********
-//Credit to Creator of WAI http://epochmod.com/forum/index.php?/topic/4427-wicked-aimission-system/
-//Credit to MattL for Support http://opendayz.net/members/matt-l.7134/
 if(isServer) then {
 
-	private ["_mission","_baserunover","_position","_crate"];
+	private ["_mission","_baserunover","_position","_crate","_crate_type","_girls","_girls1","_girls2","_girls3","_girls4","_dirtyowner"];
 	 
 	_position		= [10] call find_position;
 	_mission		= [_position,"ColorPink","Bunny Ranch","Special",false] call mission_init;
 		
 	diag_log format	["WAI: Mission Bunny Ranch Started At %1",_position];
 
-	//Large Gun Box
-	_crate = createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1), .5], [], 0, "CAN_COLLIDE"];
-	[_crate] call ranch_safe;
+	//Setup the crate
+	_crate_type 	= crates_large call BIS_fnc_selectRandom;
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+
+	[_crate,0,0,10,0] call dynamic_crate;
 	 
 	//Ranch & Girls
 	_baserunover = createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];

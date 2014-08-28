@@ -27,10 +27,14 @@ if (isServer) then {
 	_aigear 		= [];
 	_aiskin 		= "";
 	_aipack 		= "";
-
-	_unitGroup 		= createGroup east;
 	_unitnumber 	= count _position;
 
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
+	
 	if (!isServer) exitWith {};
 
 	{
@@ -157,13 +161,12 @@ if (isServer) then {
 		_unit moveingunner _static;
 
 		if (!isNil "_mission") then {
-			_static setVariable ["missionclean", "static"];
-			_unit setVariable ["mission", _mission];
-			_static setVariable ["mission", _mission];
-			[_static] spawn vehicle_monitor;
-		} else {
-			[_static] spawn vehicle_monitor;
+			_static setVariable ["missionclean","static"];
+			_static setVariable ["mission",_mission];
+			_unit setVariable ["mission",_mission];
 		};
+
+		[_static] spawn vehicle_monitor;
 
 	} forEach _position;
 

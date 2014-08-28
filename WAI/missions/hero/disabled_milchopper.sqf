@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+	private 		["_vehicle","_rndnum","_crate_type","_crate","_mission","_vehname","_position","_vehclass"];
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
@@ -9,23 +9,27 @@ if(isServer) then {
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium",format["Disabled %1", _vehname],"MainHero",true] call mission_init;
 	
-	diag_log 		format["WAI: [Hero] disabled_milchopper started At %1",_position];
+	diag_log 		format["WAI: [Mission:[Hero] Disabled Military Chopper]: Starting... %1",_position];
 
-	//Sniper Gun Box
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-	[_crate] 		call Sniper_Gun_Box;
+	//Setup the crate
+	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+	
+	[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],2] call dynamic_crate;
 
 	//Troops
-	_rndnum = round (random 4) + 2;
+	_rndnum = 2 + round (random 4);
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
-		[(_position select 0) + 10, (_position select 1) - 10, 0],
-		[(_position select 0) - 10, (_position select 1) + 10, 0]
+		[(_position select 0) + 30, (_position select 1) - 30, 0],
+		[(_position select 0) + 30, (_position select 1) + 30, 0],
+		[(_position select 0) - 30, (_position select 1) - 30, 0],
+		[(_position select 0) - 30, (_position select 1) + 30, 0]
 	],"M2StaticMG","easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Spawn vehicle
@@ -35,6 +39,7 @@ if(isServer) then {
 		diag_log format["WAI: [Hero] disabled_milchopper spawned a %1",_vehname];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -44,6 +49,7 @@ if(isServer) then {
 		"Survivors did not secure the armed chopper in time"													// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Hero] disabled_milchopper ended at %1",_position];
+	diag_log format["WAI: [Mission:[Hero] Disabled Military Chopper]: Ended at %1",_position];
+	
 	h_missionrunning = false;
 };

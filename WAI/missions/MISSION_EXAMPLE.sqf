@@ -1,17 +1,26 @@
 if(isServer) then {
 	 
-	private 		["_baserunover","_mission","_directions","_position","_crate","_num"];
+	private 		["_baserunover","_mission","_directions","_position","_crate","_crate_type","_num"];
 
 	// Get a safe position 80 meters from the nearest object
 	_position		= [80] call find_position;
 	
 	// Initialise the mission variable with the following options, [position, difficulty, mission name, mission type (MainHero/MainBandit), minefield (true or false)] call mission_init;
 	_mission 		= [_position,"Hard","Test Mission","MainHero",true] call mission_init;
+
 	diag_log 		format["WAI: Mission Test Mission started at %1",_position];
 
-	// Spawn a Gun Box
-	_crate 			= createVehicle ["RUVehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	[_crate] 		call Extra_Large_Gun_Box;
+	//Setup the crate
+	_crate_type 	= crates_large call BIS_fnc_selectRandom; // Choose between crates_large, crates_medium and crates_small
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+
+	// Crate Spawn Example
+	// Parameters:	0: _crate
+	//				1: Max number of guns OR [MAX number of guns,gun_array]
+	//				2: Max number of tools OR [MAX number of tools,tool_array]
+	//				3: Max number of items OR [MAX number of items,item_array]
+	//				4: Max number of backpacks OR [MAX number of backpacks,backpack_array]
+	[_crate,16,[8,crate_tools_sniper],[3,crate_items_high_value],[4,crate_backpacks_large]] call dynamic_crate;
 	 
 	// Create some Buildings
 	_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
@@ -114,5 +123,6 @@ if(isServer) then {
 
 	// End of mission
 	diag_log format["WAI: Mission bandit base ended at %1 ended",_position];
+
 	h_missionrunning = false;
 };

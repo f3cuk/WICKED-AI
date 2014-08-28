@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+    private ["_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_unitnumber 		= _this select 1;
@@ -28,9 +28,14 @@ if (isServer) then {
 	_aiskin 			= "";
 	_aicskill 			= [];
 	_aipack 			= "";
-	_unitGroup 			= createGroup east;
 	_current_time		= time;
 	_unarmed			= false;
+
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
 
 	for "_x" from 1 to _unitnumber do {
 
@@ -65,7 +70,7 @@ if (isServer) then {
 			_aiskin = _skin;
 		};
 
-		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "PRIVATE"];
+		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "FORM"];
 		[_unit] joinSilent _unitGroup;
 
 		call {
@@ -75,9 +80,9 @@ if (isServer) then {
 		};
 		if (!isNil "_gain") then { _unit setVariable ["humanity", _gain]; };
 
-		if (_backpack == "Random") then {
-			_aipack = ai_packs call BIS_fnc_selectRandom;
-		} else {
+		call {
+			if (_backpack == "Random") 	exitWith { _aipack = ai_packs call BIS_fnc_selectRandom; };
+			if (_backpack == "None") 	exitWith { };
 			_aipack = _backpack;
 		};
 		

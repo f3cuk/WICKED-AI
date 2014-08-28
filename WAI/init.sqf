@@ -14,9 +14,17 @@ if(isServer) then {
 	find_position			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\find_position.sqf";
 
 	createCenter			EAST;
+	createCenter			RESISTANCE;
+
 	WEST					setFriend [EAST,0];
+	WEST					setFriend [RESISTANCE,0];
+
 	EAST					setFriend [WEST,0];
+	EAST					setFriend [RESISTANCE,0];
 	
+	RESISTANCE				setFriend [EAST,0];
+	RESISTANCE				setFriend [WEST,0];
+
 	configloaded			= false;
 
 	ai_ground_units			= 0;

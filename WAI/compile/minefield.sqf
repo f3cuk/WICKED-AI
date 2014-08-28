@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private["_vehicleNear","_position", "_area", "_num_mines","_allmines"];
+	private["_bomb","_area_max","_area_min","_position", "_area", "_num_mines","_allmines"];
 
 	_position 	= _this select 0;
 	_area_min 	= _this select 1;
@@ -20,22 +20,23 @@ if(isServer) then {
 			_mine 		= createVehicle ["Mine", _mine_pos, [], 0, "CAN_COLLIDE"];
 		};
 		_mine spawn {
+			private["_vehicle_near","_bomb"];
 			waitUntil
 			{
-				_vehicleNear = false;
+				_vehicle_near = false;
 				{
 					if((isPlayer _x) && (vehicle _x != _x) && (vehicle _x distance _this < 2)) then {
-						_vehicleNear = true
+						_vehicle_near = true
 					};
 				} count playableUnits;
-				(_vehicleNear)
+				(_vehicle_near)
 			};
 			_bomb = "Bo_GBU12_lgb" createVehicle (getPosATL _this);
 			sleep 3;
 			deleteVehicle _bomb;
 			deleteVehicle _this;
 		};
-		_allmines 	set [(count _allmines), _mine];
+		_allmines set [(count _allmines), _mine];
 
 	};
 	

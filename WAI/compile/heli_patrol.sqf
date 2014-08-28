@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_aicskill","_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_aitype","_aiskin","_skin","_aicskill","_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 			= _this select 0;
 	_startingpos 		= _this select 1;
@@ -30,7 +30,12 @@ if (isServer) then {
 		_aiskin = _skin;
 	};
 
-	_unitGroup 			= createGroup east;
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
+
 	_pilot 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	
 	[_pilot] joinSilent _unitGroup;

@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+	private ["_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 	_position 		= _this select 0;
 	_startingpos 	= _this select 1;
@@ -29,8 +29,8 @@ if (isServer) then {
 	_aicskill 		= [];
 	_skillarray 	= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
-	// wait for player to come into area.
-	diag_log "WAI: Paradrop waiting for player";
+	if(debug_mode) then { diag_log "WAI: Paradrop waiting for player"; };
+
 	waitUntil
 	{
 		sleep 10;
@@ -49,10 +49,16 @@ if (isServer) then {
 
 	_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
 	
-	if(!_missionrunning)exitWith{diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position];};
+	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
 
-	diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position];
-	_unitGroup = createGroup east;
+	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
+
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
+
 	_pilot = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
 	[_pilot] joinSilent _unitGroup;
 
@@ -104,7 +110,7 @@ if (isServer) then {
 	} forEach (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
-	[_helicopter] spawn veh_monitor;
+	[_helicopter] spawn vehicle_monitor;
 
 	_unitGroup allowFleeing 0;
 	_unitGroup setBehaviour "CARELESS";
@@ -227,7 +233,7 @@ if (isServer) then {
 
 				sleep 1.5;
 				
-				if (!isNil "_mission") then {
+				if (!isNil "_mission" && typeName (wai_mission_data select _mission) == "ARRAY") then {
 					_ainum = (wai_mission_data select _mission) select 0;
 					wai_mission_data select _mission set [0, (_ainum + 1)];
 					_para setVariable ["missionclean", "ground"];
@@ -243,7 +249,7 @@ if (isServer) then {
 			
 			_drop = false;
 			_pgroup selectLeader ((units _pgroup) select 0);
-			diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber];
+			if(debug_mode) then { diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber]; };
 			[_pgroup, _position,_mission] call group_waypoints;
 		};
 	};
@@ -286,7 +292,7 @@ if (isServer) then {
 				} forEach (units _unitgroup);
 
 				deleteGroup _unitGroup;
-				diag_log "WAI: Paradrop helicopter cleaned up";
+				if(debug_mode) then { diag_log "WAI: Paradrop helicopter cleaned up"; };
 				_cleanheli = false;
 			};
 

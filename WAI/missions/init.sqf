@@ -1,27 +1,14 @@
 if(isServer) then {
 
-	private["_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
+	private["_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
 
 	diag_log "WAI: Initialising missions";
 
-	//Static Custom Boxes
-	Construction_Supply_Box  		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_construction.sqf";
-	Chain_Bullet_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_chainbullets.sqf";
-	Medical_Supply_Box  			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\supplybox_medical.sqf";
-	spawn_ammo_box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\box_dynamic.sqf";
-	ranch_safe						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\ranch_safe.sqf";
-
-	//Static Weaponbox
-	Sniper_Gun_Box  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_sniper.sqf";
-	Extra_Large_Gun_Box				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_extra_large.sqf";
-	Large_Gun_Box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_large.sqf";
-	Medium_Gun_Box 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\gunbox_medium.sqf";
-
-	// Vehicle Publish
+	dynamic_crate 					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\dynamic_crate.sqf";
 	custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\custom_publish_vehicle.sqf";
 
 	// Mission functions
-	call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_functions.sqf";
+	call 							compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_functions.sqf";
 	mission_init					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_init.sqf";
 	mission_winorfail				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_winorfail.sqf";
 	minefield						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";
@@ -29,7 +16,8 @@ if(isServer) then {
 	{
 		wai_mission_markers set [count wai_mission_markers, _x];
 	} count ["MainHero","MainBandit","Side1Hero","Side1Bandit","Side2Hero","Side2Bandit","SideSpecial"];
-
+	trader_markers 					= [];
+	trader_markers 					= call get_trader_markers;
 	markerready 					= true;
 	wai_mission_data				= [];
 	wai_hero_mission				= [];
@@ -91,38 +79,35 @@ if(isServer) then {
 		if((_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
 
 			if (_result == 1) then {
-				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
-
-				ai_roadkills		= 0;
 				h_missionrunning 	= true;
 				_h_startTime 		= floor(time);
 				_h_missionTime		= nil;
 				_result 			= 0;
+
+				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
+				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
 			};
 
 			if (_result == 2) then {
-				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
-
-				ai_roadkills		= 0;
 				b_missionrunning 	= true;
 				_b_startTime 		= floor(time);
 				_b_missionTime		= nil;
 				_result 			= 0;
+
+				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
+				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
 			};
 
 			/*
 
 			if (_result == 3) then {
-				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];
-
-				ai_roadkills		= 0;
 				s_missionrunning 	= true;
 				_s_startTime 		= floor(time);
 				_s_missionTime		= nil;
 				_result 			= 0;
+
+				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
+				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];
 			};
 
 			*/

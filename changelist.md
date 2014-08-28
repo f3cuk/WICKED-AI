@@ -1,10 +1,14 @@
 # Current version 2.1.0
 
 Type | Description
-------------: | ------------
+------------: | :------------
 `feature` | Added Hero and Bandit AI support @Jossy
+`feature` | Added possibility to add AI skin to inventory
+`feature` | Added posibily of finding a high value item in any crate
+`feature` | All new President in Town mission @Jossy / @f3cuk
+`enhancement` | Redone all the missions to included dynamic loot
 `enhancement` | Added new type of mission objective, assassination! @Jossy
-`enhancement` | Added Bandit missions, more to come in future updates @Jossy/@f3cuk
+`enhancement` | Added Bandit missions @Jossy / @f3cuk
 `enhancement` | Turned on landmines, beware! @Jossy
 `enhancement` | Changed the way damage and fuel values are read from config, fuel will now be random per vehicle @Jossy
 `enhancement` | Added min/max damage values for published vehicles in config @Jossy

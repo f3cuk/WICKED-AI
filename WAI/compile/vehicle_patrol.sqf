@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
@@ -36,7 +36,12 @@ if (isServer) then {
 		_aiskin = _skin;
 	};
 
-	_unitGroup 				= createGroup east;
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
+
 	_pilot 					= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	[_pilot] 				joinSilent _unitGroup;
 	
@@ -93,11 +98,12 @@ if (isServer) then {
 	} forEach (units _unitgroup);
 
 	if (!isNil "_mission") then {
-		_vehicle setVariable ["missionclean", "vehicle"];
-		[_vehicle,_mission] spawn vehicle_monitor;
-	} else {
-		[_vehicle] spawn vehicle_monitor;
+		_vehicle setVariable ["missionclean","vehicle"];
+		_vehicle setVariable ["mission",_mission];
+		{ _x setVariable ["mission",_mission]; } forEach (crew _vehicle);
 	};
+
+	[_vehicle] spawn vehicle_monitor;
 
 	_unitGroup 				allowFleeing 0;
 	_unitGroup 				setBehaviour "AWARE";
