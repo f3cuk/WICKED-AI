@@ -27,10 +27,14 @@ if (isServer) then {
 	_aigear 		= [];
 	_aiskin 		= "";
 	_aipack 		= "";
-
-	_unitGroup 		= createGroup east;
 	_unitnumber 	= count _position;
 
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
+	
 	if (!isServer) exitWith {};
 
 	{

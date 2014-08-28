@@ -28,9 +28,14 @@ if (isServer) then {
 	_aiskin 			= "";
 	_aicskill 			= [];
 	_aipack 			= "";
-	_unitGroup 			= createGroup EAST;
 	_current_time		= time;
 	_unarmed			= false;
+
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
 
 	for "_x" from 1 to _unitnumber do {
 

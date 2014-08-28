@@ -36,7 +36,12 @@ if (isServer) then {
 		_aiskin = _skin;
 	};
 
-	_unitGroup 				= createGroup east;
+	if(_aitype == "Hero") then {
+		_unitGroup	= createGroup RESISTANCE;
+	} else {
+		_unitGroup	= createGroup EAST;
+	};
+
 	_pilot 					= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	[_pilot] 				joinSilent _unitGroup;
 	
