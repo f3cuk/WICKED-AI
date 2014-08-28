@@ -98,11 +98,12 @@ if (isServer) then {
 	} forEach (units _unitgroup);
 
 	if (!isNil "_mission") then {
-		_vehicle setVariable ["missionclean", "vehicle"];
-		[_vehicle,_mission] spawn vehicle_monitor;
-	} else {
-		[_vehicle] spawn vehicle_monitor;
+		_vehicle setVariable ["missionclean","vehicle"];
+		_vehicle setVariable ["mission",_mission];
+		{ _x setVariable ["mission",_mission]; } forEach (crew _vehicle);
 	};
+
+	[_vehicle] spawn vehicle_monitor;
 
 	_unitGroup 				allowFleeing 0;
 	_unitGroup 				setBehaviour "AWARE";

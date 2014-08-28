@@ -5,7 +5,7 @@ if(isServer) then {
 	_position		= [50] call find_position;
 	_mission		= [_position,"Extreme","Presidents in Town","MainBandit",true] call mission_init;
 	
-	diag_log 		format["WAI: [Bandit] presidents_mansion started at %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Presidents in Town]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
@@ -38,13 +38,14 @@ if(isServer) then {
 	[[(_position select 0 + 30),(_position select 1),0],[30,30,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
 	[[(_position select 0 + -30),(_position select 1),0],[-30,0,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
 	
-	//Static mounted guns
+	//Static guns
 	[[
 		[(_position select 0) - 13.135, (_position select 1) + 5.025, 5.27],
 		[(_position select 0) + 14.225, (_position select 1) + 5.025, 5.27],
 		[(_position select 0) + 1.97, (_position select 1) - 2.368, 10.54]
 	],"M2StaticMG","Extreme","Hero","Hero",1,2,"Random","Random",_mission] call spawn_static;
 
+	//Condition
 	[
 		[_mission,_crate],			// mission number and crate
 		["assassinate",_president], // ["crate",wai_kill_percent], or ["kill"], or ["assassinate", _unitGroup],

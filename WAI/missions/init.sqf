@@ -16,7 +16,8 @@ if(isServer) then {
 	{
 		wai_mission_markers set [count wai_mission_markers, _x];
 	} count ["MainHero","MainBandit","Side1Hero","Side1Bandit","Side2Hero","Side2Bandit","SideSpecial"];
-
+	trader_markers 					= [];
+	trader_markers 					= call get_trader_markers;
 	markerready 					= true;
 	wai_mission_data				= [];
 	wai_hero_mission				= [];
@@ -78,38 +79,38 @@ if(isServer) then {
 		if((_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
 
 			if (_result == 1) then {
-				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
-
 				ai_roadkills		= 0;
 				h_missionrunning 	= true;
 				_h_startTime 		= floor(time);
 				_h_missionTime		= nil;
 				_result 			= 0;
+
+				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
+				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
 			};
 
 			if (_result == 2) then {
-				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
-
 				ai_roadkills		= 0;
 				b_missionrunning 	= true;
 				_b_startTime 		= floor(time);
 				_b_missionTime		= nil;
 				_result 			= 0;
+
+				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
+				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
 			};
 
 			/*
 
 			if (_result == 3) then {
-				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];
-
 				ai_roadkills		= 0;
 				s_missionrunning 	= true;
 				_s_startTime 		= floor(time);
 				_s_missionTime		= nil;
 				_result 			= 0;
+
+				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
+				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];
 			};
 
 			*/
