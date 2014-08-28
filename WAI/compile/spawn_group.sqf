@@ -1,8 +1,11 @@
 if (isServer) then {
 
-    private ["_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+    private ["_wp_rad","_wp","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
+	_pos_x 				= (_position select 0);
+	_pos_y 				= (_position select 1);
+	_pos_z 				= (_position select 2);
 	_unitnumber 		= _this select 1;
 	_skill 				= _this select 2;
 	_gun 				= _this select 3;
@@ -35,6 +38,29 @@ if (isServer) then {
 		_unitGroup	= createGroup RESISTANCE;
 	} else {
 		_unitGroup	= createGroup EAST;
+	};
+
+	if(_pos_z == 0) then {
+		if(floor(random 2) == 1) then { 
+			_pos_x = _pos_x - (5 + random(20));
+		} else {
+			_pos_x = _pos_x + (5 + random(20));
+		};			
+
+		if(floor(random 2) == 1) then { 
+			_pos_y = _pos_y - (5 + random(20));
+		} else {
+			_pos_y = _pos_y + (5 + random(20));
+		};
+	};
+
+	switch (_skill) do {
+		case "easy"		: { _wp_rad = 15; };
+		case "medium" 	: { _wp_rad = 25; };
+		case "hard" 	: { _wp_rad = 35; };
+		case "extreme" 	: { _wp_rad = 50; };
+		case "Random" 	: { _wp_rad = 15; };
+		default { _wp_rad = 15; };
 	};
 
 	for "_x" from 1 to _unitnumber do {
@@ -70,7 +96,7 @@ if (isServer) then {
 			_aiskin = _skin;
 		};
 
-		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "FORM"];
+		_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],10,"FORM"];
 		[_unit] joinSilent _unitGroup;
 
 		call {
@@ -154,7 +180,7 @@ if (isServer) then {
 
 	};
 
-	if (wai_use_rpg) then {
+	if (wai_use_rpg && !unarmed) then {
 		removeAllWeapons _unit;
 		_unit addWeapon "RPG7V";
 		_unit addMagazine "PG7V";
@@ -164,6 +190,21 @@ if (isServer) then {
 
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
+
+	if(_pos_z == 0) then {
+
+		{
+			private["_wp"];
+
+			_wp = _unitGroup addWaypoint [_x,_wp_rad];
+			_wp setWaypointType "MOVE";
+
+		} count [[_pos_x,(_pos_y+_wp_rad), 0],[(_pos_x+_wp_rad),_pos_y,0],[_pos_x,(_pos_y-_wp_rad),0],[(_pos_x-_wp_rad),_pos_y,0]];
+
+		_wp = _unitGroup addWaypoint [[_pos_x,_pos_y,0], _wpRadius];
+		_wp setWaypointType "CYCLE";
+
+	};
 
 	[_unitGroup, _position, _mission] call group_waypoints;
 

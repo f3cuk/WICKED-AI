@@ -35,8 +35,8 @@ if(isServer) then {
 
 	//Heli Paradrop
 	[[(_position select 0),(_position select 1),0],[0,0,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
-	[[(_position select 0 + 30),(_position select 1),0],[30,30,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
-	[[(_position select 0 + -30),(_position select 1),0],[-30,0,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
+	[[(_position select 0) + 30,(_position select 1),0],[30,30,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
+	[[(_position select 0) + 60,(_position select 1),0],[60,0,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
 	
 	//Static guns
 	[[
