@@ -22,7 +22,7 @@ if(isServer) then {
 		if (_validspot && _position call inDebug)						then {_validspot = false;}; //diag_log("WAI: Invalid Position (Debug)");
 		if (_validspot && [_position, 50, 30] call isSlope) 			then {_validspot = false;}; //diag_log("WAI: Invalid Position (Slope)");
 		if (_validspot && [_position, wai_near_water] call isNearWater) then {_validspot = false;}; //diag_log("WAI: Invalid Position (Water)");
-		if (_validspot && [_position, wai_near_town] call isNearTown) 	then {_validspot = false;}; //diag_log("WAI: Invalid Position (Town)");
+		//if (_validspot && [_position, wai_near_town] call isNearTown) 	then {_validspot = false;}; //diag_log("WAI: Invalid Position (Town)"); //infiSTAR.de RE detection problem
 		if (_validspot && [_position, wai_near_road] call isNearRoad) 	then {_validspot = false;}; //diag_log("WAI: Invalid Position (Road)");
 		if (_validspot) then {
 			{
