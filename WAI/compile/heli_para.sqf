@@ -1,8 +1,10 @@
 if (isServer) then {
 
-	private ["_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+	private ["_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 	_position 		= _this select 0;
+	_pos_x			= _position select 0;
+	_pos_y			= _position select 1;
 	_startingpos 	= _this select 1;
 	_triggerdis 	= _this select 2;
 	_heli_class 	= _this select 3;
@@ -34,9 +36,16 @@ if (isServer) then {
 	waitUntil
 	{
 		sleep 10;
-		_playerPresent = false;
-		{if((isPlayer _x) && (_x distance [(_position select 0),(_position select 1),0] <= _triggerdis)) then {_playerPresent = true};}forEach playableUnits;
-		(_playerPresent)
+
+		_player_present = false;
+
+		{
+			if((isPlayer _x) && (_x distance [_pos_x,_pos_y,0] <= _triggerdis)) then {
+				_player_present = true;
+			};
+		} forEach playableUnits;
+
+		(_player_present)
 	};
 
 	call {
@@ -249,8 +258,10 @@ if (isServer) then {
 			
 			_drop = false;
 			_pgroup selectLeader ((units _pgroup) select 0);
+
 			if(debug_mode) then { diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber]; };
-			[_pgroup, _position,_mission] call group_waypoints;
+
+			[_pgroup,_position,_mission] call group_waypoints;
 		};
 	};
 

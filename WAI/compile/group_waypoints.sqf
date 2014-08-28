@@ -1,56 +1,48 @@
 if (isServer) then {
 
-	private ["_pRange","_pDir","_wpnumber","_radius","_mission","_unitGroup","_postition","_newPos","_center","_wp"];
+	private ["_skill","_mission","_wp_rad","_wp","_pos_x","_pos_y","_pos_z","_unitGroup","_position"];
 
 	_unitGroup 		= _this select 0;
-	_postition 		= _this select 1;
+	_position 		= _this select 1;
+	_pos_x 			= _position select 0;
+	_pos_y 			= _position select 1;
+	_pos_z 			= _position select 2;
 
 	if (count _this > 2) then {
-		_mission 	= _this select 2;
+		_mission = _this select 2;
 	} else {
-		_mission 	= nil;
+		_mission = nil;
 	};
 
-	_radius 		= ai_patrol_radius;
-	_wpnumber 		= ai_patrol_radius_wp;
+	if(count _this > 3) then {
 
-	if (!isNil "_mission") then {
-		_radius 	= 1;
-		_wpnumber	= 2;
-	};
-
-	_newPos = [(_postition select 0),(_postition select 1),0];
-	_center = [(_postition select 0),(_postition select 1),0];
-
-	for "_x" from 1 to _wpnumber do {
-
-		_pDir 			= random 360;
-	    _pRange 		= 10 + random _radius;
-	    _newPos 		= [(_center select 0) + (sin _pDir) * _pRange, (_center select 1) + (cos _pDir) * _pRange, 0];
-
-		if(surfaceIsWater _newPos) then {
-
-			private["_randomWay","_dir"];
-
-			_dir = (((_center) select 0) - (_newPos select 0)) atan2 (((_center) select 1) - (_newPos select 1));
-			_randomWay = floor(random 2); 
-
-			while{surfaceIsWater _newPos}do{
-				if(_randomWay == 0)then{_dir = _dir + 20;}else{_dir = _dir - 20;};
-				if(_dir < 0) then {_dir = _dir + 360;}; 
-				_newPos = [(_center select 0) + (sin _dir) * _pRange, (_center select 1) + (cos _dir) * _pRange, 0];
-			};
-
+		_skill = _this select 3;
+	
+		switch (_skill) do {
+			case "easy"		: { _wp_rad = 15; };
+			case "medium" 	: { _wp_rad = 25; };
+			case "hard" 	: { _wp_rad = 35; };
+			case "extreme" 	: { _wp_rad = 50; };
+			case "Random" 	: { _wp_rad = 15; };
+			default { _wp_rad = 15; };
 		};
 
-		_wp = _unitGroup addWaypoint [_newPos, 10];
-		_wp setWaypointType "SAD";
-		_wp setWaypointCompletionRadius 20;
-		
+	} else {
+
+		_wp_rad = 15;
+
 	};
 
-	_wp = _unitGroup addWaypoint [[(_postition select 0),(_postition select 1),0],10];
+	{
+		private["_wp"];
+
+		_wp = _unitGroup addWaypoint [_x,_wp_rad];
+		_wp setWaypointType "MOVE";
+
+	} count [[_pos_x,(_pos_y+_wp_rad),0],[(_pos_x+_wp_rad),_pos_y,0],[_pos_x,(_pos_y-_wp_rad),0],[(_pos_x-_wp_rad),_pos_y,0]];
+
+	_wp = _unitGroup addWaypoint [[_pos_x,_pos_y,0],_wp_rad];
 	_wp setWaypointType "CYCLE";
-	_wp setWaypointCompletionRadius 20;
+
 
 };
