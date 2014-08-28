@@ -13,11 +13,11 @@ if(isServer) then {
 
 	/* AI CONFIG */
 
-		ai_clear_body				= false;		// instantly clear bodies
-		ai_clean_dead				= true;			// clear bodies after certain amount of time
-		ai_clean_roadkill			= false;		// clean bodies that are roadkills
+		ai_clear_body 				= false;		// instantly clear bodies
+		ai_clean_dead 				= true;			// clear bodies after certain amount of time
+		ai_cleanup_time 			= 7200;			// time to clear bodies in seconds
+		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
-		ai_cleanup_time				= 7200;			// time to clear bodies in seconds
 
 		ai_patrol_radius			= 300;			// radius of ai patrols in meters
 		ai_patrol_radius_wp			= 10;			// number of waypoints of patrols
@@ -71,11 +71,10 @@ if(isServer) then {
 	/* WAI MISSIONS CONFIG */
 		wai_mission_system			= true;	// use built in mission system
 
-		wai_mission_markers			= [
-										"Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader",// Chernarus
-										"DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker" //DZAI
-									];
+		wai_mission_markers			= ["DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker"];
 
+		wai_avoid_missions			= true;								// avoid spawning near other missions, these are defined in wai_mission_markers
+		wai_avoid_traders			= true;								// avoid spawning missions near traders
 		wai_mission_spread			= 1000;								// make missions spawn this far apart from one another and other markers
 		wai_near_town				= 300;								// make missions check for towns around this radius
 		wai_near_road				= 50;								// make missions check for roads around this radius
@@ -84,6 +83,9 @@ if(isServer) then {
 		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
 		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
+		
+		wai_clean_mission			= true;								// clean all mission buildings after a certain period
+		wai_clean_mission_time		= 30;								// time after a mission is complete to clean mission buildings
 
 		wai_mission_fuel			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
 		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
@@ -152,13 +154,13 @@ if(isServer) then {
 		crate_tools_sniper			= ["ItemCompass","Binocular","Binocular_Vector","NVGoggles","ItemGPS"];
 
 		crate_items					= ["FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemBandage","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked","ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine","ItemGoldBar","ItemGoldBar10oz","CinderBlocks","ItemCanvas","ItemComboLock","ItemLightBulb","ItemLockbox","ItemSandbag","ItemTankTrap","ItemWire","MortarBucket","PartEngine","PartFueltank","PartGeneric","PartGlass","PartPlankPack","PartVRotor","PartWheel","PartWoodPile"];
-		crate_items_high_value		= ["ItemBriefcase100oz","ItemVault","30m_plot_kit","itemWireKit"];
+		crate_items_high_value		= ["ItemBriefcase100oz","ItemVault","30m_plot_kit","ItemWire"];
 		crate_items_food			= ["ItemWaterbottle","FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked"];
 		crate_items_buildables		= ["forest_large_net_kit","cinder_garage_kit",["PartPlywoodPack",5],"ItemSandbagExLarge5X","park_bench_kit","ItemComboLock",["CinderBlocks",10],"ItemCanvas","ItemComboLock",["ItemLightBulb",5],"ItemLockbox",["ItemSandbag",10],["ItemTankTrap",10],["ItemWire",10],["MortarBucket",10],["PartPlankPack",5],"PartWoodPile"];
 		crate_items_vehicle_repair	= ["PartEngine","PartFueltank","PartGeneric","PartGlass","PartVRotor","PartWheel"];
 		crate_items_medical			= ["ItemWaterbottle","ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked"];
 		crate_items_chainbullets	= ["2000Rnd_762x51_M134","200Rnd_762x51_M240","100Rnd_127x99_M2","150Rnd_127x107_DSHKM"];
-		crate_items_sniper			= [["ItemPainkiller",5],"Sniper1_DZ","CZ_Soldier_Sniper_EP1_DZ","GUE_Soldier_Sniper_DZ"];
+		crate_items_sniper			= [["ItemPainkiller",5],"Skin_Sniper1_DZ","Skin_CZ_Soldier_Sniper_EP1_DZ","Skin_GUE_Soldier_Sniper_DZ"];
 		crate_items_president		= ["ItemDocument"];
 
 		crate_backpacks_all			= ["DZ_Patrol_Pack_EP1","DZ_Assault_Pack_EP1","DZ_Czech_Vest_Puch","DZ_TerminalPack_EP1","DZ_ALICE_Pack_EP1","DZ_TK_Assault_Pack_EP1","DZ_CompactPack_EP1","DZ_British_ACU","DZ_GunBag_EP1","DZ_CivilBackpack_EP1","DZ_Backpack_EP1","DZ_LargeGunBag_EP1"];

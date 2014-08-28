@@ -54,18 +54,67 @@ inDebug = {
 	_result = false;
 	_position = _this;
 	_hasdebug = false;
-	_leftX = 0;
-	_topY = 0;
-	_rightX = 0;
-	_bottomY = 0;
-	
+	_xLeft = 0;
+	_xRight = 0;
+	_yTop = 0;
+	_yBottom = 0;
+
 	call {
-		if (worldName == "chernarus") exitWith {_hasdebug = true;_leftX = 200; _topY = 15100;};
+		if (
+			worldName == "Utes" ||
+			worldName == "Bootcamp_ACR" ||
+			worldName == "Dingor" ||
+			worldName == "Lingor" ||
+			worldName == "Woodland_ACR" ||
+			worldName == "Mountains_ACR" ||
+			worldName == "isladuala" ||
+			worldName == "Tavi" ||
+			worldName == "namalsk" ||
+			worldName == "Panthera2" ||
+			worldName == "Sara" ||
+			worldName == "FDF_Isle1_a" ||
+			worldName == "fapovo" ||
+			worldName == "Caribou" ||
+			worldName == "smd_sahrani_A2" ||
+			worldName == "cmr_ovaron" ||
+			worldName == "Napf"
+		) exitWith {};
+		if (worldName == "Takistan")			exitWith	{ _hasdebug = true; _xLeft = 200; _xRight = 12600; _yTop = 12600; _yBottom = 200; };
+		if (worldName == "Shapur_BAF")			exitWith	{ _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
+		if (worldName == "Zargabad")			exitWith	{ _hasdebug = true; _xLeft = 200; _xRight = 7963; _yTop = 8091; _yBottom = 200; };
+		if (worldName == "ProvingGrounds_PMC")	exitWith	{ _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
+		if (worldName == "Chernarus")			exitWith	{ _hasdebug = true; _xLeft = 1000; _xRight = 19000; _yTop = 14100; _yBottom = 1000; };
+		if (worldName == "sauerland")			exitWith	{ _hasdebug = true; _xLeft = 1000; _xRight = 24400; _yTop = 24500; _yBottom = 1200; };
+		
 	};
 	
 	if (!_hasdebug) exitWith {_result};
 	
-	if (_position select 0 < _leftX) exitWith { _result = true; _result };
-	if (_position select 1 > _topY) exitWith { _result = true; _result };
+	if (_position select 0 < _xLeft) exitWith { _result = true; _result };
+	if (_position select 0 > _xRight) exitWith { _result = true; _result };
+	if (_position select 1 > _yTop) exitWith { _result = true; _result };
+	if (_position select 1 < _yBottom) exitWith { _result = true; _result };
 
+};
+
+get_trader_markers = {
+	_markers = [];
+	call {
+		if (worldName == "Chernarus")			exitWith	{ _markers = ["Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader"]; };
+		if (worldName == "Napf")				exitWith	{ _markers = ["NeutralTraderCity","FriendlyTraderCity","HeroVendor","BanditVendor","West Wholesaler","NorthWholesaler","NorthBoatVendor","SouthBoatVendor","NeutralTraderCity","NeutralTraderCIty2","UnarmedAirVehicles"]; };
+	};
+	_markers
+};
+
+find_suitable_ammunition = {
+	_weapon = _this;
+	_ammo = "";
+	_ammoArray = getArray (configFile >> "cfgWeapons" >> _weapon >> "magazines");
+	if (count _ammoArray > 0) then {
+		_ammo = _ammoArray select 0;
+		if (_ammo == "20Rnd_556x45_Stanag") then { _ammo = "30Rnd_556x45_Stanag"; };
+		if (_ammo == "30Rnd_556x45_G36") then { _ammo = "30Rnd_556x45_Stanag"; };
+		if (_ammo == "30Rnd_556x45_G36SD") then { _ammo = "30Rnd_556x45_StanagSD"; };
+	};
+	_ammo
 };

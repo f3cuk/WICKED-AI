@@ -66,7 +66,7 @@ if (isServer) then {
 			_dam = ((wai_vehicle_damage select 0) + random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0))) / 100;
 			_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
 			if (_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};			
-			[_vehicle, _selection, _dam] call vehicle_handleDamage;
+			[_vehicle, _selection, _dam] call object_setHitServer;
 		} forEach _hitpoints;
 		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;;
 	};

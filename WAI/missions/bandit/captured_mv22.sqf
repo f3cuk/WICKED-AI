@@ -5,7 +5,7 @@ if(isServer) then {
 	_position		= [30] call find_position;
 	_mission		= [_position,"Hard","Captured MV22","MainBandit",true] call mission_init;
 
-	diag_log		format["WAI: [Bandit] captured_mv22 started at %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Captured MV22]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
@@ -25,7 +25,7 @@ if(isServer) then {
 	
 	[[_position select 0, _position select 1, 0],_rndnum,"easy","Random",4,"Random","Doctor","Random",["Hero",200],_mission] call spawn_group;
 	 
-	//Turrets
+	//Static Guns
 	[[
 		[(_position select 0) + 10, (_position select 1) + 10, 0],
 		[(_position select 0) + 10, (_position select 1) - 10, 0]
@@ -39,6 +39,7 @@ if(isServer) then {
 		diag_log format["WAI: [Bandit] captured_mv22 spawned a MV22 at %1", _position];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
@@ -48,7 +49,7 @@ if(isServer) then {
 		"The medical supplies have been given away"								// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Bandit] captured_mv22 ended at %1",_position];
+	diag_log format["WAI: [Mission:[Bandit] Captured MV22]: Ended at %1",_position];
 	
 	b_missionrunning = false;
 };

@@ -7,9 +7,9 @@ if(isServer) then {
 	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Hard",format["Sniper extraction %1", _vehname],"MainBandit",true] call mission_init;	
+	_mission		= [_position,"Hard",format["Sniper Extraction %1", _vehname],"MainBandit",true] call mission_init;	
 	
-	diag_log 		format["WAI: [Bandit] sniper_extraction started At %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Sniper Extraction]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
@@ -24,7 +24,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
 		[(_position select 0) + 30, (_position select 1) - 30, 0],
 		[(_position select 0) + 30, (_position select 1) + 30, 0],
@@ -39,6 +39,7 @@ if(isServer) then {
 		diag_log format["WAI: [Bandit] sniper_extraction spawned a %1",_vehname];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -48,7 +49,7 @@ if(isServer) then {
 		"Bandits did not secure the sniper rifles in time"				// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Bandit] sniper_extraction ended at %1",_position];
+	diag_log format["WAI: [Mission:[Bandit] Sniper Extraction]: Ended at %1",_position];
 	
 	b_missionrunning = false;
 };

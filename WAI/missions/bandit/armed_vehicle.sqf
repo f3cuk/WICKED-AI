@@ -9,7 +9,7 @@ if(isServer) then {
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium",format["Disabled %1",_vehname],"MainBandit",true] call mission_init;
 	
-	diag_log		format["WAI: [Bandit] armed_vehicle started at %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Armed Vehicle]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
@@ -24,7 +24,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],_rndnum,"Medium","Random",3,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],_rndnum,"Medium","Random",3,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	_static_gun = ai_static_weapons call BIS_fnc_selectRandom;
 	[[
 		[(_position select 0),(_position select 1) + 10, 0]
@@ -37,6 +37,7 @@ if(isServer) then {
 		diag_log format["WAI: [Bandit] armed_vehicle spawned a %1",_vehname];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
@@ -46,7 +47,7 @@ if(isServer) then {
 		"Bandits did not secure the armed vehicle in time"										// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Bandit] armed_vehicle ended at %1",_position];
+	diag_log format["WAI: [Mission:[Bandit] Armed Vehicle]: Ended at %1",_position];
 	
 	b_missionrunning = false;
 };

@@ -3,9 +3,9 @@ if(isServer) then {
 	private			["_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
 	_position		= [40] call find_position;
-	_mission		= [_position,"Hard","Lunchbreak Convoy","MainBandit",true] call mission_init;
+	_mission		= [_position,"Hard","Lunch break Convoy","MainBandit",true] call mission_init;
 
-	diag_log		format["WAI: [Bandit] ikea_convoy started At %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Lunch break Convoy]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
@@ -20,7 +20,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],5,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
-	//Turrets
+	//Static Guns
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0],
@@ -45,6 +45,7 @@ if(isServer) then {
 		diag_log format["WAI: [Bandit] ikea_convoy spawned a %1",_vehclass2];
 	};
 	
+	//Condition
 	[
 		[_mission,_crate],				// mission number and crate
 		["crate"], 						// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
@@ -54,7 +55,7 @@ if(isServer) then {
 		"Bandits were unable to surprise the heroes on their lunchbreak"									// mission fail
 	] call mission_winorfail;
 
-	diag_log format["WAI: [Bandit] ikea_convoy ended at %1",_position];
+	diag_log format["WAI: [Mission:[Bandit] Lunch break Convoy]: Ended at %1",_position];
 	
 	b_missionrunning = false;
 };
