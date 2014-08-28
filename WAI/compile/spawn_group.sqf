@@ -1,8 +1,11 @@
 if (isServer) then {
 
-    private ["_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+    private ["_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
+	_pos_x 			= _position select 0;
+	_pos_y 			= _position select 1;
+	_pos_z 			= _position select 2;
 	_unitnumber 		= _this select 1;
 	_skill 				= _this select 2;
 	_gun 				= _this select 3;
