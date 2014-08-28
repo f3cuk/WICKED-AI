@@ -79,7 +79,6 @@ if(isServer) then {
 		if((_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
 
 			if (_result == 1) then {
-				ai_roadkills		= 0;
 				h_missionrunning 	= true;
 				_h_startTime 		= floor(time);
 				_h_missionTime		= nil;
@@ -90,7 +89,6 @@ if(isServer) then {
 			};
 
 			if (_result == 2) then {
-				ai_roadkills		= 0;
 				b_missionrunning 	= true;
 				_b_startTime 		= floor(time);
 				_b_missionTime		= nil;
@@ -103,7 +101,6 @@ if(isServer) then {
 			/*
 
 			if (_result == 3) then {
-				ai_roadkills		= 0;
 				s_missionrunning 	= true;
 				_s_startTime 		= floor(time);
 				_s_missionTime		= nil;

@@ -73,8 +73,6 @@ if (isServer) then {
 
 		if (ai_clean_roadkill) then {
 
-			ai_roadkills = (ai_roadkills + 1);
-
 			removeBackpack _unit;
 			removeAllWeapons _unit;
 
