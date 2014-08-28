@@ -124,19 +124,24 @@ if(isServer) then {
 		};
 		
 		wai_mission_data set [_mission, -1];
+
 		[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
 
 		if (wai_clean_mission) then {
+
 			_finish_time = time;
 			_cleaned = false;
+
 			while {!_cleaned} do {
 
 				_playernear = false;
+
 				{
-					if ((isPlayer _x) && (_x distance _position < 30)) exitWith { _playernear = true };
+					if ((isPlayer _x) && (_x distance _position < 400)) exitWith { _playernear = true };
 				} forEach playableUnits;	
 
 				_currenttime = time;
+
 				if ((_currenttime - _finish_time >= wai_clean_mission_time) && !_playernear) then {
 
 					{
@@ -153,12 +158,12 @@ if(isServer) then {
 						sleep 1;
 						
 					} forEach _baseclean;
+
 					_cleaned = true;
 
 				};
 			};
 		};
-		
 	};
 	
 	if (_timeout) then {
@@ -168,7 +173,7 @@ if(isServer) then {
 			if (_x getVariable ["mission", nil] == _mission) then {
 			
 				if (alive _x) then {
-			
+
 					_cleanunits = _x getVariable ["missionclean",nil];
 		
 					if (!isNil "_cleanunits") then {

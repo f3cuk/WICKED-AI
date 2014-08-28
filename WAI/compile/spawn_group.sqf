@@ -42,15 +42,15 @@ if (isServer) then {
 
 	if(_pos_z == 0) then {
 		if(floor(random 2) == 1) then { 
-			_pos_x = _pos_x - (5 + random(20));
+			_pos_x = _pos_x - (5 + random(50));
 		} else {
-			_pos_x = _pos_x + (5 + random(20));
+			_pos_x = _pos_x + (5 + random(50));
 		};			
 
 		if(floor(random 2) == 1) then { 
-			_pos_y = _pos_y - (5 + random(20));
+			_pos_y = _pos_y - (5 + random(50));
 		} else {
-			_pos_y = _pos_y + (5 + random(20));
+			_pos_y = _pos_y + (5 + random(50));
 		};
 	};
 

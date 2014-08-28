@@ -19,24 +19,24 @@ if (isServer) then {
 		_skill = _this select 3;
 	
 		switch (_skill) do {
-			case "easy"		: { _wp_rad = 15; };
-			case "medium" 	: { _wp_rad = 25; };
-			case "hard" 	: { _wp_rad = 35; };
-			case "extreme" 	: { _wp_rad = 50; };
-			case "Random" 	: { _wp_rad = 15; };
-			default { _wp_rad = 15; };
+			case "easy"		: { _wp_rad = 40; };
+			case "medium" 	: { _wp_rad = 80; };
+			case "hard" 	: { _wp_rad = 160; };
+			case "extreme" 	: { _wp_rad = 240; };
+			case "Random" 	: { _wp_rad = 80; };
+			default { _wp_rad = 80; };
 		};
 
 	} else {
 
-		_wp_rad = 15;
+		_wp_rad = 80;
 
 	};
 
 	{
 		private["_wp"];
 
-		_wp = _unitGroup addWaypoint [_x,_wp_rad];
+		_wp = _unitGroup addWaypoint [_x,10];
 		_wp setWaypointType "MOVE";
 
 	} count [[_pos_x,(_pos_y+_wp_rad),0],[(_pos_x+_wp_rad),_pos_y,0],[_pos_x,(_pos_y-_wp_rad),0],[(_pos_x-_wp_rad),_pos_y,0]];

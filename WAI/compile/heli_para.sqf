@@ -68,7 +68,7 @@ if (isServer) then {
 		_unitGroup	= createGroup EAST;
 	};
 
-	_pilot = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_pilot = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	[_pilot] joinSilent _unitGroup;
 
 	ai_air_units = (ai_air_units +1);
@@ -83,14 +83,14 @@ if (isServer) then {
 	_pilot assignAsDriver _helicopter;
 	_pilot moveInDriver _helicopter;
 
-	_gunner = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner assignAsGunner _helicopter;
 	_gunner moveInTurret [_helicopter,[0]];
 	[_gunner] joinSilent _unitGroup;
 
 	ai_air_units = (ai_air_units +1);
 
-	_gunner2 = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner2 = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner2 assignAsGunner _helicopter;
 	_gunner2 moveInTurret [_helicopter,[1]];
 	[_gunner2] joinSilent _unitGroup;

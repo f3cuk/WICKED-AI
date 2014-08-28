@@ -9,7 +9,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	
 	[_crate,[2,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],4] call dynamic_crate;
 	
@@ -28,16 +28,18 @@ if(isServer) then {
 	],"M2StaticMG","Easy","Hero","Hero",1,2,"Random","Random",_mission] call spawn_static;
 
 	//Heli Para Drop
-	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Hero","Random","Hero",true,_mission] spawn heli_para;
+	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
 
 	// Spawn Vehicles
-	_vehclass 		= cargo_trucks call BIS_fnc_selectRandom;		// Cargo Truck
-	_vehclass2 		= refuel_trucks call BIS_fnc_selectRandom;		// Refuel Truck
-	_vehclass3 		= military_unarmed call BIS_fnc_selectRandom;	// Military Unarmed
-	
-	_vehicle		= [_vehclass,_position] call custom_publish;
-	_vehicle2		= [_vehclass2,_position] call custom_publish;
-	_vehicle3		= [_vehclass3,_position] call custom_publish;
+	_dir 			= floor(round(random 360));
+
+	_vehclass 		= cargo_trucks 		call BIS_fnc_selectRandom;		// Cargo Truck
+	_vehclass2 		= refuel_trucks 	call BIS_fnc_selectRandom;		// Refuel Truck
+	_vehclass3 		= military_unarmed 	call BIS_fnc_selectRandom;		// Military Unarmed
+
+	_vehicle		= [_vehclass,_position,false,_dir] 	call custom_publish;
+	_vehicle2		= [_vehclass2,_position,false,_dir] call custom_publish;
+	_vehicle3		= [_vehclass3,_position,false,_dir] call custom_publish;
 	
 	if(debug_mode) then {
 		diag_log format["WAI: [Bandit] ikea_convoy spawned a %1",_vehclass];

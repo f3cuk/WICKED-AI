@@ -82,7 +82,7 @@ if(isServer) then {
 		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
 		
 		wai_clean_mission			= true;								// clean all mission buildings after a certain period
-		wai_clean_mission_time		= 30;								// time after a mission is complete to clean mission buildings
+		wai_clean_mission_time		= 1800;								// time after a mission is complete to clean mission buildings
 
 		wai_mission_fuel			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
 		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]

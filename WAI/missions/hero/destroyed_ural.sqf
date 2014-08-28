@@ -26,9 +26,9 @@ if(isServer) then {
 	
 	//Condition
 	[
-		[_mission,_crate],			// mission number and crate
-		["kill"], 	// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 			// cleanup objects
+		[_mission,_crate],		// mission number and crate
+		["kill"], 				// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
+		[_baserunover], 		// cleanup objects
 		"Bandits have destroyed a Ural with supplies and are securing the cargo! Check your map for the location!",	// mission announcement
 		"The supplies have been secured by survivors!",															// mission success
 		"Survivors did not secure the supplies in time"														// mission fail
