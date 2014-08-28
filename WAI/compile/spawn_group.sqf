@@ -154,6 +154,14 @@ if (isServer) then {
 
 	};
 
+	if (wai_use_rpg) then {
+		removeAllWeapons _unit;
+		_unit addWeapon "RPG7V";
+		_unit addMagazine "PG7V";
+		_unit addMagazine "PG7V";
+	};
+
+
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 

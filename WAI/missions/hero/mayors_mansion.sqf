@@ -9,7 +9,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1), .5], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 	
 	[_crate,20,4,0,4] call dynamic_crate;
 	 
@@ -24,7 +24,7 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 	//The Mayor Himself
-	_mayor = [[(_position select 0) + 10, (_position select 1) - 10, 4.1],1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
+	_mayor = [[(_position select 0) + 10, (_position select 1), 4.1],1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
 	
 	_mayor_himself = (units _mayor) select 0;
 	_mayor_himself disableAI "MOVE";

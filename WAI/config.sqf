@@ -22,11 +22,11 @@ if(isServer) then {
 		ai_patrol_radius			= 300;			// radius of ai patrols in meters
 		ai_patrol_radius_wp			= 10;			// number of waypoints of patrols
 
-		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
-		ai_bandit_behaviour			= "CARELESS";	// behaviour of bandit AI
+		ai_bandit_combatmode		= "YELLOW";		// combatmode of bandit AI
+		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_hero_combatmode			= "RED";		// combatmode of bandit AI
-		ai_hero_behaviour			= "CARELESS";	// behaviour of bandit AI
+		ai_hero_combatmode			= "YELLOW";		// combatmode of hero AI
+		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
 
 		ai_share_info				= true;			// AI share info on player position
 		ai_share_distance			= 300;			// distance from killed AI for AI to share your position
@@ -102,6 +102,9 @@ if(isServer) then {
 
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
+
+		wai_use_rpg					= false;							// add a RPG launcher to each spawned AI group
+		wai_remove_rpg				= true;								// remove RPG from AI on death
 
 		// Missions
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
