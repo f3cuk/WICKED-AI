@@ -171,7 +171,7 @@ if (isServer) then {
 
 	};
 
-	if (wai_use_rpg && !unarmed) then {
+	if (wai_use_rpg && !_unarmed) then {
 		removeAllWeapons _unit;
 		_unit addWeapon "RPG7V";
 		_unit addMagazine "PG7V";
