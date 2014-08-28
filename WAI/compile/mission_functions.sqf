@@ -1,4 +1,5 @@
 isNearWater = {
+    private["_result","_position","_radius"];
 	_result = false;
 	_position = _this select 0;
 	_radius	= _this select 1;
@@ -11,7 +12,8 @@ isNearWater = {
 };
 
 isNearTown = {
-	_result = false;
+    private["_result","_position","_radius","_locations"];
+    _result = false;
 	_position = _this select 0;
 	_radius = _this select 1;
 	
@@ -21,7 +23,8 @@ isNearTown = {
 };
 
 isNearRoad = {
-	_result = false;
+    private["_result","_position","_radius","_roads"];
+    _result = false;
 	_position = _this select 0;
 	_radius = _this select 1;
 	
@@ -31,6 +34,7 @@ isNearRoad = {
 };
 
 isSlope = {
+    private["_pos","_result","_position","_posx","_posy","_radius","_gradient","_max","_min","_posx","_posy"];
 	_result = false;
 	_position = _this select 0;
 	_posx = _position select 0;
@@ -51,6 +55,7 @@ isSlope = {
 };
 
 inDebug = {
+    private["_result","_position","_hasdebug","_xLeft","_xRight","_yTop","_yBottom"];
 	_result = false;
 	_position = _this;
 	_hasdebug = false;
@@ -98,6 +103,7 @@ inDebug = {
 };
 
 get_trader_markers = {
+    private["_markers"];
 	_markers = [];
 	call {
 		if (worldName == "Chernarus")			exitWith	{ _markers = ["Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader"]; };
@@ -107,6 +113,7 @@ get_trader_markers = {
 };
 
 find_suitable_ammunition = {
+    private["_weapon","_ammo","_ammoArray"];
 	_weapon = _this;
 	_ammo = "";
 	_ammoArray = getArray (configFile >> "cfgWeapons" >> _weapon >> "magazines");

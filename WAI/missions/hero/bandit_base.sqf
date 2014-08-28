@@ -1,6 +1,6 @@
 if(isServer) then {
 	 
-	private 		["_i","_baserunover","_mission","_directions","_position","_crate","_num","_crate_type","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7"];
+	private 		["_baserunover","_mission","_directions","_position","_crate","_num","_crate_type","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7"];
 
 	_position		= [80] call find_position;
 	_mission 		= [_position,"Hard","Bandit Base","MainHero",true] call mission_init;

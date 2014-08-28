@@ -76,7 +76,7 @@ if (isServer) then {
 	_vehicle setFuel _fuel;
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
 	
-	PVDZE_serverObjectMonitor	set [count PVDZE_serverObjectMonitor,_vehicle];
+	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_vehicle];
 
 	if(wai_keep_vehicles) then {
 		

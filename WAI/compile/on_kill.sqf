@@ -66,7 +66,11 @@ if (isServer) then {
 		};
 
 		if (ai_share_info) then {
-			{if (((position _x) distance (position _unit)) <= ai_share_distance) then {_x reveal [_player, 4.0];}} forEach allUnits;
+			{
+				if (((position _x) distance (position _unit)) <= ai_share_distance) then {
+					_x reveal [_player, 4.0];
+				};
+			} forEach allUnits;
 		};
 
 	} else {

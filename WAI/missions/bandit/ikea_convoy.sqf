@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
+	private			["_dir","_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Lunch break Convoy","MainBandit",true] call mission_init;

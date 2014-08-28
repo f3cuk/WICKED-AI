@@ -26,7 +26,7 @@ if(isServer) then {
 		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
 
 		ai_share_info				= true;			// AI share info on player position
-		ai_share_distance			= 300;			// distance from killed AI for AI to share your position
+		ai_share_distance			= 300;			// Distance from killed AI for AI to share your rough position
 
 		ai_kills_gain				= true;			// add kill to bandit/human kill score
 		ai_humanity_gain			= true;			// gain humanity for killing AI
