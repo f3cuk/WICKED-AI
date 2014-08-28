@@ -118,24 +118,22 @@ if (isServer) then {
 				_characterID	= _this select 5;
 				_class 			= _this select 6;
 				_done 			= false;
-				_retry 			= 0;
 
-				while {_retry < 10} do {
-					sleep 1;
+				while {!_done} do {
 					_key 		= format["CHILD:388:%1:",_uid];
 					_result 	= _key call server_hiveReadWrite;
 					_outcome 	= _result select 0;
+
 					if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
+
 					if(_outcome == "PASS") then {
-						_oid 	= _result select 1;
+						_oid = _result select 1;
 						_vehicle setVariable ["ObjectID", _oid, true];
 						if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
-						_done 	= true;
-						_retry 	= 11;
+						_done  = true;
 					} else {
 						if(debug_mode) then { diag_log("CUSTOM: trying again to get id for: " + str(_uid)); };
-						_done 	= false;
-						_retry 	= _retry + 1;
+						_done = false;
 					};
 				};
 
