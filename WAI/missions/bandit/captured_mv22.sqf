@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_crate_type","_mission","_playerPresent","_vehname","_vehicle","_position","_vehclass","_crate","_tent","_rndnum"];
+	private			["_crate_type","_mission","_vehicle","_position","_vehclass","_crate","_baserunover","_rndnum"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Hard","Captured MV22","MainBandit",true] call mission_init;
@@ -9,13 +9,14 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1),0],[],0,"CAN_COLLIDE"];
 	
 	[_crate,0,0,[80,crate_items_medical],0] call dynamic_crate;
 
 	//Medical Tent
-	_tent 			= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-	
+	_baserunover 	= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
+
 	//Troops
 	_rndnum = 4 + round (random 3);
 	[[_position select 0, _position select 1, 0],_rndnum,"hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
@@ -28,7 +29,7 @@ if(isServer) then {
 	[[
 		[(_position select 0) + 10, (_position select 1) + 10, 0],
 		[(_position select 0) + 10, (_position select 1) - 10, 0]
-	],"M2StaticMG","Medium","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
+	],"M2StaticMG","Medium","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
 	
 	//Spawn vehicles
 	_vehclass 		= "MV22_DZ";
@@ -42,7 +43,7 @@ if(isServer) then {
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_vehicle], 		// cleanup objects
-		"A group of red cross volunteers are giving away medical supplies",		// mission announcement
+		"A group of red cross volunteers are giving away medical supplies, they are heavily guarded by trained soldiers",		// mission announcement
 		"Bandits have murdered the volunteers, shame on them!",					// mission success
 		"The medical supplies have been given away"								// mission fail
 	] call mission_winorfail;

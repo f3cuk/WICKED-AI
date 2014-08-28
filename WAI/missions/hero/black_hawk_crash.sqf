@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_crate_type","_mission","_playerPresent","_position","_crate","_baserunover"];
+	private 		["_crate_type","_mission","_position","_crate","_baserunover"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium","Black Hawk Crash","MainHero",true] call mission_init;	
@@ -14,6 +14,7 @@ if(isServer) then {
 	[_crate,5,5,10,2] call dynamic_crate;
 
 	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0)  + 15), ((_position select 1)  + 15), 0], [], 15, "FORM"];
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;

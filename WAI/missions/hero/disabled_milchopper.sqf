@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_vehicle","_rndnum","_crate_type","_crate","_mission","_tanktraps","_mines","_playerPresent","_cleanmission","_currenttime","_starttime","_missiontimeout","_vehname","_veh","_position","_vehclass","_vehdir","_objPosition"];
+	private 		["_vehicle","_rndnum","_crate_type","_crate","_mission","_vehname","_position","_vehclass"];
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
@@ -26,8 +26,10 @@ if(isServer) then {
 
 	//Turrets
 	[[
-		[(_position select 0) + 10, (_position select 1) - 10, 0],
-		[(_position select 0) - 10, (_position select 1) + 10, 0]
+		[(_position select 0) + 30, (_position select 1) - 30, 0],
+		[(_position select 0) + 30, (_position select 1) + 30, 0],
+		[(_position select 0) - 30, (_position select 1) - 30, 0],
+		[(_position select 0) - 30, (_position select 1) + 30, 0]
 	],"M2StaticMG","easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Spawn vehicle

@@ -26,10 +26,10 @@ if(isServer) then {
 
 	//Turrets
 	[[
-		[(_position select 0) + 10, (_position select 1) - 10, 0],
-		[(_position select 0) + 10, (_position select 1) + 10, 0],
-		[(_position select 0) - 10, (_position select 1) - 10, 0],
-		[(_position select 0) - 10, (_position select 1) + 10, 0]
+		[(_position select 0) + 30, (_position select 1) - 30, 0],
+		[(_position select 0) + 30, (_position select 1) + 30, 0],
+		[(_position select 0) - 30, (_position select 1) - 30, 0],
+		[(_position select 0) - 30, (_position select 1) + 30, 0]
 	],"M2StaticMG","medium","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
 	
 	//Spawn vehicle

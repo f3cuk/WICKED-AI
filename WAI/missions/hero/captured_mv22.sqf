@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_crate_type","_mission","_playerPresent","_vehname","_vehicle","_position","_vehclass","_crate","_tent","_rndnum"];
+	private			["_crate_type","_mission","_vehname","_vehicle","_position","_vehclass","_crate","_baserunover","_rndnum"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Hard","Captured MV22","MainHero",true] call mission_init;
@@ -14,7 +14,8 @@ if(isServer) then {
 	[_crate,0,0,[80,crate_items_medical],0] call dynamic_crate;
 
 	//Medical Tent
-	_tent 			= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
+	_baserunover 	= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
 	_rndnum = 4 + round (random 3);

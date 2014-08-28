@@ -27,7 +27,7 @@ if(isServer) then {
 	//Turrets
 	_static_gun = ai_static_weapons call BIS_fnc_selectRandom;
 	[[
-		[(_position select 0), (_position select 1) + 10, 0]
+		[(_position select 0),(_position select 1) + 10, 0]
 	],_static_gun,"Medium","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 	
 	//Spawn Vehicle

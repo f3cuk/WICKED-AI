@@ -24,6 +24,7 @@ if(isServer) then {
 
 	//Spawn vehicles
 	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 15), ((_position select 1) + 15), 0], [], 20, "FORM"];
+	_baserunover setVectorUp surfaceNormal position _baserunover;
 
 	[
 		[_mission,_crate],	// mission number and crate

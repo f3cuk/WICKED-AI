@@ -22,7 +22,8 @@ if(isServer) then {
 	
 	//Spawn vehicles
 	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],15,"FORM"];
-
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
+	
 	[
 		[_mission,_crate],			// mission number and crate
 		["kill"], 	// ["crate"], or ["kill"], or ["assassinate", _unitGroup],

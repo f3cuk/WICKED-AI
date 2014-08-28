@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_crate_type","_mission","_position","_crate","_playerPresent","_baserunover","_mayor"];
+	private			["_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
@@ -15,6 +15,7 @@ if(isServer) then {
 	 
 	//Mayors Mansion
 	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
 	[[_position select 0, _position select 1, 0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
@@ -24,7 +25,9 @@ if(isServer) then {
 
 	//The Mayor Himself
 	_mayor = [[(_position select 0) + 10, (_position select 1) - 10, 4.1],1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
-	_mayor disableAI "MOVE";
+	
+	_mayor_himself = (units _mayor) select 0;
+	_mayor_himself disableAI "MOVE";
 
 	//Static mounted guns
 	[[

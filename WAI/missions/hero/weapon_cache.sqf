@@ -9,7 +9,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	
 	[_crate,10,4,0,2] call dynamic_crate;
 

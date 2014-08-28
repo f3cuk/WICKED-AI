@@ -11,7 +11,7 @@ if(isServer) then {
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 
-	[_crate,16,[8,crate_tools_sniper],[3,crate_items_high_value],[4,crate_backpacks_large]] call dynamic_crate;
+	[_crate,[16,ai_wep_sniper],[8,crate_tools_sniper],[3,crate_items_high_value],[4,crate_backpacks_large]] call dynamic_crate;
 	
 	//Buildings
 	_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
@@ -25,11 +25,13 @@ if(isServer) then {
 	_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7];
 	
 	_directions = [90,270,0,180,0,180,270,90];
-    _i = 0;
+	_i = 0;
 	{ 
-        _x setDir (_directions select _i);
-        _i + _i + 1;
-    } forEach _baserunover;
+		_x setDir (_directions select _i);
+		_i + _i + 1;
+	} forEach _baserunover;
+
+	{ _x setVectorUp surfaceNormal position _x; } foreach _baserunover;
 	
 	//Group Spawning
 	_num = 4 + round (random 3);
