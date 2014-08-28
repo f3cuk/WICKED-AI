@@ -24,8 +24,8 @@ if(isServer) then {
 	[[_position select 0,_position select 1,0],4,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//The President Himself
-	_president = [[_position select 0 + 5, _position select 1, 4.1],1,"Extreme","Random",4,"none","Special","Random",["Hero",750],_mission] call spawn_group;
-	_firstlady = [[_position select 0 + 5, _position select 1, 4.1],1,"Easy","Unarmed",4,"none","Secretary1","Random",["Hero",250],_mission] call spawn_group;
+	_president = [[((_position select 0) + 5), _position select 1, 4.1],1,"Extreme","Random",4,"none","Special","Random",["Hero",750],_mission] call spawn_group;
+	_firstlady = [[((_position select 0) + 5), _position select 1, 4.1],1,"Easy","Unarmed",4,"none","Secretary1","Random",["Hero",250],_mission] call spawn_group;
 
 	_president_himself = (units _president) select 0;
 	_president_himself disableAI "MOVE";
