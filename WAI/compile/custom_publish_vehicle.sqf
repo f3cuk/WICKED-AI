@@ -124,6 +124,8 @@ if (isServer) then {
 					_result 	= _key call server_hiveReadWrite;
 					_outcome 	= _result select 0;
 
+					waitUntil {!isNil "_outcome"};
+
 					if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
 
 					if(_outcome == "PASS") then {
