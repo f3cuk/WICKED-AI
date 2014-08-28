@@ -12,7 +12,7 @@ if(isServer) then {
 
 		private["_mine_pos","_mine"];
 
-		_mine_pos	= [_position,_area_min,_area_max,5,0,2000,0] call BIS_fnc_findSafePos;
+		_mine_pos	= [_position,_area_min,_area_max,10,0,2000,0] call BIS_fnc_findSafePos;
 
 		if(floor(random 2) == 1) then {
 			_mine 		= createVehicle ["MineE", _mine_pos, [], 0, "CAN_COLLIDE"];

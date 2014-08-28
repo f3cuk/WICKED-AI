@@ -28,7 +28,7 @@ if(isServer) then {
 	],"M2StaticMG","Easy","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
 
 	//Heli Para Drop
-	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Bandit","Random","Bandit",true,_mission] spawn heli_para;
+	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Bandit","Random","Bandit",false,_mission] spawn heli_para;
 
 	// Spawn Vehicles
 	_dir 			= floor(round(random 360));

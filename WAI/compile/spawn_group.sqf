@@ -87,7 +87,7 @@ if (isServer) then {
 			_aiskin = _skin;
 		};
 
-		_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],10,"FORM"];
+		_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
 		[_unit] joinSilent _unitGroup;
 
 		call {

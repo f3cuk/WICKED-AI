@@ -73,7 +73,7 @@ if (isServer) then {
 
 	ai_air_units = (ai_air_units +1);
 
-	_helicopter = createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 100], [], 0, "FLY"];
+	_helicopter = createVehicle [_heli_class,[(_startingpos select 0),(_startingpos select 1),100],[],0,"FLY"];
 	_helicopter setFuel 1;
 	_helicopter engineOn true;
 	_helicopter setVehicleAmmo 1;
@@ -142,7 +142,11 @@ if (isServer) then {
 
 		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
 
-			_pgroup = createGroup east;
+			if(_aitype == "Hero") then {
+				_pgroup	= createGroup RESISTANCE;
+			} else {
+				_pgroup	= createGroup EAST;
+			};
 
 			for "_x" from 1 to _paranumber do {
 

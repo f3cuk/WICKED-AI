@@ -16,10 +16,10 @@ if(isServer) then {
 
 	if(wai_enable_minefield && _mines) then {
 		call {
-			if (_difficulty == "Easy") 		exitWith {_mines = [_position,25,50,10] call minefield;};
-			if (_difficulty == "Medium") 	exitWith {_mines = [_position,50,75,25] call minefield;};
-			if (_difficulty == "Hard") 		exitWith {_mines = [_position,50,100,50] call minefield;};
-			if (_difficulty == "Extreme") 	exitWith {_mines = [_position,50,100,75] call minefield;};
+			if (_difficulty == "Easy") 		exitWith {_mines = [_position,30,37,10] call minefield;};
+			if (_difficulty == "Medium") 	exitWith {_mines = [_position,50,62,25] call minefield;};
+			if (_difficulty == "Hard") 		exitWith {_mines = [_position,60,75,50] call minefield;};
+			if (_difficulty == "Extreme") 	exitWith {_mines = [_position,70,85,75] call minefield;};
 		};
 		wai_mission_data select _mission set [2, _mines];
 	};
@@ -52,12 +52,14 @@ if(isServer) then {
 		
 		while {_running} do {
 			_type	= (wai_mission_data select _mission) select 1;
+			
 			_marker 		= createMarker [_type, _position];
 			_marker 		setMarkerColor _color;
 			_marker 		setMarkerShape "ELLIPSE";
 			_marker 		setMarkerBrush "Solid";
 			_marker 		setMarkerSize [300,300];
 			_marker 		setMarkerText _name;
+
 			_dot 			= createMarker [_type + "dot", _position];
 			_dot 			setMarkerColor "ColorBlack";
 			_dot 			setMarkerType "mil_dot";
