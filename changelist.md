@@ -1,7 +1,7 @@
 # Current version 2.1.0
 
 Type | Description
-------------: | ------------
+------------: | :------------
 `feature` | Added Hero and Bandit AI support @Jossy
 `feature` | Added possibility to add AI skin to inventory
 `feature` | Added posibily of finding a high value item in any crate
