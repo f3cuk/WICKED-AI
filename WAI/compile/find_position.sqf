@@ -19,7 +19,7 @@ if(isServer) then {
 		if (_validspot && [_position, 50, 30] call isSlope) 			then {_validspot = false;}; //diag_log("WAI: Invalid Position (Slope)");
 		if (_validspot && [_position, wai_near_water] call isNearWater) then {_validspot = false;}; //diag_log("WAI: Invalid Position (Water)");
 
-		if (isNil 'fnc_infiSTAR_Publish') then {
+		if (isNil "infiSTAR_LoadStatus1") then {
 			if (_validspot && [_position, wai_near_town] call isNearTown) 	then {_validspot = false;}; //diag_log("WAI: Invalid Position (Town)");
 		}; // ELSE infoSTAR is enabled, need to find another method of finding near Towns
 
