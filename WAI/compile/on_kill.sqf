@@ -95,17 +95,16 @@ if (isServer) then {
 		};
 
 	};
-
-	if(wai_use_rpg && wai_remove_rpg) then {
-
-		if(_unit hasWeapon "RPG7V") then {
-			_unit removeWeapon "RPG7V";
-			{
-				if(_x == "PG7V") then {
-					_unit removeMagazine _x
-				};
-			} forEach magazines _unit;
-		};
+	
+	_launcher = secondaryWeapon _unit;
+	if(wai_remove_launcher && !isNil "_launcher") then {
+		_rockets = _launcher call find_suitable_ammunition;
+		_unit removeWeapon _launcher;
+		{
+			if(_x == _rockets) then {
+				_unit removeMagazine _x;
+			};
+		} forEach magazines _unit;
 		
 	};
 

@@ -148,12 +148,15 @@ if(isServer) then {
 						if(typeName _x == "ARRAY") then {
 						
 							{
-								deleteVehicle _x;
+								if (_x getVariable ["ObjectID", 0] == 0) then {
+									deleteVehicle _x;
+								};
 							} forEach _x;
 						
 						} else {
-						
-							deleteVehicle _x;
+							if (_x getVariable ["ObjectID", 0] == 0) then {
+								deleteVehicle _x;
+							};
 						};
 						sleep 1;
 						
@@ -205,7 +208,7 @@ if(isServer) then {
 			};
 			
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
-			
+
 		wai_mission_data set [_mission, -1];
 		
 		[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;

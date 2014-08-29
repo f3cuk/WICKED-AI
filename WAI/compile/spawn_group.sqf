@@ -15,9 +15,14 @@ if (isServer) then {
 	_gear 				= _this select 7;
 	_aitype				= _this select 8;
 	
+	if (typeName _gun == "ARRAY") then {
+		_launcher		= _gun select 1;
+		_gun			= _gun select 0;
+	};
+
 	if (typeName _aitype == "ARRAY") then {
-		_gain 		= _aitype select 1;
-		_aitype 	= _aitype select 0;
+		_gain 			= _aitype select 1;
+		_aitype 		= _aitype select 0;
 	};
 	
 	if (count _this > 9) then {
@@ -125,12 +130,11 @@ if (isServer) then {
 		};
 
 		if (!_unarmed) then {
-
-			_unit addweapon _weapon;
-
 			for "_i" from 1 to _mags do {
 				_unit addMagazine _magazine;
 			};
+			_unit addweapon _weapon;
+			_unit selectWeapon _weapon;
 		};
 
 		if(_aipack != "none") then {
@@ -171,11 +175,16 @@ if (isServer) then {
 
 	};
 
-	if (wai_use_rpg && !_unarmed) then {
-		removeAllWeapons _unit;
-		_unit addWeapon "RPG7V";
-		_unit addMagazine "PG7V";
-		_unit addMagazine "PG7V";
+	if (!isNil "_launcher" && wai_use_launchers) then {
+		call {
+			//if (_launcher == "Random") exitWith { _launcher = (ai_launchers_AT + ai_launchers_AA) call BIS_fnc_selectRandom; };
+			if (_launcher == "AT") exitWith { _launcher = ai_launchers_AT call BIS_fnc_selectRandom; };
+			if (_launcher == "AA") exitWith { _launcher = ai_launchers_AA call BIS_fnc_selectRandom; };
+		};
+		_rocket = _launcher call find_suitable_ammunition;
+		_unit addMagazine _rocket;
+		_unit addMagazine _rocket;
+		_unit addWeapon _launcher;
 	};
 
 	_unitGroup setFormation "ECH LEFT";
