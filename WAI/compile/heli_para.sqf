@@ -1,8 +1,10 @@
 if (isServer) then {
 
-	private ["_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+	private ["_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 	_position 		= _this select 0;
+	_pos_x			= _position select 0;
+	_pos_y			= _position select 1;
 	_startingpos 	= _this select 1;
 	_triggerdis 	= _this select 2;
 	_heli_class 	= _this select 3;
@@ -34,9 +36,16 @@ if (isServer) then {
 	waitUntil
 	{
 		sleep 10;
-		_playerPresent = false;
-		{if((isPlayer _x) && (_x distance [(_position select 0),(_position select 1),0] <= _triggerdis)) then {_playerPresent = true};}forEach playableUnits;
-		(_playerPresent)
+
+		_player_present = false;
+
+		{
+			if((isPlayer _x) && (_x distance [_pos_x,_pos_y,0] <= _triggerdis)) then {
+				_player_present = true;
+			};
+		} forEach playableUnits;
+
+		(_player_present)
 	};
 
 	call {
@@ -59,12 +68,12 @@ if (isServer) then {
 		_unitGroup	= createGroup EAST;
 	};
 
-	_pilot = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_pilot = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	[_pilot] joinSilent _unitGroup;
 
 	ai_air_units = (ai_air_units +1);
 
-	_helicopter = createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 100], [], 0, "FLY"];
+	_helicopter = createVehicle [_heli_class,[(_startingpos select 0),(_startingpos select 1),100],[],0,"FLY"];
 	_helicopter setFuel 1;
 	_helicopter engineOn true;
 	_helicopter setVehicleAmmo 1;
@@ -74,14 +83,14 @@ if (isServer) then {
 	_pilot assignAsDriver _helicopter;
 	_pilot moveInDriver _helicopter;
 
-	_gunner = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner assignAsGunner _helicopter;
 	_gunner moveInTurret [_helicopter,[0]];
 	[_gunner] joinSilent _unitGroup;
 
 	ai_air_units = (ai_air_units +1);
 
-	_gunner2 = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner2 = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner2 assignAsGunner _helicopter;
 	_gunner2 moveInTurret [_helicopter,[1]];
 	[_gunner2] joinSilent _unitGroup;
@@ -133,7 +142,11 @@ if (isServer) then {
 
 		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
 
-			_pgroup = createGroup east;
+			if(_aitype == "Hero") then {
+				_pgroup	= createGroup RESISTANCE;
+			} else {
+				_pgroup	= createGroup EAST;
+			};
 
 			for "_x" from 1 to _paranumber do {
 
@@ -249,8 +262,10 @@ if (isServer) then {
 			
 			_drop = false;
 			_pgroup selectLeader ((units _pgroup) select 0);
+
 			if(debug_mode) then { diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber]; };
-			[_pgroup, _position,_mission] call group_waypoints;
+
+			[_pgroup,_position,_mission] call group_waypoints;
 		};
 	};
 

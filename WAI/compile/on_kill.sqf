@@ -66,7 +66,11 @@ if (isServer) then {
 		};
 
 		if (ai_share_info) then {
-			{if (((position _x) distance (position _unit)) <= ai_share_distance) then {_x reveal [_player, 4.0];}} forEach allUnits;
+			{
+				if (((position _x) distance (position _unit)) <= ai_share_distance) then {
+					_x reveal [_player, 4.0];
+				};
+			} forEach allUnits;
 		};
 
 	} else {
@@ -90,6 +94,19 @@ if (isServer) then {
 
 		};
 
+	};
+
+	if(wai_use_rpg && wai_remove_rpg) then {
+
+		if(_unit hasWeapon "RPG7V") then {
+			_unit removeWeapon "RPG7V";
+			{
+				if(_x == "PG7V") then {
+					_unit removeMagazine _x
+				};
+			} forEach magazines _unit;
+		};
+		
 	};
 
 	if(_unit hasWeapon "NVGoggles" && floor(random 100) < 20) then {

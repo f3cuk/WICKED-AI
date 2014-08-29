@@ -19,17 +19,14 @@ if(isServer) then {
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
-		ai_patrol_radius			= 300;			// radius of ai patrols in meters
-		ai_patrol_radius_wp			= 10;			// number of waypoints of patrols
+		ai_bandit_combatmode		= "YELLOW";		// combatmode of bandit AI
+		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
-		ai_bandit_behaviour			= "CARELESS";	// behaviour of bandit AI
-
-		ai_hero_combatmode			= "RED";		// combatmode of bandit AI
-		ai_hero_behaviour			= "CARELESS";	// behaviour of bandit AI
+		ai_hero_combatmode			= "YELLOW";		// combatmode of hero AI
+		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
 
 		ai_share_info				= true;			// AI share info on player position
-		ai_share_distance			= 300;			// distance from killed AI for AI to share your position
+		ai_share_distance			= 300;			// Distance from killed AI for AI to share your rough position
 
 		ai_kills_gain				= true;			// add kill to bandit/human kill score
 		ai_humanity_gain			= true;			// gain humanity for killing AI
@@ -85,7 +82,7 @@ if(isServer) then {
 		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
 		
 		wai_clean_mission			= true;								// clean all mission buildings after a certain period
-		wai_clean_mission_time		= 30;								// time after a mission is complete to clean mission buildings
+		wai_clean_mission_time		= 1800;								// time after a mission is complete to clean mission buildings
 
 		wai_mission_fuel			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
 		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
@@ -102,6 +99,9 @@ if(isServer) then {
 
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
+
+		wai_use_rpg					= false;							// add a RPG launcher to each spawned AI group
+		wai_remove_rpg				= true;								// remove RPG from AI on death
 
 		// Missions
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
@@ -158,7 +158,7 @@ if(isServer) then {
 		crate_items_food			= ["ItemWaterbottle","FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked"];
 		crate_items_buildables		= ["forest_large_net_kit","cinder_garage_kit",["PartPlywoodPack",5],"ItemSandbagExLarge5X","park_bench_kit","ItemComboLock",["CinderBlocks",10],"ItemCanvas","ItemComboLock",["ItemLightBulb",5],"ItemLockbox",["ItemSandbag",10],["ItemTankTrap",10],["ItemWire",10],["MortarBucket",10],["PartPlankPack",5],"PartWoodPile"];
 		crate_items_vehicle_repair	= ["PartEngine","PartFueltank","PartGeneric","PartGlass","PartVRotor","PartWheel"];
-		crate_items_medical			= ["ItemWaterbottle","ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked"];
+		crate_items_medical			= ["ItemWaterbottle","ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine","ItemBandage","FoodCanFrankBeans","FoodCanPasta"];
 		crate_items_chainbullets	= ["2000Rnd_762x51_M134","200Rnd_762x51_M240","100Rnd_127x99_M2","150Rnd_127x107_DSHKM"];
 		crate_items_sniper			= [["ItemPainkiller",5],"Skin_Sniper1_DZ","Skin_CZ_Soldier_Sniper_EP1_DZ","Skin_GUE_Soldier_Sniper_DZ"];
 		crate_items_president		= ["ItemDocument"];

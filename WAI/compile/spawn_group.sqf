@@ -1,8 +1,11 @@
 if (isServer) then {
 
-    private ["_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+    private ["_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
+	_pos_x 			= _position select 0;
+	_pos_y 			= _position select 1;
+	_pos_z 			= _position select 2;
 	_unitnumber 		= _this select 1;
 	_skill 				= _this select 2;
 	_gun 				= _this select 3;
@@ -35,6 +38,20 @@ if (isServer) then {
 		_unitGroup	= createGroup RESISTANCE;
 	} else {
 		_unitGroup	= createGroup EAST;
+	};
+
+	if(_pos_z == 0) then {
+		if(floor(random 2) == 1) then { 
+			_pos_x = _pos_x - (5 + random(50));
+		} else {
+			_pos_x = _pos_x + (5 + random(50));
+		};			
+
+		if(floor(random 2) == 1) then { 
+			_pos_y = _pos_y - (5 + random(50));
+		} else {
+			_pos_y = _pos_y + (5 + random(50));
+		};
 	};
 
 	for "_x" from 1 to _unitnumber do {
@@ -70,7 +87,7 @@ if (isServer) then {
 			_aiskin = _skin;
 		};
 
-		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "FORM"];
+		_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
 		[_unit] joinSilent _unitGroup;
 
 		call {
@@ -154,12 +171,21 @@ if (isServer) then {
 
 	};
 
+	if (wai_use_rpg && !_unarmed) then {
+		removeAllWeapons _unit;
+		_unit addWeapon "RPG7V";
+		_unit addMagazine "PG7V";
+		_unit addMagazine "PG7V";
+	};
+
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
-	[_unitGroup, _position, _mission] call group_waypoints;
+	if(_pos_z == 0) then {
+		[_unitGroup,[_pos_x,_pos_y,_pos_z],_mission,_skill] spawn group_waypoints;
+	};
 
-	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2", _unitnumber,_position,_aitype];
+	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2",_unitnumber,_position,_aitype];
 	
 	_unitGroup
 };
