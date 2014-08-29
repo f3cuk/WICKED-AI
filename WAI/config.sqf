@@ -103,7 +103,7 @@ if(isServer) then {
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
 
 		wai_use_launchers			= true;								// add a rocket launcher to each spawned AI group
-		wai_remove_launchers		= true;								// remove rocket launcher from AI on death
+		wai_remove_launcher		= true;								// remove rocket launcher from AI on death
 
 		// Missions
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages

@@ -14,7 +14,7 @@ if (isServer) then {
 						deleteVehicle _x;
 					};
 				};
-			} forEach allDead;
+			} count allDead;
 		};
 
 		if(debug_mode) then {

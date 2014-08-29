@@ -79,28 +79,28 @@ if (isServer) then {
 	
 	{
 		_gunner setSkill [(_x select 0),(_x select 1)];
-	} forEach _aicskill;
+	} count _aicskill;
 
 	ai_vehicle_units = (ai_vehicle_units + 1);
 
 	{
 		_pilot setSkill [_x,1]
-	} forEach _skillarray;
+	} count _skillarray;
 
 	{
 		_x addweapon "Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	{
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	if (!isNil "_mission") then {
 		_vehicle setVariable ["missionclean","vehicle"];
 		_vehicle setVariable ["mission",_mission];
-		{ _x setVariable ["mission",_mission]; } forEach (crew _vehicle);
+		{ _x setVariable ["mission",_mission]; } count (crew _vehicle);
 	};
 
 	[_vehicle] spawn vehicle_monitor;

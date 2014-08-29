@@ -28,13 +28,13 @@ if(isServer) then {
 		if (_validspot && wai_avoid_missions) then {
 			{
 				if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_mission_spread)) exitWith {_validspot = false; diag_log(format["WAI: Invalid Position (Marker:%1)", _x]); };
-			} forEach wai_mission_markers;
+			} count wai_mission_markers;
 		};
 		if(debug_mode && _validspot) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby trader markers: " + str(trader_markers)); };
 		if (_validspot && wai_avoid_traders) then {
 			{
 				if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_mission_spread)) exitWith {_validspot = false; diag_log(format["WAI: Invalid Position (Marker:%1)", _x]); };
-			} forEach trader_markers;
+			} count trader_markers;
 		};
 
 		if (_validspot) exitWith { diag_log("Loop complete, valid position " +str(_position) + " in " + str(_i) + " attempts."); };

@@ -21,8 +21,10 @@ if (isServer) then {
 		};
 		sleep 1;
 	};
+	
 	_veh setDamage 1;
 	_veh setVariable ["killedat", time];
+
 	waitUntil
 	{
 		sleep 1;
@@ -31,9 +33,12 @@ if (isServer) then {
 			if((isPlayer _x) && (_x distance _veh <= 2000)) exitWith {
 				_player_present = true
 			};
-		} forEach playableUnits;
+		} count playableUnits;
 		(!_player_present)
 	};
-	{deleteVehicle _x;} forEach (crew _veh) + [_veh];
+
+	{
+		deleteVehicle _x;
+	} count (crew _veh) + [_veh];
 
 };
