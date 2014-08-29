@@ -54,7 +54,9 @@ if(isServer) then {
 		ai_wep_machine				= [["RPK_74","75Rnd_545x39_RPK"],["MK_48_DZ","100Rnd_762x51_M240"],["M249_EP1_DZ","200Rnd_556x45_M249"],["Pecheneg_DZ","100Rnd_762x54_PK"],["M240_DZ","100Rnd_762x51_M240"]];	// Light machine guns
 		ai_wep_sniper				= [["M14_EP1","20Rnd_762x51_DMR"],["SCAR_H_LNG_Sniper_SD","20Rnd_762x51_SB_SCAR"],["M110_NVG_EP1","20rnd_762x51_B_SCAR"],["SVD_CAMO","10Rnd_762x54_SVD"],["VSS_Vintorez","20Rnd_9x39_SP5_VSS"],["DMR","20Rnd_762x51_DMR"],["M40A3","5Rnd_762x51_M24"]];	// Sniper rifles
 		ai_wep_random				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
-
+		ai_wep_launchers_AT			= ["M136","RPG18","JAVELIN"];
+		ai_wep_launchers_AA			= ["Strela","Igla","STINGER"];
+		
 		ai_packs					= ["DZ_Czech_Vest_Puch","DZ_ALICE_Pack_EP1","DZ_TK_Assault_Pack_EP1","DZ_British_ACU","DZ_GunBag_EP1","DZ_CivilBackpack_EP1","DZ_Backpack_EP1","DZ_LargeGunBag_EP1"];
 		ai_hero_skin				= ["FR_AC","FR_AR","FR_Corpsman","FR_GL","FR_Marksman","FR_R","FR_Sapper","FR_TL"];
 		ai_bandit_skin				= ["Ins_Soldier_GL_DZ","TK_INS_Soldier_EP1_DZ","TK_INS_Warlord_EP1_DZ","GUE_Commander_DZ","GUE_Soldier_Sniper_DZ","GUE_Soldier_MG_DZ","GUE_Soldier_Crew_DZ","GUE_Soldier_2_DZ","GUE_Soldier_CO_DZ","BanditW1_DZ","BanditW2_DZ","Bandit1_DZ","Bandit2_DZ"];
@@ -100,8 +102,8 @@ if(isServer) then {
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
 
-		wai_use_rpg					= false;							// add a RPG launcher to each spawned AI group
-		wai_remove_rpg				= true;								// remove RPG from AI on death
+		wai_use_launchers			= true;								// add a rocket launcher to each spawned AI group
+		wai_remove_launchers		= true;								// remove rocket launcher from AI on death
 
 		// Missions
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages

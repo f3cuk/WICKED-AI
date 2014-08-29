@@ -94,7 +94,7 @@ inDebug = {
 		case "Shapur_BAF" 			: { _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
 		case "Zargabad" 			: { _hasdebug = true; _xLeft = 200; _xRight = 7963; _yTop = 8091; _yBottom = 200; };
 		case "ProvingGrounds_PMC" 	: { _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
-		case "Chernarus" 			: { _hasdebug = true; _xLeft = 1000; _xRight = 19000; _yTop = 14100; _yBottom = 1000; };
+		case "Chernarus" 			: { _hasdebug = true; _xLeft = 1000; _xRight = 13350; _yTop = 13350; _yBottom = 1000; };
 		case "sauerland"			: { _hasdebug = true; _xLeft = 1000; _xRight = 24400; _yTop = 24500; _yBottom = 1200; };
 		default 					{ _hasdebug = false; };
 	};
