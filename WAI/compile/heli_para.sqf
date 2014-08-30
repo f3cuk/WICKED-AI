@@ -159,7 +159,6 @@ if (isServer) then {
 						if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
 					} else {
 						if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
-						_aiweapon = _gun;
 					};
 				};
 

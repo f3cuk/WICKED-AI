@@ -69,7 +69,6 @@ if (isServer) then {
 			} else {
 				if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
 				if(_gun == "unarmed") 	exitWith { _unarmed = true; };
-				_aiweapon = _gun;
 			}
 		};
 
