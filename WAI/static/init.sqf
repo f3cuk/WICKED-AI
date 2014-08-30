@@ -4,7 +4,7 @@ if(isServer) then {
 
 	if(custom_per_world) then {
 
-		ExecVM format["\z\addons\dayz_server\WAI\static\%1.sqf",toLower(missionName)];
+		ExecVM format["\z\addons\dayz_server\WAI\static\%1.sqf",toLower(worldName)];
 
 	} else {
 
