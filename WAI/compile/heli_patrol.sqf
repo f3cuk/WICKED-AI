@@ -103,7 +103,7 @@ if (isServer) then {
 
 	{
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
-	} count (units _unitgroup);
+	} forEach (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;

@@ -80,6 +80,7 @@ if(isServer) then {
 
 	if (_complete) then {
 
+//		if (typeOf(_crate) in (crates_large + crates_medium + crates_small)) then {
 		if(wai_crates_smoke && sunOrMoon == 1) then {
 			_marker = "smokeShellPurple" createVehicle getPosATL _crate;
 			_marker setPosATL (getPosATL _crate);
@@ -102,6 +103,7 @@ if(isServer) then {
 
 		};
 
+//		};
 		_delete_mines = ((wai_mission_data select _mission) select 2);
 
 		if(count _delete_mines > 0) then {
@@ -129,41 +131,46 @@ if(isServer) then {
 
 		if (wai_clean_mission) then {
 
-			_finish_time = time;
-			_cleaned = false;
+			[_position,_baseclean] spawn {
+				private ["_pos","_clean"];
+				_pos = _this select 0;
+				_clean = _this select 1;
+				_finish_time = time;
+				_cleaned = false;
+				while {!_cleaned} do {
 
-			while {!_cleaned} do {
-
-				_playernear = false;
-
-				{
-					if ((isPlayer _x) && (_x distance _position < 400)) exitWith { _playernear = true };
-				} count playableUnits;	
-
-				_currenttime = time;
-
-				if ((_currenttime - _finish_time >= wai_clean_mission_time) && !_playernear) then {
+					_playernear = false;
 
 					{
-						if(typeName _x == "ARRAY") then {
-						
-							{
-								if (_x getVariable ["ObjectID", 0] == 0) then {
+						if ((isPlayer _x) && (_x distance _pos < 400)) exitWith { _playernear = true };
+					} count playableUnits;	
+
+					_currenttime = time;
+
+					if ((_currenttime - _finish_time >= wai_clean_mission_time) && !_playernear) then {
+
+						{
+							if(typeName _x == "ARRAY") then {
+							
+								{
+									if ((_x getVariable ["ObjectID", nil]) == nil) then {
+										deleteVehicle _x;
+									};
+								} count _x;
+							
+							} else {
+								if ((_x getVariable ["ObjectID", nil]) == nil) then {
 									deleteVehicle _x;
 								};
-							} count _x;
-						
-						} else {
-							if (_x getVariable ["ObjectID", 0] == 0) then {
-								deleteVehicle _x;
 							};
-						};
-						sleep 1;
-						
-					} forEach _baseclean;
+							
+						} forEach _clean;
 
-					_cleaned = true;
+						_cleaned = true;
 
+					};
+					
+					sleep 1;
 				};
 			};
 		};
