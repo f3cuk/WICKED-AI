@@ -120,18 +120,18 @@ if (isServer) then {
 
 			{
 				_unit addMagazine _x
-			} forEach _gearmagazines;
+			} count _gearmagazines;
 
 			{
 				_unit addweapon _x
-			} forEach _geartools;
+			} count _geartools;
 		};
 		
 		if (ai_static_skills) then {
 
 			{
 				_unit setSkill [(_x select 0),(_x select 1)]
-			} forEach ai_static_array;
+			} count ai_static_array;
 
 		} else {
 
@@ -146,7 +146,7 @@ if (isServer) then {
 
 			{
 				_unit setSkill [(_x select 0),(_x select 1)]
-			} foreach _aicskill;
+			} count _aicskill;
 		};
 		
 		ai_emplacement_units = (ai_emplacement_units + 1);

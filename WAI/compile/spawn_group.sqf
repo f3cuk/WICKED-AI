@@ -1,6 +1,6 @@
 if (isServer) then {
 
-    private ["_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+    private ["_rocket","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_pos_x 			= _position select 0;
@@ -143,11 +143,11 @@ if (isServer) then {
 
 		{
 			_unit addMagazine _x
-		} foreach _gearmagazines;
+		} count _gearmagazines;
 
 		{
 			_unit addweapon _x
-		} foreach _geartools;
+		} count _geartools;
 		
 		switch (_skill) do {
 			case "easy"		: { _aicskill = ai_skill_easy; };
@@ -160,7 +160,7 @@ if (isServer) then {
 
 		{
 			_unit setSkill [(_x select 0),(_x select 1)]
-		} foreach _aicskill;
+		} count _aicskill;
 		
 		ai_ground_units = (ai_ground_units + 1);
 
@@ -178,8 +178,8 @@ if (isServer) then {
 	if (!isNil "_launcher" && wai_use_launchers) then {
 		call {
 			//if (_launcher == "Random") exitWith { _launcher = (ai_launchers_AT + ai_launchers_AA) call BIS_fnc_selectRandom; };
-			if (_launcher == "AT") exitWith { _launcher = ai_launchers_AT call BIS_fnc_selectRandom; };
-			if (_launcher == "AA") exitWith { _launcher = ai_launchers_AA call BIS_fnc_selectRandom; };
+			if (_launcher == "AT") exitWith { _launcher = ai_wep_launchers_AT call BIS_fnc_selectRandom; };
+			if (_launcher == "AA") exitWith { _launcher = ai_wep_launchers_AA call BIS_fnc_selectRandom; };
 		};
 		_rocket = _launcher call find_suitable_ammunition;
 		_unit addMagazine _rocket;

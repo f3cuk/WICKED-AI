@@ -43,7 +43,7 @@ if (isServer) then {
 			if((isPlayer _x) && (_x distance [_pos_x,_pos_y,0] <= _triggerdis)) then {
 				_player_present = true;
 			};
-		} forEach playableUnits;
+		} count playableUnits;
 
 		(_player_present)
 	};
@@ -96,27 +96,27 @@ if (isServer) then {
 	[_gunner2] joinSilent _unitGroup;
 
 	call {
-		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity", ai_add_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity", ai_remove_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity", ai_special_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity", ai_add_humanity]; } count [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity", ai_remove_humanity]; } count [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity", ai_special_humanity]; } count [_pilot, _gunner, _gunner2]; };
 	};
 	
 	ai_air_units = (ai_air_units +1);
 
 	{
 		_pilot setSkill [_x,1]
-	} forEach _skillarray;
+	} count _skillarray;
 
 	{
 		_gunner 	setSkill [_x,0.7];
 		_gunner2 	setSkill [_x,0.7];
-	} forEach _skillarray;
+	} count _skillarray;
 
 	{
 		_x addweapon "Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;
@@ -215,11 +215,11 @@ if (isServer) then {
 				
 				{
 					_para addMagazine _x
-				} forEach _gearmagazines;
+				} count _gearmagazines;
 				
 				{
 					_para addweapon _x
-				} forEach _geartools;
+				} count _geartools;
 				
 				if (sunOrMoon != 1) then {
 					_para addweapon "NVGoggles";
@@ -236,7 +236,7 @@ if (isServer) then {
 				
 				{
 					_para setSkill [(_x select 0),(_x select 1)]
-				} forEach _aicskill;
+				} count _aicskill;
 				
 				ai_ground_units = (ai_ground_units + 1);
 				_para addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
@@ -280,13 +280,13 @@ if (isServer) then {
 
 		{
 			_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
-		} forEach (units _unitgroup);
+		} count (units _unitgroup);
 
 	} else {
 
 		{
 			_x doMove [(_startingpos select 0), (_startingpos select 1), 100]
-		} forEach (units _unitGroup);
+		} count (units _unitGroup);
 		
 		_unitGroup setBehaviour "CARELESS";
 		_unitGroup setSpeedMode "FULL";
@@ -304,7 +304,7 @@ if (isServer) then {
 				{
 					deleteVehicle _x;
 					ai_air_units = (ai_air_units -1);
-				} forEach (units _unitgroup);
+				} count (units _unitgroup);
 
 				deleteGroup _unitGroup;
 				if(debug_mode) then { diag_log "WAI: Paradrop helicopter cleaned up"; };

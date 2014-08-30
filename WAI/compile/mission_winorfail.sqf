@@ -28,7 +28,7 @@ if(isServer) then {
 				_starttime = time;
 			};
 			
-		} forEach playableUnits;
+		} count playableUnits;
 
 		if (_currenttime - _starttime >= _timeout_time) then {
 			_timeout = true;
@@ -44,7 +44,7 @@ if(isServer) then {
 						if((isPlayer _x) && (_x distance _position <= 20)) then {
 							_complete = true
 						};
-					} forEach playableUnits;
+					} count playableUnits;
 
 				} else {
 
@@ -55,7 +55,7 @@ if(isServer) then {
 							if((isPlayer _x) && (_x distance _position <= 20)) then {
 								_complete = true
 							};
-						} forEach playableUnits;
+						} count playableUnits;
 					};
 
 				};
@@ -111,7 +111,7 @@ if(isServer) then {
 				
 					{
 						deleteVehicle _x;
-					} forEach _x;
+					} count _x;
 				
 				} else {
 
@@ -119,7 +119,7 @@ if(isServer) then {
 					
 				};
 				
-			} forEach _delete_mines;
+			} count _delete_mines;
 			
 		};
 		
@@ -138,7 +138,7 @@ if(isServer) then {
 
 				{
 					if ((isPlayer _x) && (_x distance _position < 400)) exitWith { _playernear = true };
-				} forEach playableUnits;	
+				} count playableUnits;	
 
 				_currenttime = time;
 
@@ -151,7 +151,7 @@ if(isServer) then {
 								if (_x getVariable ["ObjectID", 0] == 0) then {
 									deleteVehicle _x;
 								};
-							} forEach _x;
+							} count _x;
 						
 						} else {
 							if (_x getVariable ["ObjectID", 0] == 0) then {
@@ -193,14 +193,14 @@ if(isServer) then {
 				deleteVehicle _x;
 			};
 
-		} forEach allUnits + vehicles + allDead;
+		} count allUnits + vehicles + allDead;
 		
 		{
 			if(typeName _x == "ARRAY") then {
 			
 				{
 					deleteVehicle _x;
-				} forEach _x;
+				} count _x;
 			
 			} else {
 			

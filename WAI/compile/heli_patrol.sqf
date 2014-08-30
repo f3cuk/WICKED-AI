@@ -88,22 +88,22 @@ if (isServer) then {
 
 	{
 		_pilot setSkill [_x,1]
-	} forEach _skillarray;
+	} count _skillarray;
 
 	{
 		_gunner 	setSkill [(_x select 0),(_x select 1)];
 		_gunner2 	setSkill [(_x select 0),(_x select 1)];
-	} forEach _aicskill;
+	} count _aicskill;
 
 	{
 		_x addweapon "Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	{
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;

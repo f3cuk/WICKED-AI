@@ -1,10 +1,11 @@
 if (isServer) then {
 
-	private ["_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
 	_type 		= _this select 2;
+	_launcher 	= secondaryWeapon _unit;
 
 	switch (_type) do {
 		case "ground" : {ai_ground_units = (ai_ground_units -1);};
@@ -61,8 +62,8 @@ if (isServer) then {
 		};
 
 		if (ai_clear_body) then {
-			{_unit removeMagazine _x;} forEach (magazines _unit);
-			{_unit removeWeapon _x;} forEach (weapons _unit);
+			{_unit removeMagazine _x;} count (magazines _unit);
+			{_unit removeWeapon _x;} count (weapons _unit);
 		};
 
 		if (ai_share_info) then {
@@ -70,7 +71,7 @@ if (isServer) then {
 				if (((position _x) distance (position _unit)) <= ai_share_distance) then {
 					_x reveal [_player, 4.0];
 				};
-			} forEach allUnits;
+			} count allUnits;
 		};
 
 	} else {
@@ -82,7 +83,7 @@ if (isServer) then {
 
 			{
 				_unit removeMagazine _x
-			} forEach magazines _unit;
+			} count magazines _unit;
 
 		} else {
 
@@ -95,16 +96,17 @@ if (isServer) then {
 		};
 
 	};
-	
-	_launcher = secondaryWeapon _unit;
+
 	if(wai_remove_launcher && !isNil "_launcher") then {
+
 		_rockets = _launcher call find_suitable_ammunition;
 		_unit removeWeapon _launcher;
+		
 		{
 			if(_x == _rockets) then {
 				_unit removeMagazine _x;
 			};
-		} forEach magazines _unit;
+		} count magazines _unit;
 		
 	};
 
