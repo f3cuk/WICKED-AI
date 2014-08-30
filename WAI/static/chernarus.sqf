@@ -35,11 +35,11 @@ if(isServer) then {
 		"M2StaticMG",						// Classname of turret
 		"easy",								// Skill level of unit (easy, medium, hard, extreme, Random)
 		"Bandit2_DZ",						// Skin classname, use "Random" or classname here
+		"Bandit",							// AI Type, "Hero" or "Bandit".
 		"Random",							// Primary gun set number. "Random" for random weapon set
 		2,									// Number of magazines
 		"Random",							// Backpack classname, use "Random" or classname here
-		"Random",							// Gearset classname, use "Random" or classname here
-		"Bandit"							// AI Type, "Hero" or "Bandit".
+		"Random"							// Gearset classname, use "Random" or classname here
 	] call spawn_static;
 
 	Place your custom static weapon spawns below
@@ -59,8 +59,10 @@ if(isServer) then {
 		10,									// Number of waypoints to give
 		"UH1H_DZ",							// Classname of vehicle (make sure it has driver and two gunners)
 		"Random",							// Skill level of units (easy, medium, hard, extreme, Random)
+		"Random",							// Skin classname, use "Random" or classname here
 		"Bandit"							// AI Type, "Hero" or "Bandit".
 	] spawn heli_patrol;
+
 
 	Place your heli patrols below
 	*/
@@ -79,6 +81,7 @@ if(isServer) then {
 		10,									// Number of waypoints to give
 		"HMMWV_Armored",					// Classname of vehicle (make sure it has driver and gunner)
 		"Random",							// Skill level of units (easy, medium, hard, extreme, Random)
+		"Random",							// Skin classname, use "Random" or classname here
 		"Bandit"							// AI Type, "Hero" or "Bandit".
 	] spawn vehicle_patrol;
 
