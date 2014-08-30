@@ -181,11 +181,11 @@ if(isServer) then {
 		
 					if (!isNil "_cleanunits") then {
 				
-						switch (_cleanunits) do {
-							case "ground" : {ai_ground_units = (ai_ground_units -1);};
-							case "air" : {ai_air_units = (ai_air_units -1);};
-							case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
-							case "static" : {ai_emplacement_units = (ai_emplacement_units -1);};
+						call {
+							if(_cleanunits == "ground") 	exitWith { ai_ground_units = (ai_ground_units -1); };
+							if(_cleanunits == "air") 		exitWith { ai_air_units = (ai_air_units -1); };
+							if(_cleanunits == "vehicle") 	exitWith { ai_vehicle_units = (ai_vehicle_units -1); };
+							if(_cleanunits == "static") 	exitWith { ai_emplacement_units = (ai_emplacement_units -1); };
 						};
 					};
 				};

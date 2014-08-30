@@ -152,21 +152,21 @@ if (isServer) then {
 
 				_helipos = getpos _helicopter;
 
-				switch (_gun) do {
-					case 0 : {_aiweapon = ai_wep_assault;};
-					case 1 : {_aiweapon = ai_wep_machine;};
-					case 2 : {_aiweapon = ai_wep_sniper;};
-					case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
+				call {
+					if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
+					if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
+					if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
+					if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
 				};
 
-				_weaponandmag = _aiweapon call BIS_fnc_selectRandom;
-				_weapon = _weaponandmag select 0;
-				_magazine = _weaponandmag select 1;
+				_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
+				_weapon 		= _weaponandmag select 0;
+				_magazine 		= _weaponandmag select 1;
 
-				switch (_gear) do {
-					case 0 : {_aigear = ai_gear0;};
-					case 1 : {_aigear = ai_gear1;};
-					case "Random" : {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+				call {
+					if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
+					if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
+					if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
 				};
 
 				_gearmagazines 		= _aigear select 0;
@@ -179,14 +179,14 @@ if (isServer) then {
 				};
 					
 				call {
-					if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-					if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-					if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-					if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+					if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+					if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+					if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+					if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 					_aiskin = _skin;
 				};
 
-				_para = _pgroup createUnit [_aiskin, [0,0,0], [], 1, "PRIVATE"];
+				_para = _pgroup createUnit [_aiskin,[0,0,0],[],1,"FORM"];
 				
 				_para enableAI "TARGET";
 				_para enableAI "AUTOTARGET";
@@ -225,13 +225,13 @@ if (isServer) then {
 					_para addweapon "NVGoggles";
 				};
 				
-				switch (_skill) do {
-					case "easy"		: { _aicskill = ai_skill_easy; };
-					case "medium" 	: { _aicskill = ai_skill_medium; };
-					case "hard" 	: { _aicskill = ai_skill_hard; };
-					case "extreme" 	: { _aicskill = ai_skill_extreme; };
-					case "Random" 	: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
-					default { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+				call {
+					if(_skill == "easy") 	exitWith { _aicskill = ai_skill_easy; };
+					if(_skill == "medium") 	exitWith { _aicskill = ai_skill_medium; };
+					if(_skill == "hard") 	exitWith { _aicskill = ai_skill_hard; };
+					if(_skill == "extreme") exitWith { _aicskill = ai_skill_extreme; };
+					if(_skill == "random") 	exitWith { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+					_aicskill = ai_skill_random call BIS_fnc_selectRandom;
 				};
 				
 				{
@@ -307,7 +307,7 @@ if (isServer) then {
 				} count (units _unitgroup);
 
 				deleteGroup _unitGroup;
-				if(debug_mode) then { diag_log "WAI: Paradrop helicopter cleaned up"; };
+				if(debug_mode) then { diag_log "WAI: Paradrop helicopter cleaned"; };
 				_cleanheli = false;
 			};
 

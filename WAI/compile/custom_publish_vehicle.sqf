@@ -7,7 +7,7 @@ are optional	|	boolean:	true, or false by default to spawn vehicle static at pos
 /********************************************************************************************/
 if (isServer) then {
 
-    private ["_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
+    private ["_hit","_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
 
 	_count 			= count _this;
 	_classnames 	= _this select 0;
@@ -59,17 +59,26 @@ if (isServer) then {
 	_fuel = 0;
 
 	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
-		_damage = (wai_vehicle_damage select 0) / 100;
-		_vehicle setDamage _damage;
-		_hitpoints = _vehicle call vehicle_getHitpoints;
+
+		_damage 		= (wai_vehicle_damage select 0) / 100;
+		_vehicle 		setDamage _damage;
+		_hitpoints 		= _vehicle call vehicle_getHitpoints;
+
 		{
-			_dam = ((wai_vehicle_damage select 0) + random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0))) / 100;
-			_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
-			if (_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};			
-			[_vehicle,_selection,_dam] call object_setHitServer;
+			
+			_dam 		= ((wai_vehicle_damage select 0) + random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0))) / 100;
+			_selection	= getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
+
+			if ((_selection in dayZ_explosiveParts) && _dam > 0.8) then {
+				_dam = 0.8
+			};			
+
+			_hit = [_vehicle,_selection,_dam] call object_setHitServer;
+
 		} count _hitpoints;
 
 		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;;
+
 	};
 
 	if(debug_mode) then { diag_log("WAI: Spawned " +str(_class) + " at " + str(_position) + " with " + str(_fuel) + " fuel and " + str(_damage) + " damage."); };

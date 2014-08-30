@@ -20,9 +20,9 @@ if(isServer) then {
 	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
 	//Troops
-	[[_position select 0, _position select 1, 0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//Condition
 	[
