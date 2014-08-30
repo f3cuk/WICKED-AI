@@ -17,12 +17,11 @@ if(isServer) then {
 	_baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
 	_baserunover 	= [_baserunover1,_baserunover2];
 
-	{ _x setVectorUp surfaceNormal position  _x; } foreach _baserunover;
+	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
 	//Troops
-	[[_position select 0, _position select 1, 0],4,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 	//Condition
 	[

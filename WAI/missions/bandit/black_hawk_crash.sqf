@@ -9,17 +9,18 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+
 	[_crate,5,5,10,2] call dynamic_crate;
 
 	//Base
-	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 15), ((_position select 1) + 15), 0], [], 20, "FORM"];
-	_baserunover setVectorUp surfaceNormal position _baserunover;
+	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 5), ((_position select 1) + 5), 0],[],10,"FORM"];
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	[[_position select 0, _position select 1, 0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//Static Guns
 	[[

@@ -18,11 +18,11 @@ if(isServer) then {
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	_rndnum = 4 + round (random 3);
-	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0, _position select 1, 0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	_rndnum = 3 + round (random 3);
+	[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],_rndnum,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	 
 	//Static Guns
 	[[
@@ -42,7 +42,7 @@ if(isServer) then {
 	[
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_vehicle], 		// cleanup objects
+		[_vehicle,_baserunover], 		// cleanup objects
 		"Bandits have captured a Red Cross MV-22! An informant has advised there are medical supplies, he has updated the map for the location!",	// mission announcement
 		"Survivors have secured the MV-22!",																										// mission success
 		"Survivors did not secure the MV-22 in time"																								// mission fail

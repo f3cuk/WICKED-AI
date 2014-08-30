@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
+	private ["_playernear","_cleaned","_finish_time","_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
 
 	_mission	= (_this select 0) select 0;
 	_crate		= (_this select 0) select 1;
@@ -28,7 +28,7 @@ if(isServer) then {
 				_starttime = time;
 			};
 			
-		} forEach playableUnits;
+		} count playableUnits;
 
 		if (_currenttime - _starttime >= _timeout_time) then {
 			_timeout = true;
@@ -44,7 +44,7 @@ if(isServer) then {
 						if((isPlayer _x) && (_x distance _position <= 20)) then {
 							_complete = true
 						};
-					} forEach playableUnits;
+					} count playableUnits;
 
 				} else {
 
@@ -55,7 +55,7 @@ if(isServer) then {
 							if((isPlayer _x) && (_x distance _position <= 20)) then {
 								_complete = true
 							};
-						} forEach playableUnits;
+						} count playableUnits;
 					};
 
 				};
@@ -111,7 +111,7 @@ if(isServer) then {
 				
 					{
 						deleteVehicle _x;
-					} forEach _x;
+					} count _x;
 				
 				} else {
 
@@ -119,46 +119,54 @@ if(isServer) then {
 					
 				};
 				
-			} forEach _delete_mines;
+			} count _delete_mines;
 			
 		};
 		
 		wai_mission_data set [_mission, -1];
+
 		[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
 
 		if (wai_clean_mission) then {
+
 			_finish_time = time;
 			_cleaned = false;
+
 			while {!_cleaned} do {
 
 				_playernear = false;
+
 				{
-					if ((isPlayer _x) && (_x distance _position < 30)) exitWith { _playernear = true };
-				} forEach playableUnits;	
+					if ((isPlayer _x) && (_x distance _position < 400)) exitWith { _playernear = true };
+				} count playableUnits;	
 
 				_currenttime = time;
+
 				if ((_currenttime - _finish_time >= wai_clean_mission_time) && !_playernear) then {
 
 					{
 						if(typeName _x == "ARRAY") then {
 						
 							{
-								deleteVehicle _x;
-							} forEach _x;
+								if (_x getVariable ["ObjectID", 0] == 0) then {
+									deleteVehicle _x;
+								};
+							} count _x;
 						
 						} else {
-						
-							deleteVehicle _x;
+							if (_x getVariable ["ObjectID", 0] == 0) then {
+								deleteVehicle _x;
+							};
 						};
 						sleep 1;
 						
 					} forEach _baseclean;
+
 					_cleaned = true;
 
 				};
 			};
 		};
-		
 	};
 	
 	if (_timeout) then {
@@ -168,16 +176,16 @@ if(isServer) then {
 			if (_x getVariable ["mission", nil] == _mission) then {
 			
 				if (alive _x) then {
-			
+
 					_cleanunits = _x getVariable ["missionclean",nil];
 		
 					if (!isNil "_cleanunits") then {
 				
-						switch (_cleanunits) do {
-							case "ground" : {ai_ground_units = (ai_ground_units -1);};
-							case "air" : {ai_air_units = (ai_air_units -1);};
-							case "vehicle" : {ai_vehicle_units = (ai_vehicle_units -1);};
-							case "static" : {ai_emplacement_units = (ai_emplacement_units -1);};
+						call {
+							if(_cleanunits == "ground") 	exitWith { ai_ground_units = (ai_ground_units -1); };
+							if(_cleanunits == "air") 		exitWith { ai_air_units = (ai_air_units -1); };
+							if(_cleanunits == "vehicle") 	exitWith { ai_vehicle_units = (ai_vehicle_units -1); };
+							if(_cleanunits == "static") 	exitWith { ai_emplacement_units = (ai_emplacement_units -1); };
 						};
 					};
 				};
@@ -185,14 +193,14 @@ if(isServer) then {
 				deleteVehicle _x;
 			};
 
-		} forEach allUnits + vehicles + allDead;
+		} count allUnits + vehicles + allDead;
 		
 		{
 			if(typeName _x == "ARRAY") then {
 			
 				{
 					deleteVehicle _x;
-				} forEach _x;
+				} count _x;
 			
 			} else {
 			
@@ -200,7 +208,7 @@ if(isServer) then {
 			};
 			
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
-			
+
 		wai_mission_data set [_mission, -1];
 		
 		[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;

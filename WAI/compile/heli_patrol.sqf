@@ -13,20 +13,20 @@ if (isServer) then {
 
 	_skillarray			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
-	switch (_skill) do {
-		case "easy"		: { _aicskill = ai_skill_easy; };
-		case "medium" 	: { _aicskill = ai_skill_medium; };
-		case "hard" 	: { _aicskill = ai_skill_hard; };
-		case "extreme" 	: { _aicskill = ai_skill_extreme; };
-		case "Random" 	: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
-		default	{ _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+	call {
+		if(_skill == "easy") 	exitWith { _aicskill = ai_skill_easy; };
+		if(_skill == "medium") 	exitWith { _aicskill = ai_skill_medium; };
+		if(_skill == "hard") 	exitWith { _aicskill = ai_skill_hard; };
+		if(_skill == "extreme") exitWith { _aicskill = ai_skill_extreme; };
+		if(_skill == "random") 	exitWith { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+		_aicskill = ai_skill_random call BIS_fnc_selectRandom;
 	};
 
 	call {
-		if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-		if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-		if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-		if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+		if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+		if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+		if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+		if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
 	};
 
@@ -88,22 +88,22 @@ if (isServer) then {
 
 	{
 		_pilot setSkill [_x,1]
-	} forEach _skillarray;
+	} count _skillarray;
 
 	{
 		_gunner 	setSkill [(_x select 0),(_x select 1)];
 		_gunner2 	setSkill [(_x select 0),(_x select 1)];
-	} forEach _aicskill;
+	} count _aicskill;
 
 	{
 		_x addweapon "Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	{
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;

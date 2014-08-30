@@ -1,7 +1,8 @@
 if(isServer) then {
 
 	/* GENERAL CONFIG */
-
+	
+		debug_mode				= false;		// enable debug
 		use_blacklist				= true;			// use blacklist
 		blacklist					= [
 			[[5533.00,8445.00],[6911.00,7063.00]],	// Stary
@@ -19,17 +20,14 @@ if(isServer) then {
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
-		ai_patrol_radius			= 300;			// radius of ai patrols in meters
-		ai_patrol_radius_wp			= 10;			// number of waypoints of patrols
+		ai_bandit_combatmode		= "YELLOW";		// combatmode of bandit AI
+		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
-		ai_bandit_behaviour			= "CARELESS";	// behaviour of bandit AI
-
-		ai_hero_combatmode			= "RED";		// combatmode of bandit AI
-		ai_hero_behaviour			= "CARELESS";	// behaviour of bandit AI
+		ai_hero_combatmode			= "YELLOW";		// combatmode of hero AI
+		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
 
 		ai_share_info				= true;			// AI share info on player position
-		ai_share_distance			= 300;			// distance from killed AI for AI to share your position
+		ai_share_distance			= 300;			// Distance from killed AI for AI to share your rough position
 
 		ai_kills_gain				= true;			// add kill to bandit/human kill score
 		ai_humanity_gain			= true;			// gain humanity for killing AI
@@ -57,7 +55,9 @@ if(isServer) then {
 		ai_wep_machine				= [["RPK_74","75Rnd_545x39_RPK"],["MK_48_DZ","100Rnd_762x51_M240"],["M249_EP1_DZ","200Rnd_556x45_M249"],["Pecheneg_DZ","100Rnd_762x54_PK"],["M240_DZ","100Rnd_762x51_M240"]];	// Light machine guns
 		ai_wep_sniper				= [["M14_EP1","20Rnd_762x51_DMR"],["SCAR_H_LNG_Sniper_SD","20Rnd_762x51_SB_SCAR"],["M110_NVG_EP1","20rnd_762x51_B_SCAR"],["SVD_CAMO","10Rnd_762x54_SVD"],["VSS_Vintorez","20Rnd_9x39_SP5_VSS"],["DMR","20Rnd_762x51_DMR"],["M40A3","5Rnd_762x51_M24"]];	// Sniper rifles
 		ai_wep_random				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
-
+		ai_wep_launchers_AT			= ["M136","RPG18","JAVELIN"];
+		ai_wep_launchers_AA			= ["Strela","Igla","STINGER"];
+		
 		ai_packs					= ["DZ_Czech_Vest_Puch","DZ_ALICE_Pack_EP1","DZ_TK_Assault_Pack_EP1","DZ_British_ACU","DZ_GunBag_EP1","DZ_CivilBackpack_EP1","DZ_Backpack_EP1","DZ_LargeGunBag_EP1"];
 		ai_hero_skin				= ["FR_AC","FR_AR","FR_Corpsman","FR_GL","FR_Marksman","FR_R","FR_Sapper","FR_TL"];
 		ai_bandit_skin				= ["Ins_Soldier_GL_DZ","TK_INS_Soldier_EP1_DZ","TK_INS_Warlord_EP1_DZ","GUE_Commander_DZ","GUE_Soldier_Sniper_DZ","GUE_Soldier_MG_DZ","GUE_Soldier_Crew_DZ","GUE_Soldier_2_DZ","GUE_Soldier_CO_DZ","BanditW1_DZ","BanditW2_DZ","Bandit1_DZ","Bandit2_DZ"];
@@ -75,9 +75,9 @@ if(isServer) then {
 
 		wai_avoid_missions			= true;								// avoid spawning near other missions, these are defined in wai_mission_markers
 		wai_avoid_traders			= true;								// avoid spawning missions near traders
-		wai_mission_spread			= 1000;								// make missions spawn this far apart from one another and other markers
-		wai_near_town				= 300;								// make missions check for towns around this radius
-		wai_near_road				= 50;								// make missions check for roads around this radius
+		wai_mission_spread			= 750;								// make missions spawn this far apart from one another and other markers
+		wai_near_town				= 0;								// make missions check for towns around this radius
+		wai_near_road				= 0;								// make missions check for roads around this radius
 		wai_near_water				= 50;								// nearest water allowed near missions
 		
 		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
@@ -85,7 +85,7 @@ if(isServer) then {
 		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
 		
 		wai_clean_mission			= true;								// clean all mission buildings after a certain period
-		wai_clean_mission_time		= 30;								// time after a mission is complete to clean mission buildings
+		wai_clean_mission_time		= 1800;								// time after a mission is complete to clean mission buildings
 
 		wai_mission_fuel			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
 		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
@@ -102,6 +102,9 @@ if(isServer) then {
 
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
+
+		wai_use_launchers			= false;								// add a rocket launcher to each spawned AI group
+		wai_remove_launcher		= false;								// remove rocket launcher from AI on death
 
 		// Missions
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
@@ -158,7 +161,7 @@ if(isServer) then {
 		crate_items_food			= ["ItemWaterbottle","FoodNutmix","FoodPistachio","FoodMRE","ItemSodaOrangeSherbet","ItemSodaRbull","ItemSodaR4z0r","ItemSodaMdew","ItemSodaPepsi","ItemSodaCoke","FoodbaconCooked","FoodCanBakedBeans","FoodCanFrankBeans","FoodCanPasta","FoodCanSardines","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked"];
 		crate_items_buildables		= ["forest_large_net_kit","cinder_garage_kit",["PartPlywoodPack",5],"ItemSandbagExLarge5X","park_bench_kit","ItemComboLock",["CinderBlocks",10],"ItemCanvas","ItemComboLock",["ItemLightBulb",5],"ItemLockbox",["ItemSandbag",10],["ItemTankTrap",10],["ItemWire",10],["MortarBucket",10],["PartPlankPack",5],"PartWoodPile"];
 		crate_items_vehicle_repair	= ["PartEngine","PartFueltank","PartGeneric","PartGlass","PartVRotor","PartWheel"];
-		crate_items_medical			= ["ItemWaterbottle","ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine","FoodchickenCooked","FoodmuttonCooked","FoodrabbitCooked","ItemTroutCooked","ItemTunaCooked","ItemSeaBassCooked"];
+		crate_items_medical			= ["ItemWaterbottle","ItemAntibiotic","ItemBloodbag","ItemEpinephrine","ItemHeatPack","ItemMorphine","ItemBandage","FoodCanFrankBeans","FoodCanPasta"];
 		crate_items_chainbullets	= ["2000Rnd_762x51_M134","200Rnd_762x51_M240","100Rnd_127x99_M2","150Rnd_127x107_DSHKM"];
 		crate_items_sniper			= [["ItemPainkiller",5],"Skin_Sniper1_DZ","Skin_CZ_Soldier_Sniper_EP1_DZ","Skin_GUE_Soldier_Sniper_DZ"];
 		crate_items_president		= ["ItemDocument"];
@@ -174,7 +177,6 @@ if(isServer) then {
 
 		static_missions				= false;		// use static mission file
 		custom_per_world			= false;		// use a custom mission file per world
-		debug_mode					= false;		// enable debug
 
 	/* END STATIC MISSIONS CONFIG */
 

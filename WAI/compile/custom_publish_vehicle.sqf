@@ -7,7 +7,7 @@ are optional	|	boolean:	true, or false by default to spawn vehicle static at pos
 /********************************************************************************************/
 if (isServer) then {
 
-    private ["_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
+    private ["_hit","_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
 
 	_count 			= count _this;
 	_classnames 	= _this select 0;
@@ -59,16 +59,26 @@ if (isServer) then {
 	_fuel = 0;
 
 	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
-		_damage = (wai_vehicle_damage select 0) / 100;
-		_vehicle setDamage _damage;
-		_hitpoints = _vehicle call vehicle_getHitpoints;
+
+		_damage 		= (wai_vehicle_damage select 0) / 100;
+		_vehicle 		setDamage _damage;
+		_hitpoints 		= _vehicle call vehicle_getHitpoints;
+
 		{
-			_dam = ((wai_vehicle_damage select 0) + random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0))) / 100;
-			_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
-			if (_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};			
-			[_vehicle, _selection, _dam] call object_setHitServer;
-		} forEach _hitpoints;
+			
+			_dam 		= ((wai_vehicle_damage select 0) + random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0))) / 100;
+			_selection	= getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
+
+			if ((_selection in dayZ_explosiveParts) && _dam > 0.8) then {
+				_dam = 0.8
+			};			
+
+			_hit = [_vehicle,_selection,_dam] call object_setHitServer;
+
+		} count _hitpoints;
+
 		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;;
+
 	};
 
 	if(debug_mode) then { diag_log("WAI: Spawned " +str(_class) + " at " + str(_position) + " with " + str(_fuel) + " fuel and " + str(_damage) + " damage."); };
@@ -76,7 +86,7 @@ if (isServer) then {
 	_vehicle setFuel _fuel;
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
 	
-	PVDZE_serverObjectMonitor	set [count PVDZE_serverObjectMonitor,_vehicle];
+	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_vehicle];
 
 	if(wai_keep_vehicles) then {
 		
@@ -106,7 +116,7 @@ if (isServer) then {
 
 			_key call server_hiveWrite;
 			
-			[_vehicle,_uid,_fuel,_damage,_array,_characterID,_class] spawn {
+			[_vehicle,_uid,_fuel,_damage,_array,_characterID,_class] call {
 
 				private["_vehicle","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_class"];
 
@@ -118,24 +128,24 @@ if (isServer) then {
 				_characterID	= _this select 5;
 				_class 			= _this select 6;
 				_done 			= false;
-				_retry 			= 0;
 
-				while {_retry < 10} do {
-					sleep 1;
+				while {!_done} do {
 					_key 		= format["CHILD:388:%1:",_uid];
 					_result 	= _key call server_hiveReadWrite;
 					_outcome 	= _result select 0;
+
+					waitUntil {!isNil "_outcome"};
+
 					if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
+
 					if(_outcome == "PASS") then {
-						_oid 	= _result select 1;
+						_oid = _result select 1;
 						_vehicle setVariable ["ObjectID", _oid, true];
 						if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
-						_done 	= true;
-						_retry 	= 11;
+						_done  = true;
 					} else {
 						if(debug_mode) then { diag_log("CUSTOM: trying again to get id for: " + str(_uid)); };
-						_done 	= false;
-						_retry 	= _retry + 1;
+						_done = false;
 					};
 				};
 

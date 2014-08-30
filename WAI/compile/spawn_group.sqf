@@ -1,8 +1,11 @@
 if (isServer) then {
 
-    private ["_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+    private ["_rocket","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
+	_pos_x 			= _position select 0;
+	_pos_y 			= _position select 1;
+	_pos_z 			= _position select 2;
 	_unitnumber 		= _this select 1;
 	_skill 				= _this select 2;
 	_gun 				= _this select 3;
@@ -12,9 +15,14 @@ if (isServer) then {
 	_gear 				= _this select 7;
 	_aitype				= _this select 8;
 	
+	if (typeName _gun == "ARRAY") then {
+		_launcher		= _gun select 1;
+		_gun			= _gun select 0;
+	};
+
 	if (typeName _aitype == "ARRAY") then {
-		_gain 		= _aitype select 1;
-		_aitype 	= _aitype select 0;
+		_gain 			= _aitype select 1;
+		_aitype 		= _aitype select 0;
 	};
 	
 	if (count _this > 9) then {
@@ -37,14 +45,32 @@ if (isServer) then {
 		_unitGroup	= createGroup EAST;
 	};
 
+	if(_pos_z == 0) then {
+		if(floor(random 2) == 1) then { 
+			_pos_x = _pos_x - (5 + random(25));
+		} else {
+			_pos_x = _pos_x + (5 + random(25));
+		};			
+
+		if(floor(random 2) == 1) then { 
+			_pos_y = _pos_y - (5 + random(25));
+		} else {
+			_pos_y = _pos_y + (5 + random(25));
+		};
+	};
+
 	for "_x" from 1 to _unitnumber do {
 
-		switch (_gun) do {
-			case 0 : {_aiweapon = ai_wep_assault;};
-			case 1 : {_aiweapon = ai_wep_machine;};
-			case 2 : {_aiweapon = ai_wep_sniper;};
-			case "Unarmed" : {_unarmed = true;};
-			case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
+		call {
+			if(typeName(_gun) == "SCALAR") then {
+				if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
+				if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
+				if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
+			} else {
+				if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
+				if(_gun == "unarmed") 	exitWith { _unarmed = true; };
+				_aiweapon = _gun;
+			}
 		};
 
 		if (!_unarmed) then {
@@ -53,36 +79,40 @@ if (isServer) then {
 			_magazine 		= _weaponandmag select 1;
 		};
 
-		switch (_gear) do {
-			case 0 : {_aigear = ai_gear0;};
-			case 1 : {_aigear = ai_gear1;};
-			case "Random" : {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+		call {
+			if(typeName(_gear) == "SCALAR") then {
+				if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
+				if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
+			} else {
+				if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+			};
 		};
 		
-		_gearmagazines = _aigear select 0;
-		_geartools = _aigear select 1;
+		_gearmagazines 	= _aigear select 0;
+		_geartools 		= _aigear select 1;
 
 		call {
-			if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-			if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-			if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-			if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+			if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
 		};
 
-		_unit = _unitGroup createUnit [_aiskin, [(_position select 0),(_position select 1),(_position select 2)], [], 10, "FORM"];
+		_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
 		[_unit] joinSilent _unitGroup;
 
 		call {
-			if (_aitype == "Hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
-			if (_aitype == "Bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_add_humanity]; };
-			if (_aitype == "Special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["humanity", ai_special_humanity]; };
+			if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
+			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_add_humanity]; };
+			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["humanity", ai_special_humanity]; };
 		};
+
 		if (!isNil "_gain") then { _unit setVariable ["humanity", _gain]; };
 
 		call {
-			if (_backpack == "Random") 	exitWith { _aipack = ai_packs call BIS_fnc_selectRandom; };
-			if (_backpack == "None") 	exitWith { };
+			if(_backpack == "random") 	exitWith { _aipack = ai_packs call BIS_fnc_selectRandom; };
+			if(_backpack == "none") 	exitWith { };
 			_aipack = _backpack;
 		};
 		
@@ -108,12 +138,11 @@ if (isServer) then {
 		};
 
 		if (!_unarmed) then {
-
-			_unit addweapon _weapon;
-
 			for "_i" from 1 to _mags do {
 				_unit addMagazine _magazine;
 			};
+			_unit addweapon _weapon;
+			_unit selectWeapon _weapon;
 		};
 
 		if(_aipack != "none") then {
@@ -122,24 +151,24 @@ if (isServer) then {
 
 		{
 			_unit addMagazine _x
-		} foreach _gearmagazines;
+		} count _gearmagazines;
 
 		{
 			_unit addweapon _x
-		} foreach _geartools;
+		} count _geartools;
 		
-		switch (_skill) do {
-			case "easy"		: { _aicskill = ai_skill_easy; };
-			case "medium" 	: { _aicskill = ai_skill_medium; };
-			case "hard" 	: { _aicskill = ai_skill_hard; };
-			case "extreme" 	: { _aicskill = ai_skill_extreme; };
-			case "Random" 	: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
-			default { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+		call {
+			if(_skill == "easy") 		exitWith { _aicskill = ai_skill_easy; };
+			if(_skill == "medium") 		exitWith { _aicskill = ai_skill_medium; };
+			if(_skill == "hard") 		exitWith { _aicskill = ai_skill_hard; };
+			if(_skill == "extreme") 	exitWith { _aicskill = ai_skill_extreme; };
+			if(_skill == "random") 		exitWith { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+			_aicskill = ai_skill_random call BIS_fnc_selectRandom;
 		};
 
 		{
 			_unit setSkill [(_x select 0),(_x select 1)]
-		} foreach _aicskill;
+		} count _aicskill;
 		
 		ai_ground_units = (ai_ground_units + 1);
 
@@ -154,12 +183,26 @@ if (isServer) then {
 
 	};
 
+	if (!isNil "_launcher" && wai_use_launchers) then {
+		call {
+			//if (_launcher == "Random") exitWith { _launcher = (ai_launchers_AT + ai_launchers_AA) call BIS_fnc_selectRandom; };
+			if (_launcher == "at") exitWith { _launcher = ai_wep_launchers_AT call BIS_fnc_selectRandom; };
+			if (_launcher == "aa") exitWith { _launcher = ai_wep_launchers_AA call BIS_fnc_selectRandom; };
+		};
+		_rocket = _launcher call find_suitable_ammunition;
+		_unit addMagazine _rocket;
+		_unit addMagazine _rocket;
+		_unit addWeapon _launcher;
+	};
+
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
-	[_unitGroup, _position, _mission] call group_waypoints;
+	if(_pos_z == 0) then {
+		[_unitGroup,[_pos_x,_pos_y,_pos_z],_mission,_skill] spawn group_waypoints;
+	};
 
-	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2", _unitnumber,_position,_aitype];
+	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2",_unitnumber,_position,_aitype];
 	
 	_unitGroup
 };

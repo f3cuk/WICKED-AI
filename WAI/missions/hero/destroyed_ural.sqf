@@ -21,14 +21,14 @@ if(isServer) then {
 	_rndgro 	= 1 + round (random 3);
 
 	for "_i" from 0 to _rndgro do {
-		[[_position select 0, _position select 1, 0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+		[[_position select 0,_position select 1,0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	};
 	
 	//Condition
 	[
-		[_mission,_crate],			// mission number and crate
-		["kill"], 	// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 			// cleanup objects
+		[_mission,_crate],		// mission number and crate
+		["kill"], 				// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
+		[_baserunover], 		// cleanup objects
 		"Bandits have destroyed a Ural with supplies and are securing the cargo! Check your map for the location!",	// mission announcement
 		"The supplies have been secured by survivors!",															// mission success
 		"Survivors did not secure the supplies in time"														// mission fail

@@ -1,8 +1,10 @@
 if (isServer) then {
 
-	private ["_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_playerPresent","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+	private ["_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 	_position 		= _this select 0;
+	_pos_x			= _position select 0;
+	_pos_y			= _position select 1;
 	_startingpos 	= _this select 1;
 	_triggerdis 	= _this select 2;
 	_heli_class 	= _this select 3;
@@ -34,9 +36,16 @@ if (isServer) then {
 	waitUntil
 	{
 		sleep 10;
-		_playerPresent = false;
-		{if((isPlayer _x) && (_x distance [(_position select 0),(_position select 1),0] <= _triggerdis)) then {_playerPresent = true};}forEach playableUnits;
-		(_playerPresent)
+
+		_player_present = false;
+
+		{
+			if((isPlayer _x) && (_x distance [_pos_x,_pos_y,0] <= _triggerdis)) then {
+				_player_present = true;
+			};
+		} count playableUnits;
+
+		(_player_present)
 	};
 
 	call {
@@ -59,12 +68,12 @@ if (isServer) then {
 		_unitGroup	= createGroup EAST;
 	};
 
-	_pilot = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_pilot = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	[_pilot] joinSilent _unitGroup;
 
 	ai_air_units = (ai_air_units +1);
 
-	_helicopter = createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 100], [], 0, "FLY"];
+	_helicopter = createVehicle [_heli_class,[(_startingpos select 0),(_startingpos select 1),100],[],0,"FLY"];
 	_helicopter setFuel 1;
 	_helicopter engineOn true;
 	_helicopter setVehicleAmmo 1;
@@ -74,40 +83,40 @@ if (isServer) then {
 	_pilot assignAsDriver _helicopter;
 	_pilot moveInDriver _helicopter;
 
-	_gunner = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner assignAsGunner _helicopter;
 	_gunner moveInTurret [_helicopter,[0]];
 	[_gunner] joinSilent _unitGroup;
 
 	ai_air_units = (ai_air_units +1);
 
-	_gunner2 = _unitGroup createUnit ["Bandit1_DZ", [0,0,0], [], 1, "NONE"];
+	_gunner2 = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner2 assignAsGunner _helicopter;
 	_gunner2 moveInTurret [_helicopter,[1]];
 	[_gunner2] joinSilent _unitGroup;
 
 	call {
-		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity", ai_add_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity", ai_remove_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity", ai_special_humanity]; } forEach [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity", ai_add_humanity]; } count [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity", ai_remove_humanity]; } count [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity", ai_special_humanity]; } count [_pilot, _gunner, _gunner2]; };
 	};
 	
 	ai_air_units = (ai_air_units +1);
 
 	{
 		_pilot setSkill [_x,1]
-	} forEach _skillarray;
+	} count _skillarray;
 
 	{
 		_gunner 	setSkill [_x,0.7];
 		_gunner2 	setSkill [_x,0.7];
-	} forEach _skillarray;
+	} count _skillarray;
 
 	{
 		_x addweapon "Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
-	} forEach (units _unitgroup);
+	} count (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;
@@ -133,27 +142,38 @@ if (isServer) then {
 
 		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
 
-			_pgroup = createGroup east;
+			if(_aitype == "Hero") then {
+				_pgroup	= createGroup RESISTANCE;
+			} else {
+				_pgroup	= createGroup EAST;
+			};
 
 			for "_x" from 1 to _paranumber do {
 
 				_helipos = getpos _helicopter;
 
-				switch (_gun) do {
-					case 0 : {_aiweapon = ai_wep_assault;};
-					case 1 : {_aiweapon = ai_wep_machine;};
-					case 2 : {_aiweapon = ai_wep_sniper;};
-					case "Random" : {_aiweapon = ai_wep_random call BIS_fnc_selectRandom;};
+				call {
+					if (typeName(_gun) == "SCALAR") then {
+						if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
+						if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
+						if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
+					} else {
+						if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
+						_aiweapon = _gun;
+					};
 				};
 
-				_weaponandmag = _aiweapon call BIS_fnc_selectRandom;
-				_weapon = _weaponandmag select 0;
-				_magazine = _weaponandmag select 1;
+				_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
+				_weapon 		= _weaponandmag select 0;
+				_magazine 		= _weaponandmag select 1;
 
-				switch (_gear) do {
-					case 0 : {_aigear = ai_gear0;};
-					case 1 : {_aigear = ai_gear1;};
-					case "Random" : {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+				call {
+					if (typeName(_gear) == "SCALAR") then {
+						if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
+						if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
+					} else {
+						if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
+					};
 				};
 
 				_gearmagazines 		= _aigear select 0;
@@ -166,14 +186,14 @@ if (isServer) then {
 				};
 					
 				call {
-					if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-					if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-					if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-					if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+					if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+					if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+					if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+					if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 					_aiskin = _skin;
 				};
 
-				_para = _pgroup createUnit [_aiskin, [0,0,0], [], 1, "PRIVATE"];
+				_para = _pgroup createUnit [_aiskin,[0,0,0],[],1,"FORM"];
 				
 				_para enableAI "TARGET";
 				_para enableAI "AUTOTARGET";
@@ -202,28 +222,28 @@ if (isServer) then {
 				
 				{
 					_para addMagazine _x
-				} forEach _gearmagazines;
+				} count _gearmagazines;
 				
 				{
 					_para addweapon _x
-				} forEach _geartools;
+				} count _geartools;
 				
 				if (sunOrMoon != 1) then {
 					_para addweapon "NVGoggles";
 				};
 				
-				switch (_skill) do {
-					case "easy"		: { _aicskill = ai_skill_easy; };
-					case "medium" 	: { _aicskill = ai_skill_medium; };
-					case "hard" 	: { _aicskill = ai_skill_hard; };
-					case "extreme" 	: { _aicskill = ai_skill_extreme; };
-					case "Random" 	: { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
-					default { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+				call {
+					if(_skill == "easy") 	exitWith { _aicskill = ai_skill_easy; };
+					if(_skill == "medium") 	exitWith { _aicskill = ai_skill_medium; };
+					if(_skill == "hard") 	exitWith { _aicskill = ai_skill_hard; };
+					if(_skill == "extreme") exitWith { _aicskill = ai_skill_extreme; };
+					if(_skill == "random") 	exitWith { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+					_aicskill = ai_skill_random call BIS_fnc_selectRandom;
 				};
 				
 				{
 					_para setSkill [(_x select 0),(_x select 1)]
-				} forEach _aicskill;
+				} count _aicskill;
 				
 				ai_ground_units = (ai_ground_units + 1);
 				_para addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
@@ -249,8 +269,10 @@ if (isServer) then {
 			
 			_drop = false;
 			_pgroup selectLeader ((units _pgroup) select 0);
+
 			if(debug_mode) then { diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber]; };
-			[_pgroup, _position,_mission] call group_waypoints;
+
+			[_pgroup,_position,_mission] call group_waypoints;
 		};
 	};
 
@@ -265,13 +287,13 @@ if (isServer) then {
 
 		{
 			_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
-		} forEach (units _unitgroup);
+		} count (units _unitgroup);
 
 	} else {
 
 		{
 			_x doMove [(_startingpos select 0), (_startingpos select 1), 100]
-		} forEach (units _unitGroup);
+		} count (units _unitGroup);
 		
 		_unitGroup setBehaviour "CARELESS";
 		_unitGroup setSpeedMode "FULL";
@@ -289,10 +311,10 @@ if (isServer) then {
 				{
 					deleteVehicle _x;
 					ai_air_units = (ai_air_units -1);
-				} forEach (units _unitgroup);
+				} count (units _unitgroup);
 
 				deleteGroup _unitGroup;
-				if(debug_mode) then { diag_log "WAI: Paradrop helicopter cleaned up"; };
+				if(debug_mode) then { diag_log "WAI: Paradrop helicopter cleaned"; };
 				_cleanheli = false;
 			};
 
