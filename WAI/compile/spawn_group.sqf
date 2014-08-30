@@ -62,11 +62,15 @@ if (isServer) then {
 	for "_x" from 1 to _unitnumber do {
 
 		call {
-			if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
-			if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
-			if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
-			if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
-			if(_gun == "unarmed") 	exitWith { _unarmed = true; };
+			if(typeName(_gun) == "SCALAR") then {
+				if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
+				if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
+				if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
+			} else {
+				if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
+				if(_gun == "unarmed") 	exitWith { _unarmed = true; };
+				_aiweapon = _gun;
+			}
 		};
 
 		if (!_unarmed) then {
@@ -76,9 +80,12 @@ if (isServer) then {
 		};
 
 		call {
-			if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
-			if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
-			if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+			if(typeName(_gear) == "SCALAR") then {
+				if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
+				if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
+			} else {
+				if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+			};
 		};
 		
 		_gearmagazines 	= _aigear select 0;
