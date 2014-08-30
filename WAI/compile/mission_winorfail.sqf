@@ -163,13 +163,14 @@ if(isServer) then {
 									deleteVehicle _x;
 								};
 							};
-							sleep 1;
 							
 						} forEach _clean;
 
 						_cleaned = true;
 
 					};
+					
+					sleep 1;
 				};
 			};
 		};
