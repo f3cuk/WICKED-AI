@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_playernear","_cleaned","_finish_time","_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
+	private ["_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
 
 	_mission	= (_this select 0) select 0;
 	_crate		= (_this select 0) select 1;
@@ -132,7 +132,7 @@ if(isServer) then {
 		if (wai_clean_mission) then {
 
 			[_position,_baseclean] spawn {
-				private ["_pos","_clean"];
+				private ["_pos","_clean","_finish_time","_cleaned","_playernear","_currenttime"];
 				_pos = _this select 0;
 				_clean = _this select 1;
 				_finish_time = time;

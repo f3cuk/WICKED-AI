@@ -56,7 +56,7 @@ if(isServer) then {
 	//				8: AI Type ("bandit","Hero","special" or ["type", #] format to overwrite default gain amount) ***Used to determine humanity gain or loss***
 	//				9: Mission variable from line 9 (_mission)
 	_num = round (random 3) + 4;
-	[[_position select 0, _position select 1, 0],_num,"extreme",["random","at],4,"random","bandit","random",["bandit",150],_mission] call spawn_group;
+	[[_position select 0, _position select 1, 0],_num,"extreme",["random","at"],4,"random","bandit","random",["bandit",150],_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"hard","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
