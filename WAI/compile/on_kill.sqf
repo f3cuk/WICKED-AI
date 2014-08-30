@@ -97,7 +97,7 @@ if (isServer) then {
 
 	};
 
-	if(wai_remove_launcher && !isNil "_launcher") then {
+	if(wai_remove_launcher && _launcher != "") then {
 
 		_rockets = _launcher call find_suitable_ammunition;
 		_unit removeWeapon _launcher;

@@ -9,7 +9,7 @@ if(isServer) then {
 		[953.237,4486.48,0.001],			// Position
 		4,									// Number Of units
 		"Random",							// Skill level of unit (easy, medium, hard, extreme, Random)
-		"Random",							// Primary gun set number. "Random" for random weapon set
+		"Random",	or ["Random","at"],		// Primary gun set number and rocket launcher. "Random" for random weapon set, "at" for anti-tank, "aa" for anti-air launcher
 		4,									// Number of magazines
 		"Random",							// Backpack classname, use "Random" or classname here
 		"Random",							// Skin classname, use "Random" or classname here
@@ -99,7 +99,7 @@ if(isServer) then {
 		"UH1H_DZ",							// Classname of chopper (Make sure it has 2 gunner seats!)
 		5,									// Number of units to be para dropped
 		"Random",							// Skill level of units (easy, medium, hard, extreme, Random)
-		"Random",							// Primary gun set number. "Random" for random weapon set.
+		"Random",	or ["Random","at"],		// Primary gun set number and rocket launcher. "Random" for random weapon set, "at" for anti-tank, "aa" for anti-air launcher
 		4,									// Number of magazines
 		"Random",							// Backpack classname, use "Random" or classname here
 		"Bandit2_DZ",						// Skin classname, use "Random" or classname here

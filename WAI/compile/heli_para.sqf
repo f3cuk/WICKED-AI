@@ -153,10 +153,13 @@ if (isServer) then {
 				_helipos = getpos _helicopter;
 
 				call {
-					if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
-					if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
-					if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
-					if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
+					if (typeName(_gun) == "SCALAR") then {
+						if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
+						if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
+						if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
+					} else {
+						if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
+					};
 				};
 
 				_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
@@ -164,9 +167,12 @@ if (isServer) then {
 				_magazine 		= _weaponandmag select 1;
 
 				call {
-					if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
-					if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
-					if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
+					if (typeName(_gear) == "SCALAR") then {
+						if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
+						if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
+					} else {
+						if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
+					};
 				};
 
 				_gearmagazines 		= _aigear select 0;
