@@ -133,6 +133,8 @@ if(isServer) then {
 
 			[_position,_baseclean] spawn {
 				private ["_pos","_clean"];
+				_pos = _this select 0;
+				_clean = _this select 1;
 				_finish_time = time;
 				_cleaned = false;
 				while {!_cleaned} do {
@@ -161,13 +163,14 @@ if(isServer) then {
 									deleteVehicle _x;
 								};
 							};
-							sleep 1;
 							
 						} forEach _clean;
 
 						_cleaned = true;
 
 					};
+					
+					sleep 1;
 				};
 			};
 		};
