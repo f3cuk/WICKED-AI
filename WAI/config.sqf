@@ -1,7 +1,8 @@
 if(isServer) then {
 
 	/* GENERAL CONFIG */
-
+	
+		debug_mode				= false;		// enable debug
 		use_blacklist				= true;			// use blacklist
 		blacklist					= [
 			[[5533.00,8445.00],[6911.00,7063.00]],	// Stary
@@ -74,9 +75,9 @@ if(isServer) then {
 
 		wai_avoid_missions			= true;								// avoid spawning near other missions, these are defined in wai_mission_markers
 		wai_avoid_traders			= true;								// avoid spawning missions near traders
-		wai_mission_spread			= 1000;								// make missions spawn this far apart from one another and other markers
-		wai_near_town				= 300;								// make missions check for towns around this radius
-		wai_near_road				= 50;								// make missions check for roads around this radius
+		wai_mission_spread			= 750;								// make missions spawn this far apart from one another and other markers
+		wai_near_town				= 0;								// make missions check for towns around this radius
+		wai_near_road				= 0;								// make missions check for roads around this radius
 		wai_near_water				= 50;								// nearest water allowed near missions
 		
 		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
@@ -102,8 +103,8 @@ if(isServer) then {
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
 
-		wai_use_launchers			= true;								// add a rocket launcher to each spawned AI group
-		wai_remove_launcher		= true;								// remove rocket launcher from AI on death
+		wai_use_launchers			= false;								// add a rocket launcher to each spawned AI group
+		wai_remove_launcher		= false;								// remove rocket launcher from AI on death
 
 		// Missions
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
@@ -176,7 +177,6 @@ if(isServer) then {
 
 		static_missions				= false;		// use static mission file
 		custom_per_world			= false;		// use a custom mission file per world
-		debug_mode					= false;		// enable debug
 
 	/* END STATIC MISSIONS CONFIG */
 

@@ -22,7 +22,7 @@ if(isServer) then {
 	_rndgro 	= 1 + round (random 3);
 
 	for "_i" from 0 to _rndgro do {
-		[[_position select 0, _position select 1, 0],_rndnum,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+		[[_position select 0,_position select 1,0],_rndnum,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	};
 	
 	//Condition

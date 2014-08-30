@@ -31,11 +31,11 @@ if(isServer) then {
 	
 	//Troops
 	_num = 4 + round (random 3);
-	[[(_position select 0) + 30, (_position select 1) + 30, 0],_num,"hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[(_position select 0) + 30, (_position select 1) - 30, 0],4,"hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[(_position select 0) - 30, (_position select 1) + 30, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[(_position select 0) - 30, (_position select 1) - 30, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[(_position select 0), (_position select 1) + 30, 0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],_num,"hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Random","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 	//Humvee Patrol
 	[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random","Bandit","Bandit",_mission] call vehicle_patrol;

@@ -1,6 +1,6 @@
 isNearWater = {
 
-    private["_result","_position","_radius"];
+	private["_result","_position","_radius"];
 
 	_result 	= false;
 	_position 	= _this select 0;
@@ -19,9 +19,9 @@ isNearWater = {
 
 isNearTown = {
 
-    private["_result","_position","_radius","_locations"];
+	private["_result","_position","_radius","_locations"];
 
-    _result 	= false;
+	_result 	= false;
 	_position 	= _this select 0;
 	_radius 	= _this select 1;
 	
@@ -37,9 +37,9 @@ isNearTown = {
 
 isNearRoad = {
 
-    private["_result","_position","_radius","_roads"];
+	private["_result","_position","_radius","_roads"];
 
-    _result 	= false;
+	_result 	= false;
 	_position 	= _this select 0;
 	_radius 	= _this select 1;
 	
@@ -55,7 +55,7 @@ isNearRoad = {
 
 isSlope = {
 
-    private["_pos","_result","_position","_posx","_posy","_radius","_gradient","_max","_min","_posx","_posy"];
+	private["_pos","_result","_position","_posx","_posy","_radius","_gradient","_max","_min","_posx","_posy"];
 
 	_result 	= false;
 	_position 	= _this select 0;
@@ -79,7 +79,7 @@ isSlope = {
 
 inDebug = {
 
-    private["_result","_position","_hasdebug","_xLeft","_xRight","_yTop","_yBottom"];
+	private["_result","_position","_hasdebug","_xLeft","_xRight","_yTop","_yBottom"];
 
 	_result 		= false;
 	_position 		= _this;
@@ -89,21 +89,20 @@ inDebug = {
 	_yTop 			= 0;
 	_yBottom 		= 0;
 
-	switch (worldName) do {
-		case "Takistan" 			: { _hasdebug = true; _xLeft = 200; _xRight = 12600; _yTop = 12600; _yBottom = 200; };
-		case "Shapur_BAF" 			: { _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
-		case "Zargabad" 			: { _hasdebug = true; _xLeft = 200; _xRight = 7963; _yTop = 8091; _yBottom = 200; };
-		case "ProvingGrounds_PMC" 	: { _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
-		case "Chernarus" 			: { _hasdebug = true; _xLeft = 1000; _xRight = 13350; _yTop = 13350; _yBottom = 1000; };
-		case "sauerland"			: { _hasdebug = true; _xLeft = 1000; _xRight = 24400; _yTop = 24500; _yBottom = 1200; };
-		default 					{ _hasdebug = false; };
+	call {
+		if(worldName == "Takistan") 			exitWith { _hasdebug = true; _xLeft = 200; _xRight = 12600; _yTop = 12600; _yBottom = 200; };
+		if(worldName == "Shapur_BA") 			exitWith { _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
+		if(worldName == "Zargabad") 			exitWith { _hasdebug = true; _xLeft = 200; _xRight = 7963; _yTop = 8091; _yBottom = 200; };
+		if(worldName == "ProvingGrounds_PMC")	exitWith { _hasdebug = true; _xLeft = 200; _xRight = 1900; _yTop = 1900; _yBottom = 200; };
+		if(worldName == "Chernarus") 			exitWith { _hasdebug = true; _xLeft = 1000; _xRight = 13350; _yTop = 13350; _yBottom = 1000; };
+		if(worldName == "sauerland") 			exitWith { _hasdebug = true; _xLeft = 1000; _xRight = 24400; _yTop = 24500; _yBottom = 1200; };
 	};
 
 	if(_hasdebug) then {
 		if (_position select 0 < _xLeft) 	exitWith { _result = true; };
-		if (_position select 0 > _xRight) 	exitWith { _result = true; };
-		if (_position select 1 > _yTop) 	exitWith { _result = true; };
-		if (_position select 1 < _yBottom) 	exitWith { _result = true; };
+		if (_position select 0 > _xRight)	exitWith { _result = true; };
+		if (_position select 1 > _yTop)		exitWith { _result = true; };
+		if (_position select 1 < _yBottom)	exitWith { _result = true; };
 	};
 
 	_result
@@ -112,13 +111,13 @@ inDebug = {
 
 get_trader_markers = {
 
-    private["_result"];
+	private["_result"];
 
 	_result = [];
 
-	switch (worldName) do {
-		case "Chernarus"	: { _result = ["Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader"]; };
-		case "Napf"			: { _result = ["NeutralTraderCity","FriendlyTraderCity","HeroVendor","BanditVendor","West Wholesaler","NorthWholesaler","NorthBoatVendor","SouthBoatVendor","NeutralTraderCity","NeutralTraderCIty2","UnarmedAirVehicles"]; };
+	call {
+		if(worldName == "Chernarus")	exitWith { _result = ["Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader"]; };
+		if(worldName == "Napf") 		exitWith { _result = ["NeutralTraderCity","FriendlyTraderCity","HeroVendor","BanditVendor","West Wholesaler","NorthWholesaler","NorthBoatVendor","SouthBoatVendor","NeutralTraderCity","NeutralTraderCIty2","UnarmedAirVehicles"]; };
 	};
 
 	_result
@@ -127,7 +126,7 @@ get_trader_markers = {
 
 find_suitable_ammunition = {
 
-    private["_weapon","_result","_ammoArray"];
+	private["_weapon","_result","_ammoArray"];
 
 	_result 	= false;
 	_weapon 	= _this;
@@ -135,10 +134,10 @@ find_suitable_ammunition = {
 
 	if (count _ammoArray > 0) then {
 		_result = _ammoArray select 0;
-		switch(_result) do {
-			case "20Rnd_556x45_Stanag"	: { _result = "30Rnd_556x45_Stanag"; };
-			case "30Rnd_556x45_G36"		: { _result = "30Rnd_556x45_Stanag"; };
-			case "30Rnd_556x45_G36SD"	: { _result = "30Rnd_556x45_StanagSD"; };
+		call {
+			if(_result == "20Rnd_556x45_Stanag") 	exitWith { _result = "30Rnd_556x45_Stanag"; };
+			if(_result == "30Rnd_556x45_G36") 		exitWith { _result = "30Rnd_556x45_Stanag"; };
+			if(_result == "30Rnd_556x45_G36SD") 	exitWith { _result = "30Rnd_556x45_StanagSD"; };
 		};
 	};
 

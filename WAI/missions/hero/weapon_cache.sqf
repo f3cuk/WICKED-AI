@@ -17,7 +17,7 @@ if(isServer) then {
 	_rndnum 	= (1 + round(random 7));
 	_rndgro 	= (1 + round(random 3));
 	for "_i" from 0 to _rndgro do {
-		[[_position select 0, _position select 1, 0],_rndnum,"Easy","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+		[[_position select 0,_position select 1,0],_rndnum,"Easy","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	};
 
 	//Static Guns

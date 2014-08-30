@@ -18,9 +18,9 @@ if(isServer) then {
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[_position select 0,_position select 1, 0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 	//Static Guns
 	[[
