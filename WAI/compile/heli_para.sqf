@@ -60,9 +60,7 @@ if (isServer) then {
 		_aiskin = _aiskin call BIS_fnc_selectRandom;
 	};
 
-	_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
-	
-	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
+	if (!isNil "_mission" && typeName (wai_mission_data select _mission) != "ARRAY") exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
 
 	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
 
