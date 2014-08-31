@@ -11,7 +11,7 @@ if (isServer) then {
 
 	if(count _this > 2) then {
 
-		_skill = _this select 3;
+		_skill = _this select 2;
 	
 		call {
 			if(_skill == "easy") 	exitWith { _wp_rad = 20; };
