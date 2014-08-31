@@ -98,6 +98,10 @@ if (isServer) then {
 			_aiskin = _skin;
 		};
 
+		if(typeName _aiskin == "ARRAY") then {
+			_aiskin = _aiskin call BIS_fnc_selectRandom;
+		};
+
 		_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
 		[_unit] joinSilent _unitGroup;
 
