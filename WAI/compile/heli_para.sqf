@@ -66,8 +66,8 @@ if (isServer) then {
 			
 	} else {
 
-		_missionrunning = false;
-		
+		_missionrunning = true;
+
 	};
 
 	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
