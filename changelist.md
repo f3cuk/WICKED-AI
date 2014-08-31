@@ -6,6 +6,9 @@ Type | Description
 `feature` | Added possibility to add AI skin to inventory
 `feature` | Added posibily of finding a high value item in any crate
 `feature` | All new President in Town mission @Jossy / @f3cuk
+`enhancement` | Optimized code for better performance
+`enhancement` | Overal cleanup and code restructure
+`enhancement` | Crate content spawns on mission objective achieved
 `enhancement` | Redone all the missions to included dynamic loot
 `enhancement` | Added new type of mission objective, assassination! @Jossy
 `enhancement` | Added Bandit missions @Jossy / @f3cuk
