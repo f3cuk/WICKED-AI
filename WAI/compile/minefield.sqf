@@ -25,7 +25,7 @@ if(isServer) then {
 			{
 				_vehicle_near = false;
 				{
-					if((isPlayer _x) && (vehicle _x != _x) && (vehicle _x distance _this < 2)) then {
+					if((isPlayer _x) && (vehicle _x != _x) && (vehicle _x distance _this < 4)) then {
 						_vehicle_near = true
 					};
 				} count playableUnits;
