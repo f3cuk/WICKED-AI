@@ -18,6 +18,9 @@ if(isServer) then {
 	_max_ai					= (wai_mission_data select _mission) select 0;
 
 	[nil,nil,rTitleText,_msgstart,"PLAIN",10] call RE;
+	
+	clearWeaponCargoGlobal _crate;
+	clearMagazineCargoGlobal _crate;
 
 	while {!_timeout && !_complete} do {
 
