@@ -82,7 +82,7 @@ if(isServer) then {
 		
 		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
-		wai_timeout_distance		= 500;								// if a player is this close to a mission then it won't time-out
+		wai_timeout_distance		= 1000;								// if a player is this close to a mission then it won't time-out
 		
 		wai_clean_mission			= true;								// clean all mission buildings after a certain period
 		wai_clean_mission_time		= 1800;								// time after a mission is complete to clean mission buildings
@@ -103,8 +103,8 @@ if(isServer) then {
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
 
-		wai_use_launchers			= false;								// add a rocket launcher to each spawned AI group
-		wai_remove_launcher		= false;								// remove rocket launcher from AI on death
+		wai_use_launchers			= false;							// add a rocket launcher to each spawned AI group
+		wai_remove_launcher			= false;							// remove rocket launcher from AI on death
 
 		// Missions
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
