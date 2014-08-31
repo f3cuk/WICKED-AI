@@ -9,13 +9,7 @@ if (isServer) then {
 	_pos_z 			= _position select 2;
 	_wp_rad 		= 40;
 
-	if (count _this > 2) then {
-		_mission = _this select 2;
-	} else {
-		_mission = nil;
-	};
-
-	if(count _this > 3) then {
+	if(count _this > 2) then {
 
 		_skill = _this select 3;
 	

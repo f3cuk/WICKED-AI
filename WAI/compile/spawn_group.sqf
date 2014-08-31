@@ -202,7 +202,7 @@ if (isServer) then {
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
 	if(_pos_z == 0) then {
-		[_unitGroup,[_pos_x,_pos_y,_pos_z],_mission,_skill] spawn group_waypoints;
+		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;
 	};
 
 	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2",_unitnumber,_position,_aitype];

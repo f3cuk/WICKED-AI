@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+	private ["_mission_data","_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 	_position 		= _this select 0;
 	_pos_x			= _position select 0;
@@ -60,9 +60,13 @@ if (isServer) then {
 		_aiskin = _aiskin call BIS_fnc_selectRandom;
 	};
 
-	_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
+	if(!isNil "_mission") then {
+
+		_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
+		
+		if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
 	
-	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
+	};
 
 	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
 
@@ -260,11 +264,17 @@ if (isServer) then {
 
 				sleep 1.5;
 				
-				if (!isNil "_mission" && typeName (wai_mission_data select _mission) == "ARRAY") then {
-					_ainum = (wai_mission_data select _mission) select 0;
-					wai_mission_data select _mission set [0, (_ainum + 1)];
-					_para setVariable ["missionclean", "ground"];
-					_para setVariable ["mission", _mission, true];
+				if(!isNil "_mission") then {
+
+					_mission_data = (wai_mission_data select _mission);
+
+					if (typeName _mission_data == "ARRAY") then {
+						_ainum = _mission_data select 0;
+						wai_mission_data select _mission set [0, (_ainum + 1)];
+						_para setVariable ["missionclean", "ground"];
+						_para setVariable ["mission", _mission, true];
+					};
+
 				};
 			};
 
@@ -279,7 +289,7 @@ if (isServer) then {
 
 			if(debug_mode) then { diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber]; };
 
-			[_pgroup,_position,_mission] call group_waypoints;
+			[_pgroup,_position,_skill] call group_waypoints;
 		};
 	};
 
