@@ -189,11 +189,15 @@ if (isServer) then {
 				};
 					
 				call {
+					if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
 					if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
 					if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-					if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
 					if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 					_aiskin = _skin;
+				};
+
+				if(typeName _aiskin == "ARRAY") then {
+					_aiskin = _aiskin call BIS_fnc_selectRandom;
 				};
 
 				_para = _pgroup createUnit [_aiskin,[0,0,0],[],1,"FORM"];
