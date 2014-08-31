@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_crate_type","_mission","_position","_crate","_playerPresent","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
+	private 		["_complete","_crate_type","_mission","_position","_crate","_playerPresent","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Medium","Weapon Cache","MainHero",true] call mission_init;
@@ -11,7 +11,7 @@ if(isServer) then {
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	
-	[_crate,10,4,0,2] call dynamic_crate;
+	
 
 	//Troops
 	_rndnum 	= (1 + round(random 7));
@@ -27,7 +27,7 @@ if(isServer) then {
 	],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Condition
-	[
+	_complete = [
 		[_mission,_crate],	// mission number and crate
 		["crate"],			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
 		[],					// cleanup objects
@@ -35,6 +35,10 @@ if(isServer) then {
 		"Survivors have secured the weapon cache!",									// mission success
 		"Survivors did not secure the weapon cache in time"							// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,10,4,0,2] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Mission:[Hero] Weapon Cache]: Ended at %1",_position];
 

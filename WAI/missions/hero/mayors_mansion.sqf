@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
+	private			["_complete","_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
@@ -10,8 +10,6 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
 	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	
-	[_crate,16,4,0,4] call dynamic_crate;
 	 
 	//Mayors Mansion
 	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
@@ -35,7 +33,7 @@ if(isServer) then {
 		[(_position select 0) + 15, (_position select 1) - 15, 8]
 	],"M2StaticMG","Easy","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
 
-	[
+	_complete = [
 		[_mission,_crate],		// mission number and crate
 		["assassinate",_mayor], // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 		// cleanup objects
@@ -43,6 +41,10 @@ if(isServer) then {
 		"The rogue mayor has been taken out, who will be the next Mayor of Cherno?",						// mission success
 		"Survivors were unable to capture the mansion, time is up"										// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,16,4,0,4] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Mission:[Hero] Mayors Mansion]: Ended at %1",_position];
 

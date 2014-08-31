@@ -1,6 +1,6 @@
 if(isServer) then {
 
-    private			["_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
+    private			["_complete","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Ural Attack","MainHero",true] call mission_init;
@@ -10,7 +10,6 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
-	[_crate,4,8,36,2] call dynamic_crate;
 
 	//Base
 	diag_log 		format["WAI: [Mission:[Hero] Ural Attack]: Spawning Buildings"];
@@ -25,7 +24,7 @@ if(isServer) then {
 	};
 	
 	//Condition
-	[
+	_complete = [
 		[_mission,_crate],		// mission number and crate
 		["kill"], 				// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 		// cleanup objects
@@ -33,6 +32,10 @@ if(isServer) then {
 		"The supplies have been secured by survivors!",															// mission success
 		"Survivors did not secure the supplies in time"														// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,4,8,36,2] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Mission:[Hero] Ural Attack]: Ended at %1",_position];
 	

@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_crate","_mission","_static_gun","_crate_type","_rndnum","_playerPresent","_vehname","_vehicle","_position","_vehclass"];
+	private 		["_complete","_crate","_mission","_static_gun","_crate_type","_rndnum","_playerPresent","_vehname","_vehicle","_position","_vehclass"];
 
 	//Armed Land Vehicle
 	_vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
@@ -15,8 +15,6 @@ if(isServer) then {
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 	
-	[_crate,0,0,[25,crate_items_chainbullets],2] call dynamic_crate;
-
 	//Troops
 	_rndnum = (2 + round (random 4));
 	[[_position select 0,_position select 1,0],_rndnum,"Medium","Random",3,"Random","Hero","Random","Hero",_mission] call spawn_group;
@@ -37,7 +35,7 @@ if(isServer) then {
 	};
 	
 	//Condition
-	[
+	_complete = [
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_vehicle], 		// cleanup objects
@@ -45,6 +43,10 @@ if(isServer) then {
 		"Bandits have secured the armed vehicle!",													// mission success
 		"Bandits did not secure the armed vehicle in time"										// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,0,0,[25,crate_items_chainbullets],2] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Mission:[Bandit] Armed Vehicle]: Ended at %1",_position];
 	

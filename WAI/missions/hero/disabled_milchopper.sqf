@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private 		["_vehicle","_rndnum","_crate_type","_crate","_mission","_vehname","_position","_vehclass"];
+	private 		["_complete","_vehicle","_rndnum","_crate_type","_crate","_mission","_vehname","_position","_vehclass"];
 
 	//Military Chopper
 	_vehclass 		= armed_chopper call BIS_fnc_selectRandom;
@@ -15,8 +15,6 @@ if(isServer) then {
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 	
-	[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],2] call dynamic_crate;
-
 	//Troops
 	_rndnum = 2 + round (random 4);
 	[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
@@ -40,7 +38,7 @@ if(isServer) then {
 	};
 	
 	//Condition
-	[
+	_complete = [
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
 		[_vehicle], 		// cleanup objects
@@ -48,6 +46,10 @@ if(isServer) then {
 		"Survivors have secured the armed chopper!",															// mission success
 		"Survivors did not secure the armed chopper in time"													// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],2] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Mission:[Hero] Disabled Military Chopper]: Ended at %1",_position];
 	

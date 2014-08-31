@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_president_himself","_crate_type","_mission","_position","_crate","_rndnum","_baserunover","_president","_firstlady"];
+	private			["_complete","_president_himself","_crate_type","_mission","_position","_crate","_rndnum","_baserunover","_president","_firstlady"];
 
 	_position		= [50] call find_position;
 	_mission		= [_position,"Extreme","Presidents in Town","MainBandit",true] call mission_init;
@@ -11,8 +11,6 @@ if(isServer) then {
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
 	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),.1], [], 0, "CAN_COLLIDE"];
 	
-	[_crate,0,0,[40,crate_items_president],2] call dynamic_crate;
-	 
 	//Hotel
 	_baserunover 	= createVehicle ["Land_A_Office01",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
@@ -46,7 +44,7 @@ if(isServer) then {
 	],"M2StaticMG","Extreme","Hero","Hero",1,2,"Random","Random",_mission] call spawn_static;
 
 	//Condition
-	[
+	_complete = [
 		[_mission,_crate],			// mission number and crate
 		["assassinate",_president], // ["crate",wai_kill_percent], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 			// cleanup objects
@@ -54,6 +52,10 @@ if(isServer) then {
 		"The President has been assassinated, a day of mourning has been announced",							// mission success
 		"The President managed to get away from the assasination attempt"										// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,0,0,[40,crate_items_president],2] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Bandit] presidents_mansion ended at %1",_position];
 

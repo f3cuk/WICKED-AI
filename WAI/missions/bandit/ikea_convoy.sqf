@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_dir","_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
+	private			["_complete","_dir","_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Lunch break Convoy","MainBandit",true] call mission_init;
@@ -10,8 +10,6 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
-	
-	[_crate,[2,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],4] call dynamic_crate;
 	
 	//Troops
 	_rndnum = 5 + round (random 3);
@@ -48,7 +46,7 @@ if(isServer) then {
 	};
 	
 	//Condition
-	[
+	_complete = [
 		[_mission,_crate],				// mission number and crate
 		["crate"], 						// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
 		[_vehicle,_vehicle2,_vehicle3],	// cleanup objects
@@ -56,6 +54,10 @@ if(isServer) then {
 		"Bandits have successfully ambushed the Ikea convoy and secured the building supplies!",			// mission success
 		"Bandits were unable to surprise the heroes on their lunchbreak"									// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,[2,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],4] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Mission:[Bandit] Lunch break Convoy]: Ended at %1",_position];
 	

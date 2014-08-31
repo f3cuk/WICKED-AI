@@ -221,4 +221,6 @@ if(isServer) then {
 		[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;
 	};
 
+	_complete
+
 };

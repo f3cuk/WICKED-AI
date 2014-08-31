@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_baserunover","_crate_type","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
+	private			["_complete","_baserunover","_crate_type","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
 	_position		= [30] call find_position;
 	_mission		= [_position,"Easy","Ural Attack","MainBandit",true] call mission_init;
@@ -10,8 +10,6 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],10,"FORM"];
-
-	[_crate,4,8,36,2] call dynamic_crate;
 
 	//Base
 	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],14,"FORM"];
@@ -26,7 +24,7 @@ if(isServer) then {
 	};
 	
 	//Condition
-	[
+	_complete = [
 		[_mission,_crate],			// mission number and crate
 		["kill"], 					// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 			// cleanup objects
@@ -34,6 +32,10 @@ if(isServer) then {
 		"The supplies have been secured by bandits!",									// mission success
 		"Bandits failed to secure the supplies"											// mission fail
 	] call mission_winorfail;
+
+	if(_complete) then {
+		[_crate,4,8,36,2] call dynamic_crate;
+	};
 
 	diag_log format["WAI: [Mission:[Bandit] Ural Attack]: Ended at %1",_position];
 	
