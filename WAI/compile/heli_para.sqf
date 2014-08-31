@@ -63,10 +63,14 @@ if (isServer) then {
 	if(!isNil "_mission") then {
 
 		_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
+			
+	} else {
+
+		_missionrunning = false;
 		
-		if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
-	
 	};
+
+	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
 
 	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
 
