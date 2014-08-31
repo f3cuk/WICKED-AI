@@ -49,11 +49,15 @@ if (isServer) then {
 	};
 
 	call {
-		if (_skin == "Hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-		if (_skin == "Bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-		if (_skin == "Random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-		if (_skin == "Special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+		if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+		if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+		if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+		if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
+	};
+
+	if(typeName _aiskin == "ARRAY") then {
+		_aiskin = _aiskin call BIS_fnc_selectRandom;
 	};
 
 	_missionrunning = (typeName (wai_mission_data select _mission) == "ARRAY");
