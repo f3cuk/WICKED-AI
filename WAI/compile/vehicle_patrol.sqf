@@ -100,7 +100,11 @@ if (isServer) then {
 	if (!isNil "_mission") then {
 		_vehicle setVariable ["missionclean","vehicle"];
 		_vehicle setVariable ["mission",_mission];
-		{ _x setVariable ["mission",_mission]; } count (crew _vehicle);
+		{
+			_ainum = (wai_mission_data select _mission) select 0;
+			wai_mission_data select _mission set [0, (_ainum + 1)];
+			_x setVariable ["mission",_mission]; 
+		} count (crew _vehicle);
 	};
 
 	[_vehicle] spawn vehicle_monitor;
