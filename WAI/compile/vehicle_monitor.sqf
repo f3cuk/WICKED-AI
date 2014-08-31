@@ -30,9 +30,7 @@ if (isServer) then {
 		sleep 1;
 		_player_present = false;
 		{
-			if((isPlayer _x) && (_x distance _veh <= 2000)) exitWith {
-				_player_present = true
-			};
+			if((isPlayer _x) && (_x distance _veh <= 750)) exitWith { _player_present = true };
 		} count playableUnits;
 		(!_player_present)
 	};

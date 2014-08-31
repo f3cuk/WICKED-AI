@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_unarmed","_aicskill","_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+	private ["_ainum","_unarmed","_aicskill","_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_class 				= _this select 1;
@@ -168,6 +168,8 @@ if (isServer) then {
 		_unit moveingunner _static;
 
 		if (!isNil "_mission") then {
+			_ainum = (wai_mission_data select _mission) select 0;
+			wai_mission_data select _mission set [0, (_ainum + 1)];
 			_static setVariable ["missionclean","static"];
 			_static setVariable ["mission",_mission];
 			_unit setVariable ["mission",_mission];
