@@ -5,14 +5,16 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Release 2.1.0
 - Bandit and hero missions
+- Dynamic loot
 - More missions
 - Multi mission support
 - Better markers
+- [And much more](https://github.com/f3cuk/WICKED-AI/blob/master/changelist.md)
 
 ### Upcoming in 2.2.0+
 - C130 Missions
 - More missions
-- Dynamic loot revisited
+- Further enhancements
 
 ### Version history
 - 31-08-2014 : Release (2.1.0)
