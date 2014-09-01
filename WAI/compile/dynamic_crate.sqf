@@ -1,8 +1,6 @@
 private ["_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array"];
 
 _crate = _this select 0;
-_crate setVariable ["ObjectID","1",true];
-_crate setVariable ["permaLoot",true];
 
 if(typeName (_this select 1) == "ARRAY") then {
 	_num_weapons	= (_this select 1) select 0;

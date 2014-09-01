@@ -22,6 +22,9 @@ if(isServer) then {
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;
 
+	_crate setVariable ["ObjectID","1",true];
+	_crate setVariable ["permaLoot",true];
+
 	while {!_timeout && !_complete} do {
 
 		sleep 1;
