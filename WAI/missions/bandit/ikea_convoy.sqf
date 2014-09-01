@@ -35,9 +35,9 @@ if(isServer) then {
 	_vehclass2 		= refuel_trucks 	call BIS_fnc_selectRandom;		// Refuel Truck
 	_vehclass3 		= military_unarmed 	call BIS_fnc_selectRandom;		// Military Unarmed
 
-	_vehicle		= [_vehclass,_position,false,_dir] 	call custom_publish;
-	_vehicle2		= [_vehclass2,_position,false,_dir] call custom_publish;
-	_vehicle3		= [_vehclass3,_position,false,_dir] call custom_publish;
+	_vehicle		= [_vehclass,_position,_mission,false,_dir] call custom_publish;
+	_vehicle2		= [_vehclass2,_position,_mission,false,_dir] call custom_publish;
+	_vehicle3		= [_vehclass3,_position,_mission,false,_dir] call custom_publish;
 	
 	if(debug_mode) then {
 		diag_log format["WAI: [Bandit] ikea_convoy spawned a %1",_vehclass];
