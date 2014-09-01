@@ -1,7 +1,10 @@
-# Current version 2.1.0
+# Current version 2.2.0
 
 Type | Description
 ------------: | :------------
+`feature` | Added the ability to lock mission vehicles with keys on AI
+ |
+Version | **2.1.0**
 `feature` | Added Hero and Bandit AI support @Jossy
 `feature` | Added possibility to add AI skin to inventory
 `feature` | Added posibily of finding a high value item in any crate
