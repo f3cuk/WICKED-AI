@@ -187,4 +187,5 @@ if (isServer) then {
 
 	diag_log format ["WAI: Spawned in %1 %2",_unitnumber,_class];
 
+	_unitGroup
 };
