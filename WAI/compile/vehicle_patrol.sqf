@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
@@ -131,4 +131,6 @@ if (isServer) then {
 	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100];
 	_wp setWaypointType "CYCLE";
 	_wp setWaypointCompletionRadius 200;
+	
+	_unitGroup
 };

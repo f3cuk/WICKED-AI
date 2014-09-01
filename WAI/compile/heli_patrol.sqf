@@ -131,4 +131,5 @@ if (isServer) then {
 	_wp setWaypointType "CYCLE";
 	_wp setWaypointCompletionRadius 200;
 
+	_unitGroup
 };
