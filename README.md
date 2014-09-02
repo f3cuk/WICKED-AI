@@ -1,4 +1,4 @@
-WICKED AI 2.1.1
+WICKED AI 2.1.2
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.5+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
@@ -17,6 +17,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - Further enhancements
 
 ### Version history
+- 02-09-2014 : Minor bugfixes and improvements (2.1.2)
 - 01-09-2014 : Minor bugfixes (2.1.1)
 - 31-08-2014 : Release (2.1.0)
 - 26-08-2014 : BETA release (2.1.0)

@@ -2,6 +2,15 @@
 
 Type | Description
 ------------: | :------------
+Version | **2.1.2**
+`enhancement` | Added output variable to all unit group spawns @Jossy
+`enhancement` | Position the mayor inside a random room until player arrives @Jossy
+`bug` | Fixed bad vehicle on "none" backpack @Jossy
+ |
+ Version | **2.1.1**
+`bug` | Fixed crate despawning @f3cuk
+ |
+ Version | **2.1.0**
 `feature` | Added Hero and Bandit AI support @Jossy
 `feature` | Added possibility to add AI skin to inventory
 `feature` | Added posibily of finding a high value item in any crate
