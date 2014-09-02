@@ -15,7 +15,7 @@ if(isServer) then {
 	
 	{
 		wai_mission_markers set [count wai_mission_markers, _x];
-	} count ["MainHero","MainBandit","Side1Hero","Side1Bandit","Side2Hero","Side2Bandit","SideSpecial"];
+	} count ["MainHero","MainBandit","Side1Hero","Side1Bandit","Side2Hero","Side2Bandit","Special"];
 	trader_markers 					= [];
 	trader_markers 					= call get_trader_markers;
 	markerready 					= true;

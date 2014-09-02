@@ -16,6 +16,7 @@ if(isServer) then {
 	_starttime 				= time;
 	_timeout_time			= ((wai_mission_timeout select 0) + random((wai_mission_timeout select 1) - (wai_mission_timeout select 0)));
 	_max_ai					= (wai_mission_data select _mission) select 0;
+	_killpercent = _max_ai - (_max_ai * (wai_kill_percent / 100));
 
 	[nil,nil,rTitleText,_msgstart,"PLAIN",10] call RE;
 	
@@ -24,6 +25,7 @@ if(isServer) then {
 
 	_crate setVariable ["ObjectID","1",true];
 	_crate setVariable ["permaLoot",true];
+	_crate allowDamage false;
 
 	while {!_timeout && !_complete} do {
 
@@ -53,8 +55,6 @@ if(isServer) then {
 					} count playableUnits;
 
 				} else {
-
-					_killpercent = _max_ai - (_max_ai * (wai_kill_percent / 100));
 
 					if(((wai_mission_data select _mission) select 0) <= _killpercent) then {
 						{
