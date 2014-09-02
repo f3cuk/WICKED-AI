@@ -113,10 +113,10 @@ if (isServer) then {
 				};
 			};
 
-			if (_backpack == "Random") then {
-				_aipack = ai_packs call BIS_fnc_selectRandom;
-			} else {
-				_aipack = _backpack
+			call {
+				if(_backpack == "random") 	exitWith { _aipack = ai_packs call BIS_fnc_selectRandom; };
+				if(_backpack == "none") 	exitWith { };
+				_aipack = _backpack;
 			};
 
 			_gearmagazines 		= _aigear select 0;
@@ -127,7 +127,9 @@ if (isServer) then {
 				_unit addMagazine _magazine;
 			};
 
-			_unit addBackpack _aipack;
+			if(_backpack != "none") then {
+				_unit addBackpack _aipack;
+			};
 
 			{
 				_unit addMagazine _x

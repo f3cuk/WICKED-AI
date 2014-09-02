@@ -54,6 +54,6 @@ if(isServer) then {
 		};
 
 	};
-
+	_position set [2, 0];
 	_position
 };

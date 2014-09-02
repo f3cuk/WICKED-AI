@@ -148,7 +148,7 @@ if (isServer) then {
 			_unit selectWeapon _weapon;
 		};
 
-		if(_aipack != "none") then {
+		if(_backpack != "none") then {
 			_unit addBackpack _aipack;
 		};
 

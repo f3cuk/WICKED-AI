@@ -190,9 +190,9 @@ if (isServer) then {
 				_gearmagazines 		= _aigear select 0;
 				_geartools 			= _aigear select 1;
 				
-				if (_backpack == "" || _backpack == "Random") then {
-					_aipack = ai_packs call BIS_fnc_selectRandom;
-				} else {
+				call {
+					if(_backpack == "random") 	exitWith { _aipack = ai_packs call BIS_fnc_selectRandom; };
+					if(_backpack == "none") 	exitWith { };
 					_aipack = _backpack;
 				};
 					
@@ -233,7 +233,9 @@ if (isServer) then {
 					_para addMagazine _magazine;
 				};
 				
-				_para addBackpack _aipack;
+				if(_backpack != "none") then {
+					_para addBackpack _aipack;
+				};
 				
 				{
 					_para addMagazine _x

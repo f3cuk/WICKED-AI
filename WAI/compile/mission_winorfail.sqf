@@ -24,6 +24,10 @@ if(isServer) then {
 	clearMagazineCargoGlobal _crate;
 	_crate allowDamage false;
 
+	_crate setVariable ["ObjectID","1",true];
+	_crate setVariable ["permaLoot",true];
+	_crate allowDamage false;
+
 	while {!_timeout && !_complete} do {
 
 		sleep 1;
