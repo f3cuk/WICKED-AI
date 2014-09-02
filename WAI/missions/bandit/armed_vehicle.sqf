@@ -28,7 +28,7 @@ if(isServer) then {
 	],_static_gun,"Medium","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Spawn vehicles
-	_vehicle		= [_vehclass,_position] call custom_publish;
+	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
 	
 	if(debug_mode) then {
 		diag_log format["WAI: [Bandit] armed_vehicle spawned a %1",_vehname];

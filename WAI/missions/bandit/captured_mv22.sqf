@@ -31,7 +31,7 @@ if(isServer) then {
 	
 	//Spawn vehicles
 	_vehclass 		= "MV22_DZ";
-	_vehicle		= [_vehclass,_position] call custom_publish;
+	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
 	
 	if(debug_mode) then {
 		diag_log format["WAI: [Bandit] captured_mv22 spawned a MV22 at %1", _position];

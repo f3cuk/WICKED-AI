@@ -1,7 +1,10 @@
-# Current version 2.1.0
+# Current version 2.2.0
 
 Type | Description
 ------------: | :------------
+ Version | **2.2.0**
+`feature` | Added the ability to lock mission vehicles with keys on AI
+ |
 Version | **2.1.2**
 `enhancement` | Added output variable to all unit group spawns @Jossy
 `enhancement` | Position the mayor inside a random room until player arrives @Jossy
