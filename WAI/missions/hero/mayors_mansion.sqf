@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private			["_complete","_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
+	private			["_room","_complete","_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
 
 	_position		= [40] call find_position;
 	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
@@ -22,10 +22,28 @@ if(isServer) then {
 	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 	//The Mayor Himself
-	_mayor = [[(_position select 0) + 10, (_position select 1), 4.1],1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
-	
+	_mayor = [_position],1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
 	_mayor_himself = (units _mayor) select 0;
+	
+	//Put the Mayor in his room
+	_room = (6 + ceil(random(3)));
 	_mayor_himself disableAI "MOVE";
+	_mayor_himself setPos (_baserunover buildingPos _room);
+	
+	//Let him move once player is near
+	_mayor_himself spawn {
+		private ["_mayor","_player_near"];
+		_mayor = _this;
+		_player_near = false;
+		waitUntil {
+			{
+				if (isPlayer _x && (_x distance (position _mayor) < 20)) then { _player_near = true; };
+			} count playableUnits;
+			sleep .1;
+			(_player_near)
+		};
+		_mayor enableAI "MOVE";
+	};
 
 	//Static mounted guns
 	[[
