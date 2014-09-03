@@ -1,7 +1,10 @@
-# Current version 2.1.3
+# Current version 2.1.4
 
 Type | Description
 ------------: | :------------
+`bug` | Fixed problem with GuerillaCacheBox_EP1 not spawning
+|
+Version | **2.1.3**
 `bug` | Fixed typo in Mayors Mansion mission @Jossy
 |
 Version | **2.1.2**
