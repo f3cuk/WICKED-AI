@@ -31,7 +31,7 @@ if(isServer) then {
 	],"M2StaticMG","easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Spawn vehicle
-	_vehicle		= [_vehclass,_position] call custom_publish;
+	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
 	
 	if(debug_mode) then {
 		diag_log format["WAI: [Hero] disabled_milchopper spawned a %1",_vehname];

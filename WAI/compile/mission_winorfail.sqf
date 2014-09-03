@@ -22,6 +22,7 @@ if(isServer) then {
 	
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;
+	_crate allowDamage false;
 
 	_crate setVariable ["ObjectID","1",true];
 	_crate setVariable ["permaLoot",true];
