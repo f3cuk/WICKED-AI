@@ -2,7 +2,6 @@
 
 Type | Description
 ------------: | :------------
-Version | **2.1.3**
 `bug` | Fixed typo in Mayors Mansion mission @Jossy
 |
 Version | **2.1.2**
