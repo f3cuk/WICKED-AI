@@ -1,9 +1,13 @@
+
 # Current version 2.2.0
 
 Type | Description
 ------------: | :------------
 `feature` | Added the ability to lock mission vehicles with keys on AI
- |
+|
+Version | **2.1.4**
+`bug` | Fixed problem with GuerillaCacheBox_EP1 not spawning
+|
 Version | **2.1.3**
 `bug` | Fixed typo in Mayors Mansion mission @Jossy
 |
