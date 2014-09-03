@@ -1,7 +1,10 @@
-# Current version 2.1.0
+# Current version 2.1.3
 
 Type | Description
 ------------: | :------------
+Version | **2.1.3**
+`bug` | Fixed typo in Mayors Mansion mission @Jossy
+|
 Version | **2.1.2**
 `enhancement` | Added output variable to all unit group spawns @Jossy
 `enhancement` | Position the mayor inside a random room until player arrives @Jossy
