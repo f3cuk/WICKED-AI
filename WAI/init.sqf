@@ -34,6 +34,11 @@ if(isServer) then {
 	
 	//Load config
 	ExecVM "\z\addons\dayz_server\WAI\config.sqf";
+	
+	if ((preProcessFileLineNumbers ("\z\addons\dayz_server\WAI\customsettings.sqf")) != "") then {
+		ExecVM "\z\addons\dayz_server\WAI\customsettings.sqf";
+		diag_log "WAI: Custom Config File Loaded";
+	};
 
 	waitUntil {configloaded};
 		diag_log "WAI: AI Config File Loaded";
