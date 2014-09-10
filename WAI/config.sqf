@@ -14,7 +14,7 @@ if(isServer) then {
 
 	/* AI CONFIG */
 
-		ai_clear_body 				= false;		// instantly clear bodies
+		ai_clear_weapon 			= false;		// instantly clear weapon and ammo from bodies
 		ai_clean_dead 				= true;			// clear bodies after certain amount of time
 		ai_cleanup_time 			= 7200;			// time to clear bodies in seconds
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills

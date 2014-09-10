@@ -61,9 +61,13 @@ if (isServer) then {
 			};
 		};
 
-		if (ai_clear_body) then {
-			{_unit removeMagazine _x;} count (magazines _unit);
-			{_unit removeWeapon _x;} count (weapons _unit);
+		if (ai_clear_weapon) then {
+			_unit removeWeapon (primaryWeapon _unit);
+			{
+				if (_x in ai_wep_random select 1) then {
+					_unit removeMagazine _x;
+				};
+			} count (magazines _unit);
 		};
 
 		if (ai_share_info) then {
