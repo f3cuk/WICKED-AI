@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	private ["_weaponclip","_weaponclips","_weaponammolist","_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
@@ -61,9 +61,20 @@ if (isServer) then {
 			};
 		};
 
-		if (ai_clear_body) then {
-			{_unit removeMagazine _x;} count (magazines _unit);
-			{_unit removeWeapon _x;} count (weapons _unit);
+		_weaponammolist 	= ai_wep_assault + ai_wep_sniper + ai_wep_machine;
+		for "_x" from 0 to ((count _weaponammolist) -1) do
+		{
+			_weaponclip 	= [(_weaponammolist select _x) select 1];
+			_weaponclips 	= _weaponclips + _weaponclip;
+		};
+
+		if (ai_clear_weapon) then {
+			_unit removeWeapon (primaryWeapon _unit);
+			{
+				if (_x in _weaponclips) then {
+					_unit removeMagazine _x;
+				};
+			} count (magazines _unit);
 		};
 
 		if (ai_share_info) then {
@@ -80,17 +91,16 @@ if (isServer) then {
 
 			removeBackpack _unit;
 			removeAllWeapons _unit;
-
-			{
-				_unit removeMagazine _x
-			} count magazines _unit;
+			{_unit removeMagazine _x;} count magazines _unit;
 
 		} else {
 
 			if ((random 100) <= ai_roadkill_damageweapon) then {
 
+				removeBackpack _unit;
 				removeAllWeapons _unit;
-				
+				{_unit removeMagazine _x;} count magazines _unit;
+
 			};
 
 		};
