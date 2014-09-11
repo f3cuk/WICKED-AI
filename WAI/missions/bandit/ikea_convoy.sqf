@@ -3,9 +3,9 @@ if(isServer) then {
 	private			["_complete","_dir","_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
 	_position		= [40] call find_position;
-	_mission		= [_position,"Hard","Lunch break Convoy","MainBandit",true] call mission_init;
+	_mission		= [_position,"Hard","IKEA Convoy","MainBandit",true] call mission_init;
 
-	diag_log 		format["WAI: [Mission:[Bandit] Lunch break Convoy]: Starting... %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] IKEA Convoy]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
@@ -59,7 +59,7 @@ if(isServer) then {
 		[_crate,[2,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],4] call dynamic_crate;
 	};
 
-	diag_log format["WAI: [Mission:[Bandit] Lunch break Convoy]: Ended at %1",_position];
+	diag_log format["WAI: [Mission:[Bandit] IKEA Convoy]: Ended at %1",_position];
 	
 	b_missionrunning = false;
 };
