@@ -9,7 +9,7 @@ if(isServer) then {
 		[953.237,4486.48,0.001],			// Position
 		4,									// Number Of units
 		"Random",							// Skill level of unit (easy, medium, hard, extreme, Random)
-		"Random",	or ["Random","at"],		// Primary gun set number and rocket launcher. "Random" for random weapon set, "at" for anti-tank, "aa" for anti-air launcher
+		"Random",							// Primary gun set number or gun and rocket launcher. Syntax is "Random", for gun only or ["Random","AT"], for gun and launcher
 		4,									// Number of magazines
 		"Random",							// Backpack classname, use "Random" or classname here
 		"Random",							// Skin classname, use "Random" or classname here
