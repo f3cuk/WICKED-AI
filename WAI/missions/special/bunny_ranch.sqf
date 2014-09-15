@@ -1,9 +1,12 @@
 if(isServer) then {
 
 	private ["_mission","_baserunover","_position","_crate","_crate_type","_girls","_girls1","_girls2","_girls3","_girls4","_dirtyowner"];
-	 
+
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	_position		= [10] call find_position;
-	_mission		= [_position,"ColorPink","Bunny Ranch","Special",false] call mission_init;
+	[_mission,_position,"ColorPink","Bunny Ranch","Special",false] call mission_init;
 		
 	diag_log format	["WAI: Mission Bunny Ranch Started At %1",_position];
 
@@ -36,5 +39,5 @@ if(isServer) then {
 
 	diag_log format["WAI: Mission Bunny Ranch Ended At %1",_position];
 
-	s_missionrunning = false;
+	s_missionsrunning = s_missionsrunning - 1;
 };

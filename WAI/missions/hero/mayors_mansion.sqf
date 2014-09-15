@@ -2,8 +2,11 @@ if(isServer) then {
 
 	private			["_room","_complete","_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
 
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	_position		= [40] call find_position;
-	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
+	[_mission,_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
 	
 	diag_log 		format["WAI: [Mission:[Hero] Mayors Mansion]: Starting... %1",_position];
 
@@ -16,7 +19,7 @@ if(isServer) then {
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Hard",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
@@ -66,5 +69,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Hero] Mayors Mansion]: Ended at %1",_position];
 
-	h_missionrunning = false;
+	h_missionsrunning = h_missionsrunning - 1;
 };

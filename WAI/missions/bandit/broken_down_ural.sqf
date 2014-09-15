@@ -2,8 +2,11 @@ if(isServer) then {
 
 	private			["_complete","_baserunover","_crate_type","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	_position		= [30] call find_position;
-	_mission		= [_position,"Easy","Ural Attack","MainBandit",true] call mission_init;
+	[_mission,_position,"Easy","Ural Attack","MainBandit",true] call mission_init;
 
 	diag_log 		format["WAI: [Mission:[Bandit] Ural Attack]: Starting... %1",_position];
 
@@ -17,8 +20,8 @@ if(isServer) then {
 
 	//Troops
 	_rndnum 	= 1 + round (random 4);
-	_rndgro 	= 1 + round (random 3);
-
+	_rndgro 	= 1 + round (random 2);
+	[[_position select 0,_position select 1,0],_rndnum,"Easy",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	for "_i" from 0 to _rndgro do {
 		[[_position select 0,_position select 1,0],_rndnum,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	};
@@ -39,5 +42,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Bandit] Ural Attack]: Ended at %1",_position];
 	
-	b_missionrunning = false;
+	b_missionsrunning = b_missionsrunning - 1;
 };

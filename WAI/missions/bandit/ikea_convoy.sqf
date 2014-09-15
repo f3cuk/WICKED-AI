@@ -2,8 +2,11 @@ if(isServer) then {
 
 	private			["_complete","_dir","_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	_position		= [40] call find_position;
-	_mission		= [_position,"Hard","Lunch break Convoy","MainBandit",true] call mission_init;
+	[_mission,_position,"Hard","Lunch break Convoy","MainBandit",true] call mission_init;
 
 	diag_log 		format["WAI: [Mission:[Bandit] Lunch break Convoy]: Starting... %1",_position];
 
@@ -13,17 +16,17 @@ if(isServer) then {
 	
 	//Troops
 	_rndnum = 5 + round (random 3);
-	[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],_rndnum,"Hard",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],5,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[_position select 0,_position select 1,0],5,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[_position select 0,_position select 1,0],5,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],5,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],5,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//Static Guns
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0],
 		[(_position select 0) + 25, (_position select 1) - 25, 0]
-	],"M2StaticMG","Easy","Hero","Hero",1,2,"Random","Random",_mission] call spawn_static;
+	],"M2StaticMG","Hard","Hero","Hero",1,2,"Random","Random",_mission] call spawn_static;
 
 	//Heli Para Drop
 	[[(_position select 0),(_position select 1),0],[0,0,0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
@@ -48,7 +51,7 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],				// mission number and crate
-		["crate"], 						// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
+		["crate"], 						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_vehicle,_vehicle2,_vehicle3],	// cleanup objects
 		"A heavily guarded Ikea convoy is taking a lunch break, heroes are securing the parameter. See if you can make the building supplies yours.",	// mission announcement
 		"Bandits have successfully ambushed the Ikea convoy and secured the building supplies!",			// mission success
@@ -61,5 +64,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Bandit] Lunch break Convoy]: Ended at %1",_position];
 	
-	b_missionrunning = false;
+	b_missionsrunning = b_missionsrunning - 1;
 };

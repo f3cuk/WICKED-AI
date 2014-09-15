@@ -93,8 +93,8 @@ if (isServer) then {
 
 		call {
 			if ((_keyid > 0) && (_keyid <= 2500)) 		exitWith {_carkey = format["ItemKeyGreen%1",_keyid];};
-			if ((_keyid > 2500) && (_keyid <= 5000))		exitWith {_carkey = format["ItemKeyRed%1",_keyid-2500];};
-			if ((_keyid > 5000) && (_keyid <= 7500)) 		exitWith {_carkey = format["ItemKeyBlue%1",_keyid-5000];};
+			if ((_keyid > 2500) && (_keyid <= 5000))	exitWith {_carkey = format["ItemKeyRed%1",_keyid-2500];};
+			if ((_keyid > 5000) && (_keyid <= 7500)) 	exitWith {_carkey = format["ItemKeyBlue%1",_keyid-5000];};
 			if ((_keyid > 7500) && (_keyid <= 10000)) 	exitWith {_carkey = format["ItemKeyYellow%1",_keyid-7500];};
 			if ((_keyid > 10000) && (_keyid <= 12500)) 	exitWith {_carkey = format["ItemKeyBlack%1",_keyid-10000];};
 		};

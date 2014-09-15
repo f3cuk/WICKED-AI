@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private["_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
+	private["_marker","_unitGroup","_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
 
 	diag_log "WAI: Initialising missions";
 
@@ -11,27 +11,26 @@ if(isServer) then {
 	minefield						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";
 	custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\custom_publish_vehicle.sqf";
 	
-	{
-		wai_mission_markers set [count wai_mission_markers, _x];
-	} count ["MainHero","MainBandit","Side1Hero","Side1Bandit","Side2Hero","Side2Bandit","Special"];
-	trader_markers 					= [];
 	trader_markers 					= call get_trader_markers;
 	markerready 					= true;
 	wai_mission_data				= [];
 	wai_hero_mission				= [];
 	wai_bandit_mission				= [];
 	wai_special_mission				= [];
-	h_missionrunning				= false;
-	b_missionrunning				= false;
-	//s_missionrunning				= false;
+	h_missionsrunning				= 0;
+	b_missionsrunning				= 0;
+	//s_missionsrunning				= 0;
 	_h_startTime 					= floor(time);
 	_b_startTime 					= floor(time);
 	//_s_startTime					= floor(time);
+	_delayTime						= floor(time);
 	_h_missionTime					= nil;
 	_b_missionTime					= nil;
 	//_s_missionTime					= nil;
 	_mission						= "";
-	_result 						= 0;
+	_hresult 						= 0;
+	_bresult 						= 0;
+	//_sresult 						= 0;
 
 	// Set mission frequencies from config
 	{
@@ -66,49 +65,65 @@ if(isServer) then {
 		if (isNil "_b_missionTime") then { _b_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
 		//if (isNil "_s_missionTime") then { _s_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
 
-		if((_currTime - _h_startTime >= _h_missionTime) && (!h_missionrunning)) then { _result = 1; };
-		if((_currTime - _b_startTime >= _b_missionTime) && (!b_missionrunning)) then { _result = 2; };
-		//if((_currTime - _s_startTime >= _s_missionTime) && (!s_missionrunning)) then { _result = 3; };
+		if((_currTime - _h_startTime >= _h_missionTime) && (h_missionsrunning < wai_hero_limit)) then { _hresult = 1; };
+		if((_currTime - _b_startTime >= _b_missionTime) && (b_missionsrunning < wai_bandit_limit)) then { _bresult = 1; };
+		if((_currTime - _s_startTime >= _s_missionTime) && (s_missionsrunning < wai_special_limit)) then { _sresult = 1; };
 
-		if(h_missionrunning) then { _h_startTime = floor(time); };
-		if(b_missionrunning) then { _b_startTime = floor(time); };
-		//if(s_missionrunning) then { _s_startTime = floor(time); };
+		if(h_missionsrunning == wai_hero_limit) then { _h_startTime = floor(time); };
+		if(b_missionsrunning == wai_bandit_limit) then { _b_startTime = floor(time); };
+		if(s_missionsrunning == wai_special_limit) then { _s_startTime = floor(time); };
 
-		if((_cnt >= wai_players_online) && (markerready) && ((diag_fps) >= wai_server_fps)) then {
+		if((_cnt >= wai_players_online) && (diag_fps >= wai_server_fps)) then {
 
-			if (_result == 1) then {
-				h_missionrunning 	= true;
+			if (_hresult == 1) then {
+				waitUntil {_currTime = floor(time);(_currTime - _delayTime > 10 && markerready)};
+				markerready 		= false;
+				h_missionsrunning 	= h_missionsrunning + 1;
 				_h_startTime 		= floor(time);
+				_delayTime			= floor(time);
 				_h_missionTime		= nil;
-				_result 			= 0;
+				_hresult 			= 0;
+				wai_mission_markers set [(count wai_mission_markers), ("MainHero" + str(count wai_mission_data))];
+				wai_mission_data = wai_mission_data + [[0,"",[],[0,0,0]]];
 
 				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
 				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
 			};
 
-			if (_result == 2) then {
-				b_missionrunning 	= true;
+			if (_bresult == 1) then {
+				waitUntil {_currTime = floor(time);(_currTime - _delayTime > 10 && markerready)};
+				markerready 		= false;
+				b_missionsrunning 	= b_missionsrunning + 1;
 				_b_startTime 		= floor(time);
+				_delayTime			= floor(time);
 				_b_missionTime		= nil;
-				_result 			= 0;
-
+				_bresult 			= 0;
+				wai_mission_markers set [(count wai_mission_markers), ("MainBandit" + str(count wai_mission_data))];
+				wai_mission_data = wai_mission_data + [[0,"",[],[0,0,0]]];
+				
 				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
 				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
 			};
 
 			/*
 
-			if (_result == 3) then {
-				s_missionrunning 	= true;
+			if (_sresult == 1) then {
+				waitUntil {_currTime = floor(time);(_currTime - _delayTime > 10 && markerready)};
+				markerready 		= false;
+				s_missionsrunning 	= s_missionsrunning + 1;
 				_s_startTime 		= floor(time);
+				_delayTime			= floor(time);
 				_s_missionTime		= nil;
-				_result 			= 0;
+				_sresult 			= 0;
+				wai_mission_markers set [(count wai_mission_markers), ("Special" + str(count wai_mission_data))];
+				wai_mission_data = wai_mission_data + [[0,"",[],[0,0,0]]];
 
 				_mission 			= wai_special_mission call BIS_fnc_selectRandom;
 				execVM format ["\z\addons\dayz_server\WAI\missions\special\%1.sqf",_mission];
 			};
 
 			*/
+
 		};
 		sleep 1;
 	};

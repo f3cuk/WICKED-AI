@@ -114,6 +114,21 @@ if (isServer) then {
 	[_vehicle] spawn vehicle_monitor;
 
 	_unitGroup 				allowFleeing 0;
+
+	if(_aitype == "Hero") then {
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn hero_behaviour;
+		} else {
+			[_unitGroup] spawn hero_behaviour;
+		};
+	} else {
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn bandit_behaviour;
+		} else {
+			[_unitGroup] spawn bandit_behaviour;
+		};
+	};
+
 	_unitGroup 				setBehaviour "AWARE";
 	_unitGroup 				setCombatMode "RED";
 

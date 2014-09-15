@@ -8,6 +8,8 @@ if(isServer) then {
 	vehicle_patrol			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\vehicle_patrol.sqf";
 
 	on_kill					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\on_kill.sqf";
+	hero_behaviour			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\hero_behaviour.sqf";
+	bandit_behaviour		= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\bandit_behaviour.sqf";
 
 	dynamic_crate 			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\dynamic_crate.sqf";
 
@@ -29,7 +31,8 @@ if(isServer) then {
 	RESISTANCE				setFriend [EAST,0];
 	RESISTANCE				setFriend [WEST,0];
 
-	configloaded			= false;
+	wai_staticloaded 			= false;
+	wai_configloaded			= false;
 
 	ai_ground_units			= 0;
 	ai_emplacement_units	= 0;
@@ -38,19 +41,18 @@ if(isServer) then {
 	
 	//Load config
 	ExecVM "\z\addons\dayz_server\WAI\config.sqf";
-	
+	waitUntil {wai_configloaded};
 	if ((preProcessFileLineNumbers ("\z\addons\dayz_server\WAI\customsettings.sqf")) != "") then {
 		ExecVM "\z\addons\dayz_server\WAI\customsettings.sqf";
 		diag_log "WAI: Custom Config File Loaded";
 	};
-
-	waitUntil {configloaded};
-		diag_log "WAI: AI Config File Loaded";
+	diag_log "WAI: AI Config File Loaded";
 
 	[] spawn ai_monitor;
 
 	if(static_missions) then {
 		ExecVM "\z\addons\dayz_server\WAI\static\init.sqf";
+		waitUntil {wai_staticloaded};
 	};
 	
 	if (wai_mission_system) then {
