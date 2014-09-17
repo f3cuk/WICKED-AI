@@ -187,6 +187,6 @@ if(isServer) then {
 
 	/* END STATIC MISSIONS CONFIG */
 
-	wai_configloaded = true;
+	WAIconfigloaded = true;
 
 };
