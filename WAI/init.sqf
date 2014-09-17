@@ -19,20 +19,33 @@ if(isServer) then {
 
 	call 					compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\functions.sqf";
 
-	createCenter			EAST;
-	createCenter			RESISTANCE;
+	if(isNil("DZMSInstalled")) then {
 
-	WEST					setFriend [EAST,0];
-	WEST					setFriend [RESISTANCE,0];
-
-	EAST					setFriend [WEST,0];
-	EAST					setFriend [RESISTANCE,0];
+		createCenter			EAST;
+		createCenter			RESISTANCE;
 	
-	RESISTANCE				setFriend [EAST,0];
-	RESISTANCE				setFriend [WEST,0];
+		WEST					setFriend [EAST,0];
+		WEST					setFriend [RESISTANCE,0];
+	
+		EAST					setFriend [WEST,0];
+		EAST					setFriend [RESISTANCE,0];
+		
+		RESISTANCE				setFriend [EAST,0];
+		RESISTANCE				setFriend [WEST,0];
 
-	wai_staticloaded 			= false;
-	wai_configloaded			= false;
+	} else {
+	
+		createCenter			RESISTANCE;
+		
+		EAST					setFriend [RESISTANCE,0];
+		WEST					setFriend [RESISTANCE,0];
+		
+		RESISTANCE				setFriend [EAST,0];
+		RESISTANCE				setFriend [WEST,0];	
+	};
+	
+	wai_staticloaded 		= false;
+	WAIconfigloaded			= false;
 
 	ai_ground_units			= 0;
 	ai_emplacement_units	= 0;
@@ -41,7 +54,7 @@ if(isServer) then {
 	
 	//Load config
 	ExecVM "\z\addons\dayz_server\WAI\config.sqf";
-	waitUntil {wai_configloaded};
+	waitUntil {WAIconfigloaded};
 	if ((preProcessFileLineNumbers ("\z\addons\dayz_server\WAI\customsettings.sqf")) != "") then {
 		ExecVM "\z\addons\dayz_server\WAI\customsettings.sqf";
 		diag_log "WAI: Custom Config File Loaded";
