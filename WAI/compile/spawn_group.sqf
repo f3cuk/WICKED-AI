@@ -75,7 +75,7 @@ if (isServer) then {
 
 		if (!_unarmed) then {
 			_weapon 	= _aiweapon call BIS_fnc_selectRandom;
-			_magazine 	= _weapon call find_suitable_ammunition;
+			_magazine 	= _weapon 	call find_suitable_ammunition;
 		};
 
 		call {
@@ -170,8 +170,7 @@ if (isServer) then {
 		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
 
 		if (!isNil "_mission") then {
-			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0, (_ainum + 1)];
+			wai_mission_data select _mission set [0, (((wai_mission_data select _mission) select 0) + 1)];
 			_unit setVariable ["missionclean", "ground"];
 			_unit setVariable ["mission", _mission, true];
 		};
