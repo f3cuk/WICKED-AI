@@ -67,11 +67,11 @@ if(isServer) then {
 
 		if((_currTime - _h_startTime >= _h_missionTime) && (h_missionsrunning < wai_hero_limit)) then { _hresult = 1; };
 		if((_currTime - _b_startTime >= _b_missionTime) && (b_missionsrunning < wai_bandit_limit)) then { _bresult = 1; };
-		if((_currTime - _s_startTime >= _s_missionTime) && (s_missionsrunning < wai_special_limit)) then { _sresult = 1; };
+		//if((_currTime - _s_startTime >= _s_missionTime) && (s_missionsrunning < wai_special_limit)) then { _sresult = 1; };
 
 		if(h_missionsrunning == wai_hero_limit) then { _h_startTime = floor(time); };
 		if(b_missionsrunning == wai_bandit_limit) then { _b_startTime = floor(time); };
-		if(s_missionsrunning == wai_special_limit) then { _s_startTime = floor(time); };
+		//if(s_missionsrunning == wai_special_limit) then { _s_startTime = floor(time); };
 
 		if((_cnt >= wai_players_online) && (diag_fps >= wai_server_fps)) then {
 

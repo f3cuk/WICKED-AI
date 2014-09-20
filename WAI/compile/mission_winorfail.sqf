@@ -24,7 +24,7 @@ if(isServer) then {
 	{
 		
 		if (_x getVariable ["mission", nil] == _mission && (canMove _x)) then {
-			_mission_units set [0,_mission_units + _x];
+			_mission_units set [count _mission_units, _x];
 		};
 
 	} count allUnits + vehicles;
@@ -53,7 +53,7 @@ if(isServer) then {
 		_x disableAI "MOVE";
 	} count _mission_units;
 
-	while(!_start) do {
+	while {!_start} do {
 
 		sleep 1;
 
