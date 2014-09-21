@@ -53,15 +53,20 @@ if(isServer) then {
 		_x disableAI "MOVE";
 	} count _mission_units;
 
-	while {!_start} do {
+	while {!_start && !_timeout} do {
 
 		sleep 1;
+		_currenttime = time;
 
 		{
 			if((isPlayer _x) && (_x distance _position <= 1500)) then {
 				_start = true
 			};
 		} count playableUnits;
+
+		if (_currenttime - _starttime >= _timeout_time) then {
+			_timeout = true;
+		};
 
 	};
 

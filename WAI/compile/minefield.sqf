@@ -11,9 +11,13 @@ if(isServer) then {
 	for "_x" from 1 to _num_mines do {
 
 		private["_mine_pos","_mine"];
-
-		_mine_pos	= [_position,_area_min,_area_max,10,0,2000,0] call BIS_fnc_findSafePos;
-
+		
+		if(random 10 > 2) then {
+			_mine_pos = [_position,_area_min,_area_max,10,0,2000,0] call BIS_fnc_findSafePos;
+		} else {
+			_mine_pos = [_position,0,750,10,0,2000,0] call BIS_fnc_findSafePos;
+		};
+		
 		if(floor(random 2) == 1) then {
 			_mine 		= createVehicle ["MineE", _mine_pos, [], 0, "CAN_COLLIDE"];
 		} else {
