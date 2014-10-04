@@ -61,20 +61,21 @@ if (isServer) then {
 
 	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
 
-		_damage 		= (wai_vehicle_damage select 0) / 100;
-		_vehicle 		setDamage _damage;
 		_hitpoints 		= _vehicle call vehicle_getHitpoints;
 
 		{
-			
-			_dam 		= ((wai_vehicle_damage select 0) + random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0))) / 100;
+			_dam 		= (random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0)) + (wai_vehicle_damage select 0)) / 100;
 			_selection	= getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
 
 			if ((_selection in dayZ_explosiveParts) && _dam > 0.8) then {
 				_dam = 0.8
-			};			
+			};
 
-			_hit = [_vehicle,_selection,_dam] call object_setHitServer;
+			_isglass = ["glass", _selection] call KK_fnc_inString;
+
+			if(!_isglass) then {
+				_hit = [_vehicle,_selection,_dam] call object_setHitServer;
+			};
 
 		} count _hitpoints;
 
