@@ -1,4 +1,4 @@
-private ["_agro","_player","_player","_guarding","_group","_unit","_position"];
+private ["_agro","_player","_guarding","_group","_unit","_position"];
 
 _count 			= count _this;
 _group			= _this select 0;
@@ -23,8 +23,9 @@ if (count _this > 1) then {
 		_aggressors = _unit getVariable ["Aggressors", []];
 		if !(name _player in _aggressors) then {
 			_aggressors set [count _aggressors, name _player];
-			_unit setVariable ["Aggressors", _aggressors, true];
-			diag_log format ["Unit:%1 Setting Aggressors:%2", name _unit, _aggressors];
+			_unit setVariable ["Aggressors", _aggressors];
+
+			if(debug_mode) then { diag_log format ["Unit:%1 Setting Aggressors:%2", name _unit, _aggressors]; };
 		};
 
 		{
@@ -32,8 +33,9 @@ if (count _this > 1) then {
 				_aggressors = _x getVariable ["Aggressors", []];
 				if !(name _player in _aggressors) then {
 					_aggressors set [count _aggressors, name _player];
-					_x setVariable ["Aggressors", _aggressors, true];
-					diag_log format ["Shared Unit:%1 Setting Aggressors:%2", name _x, _aggressors];
+					_x setVariable ["Aggressors", _aggressors];
+					
+					if(debug_mode) then { diag_log format ["Shared Unit:%1 Setting Aggressors:%2", name _x, _aggressors]; };
 				};
 			};
 		} count allUnits;				
@@ -51,7 +53,7 @@ if (ai_friendly_behaviour) then {
 
 				_agro = name _player in (_x getVariable ["Aggressors", []]);
 
-				if (_player getVariable ["humanity", 0] > player_bandit) then {
+				if (_player getVariable ["humanity", 0] < player_bandit) then {
 				
 					if ((_player distance _position < 120 && _guarding) || _agro) then {
 						_player setCaptive false;

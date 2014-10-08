@@ -23,8 +23,9 @@ if (count _this > 1) then {
 		_aggressors = _unit getVariable ["Aggressors", []];
 		if !(name _player in _aggressors) then {
 			_aggressors set [count _aggressors, name _player];
-			_unit setVariable ["Aggressors", _aggressors, true];
-			diag_log format ["Unit:%1 Setting Aggressors:%2", name _unit, _aggressors];
+			_unit setVariable ["Aggressors", _aggressors];
+
+			if(debug_mode) then { diag_log format ["Unit:%1 Setting Aggressors:%2", name _unit, _aggressors]; };
 		};
 
 		{
@@ -32,8 +33,9 @@ if (count _this > 1) then {
 				_aggressors = _x getVariable ["Aggressors", []];
 				if !(name _player in _aggressors) then {
 					_aggressors set [count _aggressors, name _player];
-					_x setVariable ["Aggressors", _aggressors, true];
-					diag_log format ["Shared Unit:%1 Setting Aggressors:%2", name _x, _aggressors];
+					_x setVariable ["Aggressors", _aggressors];
+					
+					if(debug_mode) then { diag_log format ["Shared Unit:%1 Setting Aggressors:%2", name _x, _aggressors]; };
 				};
 			};
 		} count allUnits;				
