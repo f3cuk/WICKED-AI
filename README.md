@@ -1,22 +1,22 @@
-WICKED AI 2.1.4
+WICKED AI 2.2.0
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.5+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.1.0
-- Bandit and hero missions
-- Dynamic loot
-- More missions
-- Multi mission support
-- Better markers
+### Release 2.2.0
+- Multiple mission support
+- Automatic ammo finder (no need to specify ammo in weaponarray - config.sqf)
+- Option: Locked vehicles with keys randomly on AI
+- Option: Friendly AI
+- Added: Bandit Patrol mission
 - [And much more](https://github.com/f3cuk/WICKED-AI/blob/master/changelist.md)
 
-### Upcoming in 2.2.0+
-- C130 Missions
+### Upcoming in 2.3.0+
 - More missions
 - Further enhancements
 
 ### Version history
+- 16-10-2014 : BETA release (2.2.0)
 - 03-09-2014 : Minor bugfixes (2.1.4)
 - 03-09-2014 : Minor bugfixes (2.1.3)
 - 02-09-2014 : Minor bugfixes and improvements (2.1.2)
