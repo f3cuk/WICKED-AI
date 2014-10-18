@@ -38,10 +38,28 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Installation Instructions
 
-1. Unpack `dayz_server.pbo`
-2. Add the WAI folder to your dayz_server directory
-3. In `server_monitor.sqf` find `allowConnection = true;` add above `ExecVM "\z\addons\dayz_server\WAI\init.sqf";`
-4. Repack `dayz_server.pbo`
+1. Click ***[Download Zip](https://github.com/f3cuk/WICKED-AI/archive/master.zip)*** on the right sidebar of this Github page.
+
+	> Recommended PBO tool for all "pack", "repack", or "unpack" steps: ***[PBO Manager](http://www.armaholic.com/page.php?id=16369)***
+
+1. Extract the downloaded folder to your desktop and open it
+1. Go to your server pbo and unpack it.
+1. Navigate to the new ***dayz_server*** folder and copy the WAI folder into this folder.
+1. Navigate to the ***system*** folder and open server_monitor.sqf
+
+	Find this code at the bottom of the file:
+
+	~~~~java
+	allowConnection = true;	
+	~~~~
+	
+	And past the following code ***above*** it:
+	
+	~~~~java
+	[] ExecVM "\z\addons\dayz_server\WAI\init.sqf";
+	~~~~
+
+1. Repack your server pbo.
 
 ### Versioning
 
