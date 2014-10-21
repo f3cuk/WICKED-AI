@@ -53,7 +53,7 @@ if (isServer) then {
 
 	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
 
-		_hitpoints 		= _vehicle call vehicle_getHitpoints;
+		_hitpoints = _vehicle call vehicle_getHitpoints;
 		
 		if(debug_mode) then { diag_log(format["WAI: Spawned %1 at %2",str(_class),str(_position)]); };
 		
@@ -75,12 +75,12 @@ if (isServer) then {
 		} count _hitpoints;
 
 		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;
+		_vehicle setFuel _fuel;
 
 		if(debug_mode) then { diag_log(format["WAI: Added %1 percent fuel to vehicle",str(_fuel)]); };
 
 	};
 	
-	_vehicle setFuel _fuel;
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
 	
 	if (wai_lock_vehicles) then {

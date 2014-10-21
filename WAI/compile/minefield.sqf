@@ -18,11 +18,11 @@ if(isServer) then {
 			_mine_pos = [_position,0,750,10,0,2000,0] call BIS_fnc_findSafePos;
 		};
 
+		_mine createVehicle ["Mine", _mine_pos, [], 0, "CAN_COLLIDE"];
+
 		_mine spawn {
 
 			private["_vehicle_near","_bomb"];
-
-			_this createVehicle ["Mine", _mine_pos, [], 0, "CAN_COLLIDE"];
 			
 			waitUntil
 			{
@@ -39,6 +39,7 @@ if(isServer) then {
 			deleteVehicle _bomb;
 			deleteVehicle _this;
 		};
+
 		_allmines set [(count _allmines), _mine];
 
 	};
