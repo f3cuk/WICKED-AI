@@ -18,9 +18,10 @@ if (count _this > 1) then {
 	_x setVariable ["Aggressors", []];
 	_x addEventHandler ["Hit", {
 		private ["_unit","_player","_aggressors"];
-		_unit = _this select 0;
-		_player = _this select 1;
+		_unit 		= _this select 0;
+		_player 	= _this select 1;
 		_aggressors = _unit getVariable ["Aggressors", []];
+		
 		if !(name _player in _aggressors) then {
 			_aggressors set [count _aggressors, name _player];
 			_unit setVariable ["Aggressors", _aggressors];

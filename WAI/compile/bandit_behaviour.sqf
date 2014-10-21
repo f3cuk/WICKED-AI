@@ -18,14 +18,15 @@ if (count _this > 1) then {
 	_x setVariable ["Aggressors", []];
 	_x addEventHandler ["Hit", {
 		private ["_unit","_player","_aggressors"];
-		_unit = _this select 0;
-		_player = _this select 1;
+		_unit 		= _this select 0;
+		_player 	= _this select 1;
 		_aggressors = _unit getVariable ["Aggressors", []];
+
 		if !(name _player in _aggressors) then {
 			_aggressors set [count _aggressors, name _player];
 			_unit setVariable ["Aggressors", _aggressors];
 
-			if(debug_mode) then { diag_log format ["Unit:%1 Setting Aggressors:%2", name _unit, _aggressors]; };
+			if(debug_mode) then { diag_log format ["WAI: Unit:%1 Setting Aggressors:%2", name _unit, _aggressors]; };
 		};
 
 		{
@@ -35,7 +36,7 @@ if (count _this > 1) then {
 					_aggressors set [count _aggressors, name _player];
 					_x setVariable ["Aggressors", _aggressors];
 					
-					if(debug_mode) then { diag_log format ["Shared Unit:%1 Setting Aggressors:%2", name _x, _aggressors]; };
+					if(debug_mode) then { diag_log format ["WAI: Shared Unit:%1 Setting Aggressors:%2", name _x, _aggressors]; };
 				};
 			};
 		} count allUnits;				

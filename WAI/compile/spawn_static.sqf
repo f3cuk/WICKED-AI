@@ -16,8 +16,8 @@ if (isServer) then {
 	};
 	
 	if ((count _this == 10) OR (count _this == 6)) then {
-		if (count _this == 10) then {_mission = _this select 9;};
-		if (count _this == 6) then {_mission = _this select 5;};
+		if (count _this == 10) 	then { _mission = _this select 9; };
+		if (count _this == 6) 	then { _mission = _this select 5; };
 	} else {
 		_mission = nil;
 	};
@@ -97,10 +97,10 @@ if (isServer) then {
 			
 			call {
 				if(typeName(_gear) == "SCALAR") then {
-					if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
-					if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
+					if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
+					if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
 				} else {
-					if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+					if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
 				};
 			};
 

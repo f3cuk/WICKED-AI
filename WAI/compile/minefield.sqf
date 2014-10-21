@@ -17,14 +17,13 @@ if(isServer) then {
 		} else {
 			_mine_pos = [_position,0,750,10,0,2000,0] call BIS_fnc_findSafePos;
 		};
-		
-		if(floor(random 2) == 1) then {
-			_mine 		= createVehicle ["MineE", _mine_pos, [], 0, "CAN_COLLIDE"];
-		} else {
-			_mine 		= createVehicle ["Mine", _mine_pos, [], 0, "CAN_COLLIDE"];
-		};
+
 		_mine spawn {
+
 			private["_vehicle_near","_bomb"];
+
+			_this createVehicle ["Mine", _mine_pos, [], 0, "CAN_COLLIDE"];
+			
 			waitUntil
 			{
 				_vehicle_near = false;

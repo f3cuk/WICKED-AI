@@ -1,11 +1,3 @@
-/********************************************************************************************
-Usage:			|	[classname,position,_mission,(boolean),(direction)] call custom_publish;
-Parameters		|	classname:	Class or array of classnames of vehicle to spawn
-in brackets		|	position:	Position to spawn vehicle
-are optional	|	_mission:	Mission # the vehicle is attached to
-				|	boolean:	true, or false by default to spawn vehicle static at position
-				|	direction:	Direction to face vehicle, random by default
-/********************************************************************************************/
 if (isServer) then {
 
     private ["_unit","_ailist","_keyid","_carkey","_hit","_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
@@ -47,7 +39,7 @@ if (isServer) then {
 		_vehpos = _position;
 	};
 
-	_vehicle = createVehicle [_class,_vehpos,[],5,"FORM"];
+	_vehicle createVehicle [_class,_vehpos,[],5,"FORM"];
 	_vehicle setDir _dir;
 	_vehicle setVectorUp surfaceNormal position _vehicle;
 	_vehicle setvelocity [0,0,1];
@@ -62,7 +54,9 @@ if (isServer) then {
 	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
 
 		_hitpoints 		= _vehicle call vehicle_getHitpoints;
-
+		
+		if(debug_mode) then { diag_log(format["WAI: Spawned %1 at %2",str(_class),str(_position)]); };
+		
 		{
 			_dam 		= (random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0)) + (wai_vehicle_damage select 0)) / 100;
 			_selection	= getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
@@ -73,17 +67,18 @@ if (isServer) then {
 
 			_isglass = ["glass", _selection] call KK_fnc_inString;
 
-			if(!_isglass) then {
+			if(!_isglass && _dam > 0.1) then {
 				_hit = [_vehicle,_selection,_dam] call object_setHitServer;
+				if(debug_mode) then { diag_log(format["WAI: Calculated damage for %1 is %2",str(_selection),str(_dam)]); };
 			};
 
 		} count _hitpoints;
 
-		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;;
+		_fuel = ((wai_mission_fuel select 0) + random((wai_mission_fuel select 1) - (wai_mission_fuel select 0))) / 100;
+
+		if(debug_mode) then { diag_log(format["WAI: Added %1 percent fuel to vehicle",str(_fuel)]); };
 
 	};
-
-	if(debug_mode) then { diag_log("WAI: Spawned " +str(_class) + " at " + str(_position) + " with " + str(_fuel) + " fuel and " + str(_damage) + " damage."); };
 	
 	_vehicle setFuel _fuel;
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];

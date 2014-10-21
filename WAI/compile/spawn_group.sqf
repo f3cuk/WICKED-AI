@@ -80,10 +80,10 @@ if (isServer) then {
 
 		call {
 			if(typeName(_gear) == "SCALAR") then {
-				if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
-				if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
+				if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
+				if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
 			} else {
-				if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+				if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
 			};
 		};
 		
@@ -91,10 +91,10 @@ if (isServer) then {
 		_geartools 		= _aigear select 1;
 
 		call {
-			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-			if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin 		call BIS_fnc_selectRandom; };
+			if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin 		call BIS_fnc_selectRandom; };
+			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin 	call BIS_fnc_selectRandom; };
+			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin 	call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
 		};
 
