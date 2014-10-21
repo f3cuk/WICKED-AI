@@ -39,7 +39,7 @@ if (isServer) then {
 		_vehpos = _position;
 	};
 
-	_vehicle createVehicle [_class,_vehpos,[],5,"FORM"];
+	_vehicle = createVehicle [_class,_vehpos,[],5,"FORM"];
 	_vehicle setDir _dir;
 	_vehicle setVectorUp surfaceNormal position _vehicle;
 	_vehicle setvelocity [0,0,1];
