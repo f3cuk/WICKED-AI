@@ -119,11 +119,15 @@ if (isServer) then {
 			_aipack = _backpack;
 		};
 		
-		_unit enableAI "TARGET";
-		_unit enableAI "AUTOTARGET";
-		_unit enableAI "MOVE";
-		_unit enableAI "ANIM";
-		_unit enableAI "FSM";
+		if (isNil "_mission") then {
+		
+			_unit enableAI "TARGET";
+			_unit enableAI "AUTOTARGET";
+			_unit enableAI "MOVE";
+			_unit enableAI "ANIM";
+			_unit enableAI "FSM";
+		
+		};
 
 		removeAllWeapons _unit;
 		removeAllItems _unit;

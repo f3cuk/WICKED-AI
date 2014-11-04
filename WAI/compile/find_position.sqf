@@ -5,15 +5,17 @@ if(isServer) then {
 	markerready = false;
 
 	if(use_blacklist) then {
-		_safepos		= [getMarkerPos "center",0,9500,(_this select 0),0,0.5,0,blacklist];
+		_safepos		= [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0,blacklist];
 	} else {
-		_safepos		= [getMarkerPos "center",0,9500,(_this select 0),0,0.5,0];
+		_safepos		= [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0];
 	};
 
 	_validspot 	= false;
 	_i 			= 1;
 
 	while{!_validspot} do {
+	
+		sleep 1;
 
 		_position 	= _safepos call BIS_fnc_findSafePos;
 		_i 			= _i + 1;

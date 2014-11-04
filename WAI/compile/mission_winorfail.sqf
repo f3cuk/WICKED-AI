@@ -23,16 +23,17 @@ if(isServer) then {
 
 	{
 		
-		if (_x getVariable ["mission", nil] == _mission && (canMove _x)) then {
+		if (_x getVariable ["mission", nil] == _mission) then {
 			_mission_units set [count _mission_units, _x];
 		};
 
-	} count allUnits + vehicles;
-
+	} count allUnits;
+	
 	if (wai_radio_announce) then {
 		{
 			if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
-				[nil,_x,rTitleText,"[RADIO] " + _msgstart,"PLAIN",10] call RE;
+				customRemoteMessage = ["systemChat","[RADIO] " + _msgstart,_x];
+				publicVariable "customRemoteMessage";
 			};
 		} count playableUnits;
 	} else {
@@ -48,10 +49,6 @@ if(isServer) then {
 	_crate addEventHandler ["HandleDamage", {}];
 	
 	markerready = true;
-
-	{
-		_x disableAI "MOVE";
-	} count _mission_units;
 
 	while {!_start && !_timeout} do {
 
@@ -70,8 +67,12 @@ if(isServer) then {
 
 	};
 
-	{
+	{	
+		_x enableAI "TARGET";
+		_x enableAI "AUTOTARGET";
 		_x enableAI "MOVE";
+		_x enableAI "ANIM";
+		_x enableAI "FSM";
 	} count _mission_units;
 
 	while {!_timeout && !_complete} do {
@@ -192,9 +193,18 @@ if(isServer) then {
 			} count _delete_mines;
 			
 		};
-
-		[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
-
+		
+		if (wai_radio_announce) then {
+			{
+				if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
+					customRemoteMessage = ["systemChat","[RADIO] " + _msgwin,_x];
+					publicVariable "customRemoteMessage";
+				};
+			} count playableUnits;
+		} else {
+			[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
+		};
+		
 		if (wai_clean_mission) then {
 
 			[_position,_baseclean] spawn {
@@ -282,7 +292,17 @@ if(isServer) then {
 			
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
-		[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;
+		if (wai_radio_announce) then {
+			{
+				if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
+					customRemoteMessage = ["systemChat","[RADIO] " + _msglose,_x];
+					publicVariable "customRemoteMessage";
+				};
+			} count playableUnits;
+		} else {
+			[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;
+		};
+		
 	};
 	
 	_map_marker = (wai_mission_data select _mission) select 1;
