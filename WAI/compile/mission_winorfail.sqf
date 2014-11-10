@@ -30,12 +30,8 @@ if(isServer) then {
 	} count allUnits;
 	
 	if (wai_radio_announce) then {
-		{
-			if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
-				RemoteMessage = ["radio","[RADIO] " + _msgstart];
-				owner _x publicVariableClient "RemoteMessage";
-			};
-		} count playableUnits;
+		RemoteMessage = ["radio","[RADIO] " + _msgstart];
+		publicVariable "RemoteMessage";
 	} else {
 		[nil,nil,rTitleText,_msgstart,"PLAIN",10] call RE;
 	};
@@ -196,12 +192,8 @@ if(isServer) then {
 		};
 		
 		if (wai_radio_announce) then {
-			{
-				if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
-					RemoteMessage = ["radio","[RADIO] " + _msgwin];
-					owner _x publicVariableClient "RemoteMessage";
-				};
-			} count playableUnits;
+			RemoteMessage = ["radio","[RADIO] " + _msgwin];
+			owner _xpublicVariableClient "RemoteMessage";
 		} else {
 			[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
 		};
@@ -294,12 +286,8 @@ if(isServer) then {
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
 		if (wai_radio_announce) then {
-			{
-				if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
-					RemoteMessage = ["radio","[RADIO] " + _msglose];
-					owner _x publicVariableClient "RemoteMessage";
-				};
-			} count playableUnits;
+			RemoteMessage = ["radio","[RADIO] " + _msglose];
+			publicVariable "RemoteMessage";
 		} else {
 			[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;
 		};

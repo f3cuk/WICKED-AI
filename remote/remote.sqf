@@ -6,8 +6,8 @@ fnc_remote_message = {
 	_message 	= _this select 1;
 	
 	call {
-		if(_type == "radio")		exitWith { systemChat _message; };
-		if(_type == "say")			exitWith { player globalChat _message; };
+		if(_type == "radio")		exitWith { ?!(player hasWeapon "ItemRadio") : systemChat _message; };
+		if(_type == "global")		exitWith { systemChat _message; };
 	};
 };
 
