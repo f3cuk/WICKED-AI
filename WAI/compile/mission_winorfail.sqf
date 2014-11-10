@@ -32,8 +32,8 @@ if(isServer) then {
 	if (wai_radio_announce) then {
 		{
 			if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
-				customRemoteMessage = ["systemChat","[RADIO] " + _msgstart,_x];
-				publicVariable "customRemoteMessage";
+				RemoteMessage = ["radio","[RADIO] " + _msgstart];
+				owner _x publicVariableClient "RemoteMessage";
 			};
 		} count playableUnits;
 	} else {
@@ -131,8 +131,8 @@ if(isServer) then {
 			};
 
 			if (_type == "resource") exitWith {
-				_node = (_this select 1) select 1;
-				_resource = _node getVariable ["Resource", 0];
+				_node 		= (_this select 1) select 1;
+				_resource 	= _node getVariable ["Resource", 0];
 				if (_resource == 0) then {
 					{
 						if((isPlayer _x) && (_x distance _position <= 80)) then {
@@ -173,6 +173,7 @@ if(isServer) then {
 			};
 
 		};
+
 		_delete_mines = ((wai_mission_data select _mission) select 2);
 
 		if(count _delete_mines > 0) then {
@@ -190,15 +191,15 @@ if(isServer) then {
 					
 				};
 				
-			} count _delete_mines;
+			} forEach _delete_mines;
 			
 		};
 		
 		if (wai_radio_announce) then {
 			{
 				if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
-					customRemoteMessage = ["systemChat","[RADIO] " + _msgwin,_x];
-					publicVariable "customRemoteMessage";
+					RemoteMessage = ["radio","[RADIO] " + _msgwin];
+					owner _x publicVariableClient "RemoteMessage";
 				};
 			} count playableUnits;
 		} else {
@@ -295,8 +296,8 @@ if(isServer) then {
 		if (wai_radio_announce) then {
 			{
 				if((isPlayer _x) && (_x hasWeapon "ItemRadio")) then {
-					customRemoteMessage = ["systemChat","[RADIO] " + _msglose,_x];
-					publicVariable "customRemoteMessage";
+					RemoteMessage = ["radio","[RADIO] " + _msglose];
+					owner _x publicVariableClient "RemoteMessage";
 				};
 			} count playableUnits;
 		} else {

@@ -5,27 +5,13 @@ fnc_remote_message = {
 	_type 		= _this select 0;
 	_message 	= _this select 1;
 	
-	if(count _this > 2) then {
-		_player 	= _this select 2;
-
-		if (_player == player) then {
-			call {
-				if(_type == "systemChat")	exitWith { systemChat _message; };
-				if(_type == "globalChat")	exitWith { player globalChat _message; };
-				if(_type == "sideChat")		exitWith { player sideChat _message };
-			};
-		};
-	} else {
-
-		call {
-			if(_type == "systemChat")	exitWith { systemChat _message; };
-			if(_type == "globalChat")	exitWith { WEST globalChat _message; };
-		};
-	
+	call {
+		if(_type == "radio")		exitWith { systemChat _message; };
+		if(_type == "say")			exitWith { player globalChat _message; };
 	};
 };
 
-fnc_custom_marker = {
+fnc_remote_marker = {
 
 	private ["_player","_location","_shape","_color","_size","_alpha","_timeout","_marker","_name"];
 
@@ -56,5 +42,5 @@ fnc_custom_marker = {
 
 };
 
-"customRemoteMessage" addPublicVariableEventHandler { (_this select 1) call fnc_remote_message; };
-"customMarker" addPublicVariableEventHandler { (_this select 1) call fnc_custom_marker; };
+"RemoteMessage" addPublicVariableEventHandler { (_this select 1) call fnc_remote_message; };
+"RemoteMarker" addPublicVariableEventHandler { (_this select 1) call fnc_custom_marker; };
