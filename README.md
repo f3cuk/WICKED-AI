@@ -42,10 +42,10 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 	> Recommended PBO tool for all "pack", "repack", or "unpack" steps: ***[PBO Manager](http://www.armaholic.com/page.php?id=16369)***
 
-1. Extract the downloaded folder to your desktop and open it
-1. Go to your server pbo and unpack it.
-1. Navigate to the new ***dayz_server*** folder and copy the WAI folder into this folder.
-1. Navigate to the ***system*** folder and open server_monitor.sqf
+2. Extract the downloaded folder to your desktop and open it
+3. Go to your server pbo and unpack it.
+4. Navigate to the new ***dayz_server*** folder and copy the WAI folder into this folder.
+5. Navigate to the ***system*** folder and open server_monitor.sqf
 
 	Find this code at the bottom of the file:
 
@@ -59,7 +59,26 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 	[] ExecVM "\z\addons\dayz_server\WAI\init.sqf";
 	~~~~
 
-1. Repack your server pbo.
+6. Repack your server pbo.
+
+##### Optional Radio messages
+1. Go to your mission pbo and unpack it.
+2. Open init.sqf
+
+	Find:
+
+	~~~~java
+	//[false,12] execVM "\z\addons\dayz_code\compile\local_lights_init.sqf";	
+	~~~~
+	
+	Add below:
+	
+	~~~~java
+	_nil = [] execVM "custom\remote_message\remote_message.sqf";
+	~~~~
+
+3. Copy the remote_message folder into your custom folder, if you do not have this one yet simply create it.
+4. Repack your mission pbo.
 
 ### Versioning
 
