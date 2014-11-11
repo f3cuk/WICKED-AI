@@ -16,6 +16,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - Further enhancements
 
 ### Version history
+- 11-11-2014 : BETA release v2 (2.2.0)
 - 16-10-2014 : BETA release (2.2.0)
 - 03-09-2014 : Minor bugfixes (2.1.4)
 - 03-09-2014 : Minor bugfixes (2.1.3)
