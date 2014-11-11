@@ -1,6 +1,6 @@
 if(isServer) then {
 
-    private			["_complete","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
+    private			["_complete","_baserunover","_crate_type","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
 	// Get mission number, important we do this early
 	_mission 		= count wai_mission_data -1;
@@ -15,13 +15,15 @@ if(isServer) then {
 	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
 
 	//Base
-	diag_log 		format["WAI: [Mission:[Hero] Ural Attack]: Spawning Buildings"];
-	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],15,"FORM"];
+	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],14,"FORM"];
+	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	_rndnum 	= 1 + round (random 4);
+	_rndnum 	= 2 + round (random 2);
 	_rndgro 	= 1 + round (random 2);
+
 	[[_position select 0,_position select 1,0],_rndnum,"Easy",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+
 	for "_i" from 0 to _rndgro do {
 		[[_position select 0,_position select 1,0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	};
@@ -32,8 +34,8 @@ if(isServer) then {
 		["kill"], 				// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 		// cleanup objects
 		"Bandits have destroyed a Ural with supplies and are securing the cargo! Check your map for the location!",	// mission announcement
-		"The supplies have been secured by survivors!",															// mission success
-		"Survivors did not secure the supplies in time"														// mission fail
+		"The supplies have been secured by survivors!",																// mission success
+		"Survivors did not secure the supplies in time"																// mission fail
 	] call mission_winorfail;
 
 	if(_complete) then {
