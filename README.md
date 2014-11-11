@@ -62,6 +62,8 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 6. Repack your server pbo.
 
 ##### Optional Radio messages
+Note: These are on by default, change *wai_radio_announce* in config.sqf to *false* to disable them.
+
 1. Go to your mission pbo and unpack it.
 2. Open init.sqf
 
