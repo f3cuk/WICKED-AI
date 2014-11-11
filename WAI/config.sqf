@@ -2,8 +2,8 @@ if(isServer) then {
 
 	/* GENERAL CONFIG */
 
-		debug_mode					= true;			// enable debug
-		use_blacklist				= true;		// use blacklist
+		debug_mode					= false;		// enable debug
+		use_blacklist				= true;			// use blacklist
 		blacklist					= [
 			[[0,16000,0],[1000,-0,0]],				// Left
 			[[0,16000,0],[16000.0,14580.3,0]]		// Top
@@ -112,9 +112,9 @@ if(isServer) then {
 
 		// Missions
 		wai_radio_announce			= true;								// Setting this to true will announce the missions to those that hold a radio only
-		wai_hero_limit				= 2;
-		wai_bandit_limit			= 2;
-		wai_special_limit			= 1;
+		wai_hero_limit				= 1;								// define how many hero missions can run at once
+		wai_bandit_limit			= 1;								// define how many bandit missions can run at once
+		/* wai_special_limit			= 1;								// define how many special missions can run at once */
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
 										["black_hawk_crash",11],
 										["armed_vehicle",12],

@@ -193,7 +193,7 @@ if(isServer) then {
 		
 		if (wai_radio_announce) then {
 			RemoteMessage = ["radio","[RADIO] " + _msgwin];
-			owner _xpublicVariableClient "RemoteMessage";
+			publicVariable "RemoteMessage";
 		} else {
 			[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
 		};
