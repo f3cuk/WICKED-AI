@@ -19,17 +19,19 @@ if(isServer) then {
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
-		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
+		ai_bandit_combatmode		= "YELLOW";		// combatmode of bandit AI
 		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_hero_combatmode			= "RED";		// combatmode of hero AI
-		ai_hero_behaviour			= "SAFE";		// behaviour of hero AI
-		ai_friendly_behaviour		= true;
+		ai_hero_combatmode			= "YELLOW";		// combatmode of hero AI
+		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
+
+		ai_friendly_behaviour		= false;		// make ai friendly towards comrades
+
 		player_bandit				= -5000;		// this is the amount you declare someone to be a bandit on your server, bandit AI will not attack you if ai_friendly_behaviour is true
 		player_hero					= 5000;			// this is the amount you declare someone to be a hero on your server, hero AI will not attack you if ai_friendly_behaviour is true
 
 		ai_share_info				= true;			// AI share info on player position
-		ai_share_distance			= 300;			// Distance from killed AI for AI to share your rough position
+		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
 
 		ai_kills_gain				= true;			// add kill to bandit/human kill score
 		ai_humanity_gain			= true;			// gain humanity for killing AI
@@ -75,7 +77,7 @@ if(isServer) then {
 
 		wai_mission_markers			= ["DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker"];
 		wai_avoid_missions			= 750;								// avoid spawning missions this close to other missions, these are defined in wai_mission_markers
-		wai_avoid_traders			= 1250;								// avoid spawning missions this close to traders
+		wai_avoid_traders			= 750;								// avoid spawning missions this close to traders
 		wai_avoid_town				= 0;								// avoid spawning missions this close to towns, *** doesn't function with infiSTAR enabled ***
 		wai_avoid_road				= 0;								// avoid spawning missions this close to roads
 		wai_avoid_water				= 50;								// avoid spawning missions this close to water
@@ -88,8 +90,8 @@ if(isServer) then {
 		wai_clean_mission			= true;								// clean all mission buildings after a certain period
 		wai_clean_mission_time		= 1800;								// time after a mission is complete to clean mission buildings
 
-		wai_mission_fuel			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
-		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
+		wai_mission_fuel			= [5,60];							// fuel inside mission spawned vehicles [min%,max%]
+		wai_vehicle_damage			= [20,70];							// damages to spawn vehicles with [min%,max%]
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
 		wai_lock_vehicles			= true;								// lock mission vehicles and add keys to random AI bodies (be careful with ai_clean_dead if this is true)
 		
@@ -105,11 +107,11 @@ if(isServer) then {
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
 
 		wai_enable_minefield		= true;								// enable minefields to better defend missions
-		wai_use_launchers			= false;							// add a rocket launcher to each spawned AI group
-		wai_remove_launcher			= false;							// remove rocket launcher from AI on death
+		wai_use_launchers			= true;								// add a rocket launcher to each spawned AI group
+		wai_remove_launcher			= true;								// remove rocket launcher from AI on death
 
 		// Missions
-		wai_radio_announce			= false;							// Setting this to true will announce the missions to those that hold a Radio only
+		wai_radio_announce			= true;								// Setting this to true will announce the missions to those that hold a radio only
 		wai_hero_limit				= 2;
 		wai_bandit_limit			= 2;
 		wai_special_limit			= 1;
@@ -117,13 +119,13 @@ if(isServer) then {
 										["black_hawk_crash",11],
 										["armed_vehicle",12],
 										["bandit_base",7],
-										["captured_mv22",7],
+										["captured_mv22",6],
 										["ikea_convoy",7],
 										["destroyed_ural",16],
 										["disabled_milchopper",9],
 										["mayors_mansion",9],
 										["weapon_cache",12],
-										["bandit_patrol",10]
+										["bandit_patrol",11]
 									];
 		wai_bandit_missions			= [
 										["armed_vehicle",12],
@@ -137,11 +139,6 @@ if(isServer) then {
 										["sniper_extraction",8],
 										["weapon_cache",10]
 									];
-		/*
-		wai_special_missions		= [
-										["bunny_ranch",100]
-									];
-		*/
 		
 		// Vehicle arrays
 		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Offroad_DSHKM_Gue_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];

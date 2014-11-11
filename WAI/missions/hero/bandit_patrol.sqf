@@ -18,12 +18,12 @@ if(isServer) then {
 	_crate  = createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
 
 
-	//Military Chopper
-	_vehclass  = armed_chopper call BIS_fnc_selectRandom;
+	//Civil vehicle
+	_vehclass  = civil_vehicles call BIS_fnc_selectRandom;
 
 	//Troops
-	_rndnum  = 1 + round (random 4);
-	_rndgro  = 1 + round (random 3);
+	_rndnum  = 2 + round (random 1);
+	_rndgro  = 1 + round (random 1);
 
 
 	for "_i" from 0 to _rndgro do {
@@ -38,7 +38,7 @@ if(isServer) then {
 		[_mission,_crate], // mission number and crate
 		["kill"],  // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_vehicle],  // cleanup objects
-		"A bandit scout patrol has landed to site a new base, stop them before they get back and report!", // mission announcement
+		"A bandit scout patrol is checking out a new base location, stop them before they get back and report!", // mission announcement
 		"Survivors have dealt with the scout patrol!", // mission success
 		"Survivors did not deal with the scout patrol in time! A bandit base might appear here soon!" // mission fail
 	] call mission_winorfail;
@@ -50,7 +50,6 @@ if(isServer) then {
 
 
 	diag_log format["WAI: [Mission:[Hero] Bandit Patrol]: Ended at %1",_position];
-
 
 	h_missionsrunning = h_missionsrunning - 1;
 };
