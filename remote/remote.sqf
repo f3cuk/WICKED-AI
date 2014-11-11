@@ -6,18 +6,18 @@ fnc_remote_message = {
 	_message 	= _this select 1;
 	
 	call {
-		if(_type == "radio")		exitWith { ?!(player hasWeapon "ItemRadio") : systemChat _message; };
+		if(_type == "radio")		exitWith { if(player hasWeapon "ItemRadio") then { systemChat _message; }; };
 		if(_type == "global")		exitWith { systemChat _message; };
 	};
 };
 
 fnc_remote_marker = {
 
-	private ["_player","_location","_shape","_color","_size","_alpha","_timeout","_marker","_name"];
+	private ["_req","_location","_shape","_color","_size","_alpha","_timeout","_marker","_name"];
 
-	_player = _this select 0;
+	_req = _this select 0;
 
-	if(player == _player) then {
+	if(player hasWeapon _req) then {
 	
 		_location 	= _this select 1;
 		_shape 		= _this select 2;
