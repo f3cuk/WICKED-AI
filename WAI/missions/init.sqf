@@ -7,6 +7,7 @@ if(isServer) then {
 	// Mission functions
 	call 							compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\position_functions.sqf";
 	mission_init					= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_init.sqf";
+	patrol							= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\patrol.sqf";
 	mission_winorfail				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_winorfail.sqf";
 	minefield						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";
 	custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\custom_publish_vehicle.sqf";
@@ -19,18 +20,14 @@ if(isServer) then {
 	wai_special_mission				= [];
 	h_missionsrunning				= 0;
 	b_missionsrunning				= 0;
-	//s_missionsrunning				= 0;
 	_h_startTime 					= floor(time);
 	_b_startTime 					= floor(time);
-	//_s_startTime					= floor(time);
 	_delayTime						= floor(time);
 	_h_missionTime					= nil;
 	_b_missionTime					= nil;
-	//_s_missionTime					= nil;
 	_mission						= "";
 	_hresult 						= 0;
 	_bresult 						= 0;
-	//_sresult 						= 0;
 
 	// Set mission frequencies from config
 	{

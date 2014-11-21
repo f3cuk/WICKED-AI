@@ -19,10 +19,10 @@ if(isServer) then {
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
-		ai_bandit_combatmode		= "YELLOW";		// combatmode of bandit AI
+		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
 		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_hero_combatmode			= "YELLOW";		// combatmode of hero AI
+		ai_hero_combatmode			= "RED";		// combatmode of hero AI
 		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
 
 		ai_friendly_behaviour		= false;		// make ai friendly towards comrades
@@ -51,9 +51,12 @@ if(isServer) then {
 		ai_static_skills			= false;	// Allows you to set custom array for AI on static weapons. (true: On false: Off) 
 		ai_static_array				= [["aimingAccuracy",0.20],["aimingShake",0.70],["aimingSpeed",0.75],["endurance",1.00],["spotDistance",0.70],["spotTime",0.50],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];
 
-		ai_gear0					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
-		ai_gear1					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
-		ai_gear_random				= [ai_gear0,ai_gear1];	// Allows the possibility of random gear
+		ai_gear0					= [["ItemBandage","ItemBandage","ItemAntibiotic"],["ItemRadio","ItemMachete","ItemCrowbar"]];
+		ai_gear1					= [["ItemBandage","ItemSodaPepsi","ItemMorphine"],["Binocular_Vector"]];
+		ai_gear2					= [["ItemDocument","FoodCanFrankBeans","ItemHeatPack"],["ItemToolbox"]];
+		ai_gear3					= [["ItemWaterbottle","ItemBloodbag"],["ItemCompass","ItemCrowbar"]];
+		ai_gear4					= [["ItemBandage","ItemEpinephrine","ItemPainkiller"],["ItemGPS","ItemKeyKit"]];
+		ai_gear_random				= [ai_gear0,ai_gear1,ai_gear2,ai_gear3,ai_gear4];	// Allows the possibility of random gear
 
 		ai_wep_assault				= ["M16A4_ACG","Sa58V_RCO_EP1","SCAR_L_STD_Mk4CQT","M8_sharpshooter","M4A1_HWS_GL_camo","SCAR_L_STD_HOLO","M4A3_CCO_EP1","M4A3_CCO_EP1","M4A1_AIM_SD_camo","M16A4","m8_carbine","BAF_L85A2_RIS_Holo","Sa58V_CCO_EP1"];	// Assault
 		ai_wep_machine				= ["RPK_74","MK_48_DZ","M249_EP1_DZ","Pecheneg_DZ","M240_DZ"];	// Light machine guns
@@ -114,27 +117,29 @@ if(isServer) then {
 		wai_radio_announce			= true;								// Setting this to true will announce the missions to those that hold a radio only
 		wai_hero_limit				= 1;								// define how many hero missions can run at once
 		wai_bandit_limit			= 1;								// define how many bandit missions can run at once
-		/* wai_special_limit			= 1;								// define how many special missions can run at once */
+		/* wai_special_limit		= 1;								// define how many special missions can run at once */
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
 										["black_hawk_crash",11],
-										["armed_vehicle",12],
+										["patrol",10],
+										["armed_vehicle",11],
 										["bandit_base",7],
 										["captured_mv22",6],
 										["ikea_convoy",7],
-										["destroyed_ural",16],
+										["destroyed_ural",10],
 										["disabled_milchopper",9],
 										["mayors_mansion",9],
-										["weapon_cache",12],
-										["bandit_patrol",11]
+										["weapon_cache",10],
+										["bandit_patrol",10]
 									];
 		wai_bandit_missions			= [
-										["armed_vehicle",12],
-										["black_hawk_crash",14],
+										["armed_vehicle",10],
+										["patrol",10],
+										["black_hawk_crash",10],
 										["captured_mv22",6],
-										["broken_down_ural",14],
+										["broken_down_ural",12],
 										["hero_base",6],
 										["ikea_convoy",8],
-										["medi_camp",16],
+										["medi_camp",14],
 										["presidents_mansion",6],
 										["sniper_extraction",8],
 										["weapon_cache",10]

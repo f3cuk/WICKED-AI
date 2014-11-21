@@ -101,7 +101,6 @@ if (isServer) then {
 		} count allUnits;
 
 		_unit = _ailist select (floor(random(count _ailist)));
-		
 		_unit addWeapon _carkey;
 		
 		_vehicle setvehiclelock "locked";
