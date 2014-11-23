@@ -86,7 +86,7 @@ if(isServer) then {
 		wai_avoid_water				= 50;								// avoid spawning missions this close to water
 
 		
-		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
+		wai_mission_timer			= [30,900];							// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
 		wai_timeout_distance		= 1000;								// if a player is this close to a mission then it won't time-out
 		
@@ -117,10 +117,10 @@ if(isServer) then {
 		wai_radio_announce			= true;								// Setting this to true will announce the missions to those that hold a radio only
 		wai_hero_limit				= 1;								// define how many hero missions can run at once
 		wai_bandit_limit			= 1;								// define how many bandit missions can run at once
-		/* wai_special_limit		= 1;								// define how many special missions can run at once */
+
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
-										["black_hawk_crash",11],
 										["patrol",10],
+										["black_hawk_crash",11],
 										["armed_vehicle",11],
 										["bandit_base",7],
 										["captured_mv22",6],
@@ -132,8 +132,8 @@ if(isServer) then {
 										["bandit_patrol",10]
 									];
 		wai_bandit_missions			= [
-										["armed_vehicle",10],
 										["patrol",10],
+										["armed_vehicle",10],
 										["black_hawk_crash",10],
 										["captured_mv22",6],
 										["broken_down_ural",12],
@@ -146,7 +146,7 @@ if(isServer) then {
 									];
 		
 		// Vehicle arrays
-		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Offroad_DSHKM_Gue_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
+		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
 		armed_chopper 				= ["CH_47F_EP1_DZE","UH1H_DZE","Mi17_DZE","UH60M_EP1_DZE","UH1Y_DZE","MH60S_DZE"];
 		civil_chopper 				= ["AH6X_DZ","BAF_Merlin_DZE","MH6J_DZ","Mi17_Civilian_DZ"];
 		military_unarmed 			= ["GAZ_Vodnik_MedEvac","HMMWV_Ambulance","HMMWV_Ambulance_CZ_DES_EP1","HMMWV_DES_EP1","HMMWV_DZ","HMMWV_M1035_DES_EP1","LandRover_CZ_EP1","LandRover_TK_CIV_EP1","UAZ_CDF","UAZ_INS","UAZ_RU","UAZ_Unarmed_TK_CIV_EP1","UAZ_Unarmed_TK_EP1","UAZ_Unarmed_UN_EP1"];

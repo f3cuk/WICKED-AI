@@ -1,7 +1,7 @@
 private["_vehicle","_type"];
 
-_vehicle 	= _this select 0;
-_type  		= _this select 1;
+_vehicle	= _this select 0;
+_type		= _this select 1;
 
 call {
 

@@ -58,6 +58,9 @@ if(isServer) then {
 	//Spawn vehicles
 	_vehicle = [_vehclass,_position,_mission] call custom_publish;
 
+	// load the guns
+	[_vehicle,_vehclass] spawn load_ammo;
+
 	//Setup patrol
 	[_vehicle,_position,_units,_pos_location,3] call patrol;
 	
@@ -76,7 +79,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_vehicle,6,0,0,2] call dynamic_crate;
+		[_vehicle,6,4,15,2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Armed Vehicle]: Ended at %1",_position];

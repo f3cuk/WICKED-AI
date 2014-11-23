@@ -21,6 +21,10 @@ if(isServer) then {
 	_killpercent 	= _max_ai - (_max_ai * (wai_kill_percent / 100));
 	_mission_units	= [];
 
+	if(_type == "patrol") then {
+		_start = true
+	};
+
 	{
 		
 		if (_x getVariable ["mission", nil] == _mission) then {
@@ -55,6 +59,7 @@ if(isServer) then {
 			if((isPlayer _x) && (_x distance _position <= 1500)) then {
 				_start = true
 			};
+
 		} count playableUnits;
 
 		if (_currenttime - _starttime >= _timeout_time) then {

@@ -2,7 +2,7 @@ if (isServer) then {
 
 	_this spawn {
 
-		private["_vehicle","_position","_unitgroup","_waypoint_data","_waypoints","_leader"];
+		private["_vehicle","_position","_unitgroup","_waypoint_data","_num_waypoints","_leader","_count_wp","_waypoints","_waypoint_prev","_msg","_wp"];
 
 		_vehicle 		= _this select 0;
 		_position 		= _this select 1;
@@ -11,8 +11,12 @@ if (isServer) then {
 		_num_waypoints 	= _this select 4;
 		_leader			= leader _unitgroup;
 		_count_wp		= count _waypoint_data;
+		_waypoint_prev	= "";
 
 		_vehicle setvehiclelock "UNLOCKED";
+
+		_unitgroup setBehaviour "COMBAT";
+		_unitgroup setCombatMode "YELLOW";
 
 		{
 
@@ -36,7 +40,7 @@ if (isServer) then {
 
 		} forEach units _unitgroup;
 
-		waitUntil {(_vehicle emptyPositions "DRIVER" == 0)};	// Wait until designated driver gets inside vehicle
+		waitUntil {(_vehicle emptyPositions "DRIVER" == 0)};	// Wait until driver gets inside vehicle
 
 		diag_log format["WAI: Driver is inside vehicle, continue.."];
 
@@ -63,6 +67,8 @@ if (isServer) then {
 
 			deleteWaypoint [_unitgroup, all];
 
+			waitUntil { (speed _vehicle < 10) };	// Wait until vehicle slows down before ejecting crew
+
 			{
 				_x action ["eject",vehicle _x];
 			} forEach crew _vehicle;
@@ -70,8 +76,6 @@ if (isServer) then {
 			_wp = _unitgroup addWaypoint [(getPos _vehicle),0];
 			_wp setWaypointType "GUARD";
 			_wp setWaypointBehaviour "COMBAT";
-			_unitgroup setBehaviour "COMBAT";
-			_unitgroup setCombatMode "YELLOW";
 
 		};
 
@@ -83,12 +87,22 @@ if (isServer) then {
 			_waypoints	= _waypoints - [-1];
 			
 			_wp = _unitgroup addWaypoint [(_waypoint select 1),0];
-			if(_i == _num_waypoints) then { _wp setWaypointType "GUARD"; } else { _wp setWaypointType "MOVE"; };
+			
+			if(_i == _num_waypoints) then { 
+				_wp setWaypointType "GUARD";
+			} else { 
+				_wp setWaypointType "MOVE";
+			};
+
 			_wp setWaypointBehaviour "CARELESS";
 			_wp setWaypointCombatMode "YELLOW";
+
+			if(_waypoint_prev != "") then {
+				_msg = format["[RADIO] The patrol arrived at %1, heading towards %2",_waypoint_prev,(_waypoint select 0)];
+			} else {
+				_msg = format["[RADIO] The patrol is seen moving towards %1",(_waypoint select 0)];
+			};
 			
-			_msg = format["[RADIO] The patrol is seen moving towards %1",(_waypoint select 0)];
-	
 			sleep random(10);
 			
 			if (wai_radio_announce) then {
@@ -99,6 +113,8 @@ if (isServer) then {
 			};
 			
 			waitUntil{sleep 1; (_vehicle distance (_waypoint select 1) < 30)};
+
+			_waypoint_prev = (_waypoint select 0);
 		};
 
 	};
