@@ -90,6 +90,7 @@ if(isServer) then {
 		wai_mission_fuel			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
 		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
+		wai_linux_server			= false;							// false = Windows (HiveExt.dll)		true = Linux Server (writer.pl)		has no effect when "wai_keep_vehicles = false;"
 
 		wai_crates_smoke			= true;								// pop smoke on crate when mission is finished during daytime
 		wai_crates_flares			= true;								// pop flare on crate when mission is finished during nighttime
