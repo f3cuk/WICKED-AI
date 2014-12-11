@@ -1,6 +1,6 @@
 if (isServer) then {
 
-    private ["_unit","_ailist","_keyid","_carkey","_hit","_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
+    private ["_unit","_ailist","_keyid","_carkey","_hit","_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key","_inventory"];
 
 	_count 			= count _this;
 	_classnames 	= _this select 0;
@@ -129,18 +129,35 @@ if (isServer) then {
 				if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
 			} count _hitpoints;
 
+			_inventory 	= [
+				getWeaponCargo _vehicle,
+				getMagazineCargo _vehicle,
+				getBackpackCargo _vehicle
+			];
+
 			_fuel 	= fuel _vehicle;
 			_uid 	= _worldspace call dayz_objectUID2;
 
-			_key 	= format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance,_class,_damage,_characterID,_worldspace,[],_array,_fuel,_uid];
+			_key 	= format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance,_class,_damage,_characterID,_worldspace,_inventory,_array,_fuel,_uid];
 
 			if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
+			if (wai_linux_server) then {
+				if (count(toArray(_key)) > 1020) then {
+					diag_log format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance,_class,_damage,_characterID,_worldspace,[],_array,_fuel,_uid];
+					if(debug_mode) then { diag_log ("Prevent diag_log limit..."); };
+					diag_log format["CHILD:39:%1:0:%2:",_uid,_inventory select 0]; // weapons
+					diag_log format["CHILD:39:%1:1:%2:",_uid,_inventory select 1]; // magazines
+					diag_log format["CHILD:39:%1:2:%2:",_uid,_inventory select 2]; // backpack  
+				} else {
+					diag_log _key;
+				};
+			} else {
+				_key call server_hiveWrite;
+			};
 
-			_key call server_hiveWrite;
-			
-			[_vehicle,_uid,_fuel,_damage,_array,_characterID,_class] call {
+			[_vehicle,_uid,_fuel,_damage,_array,_characterID,_class] spawn {
 
-				private["_vehicle","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_class"];
+				private["_vehicle","_uid","_fuel","_damage","_array","_characterID","_done","_retry","_key","_result","_outcome","_oid","_class","_res"];
 
 				_vehicle 		= _this select 0;
 				_uid 			= _this select 1;
@@ -151,24 +168,50 @@ if (isServer) then {
 				_class 			= _this select 6;
 				_done 			= false;
 
+				if (wai_linux_server) then {
+					sleep 5;
+				};
+
 				while {!_done} do {
-					_key 		= format["CHILD:388:%1:",_uid];
-					_result 	= _key call server_hiveReadWrite;
-					_outcome 	= _result select 0;
-
-					waitUntil {!isNil "_outcome"};
-
-					if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
-
-					if(_outcome == "PASS") then {
-						_oid = _result select 1;
-						_vehicle setVariable ["ObjectID", _oid, true];
-						if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
-						_done  = true;
+					if (wai_linux_server) then {
+						_key = format["\cache\objects\%1.sqf", _uid];
+						if(debug_mode) then { diag_log ("LOAD OBJECT ID: "+_key); };
+						_res = preprocessFile _key;
+						if(debug_mode) then { diag_log ("OBJECT ID CACHE: "+_res); };
+						if ((_res != "") and (!isNil "_res")) then {
+							_result  = call compile _res;
+							_outcome = _result select 0;
+							if (_outcome == "PASS") then {
+								_oid = _result select 1;
+								_vehicle setVariable ["ObjectID", _oid, true];
+								if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
+								_done = true;
+							} else {
+								if(debug_mode) then { diag_log("CUSTOM: trying again to get id for: " + str(_uid)); };
+								_done = false;
+							};
+						} else {
+							if(debug_mode) then { diag_log("CUSTOM: trying again to get id for: " + str(_uid)); };
+							_done = false;
+						};
+						_res = nil;
 					} else {
-						if(debug_mode) then { diag_log("CUSTOM: trying again to get id for: " + str(_uid)); };
-						_done = false;
+						_key 		= format["CHILD:388:%1:",_uid];
+						_result 	= _key call server_hiveReadWrite;
+						_outcome 	= _result select 0;
+						waitUntil {!isNil "_outcome"};
+						if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
+						if(_outcome != "PASS") then {
+							_oid = _result select 1;
+							_vehicle setVariable ["ObjectID", _oid, true];
+							if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
+							_done  = true;
+						} else {
+							if(debug_mode) then { diag_log("CUSTOM: trying again to get id for: " + str(_uid)); };
+							_done = false;
+						};
 					};
+					sleep 1;
 				};
 
 				if(!_done) then { 
