@@ -1,17 +1,12 @@
-WICKED AI 2.2.0
+WICKED AI 1.0.0
 ==============
 
-Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.5+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
+AI Missions for ARMA 3 Epoch. If you liked the ones on A2 Epoch, you are definately gonna love these!
 
-### Release 2.2.0
-- Multiple mission support
-- Automatic ammo finder (no need to specify ammo in weaponarray - config.sqf)
-- Option: Locked vehicles with keys randomly on AI
-- Option: Friendly AI
-- Added: Bandit Patrol mission
-- [And much more](https://github.com/f3cuk/WICKED-AI/blob/master/changelist.md)
+### Release 1.0.0
+- List of features (?)
 
-### Upcoming in 1.0.0
+### Upcoming in 1.1.0
 - 
 
 ### Version history
