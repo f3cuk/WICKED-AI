@@ -2,8 +2,11 @@ if(isServer) then {
 
 	private			["_complete","_president_himself","_crate_type","_mission","_position","_crate","_rndnum","_baserunover","_president","_firstlady"];
 
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	_position		= [50] call find_position;
-	_mission		= [_position,"Extreme","Presidents in Town","MainBandit",true] call mission_init;
+	[_mission,_position,"Extreme","Presidents in Town","MainBandit",true] call mission_init;
 	
 	diag_log 		format["WAI: [Mission:[Bandit] Presidents in Town]: Starting... %1",_position];
 
@@ -16,14 +19,14 @@ if(isServer) then {
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	[[_position select 0,_position select 1,0],4,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Extreme",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Extreme","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//The President Himself
 	_president = [[((_position select 0) + 5), _position select 1, 4.1],1,"Extreme","Random",4,"none","Special","Random",["Hero",750],_mission] call spawn_group;
-	_firstlady = [[((_position select 0) + 5), _position select 1, 4.1],1,"Easy","Unarmed",4,"none","Secretary1","Random",["Hero",250],_mission] call spawn_group;
+	_firstlady = [[((_position select 0) + 5), _position select 1, 4.1],1,"Extreme","Unarmed",4,"none","Secretary1","Random",["Hero",250],_mission] call spawn_group;
 
 	_president_himself = (units _president) select 0;
 	_president_himself disableAI "MOVE";
@@ -46,7 +49,7 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],			// mission number and crate
-		["assassinate",_president], // ["crate",wai_kill_percent], or ["kill"], or ["assassinate", _unitGroup],
+		["assassinate",_president], // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 			// cleanup objects
 		"The President is in town for a press conference, rumour has it bandits are planning his assasination",	// mission announcement
 		"The President has been assassinated, a day of mourning has been announced",							// mission success
@@ -59,5 +62,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Bandit] presidents_mansion ended at %1",_position];
 
-	b_missionrunning = false;
+	b_missionsrunning = b_missionsrunning - 1;
 };

@@ -1,22 +1,23 @@
-WICKED AI 2.1.4
+WICKED AI 2.2.0
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.5+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.1.0
-- Bandit and hero missions
-- Dynamic loot
-- More missions
-- Multi mission support
-- Better markers
+### Release 2.2.0
+- Multiple mission support
+- Automatic ammo finder (no need to specify ammo in weaponarray - config.sqf)
+- Option: Locked vehicles with keys randomly on AI
+- Option: Friendly AI
+- Added: Bandit Patrol mission
 - [And much more](https://github.com/f3cuk/WICKED-AI/blob/master/changelist.md)
 
-### Upcoming in 2.2.0+
-- C130 Missions
+### Upcoming in 2.3.0+
 - More missions
 - Further enhancements
 
 ### Version history
+- 11-11-2014 : BETA release v2 (2.2.0)
+- 16-10-2014 : BETA release (2.2.0)
 - 03-09-2014 : Minor bugfixes (2.1.4)
 - 03-09-2014 : Minor bugfixes (2.1.3)
 - 02-09-2014 : Minor bugfixes and improvements (2.1.2)
@@ -38,10 +39,49 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Installation Instructions
 
-1. Unpack `dayz_server.pbo`
-2. Add the WAI folder to your dayz_server directory
-3. In `server_monitor.sqf` find `allowConnection = true;` add above `ExecVM "\z\addons\dayz_server\WAI\init.sqf";`
-4. Repack `dayz_server.pbo`
+1. Click ***[Download Zip](https://github.com/f3cuk/WICKED-AI/archive/master.zip)*** on the right sidebar of this Github page.
+
+	> Recommended PBO tool for all "pack", "repack", or "unpack" steps: ***[PBO Manager](http://www.armaholic.com/page.php?id=16369)***
+
+2. Extract the downloaded folder to your desktop and open it
+3. Go to your server pbo and unpack it.
+4. Navigate to the new ***dayz_server*** folder and copy the WAI folder into this folder.
+5. Navigate to the ***system*** folder and open server_monitor.sqf
+
+	Find this code at the bottom of the file:
+
+	~~~~java
+	allowConnection = true;	
+	~~~~
+	
+	And past the following code ***above*** it:
+	
+	~~~~java
+	[] ExecVM "\z\addons\dayz_server\WAI\init.sqf";
+	~~~~
+
+6. Repack your server pbo.
+
+##### Optional Radio messages
+Note: These are on by default, change *wai_radio_announce* in config.sqf to *false* in order to disable them.
+
+1. Go to your mission pbo and unpack it.
+2. Open init.sqf
+
+	Find:
+
+	~~~~java
+	//[false,12] execVM "\z\addons\dayz_code\compile\local_lights_init.sqf";	
+	~~~~
+	
+	Add below:
+	
+	~~~~java
+	_nil = [] execVM "custom\remote_message\remote_message.sqf";
+	~~~~
+
+3. Copy the remote_message folder into your custom folder, if you do not have this one yet simply create it.
+4. Repack your mission pbo.
 
 ### Versioning
 

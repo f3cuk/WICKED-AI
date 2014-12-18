@@ -2,8 +2,11 @@ if(isServer) then {
 
 	private 		["_complete","_crate_type","_mission","_position","_crate","_baserunover","_baserunover1","_baserunover2"];
 
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	_position		= [30] call find_position;
-	_mission		= [_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
+	[_mission,_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
 	
 	diag_log 		format["WAI: [Mission:[Bandit] Medical Supply Camp]: Starting... %1",_position];
 
@@ -19,9 +22,9 @@ if(isServer) then {
 	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
 	//Troops
+	[[_position select 0,_position select 1,0],4,"Easy",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[_position select 0,_position select 1,0],4,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//Condition
 	_complete = [
@@ -39,5 +42,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Bandit] Medical Supply Camp]: Ended at %1",_position];
 	
-	b_missionrunning = false;
+	b_missionsrunning = b_missionsrunning - 1;
 };

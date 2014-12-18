@@ -6,7 +6,7 @@ if(isServer) then {
 	_position		= [80] call find_position;
 	
 	// Initialise the mission variable with the following options, [position, difficulty, mission name, mission type (MainHero/Mainbandit), minefield (true or false)] call mission_init;
-	_mission 		= [_position,"hard","Test Mission","MainHero",true] call mission_init;
+	[_mission,_position,"hard","Test Mission","MainHero",true] call mission_init;
 
 	diag_log 		format["WAI: Mission Test Mission started at %1",_position];
 
@@ -116,7 +116,7 @@ if(isServer) then {
 	// Mission objective options and messages
 	[
 		[_mission,_crate],	// mission variable (from line 9) and crate
-		["crate"], 			// Mission objective type (["crate"], or ["kill",wai_kill_percent], or ["assassinate", _assassinate])
+		["crate"], 			// Mission objective type (["crate"], or ["kill"], or ["assassinate", _assassinate])
 		[_baserunover], 	// buildings to cleanup after mission is complete, does not include the crate
 		"A Mission has spawned, hurry up to claim the loot!",	// mission announcement
 		"The mission was complete/objective reached",			// mission success
@@ -126,5 +126,5 @@ if(isServer) then {
 	// End of mission
 	diag_log format["WAI: Mission bandit base ended at %1 ended",_position];
 
-	h_missionrunning = false;
+	h_missionsrunning = h_missionsrunning - 1;
 };

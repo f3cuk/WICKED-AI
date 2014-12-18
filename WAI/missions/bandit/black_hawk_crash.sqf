@@ -2,8 +2,11 @@ if(isServer) then {
 
 	private 		["_complete","_crate_type","_mission","_playerPresent","_position","_crate","_baserunover"];
 
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	_position		= [30] call find_position;
-	_mission		= [_position,"Medium","Black Hawk Crash","MainBandit",true] call mission_init;
+	[_mission,_position,"Medium","Black Hawk Crash","MainBandit",true] call mission_init;
 
 	diag_log 		format["WAI: [Mission:[Bandit] Black Hawk Crash]: Starting... %1",_position];
 
@@ -16,7 +19,7 @@ if(isServer) then {
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
@@ -42,5 +45,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Bandit] Black Hawk Crash]: Ended at %1",_position];
 	
-	b_missionrunning = false;
+	b_missionsrunning = b_missionsrunning - 1;
 };

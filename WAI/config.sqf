@@ -1,11 +1,10 @@
 if(isServer) then {
 
 	/* GENERAL CONFIG */
-	
-		debug_mode				= false;		// enable debug
+
+		debug_mode					= false;		// enable debug
 		use_blacklist				= true;			// use blacklist
 		blacklist					= [
-			[[5533.00,8445.00],[6911.00,7063.00]],	// Stary
 			[[0,16000,0],[1000,-0,0]],				// Left
 			[[0,16000,0],[16000.0,14580.3,0]]		// Top
 		];
@@ -20,14 +19,19 @@ if(isServer) then {
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
-		ai_bandit_combatmode		= "YELLOW";		// combatmode of bandit AI
+		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
 		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_hero_combatmode			= "YELLOW";		// combatmode of hero AI
+		ai_hero_combatmode			= "RED";		// combatmode of hero AI
 		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
 
+		ai_friendly_behaviour		= false;		// make ai friendly towards comrades
+
+		player_bandit				= -5000;		// this is the amount you declare someone to be a bandit on your server, bandit AI will not attack you if ai_friendly_behaviour is true
+		player_hero					= 5000;			// this is the amount you declare someone to be a hero on your server, hero AI will not attack you if ai_friendly_behaviour is true
+
 		ai_share_info				= true;			// AI share info on player position
-		ai_share_distance			= 300;			// Distance from killed AI for AI to share your rough position
+		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
 
 		ai_kills_gain				= true;			// add kill to bandit/human kill score
 		ai_humanity_gain			= true;			// gain humanity for killing AI
@@ -47,13 +51,16 @@ if(isServer) then {
 		ai_static_skills			= false;	// Allows you to set custom array for AI on static weapons. (true: On false: Off) 
 		ai_static_array				= [["aimingAccuracy",0.20],["aimingShake",0.70],["aimingSpeed",0.75],["endurance",1.00],["spotDistance",0.70],["spotTime",0.50],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];
 
-		ai_gear0					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
-		ai_gear1					= [["ItemBandage","ItemBandage","ItemPainkiller"],["ItemKnife","ItemFlashlight"]];
-		ai_gear_random				= [ai_gear0,ai_gear1];	// Allows the possibility of random gear
+		ai_gear0					= [["ItemBandage","ItemBandage","ItemAntibiotic"],["ItemRadio","ItemMachete","ItemCrowbar"]];
+		ai_gear1					= [["ItemBandage","ItemSodaPepsi","ItemMorphine"],["Binocular_Vector"]];
+		ai_gear2					= [["ItemDocument","FoodCanFrankBeans","ItemHeatPack"],["ItemToolbox"]];
+		ai_gear3					= [["ItemWaterbottle","ItemBloodbag"],["ItemCompass","ItemCrowbar"]];
+		ai_gear4					= [["ItemBandage","ItemEpinephrine","ItemPainkiller"],["ItemGPS","ItemKeyKit"]];
+		ai_gear_random				= [ai_gear0,ai_gear1,ai_gear2,ai_gear3,ai_gear4];	// Allows the possibility of random gear
 
-		ai_wep_assault				= [["M16A4_ACG","30Rnd_556x45_Stanag"],["Sa58V_RCO_EP1","30Rnd_762x39_AK47"],["SCAR_L_STD_Mk4CQT","30Rnd_556x45_Stanag"],["M8_sharpshooter","30Rnd_556x45_Stanag"],["M4A1_HWS_GL_camo","30Rnd_556x45_Stanag"],["SCAR_L_STD_HOLO","30Rnd_556x45_Stanag"],["M4A3_CCO_EP1","30Rnd_556x45_Stanag"],["M4A3_CCO_EP1","30Rnd_556x45_Stanag"],["M4A1_AIM_SD_camo","30Rnd_556x45_StanagSD"],["M16A4","30Rnd_556x45_Stanag"],["m8_carbine","30Rnd_556x45_Stanag"],["BAF_L85A2_RIS_Holo","30Rnd_556x45_Stanag"],["Sa58V_CCO_EP1","30Rnd_762x39_AK47"]];	// Assault
-		ai_wep_machine				= [["RPK_74","75Rnd_545x39_RPK"],["MK_48_DZ","100Rnd_762x51_M240"],["M249_EP1_DZ","200Rnd_556x45_M249"],["Pecheneg_DZ","100Rnd_762x54_PK"],["M240_DZ","100Rnd_762x51_M240"]];	// Light machine guns
-		ai_wep_sniper				= [["M14_EP1","20Rnd_762x51_DMR"],["SCAR_H_LNG_Sniper_SD","20Rnd_762x51_SB_SCAR"],["M110_NVG_EP1","20rnd_762x51_B_SCAR"],["SVD_CAMO","10Rnd_762x54_SVD"],["VSS_Vintorez","20Rnd_9x39_SP5_VSS"],["DMR","20Rnd_762x51_DMR"],["M40A3","5Rnd_762x51_M24"]];	// Sniper rifles
+		ai_wep_assault				= ["M16A4_ACG","Sa58V_RCO_EP1","SCAR_L_STD_Mk4CQT","M8_sharpshooter","M4A1_HWS_GL_camo","SCAR_L_STD_HOLO","M4A3_CCO_EP1","M4A3_CCO_EP1","M4A1_AIM_SD_camo","M16A4","m8_carbine","BAF_L85A2_RIS_Holo","Sa58V_CCO_EP1"];	// Assault
+		ai_wep_machine				= ["RPK_74","MK_48_DZ","M249_EP1_DZ","Pecheneg_DZ","M240_DZ"];	// Light machine guns
+		ai_wep_sniper				= ["M14_EP1","SCAR_H_LNG_Sniper_SD","M110_NVG_EP1","SVD_CAMO","VSS_Vintorez","DMR_DZ","M40A3"];	// Sniper rifles
 		ai_wep_random				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
 		ai_wep_launchers_AT			= ["M136","RPG18","JAVELIN"];
 		ai_wep_launchers_AA			= ["Strela","Igla","STINGER"];
@@ -72,24 +79,25 @@ if(isServer) then {
 		wai_mission_system			= true;	// use built in mission system
 
 		wai_mission_markers			= ["DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker"];
+		wai_avoid_missions			= 750;								// avoid spawning missions this close to other missions, these are defined in wai_mission_markers
+		wai_avoid_traders			= 750;								// avoid spawning missions this close to traders
+		wai_avoid_town				= 0;								// avoid spawning missions this close to towns, *** doesn't function with infiSTAR enabled ***
+		wai_avoid_road				= 0;								// avoid spawning missions this close to roads
+		wai_avoid_water				= 50;								// avoid spawning missions this close to water
 
-		wai_avoid_missions			= true;								// avoid spawning near other missions, these are defined in wai_mission_markers
-		wai_avoid_traders			= true;								// avoid spawning missions near traders
-		wai_mission_spread			= 750;								// make missions spawn this far apart from one another and other markers
-		wai_near_town				= 0;								// make missions check for towns around this radius
-		wai_near_road				= 0;								// make missions check for roads around this radius
-		wai_near_water				= 50;								// nearest water allowed near missions
 		
-		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
+		wai_mission_timer			= [30,900];							// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
 		wai_timeout_distance		= 1000;								// if a player is this close to a mission then it won't time-out
 		
 		wai_clean_mission			= true;								// clean all mission buildings after a certain period
 		wai_clean_mission_time		= 1800;								// time after a mission is complete to clean mission buildings
 
-		wai_mission_fuel			= [10,20];							// fuel inside mission spawned vehicles [min%,max%]
-		wai_vehicle_damage			= [20,80];							// damages to spawn vehicles with [min%,max%]
+		wai_mission_fuel			= [5,60];							// fuel inside mission spawned vehicles [min%,max%]
+		wai_vehicle_damage			= [20,70];							// damages to spawn vehicles with [min%,max%]
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
+		wai_linux_server			= false;							// false = Windows (HiveExt.dll)		true = Linux Server (writer.pl)		has no effect when "wai_keep_vehicles = false;"
+		wai_lock_vehicles			= true;								// lock mission vehicles and add keys to random AI bodies (be careful with ai_clean_dead if this is true
 
 		wai_crates_smoke			= true;								// pop smoke on crate when mission is finished during daytime
 		wai_crates_flares			= true;								// pop flare on crate when mission is finished during nighttime
@@ -103,41 +111,43 @@ if(isServer) then {
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
 
 		wai_enable_minefield		= true;								// enable minefields to better defend missions
-		wai_use_launchers			= false;							// add a rocket launcher to each spawned AI group
-		wai_remove_launcher			= false;							// remove rocket launcher from AI on death
+		wai_use_launchers			= true;								// add a rocket launcher to each spawned AI group
+		wai_remove_launcher			= true;								// remove rocket launcher from AI on death
 
 		// Missions
+		wai_radio_announce			= true;								// Setting this to true will announce the missions to those that hold a radio only
+		wai_hero_limit				= 1;								// define how many hero missions can run at once
+		wai_bandit_limit			= 1;								// define how many bandit missions can run at once
+
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
-										["black_hawk_crash",12],
-										["armed_vehicle",13],
-										["bandit_base",8],
-										["captured_mv22",8],
-										["ikea_convoy",8],
-										["destroyed_ural",18],
-										["disabled_milchopper",10],
-										["mayors_mansion",10],
-										["weapon_cache",13]
+										["patrol",10],
+										["black_hawk_crash",11],
+										["armed_vehicle",11],
+										["bandit_base",7],
+										["captured_mv22",6],
+										["ikea_convoy",7],
+										["destroyed_ural",10],
+										["disabled_milchopper",9],
+										["mayors_mansion",9],
+										["weapon_cache",10],
+										["bandit_patrol",10]
 									];
 		wai_bandit_missions			= [
-										["armed_vehicle",12],
-										["black_hawk_crash",14],
+										["patrol",10],
+										["armed_vehicle",10],
+										["black_hawk_crash",10],
 										["captured_mv22",6],
-										["broken_down_ural",14],
+										["broken_down_ural",12],
 										["hero_base",6],
 										["ikea_convoy",8],
-										["medi_camp",16],
+										["medi_camp",14],
 										["presidents_mansion",6],
 										["sniper_extraction",8],
 										["weapon_cache",10]
 									];
-		/*
-		wai_special_missions		= [
-										["bunny_ranch",100]
-									];
-		*/
 		
 		// Vehicle arrays
-		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Offroad_DSHKM_Gue_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
+		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
 		armed_chopper 				= ["CH_47F_EP1_DZE","UH1H_DZE","Mi17_DZE","UH60M_EP1_DZE","UH1Y_DZE","MH60S_DZE"];
 		civil_chopper 				= ["AH6X_DZ","BAF_Merlin_DZE","MH6J_DZ","Mi17_Civilian_DZ"];
 		military_unarmed 			= ["GAZ_Vodnik_MedEvac","HMMWV_Ambulance","HMMWV_Ambulance_CZ_DES_EP1","HMMWV_DES_EP1","HMMWV_DZ","HMMWV_M1035_DES_EP1","LandRover_CZ_EP1","LandRover_TK_CIV_EP1","UAZ_CDF","UAZ_INS","UAZ_RU","UAZ_Unarmed_TK_CIV_EP1","UAZ_Unarmed_TK_EP1","UAZ_Unarmed_UN_EP1"];
@@ -150,7 +160,7 @@ if(isServer) then {
 		crates_medium				= ["USBasicWeaponsBox","RUBasicWeaponsBox","USSpecialWeaponsBox","USSpecialWeapons_EP1","RUSpecialWeaponsBox","SpecialWeaponsBox","TKSpecialWeapons_EP1","CZBasicWeapons_EP1","UNBasicWeapons_EP1"];
 		crates_small				= ["GuerillaCacheBox","RULaunchersBox","RUBasicAmmunitionBox","RUOrdnanceBox","USBasicAmmunitionBox","USLaunchersBox","USOrdnanceBox","USOrdnanceBox_EP1","USLaunchers_EP1","USBasicWeapons_EP1","USBasicAmmunitionBox_EP1","UNBasicAmmunitionBox_EP1","TKOrdnanceBox_EP1","TKLaunchers_EP1","TKBasicAmmunitionBox_EP1","GuerillaCacheBox_EP1","GERBasicWeapons_EP1"];
 
-		crate_weapons_buildables	= [["ChainSaw","ItemJerryMixed"],["ChainSawB","ItemJerryMixed"],["ChainSawG","ItemJerryMixed"],["ChainSawP","ItemJerryMixed"],["ChainSawR","ItemJerryMixed"]];
+		crate_weapons_buildables	= ["ChainSaw","ChainSawB","ChainSawG","ChainSawP","ChainSawR"];
 		
 		crate_tools					= ["ItemKeyKit","Binocular","Binocular_Vector","ItemCompass","ItemCrowbar","ItemEtool","ItemFishingPole","ItemFlashlightRed","ItemGPS","ItemHatchet_DZE","ItemKnife","ItemMachete","ItemMatchbox_DZE","ItemToolbox","NVGoggles"];
 		crate_tools_buildable		= ["ItemToolbox","ItemEtool","ItemCrowbar","ItemKnife"];
@@ -180,6 +190,6 @@ if(isServer) then {
 
 	/* END STATIC MISSIONS CONFIG */
 
-	configloaded = true;
+	WAIconfigloaded = true;
 
 };
