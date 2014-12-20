@@ -1,6 +1,8 @@
-private ["_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array"];
+private ["_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array"];
 
 _crate = _this select 0;
+_crate setVariable ["ObjectID","1",true];
+_crate setVariable ["permaLoot",true];
 
 if(typeName (_this select 1) == "ARRAY") then {
 	_num_weapons	= (_this select 1) select 0;
@@ -49,8 +51,9 @@ if(_num_weapons > 0) then {
 
 	for "_i" from 1 to _num_weapons do {
 		_weapon = _weapons_array call BIS_fnc_selectRandom;
-		_crate addWeaponCargoGlobal [(_weapon select 0),1];
-		_crate addMagazineCargoGlobal [(_weapon select 1), (1 + floor(random 5))];
+		_ammo = _weapon call find_suitable_ammunition;
+		_crate addWeaponCargoGlobal [_weapon,1];
+		_crate addMagazineCargoGlobal [_ammo, (1 + floor(random 5))];
 	};
 
 };

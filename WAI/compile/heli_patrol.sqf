@@ -29,7 +29,7 @@ if (isServer) then {
 		if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
 	};
-	
+
 	if(typeName _aiskin == "ARRAY") then {
 		_aiskin = _aiskin call BIS_fnc_selectRandom;
 	};
@@ -115,7 +115,20 @@ if (isServer) then {
 	_unitGroup allowFleeing 0;
 	_unitGroup setBehaviour "AWARE";
 	_unitGroup setSpeedMode "FULL";
-	_unitGroup setCombatMode "RED";
+
+	if(_aitype == "Hero") then {
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn hero_behaviour;
+		} else {
+			[_unitGroup] spawn hero_behaviour;
+		};
+	} else {
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn bandit_behaviour;
+		} else {
+			[_unitGroup] spawn bandit_behaviour;
+		};
+	};
 
 	if(_wpnum > 0) then {
 
