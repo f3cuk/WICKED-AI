@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
@@ -92,9 +92,9 @@ if (isServer) then {
 	} count _skillarray;
 
 	{
-		_x addweapon "Makarov";
-		_x addmagazine "8Rnd_9x18_Makarov";
-		_x addmagazine "8Rnd_9x18_Makarov";
+		_x addweapon "1911_pistol_epoch";
+		_x addmagazine "9Rnd_45ACP_Mag";
+		_x addmagazine "9Rnd_45ACP_Mag";
 	} count (units _unitgroup);
 
 	{
@@ -114,21 +114,6 @@ if (isServer) then {
 	[_vehicle] spawn vehicle_monitor;
 
 	_unitGroup 				allowFleeing 0;
-
-	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
-		} else {
-			[_unitGroup] spawn hero_behaviour;
-		};
-	} else {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
-		} else {
-			[_unitGroup] spawn bandit_behaviour;
-		};
-	};
-
 	_unitGroup 				setBehaviour "AWARE";
 	_unitGroup 				setCombatMode "RED";
 

@@ -29,7 +29,7 @@ if (isServer) then {
 		if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
 	};
-
+	
 	if(typeName _aiskin == "ARRAY") then {
 		_aiskin = _aiskin call BIS_fnc_selectRandom;
 	};
@@ -100,9 +100,9 @@ if (isServer) then {
 	} count _aicskill;
 
 	{
-		_x addweapon "Makarov";
-		_x addmagazine "8Rnd_9x18_Makarov";
-		_x addmagazine "8Rnd_9x18_Makarov";
+		_x addweapon "1911_pistol_epoch";
+		_x addmagazine "9Rnd_45ACP_Mag";
+		_x addmagazine "9Rnd_45ACP_Mag";
 	} count (units _unitgroup);
 
 	{
@@ -115,20 +115,7 @@ if (isServer) then {
 	_unitGroup allowFleeing 0;
 	_unitGroup setBehaviour "AWARE";
 	_unitGroup setSpeedMode "FULL";
-
-	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
-		} else {
-			[_unitGroup] spawn hero_behaviour;
-		};
-	} else {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
-		} else {
-			[_unitGroup] spawn bandit_behaviour;
-		};
-	};
+	_unitGroup setCombatMode "RED";
 
 	if(_wpnum > 0) then {
 
@@ -143,6 +130,7 @@ if (isServer) then {
 	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100];
 	_wp setWaypointType "CYCLE";
 	_wp setWaypointCompletionRadius 200;
+	
+	_unitGroup;
 
-	_unitGroup
 };

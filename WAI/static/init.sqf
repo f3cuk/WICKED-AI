@@ -4,12 +4,12 @@ if(isServer) then {
 
 	if(custom_per_world) then {
 
-		ExecVM format["\z\addons\dayz_server\WAI\static\%1.sqf",toLower(worldName)];
+		ExecVM format["\WAI\static\%1.sqf",toLower(worldName)];
 
 	} else {
 
-		ExecVM "\z\addons\dayz_server\WAI\static\default.sqf";
+		ExecVM "\WAI\static\default.sqf";
 
 	};
-	wai_staticloaded = true;
+
 };

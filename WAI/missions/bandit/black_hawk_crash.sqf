@@ -2,11 +2,8 @@ if(isServer) then {
 
 	private 		["_complete","_crate_type","_mission","_playerPresent","_position","_crate","_baserunover"];
 
-	// Get mission number, important we do this early
-	_mission 		= count wai_mission_data -1;
-
 	_position		= [30] call find_position;
-	[_mission,_position,"Medium","Black Hawk Crash","MainBandit",true] call mission_init;
+	_mission		= [_position,"Medium","Black Hawk Crash","MainBandit",true] call mission_init;
 
 	diag_log 		format["WAI: [Mission:[Bandit] Black Hawk Crash]: Starting... %1",_position];
 
@@ -15,11 +12,11 @@ if(isServer) then {
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 
 	//Base
-	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 5), ((_position select 1) + 5), 0],[],10,"FORM"];
+	_baserunover 	= createVehicle ["Land_UWreck_Heli_Attack_02_F",[((_position select 0) + 5), ((_position select 1) + 5), 0],[],10,"FORM"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	[[_position select 0,_position select 1,0],3,"Medium",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],3,"Medium","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
@@ -27,7 +24,7 @@ if(isServer) then {
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0]
-	],"M2StaticMG","Easy","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
+	],"O_HMG_01_support_high_F","Easy","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Condition
 	_complete = [
@@ -45,5 +42,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Bandit] Black Hawk Crash]: Ended at %1",_position];
 	
-	b_missionsrunning = b_missionsrunning - 1;
+	b_missionrunning = false;
 };

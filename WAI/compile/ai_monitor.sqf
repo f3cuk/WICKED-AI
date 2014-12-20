@@ -18,6 +18,7 @@ if (isServer) then {
 		};
 
 		if(debug_mode) then {
+			
 			diag_log format ["WAI: %1 Active ground units", ai_ground_units];
 			diag_log format ["WAI: %1 Active emplacement units", ai_emplacement_units];
 			diag_log format ["WAI: %1 Active chopper patrol units (Crew)", ai_air_units];

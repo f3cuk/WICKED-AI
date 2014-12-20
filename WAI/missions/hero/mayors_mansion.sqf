@@ -2,24 +2,21 @@ if(isServer) then {
 
 	private			["_room","_complete","_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
 
-	// Get mission number, important we do this early
-	_mission 		= count wai_mission_data -1;
-
 	_position		= [40] call find_position;
-	[_mission,_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
+	_mission		= [_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
 	
 	diag_log 		format["WAI: [Mission:[Hero] Mayors Mansion]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle ["Cargo_Container",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
 	 
 	//Mayors Mansion
-	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
+	_baserunover 	= createVehicle ["Land_i_House_Big_01_V2_F",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
-	[[_position select 0,_position select 1,0],4,"Hard",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
@@ -52,15 +49,15 @@ if(isServer) then {
 	[[
 		[(_position select 0) - 15, (_position select 1) + 15, 8],
 		[(_position select 0) + 15, (_position select 1) - 15, 8]
-	],"M2StaticMG","Easy","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
+	],"O_HMG_01_support_high_F","Easy","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
 
 	_complete = [
 		[_mission,_crate],		// mission number and crate
 		["assassinate",_mayor], // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 		// cleanup objects
-		"The Mayor has gone rogue, go take him and his task force out to claim the black market weapons!",	// mission announcement
+		"The Mayor has gone rogue!  Go take him and his task force out to claim the black market weapons!",	// mission announcement
 		"The rogue mayor has been taken out, who will be the next Mayor of Cherno?",						// mission success
-		"Survivors were unable to capture the mansion, time is up"										// mission fail
+		"Survivors were unable to capture the mansion.  Cherno will forever be ruled by a tyrant!"										// mission fail
 	] call mission_winorfail;
 
 	if(_complete) then {
@@ -69,5 +66,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Hero] Mayors Mansion]: Ended at %1",_position];
 
-	h_missionsrunning = h_missionsrunning - 1;
+	h_missionrunning = false;
 };

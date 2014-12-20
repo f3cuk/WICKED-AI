@@ -2,11 +2,8 @@ if(isServer) then {
 
 	private 		["_complete","_crate_type","_mission","_position","_crate","_baserunover","_baserunover1","_baserunover2"];
 
-	// Get mission number, important we do this early
-	_mission 		= count wai_mission_data -1;
-
 	_position		= [30] call find_position;
-	[_mission,_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
+	_mission		= [_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
 	
 	diag_log 		format["WAI: [Mission:[Bandit] Medical Supply Camp]: Starting... %1",_position];
 
@@ -15,16 +12,16 @@ if(isServer) then {
 	_crate 			= createVehicle [_crate_type,[(_position select 0) + 15,(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
 
 	//Medical Supply Camp
-	_baserunover1 	= createVehicle ["Land_fortified_nest_big",[(_position select 0) +15, (_position select 1) -20,0],[], 0, "CAN_COLLIDE"];
-	_baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
+	_baserunover1 	= createVehicle ["Land_BagBunker_Small_F",[(_position select 0) +15, (_position select 1) -20,0],[], 0, "CAN_COLLIDE"];
+	_baserunover2 	= createVehicle ["Land_BagBunker_Tower_F",[(_position select 0) +25, (_position select 1) +10,0],[], 0, "CAN_COLLIDE"];
 	_baserunover 	= [_baserunover1,_baserunover2];
 
 	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
 	//Troops
-	[[_position select 0,_position select 1,0],4,"Easy",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],4,"Easy","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],4,"Random","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
 	//Condition
 	_complete = [
@@ -42,5 +39,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Mission:[Bandit] Medical Supply Camp]: Ended at %1",_position];
 	
-	b_missionsrunning = b_missionsrunning - 1;
+	b_missionrunning = false;
 };
