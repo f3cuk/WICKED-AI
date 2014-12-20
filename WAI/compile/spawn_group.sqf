@@ -1,6 +1,6 @@
 if (isServer) then {
 
-    private ["_rocket","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
+    private ["_rocket","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_pos_x 			= _position select 0;
@@ -69,21 +69,21 @@ if (isServer) then {
 			} else {
 				if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
 				if(_gun == "unarmed") 	exitWith { _unarmed = true; };
-				_weapon = _gun;
 			}
 		};
 
 		if (!_unarmed) then {
-			_weapon 	= _aiweapon call BIS_fnc_selectRandom;
-			_magazine 	= _weapon 	call find_suitable_ammunition;
+			_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
+			_weapon 		= _weaponandmag select 0;
+			_magazine 		= _weaponandmag select 1;
 		};
 
 		call {
 			if(typeName(_gear) == "SCALAR") then {
-				if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
-				if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
+				if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
+				if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
 			} else {
-				if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
+				if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
 			};
 		};
 		
@@ -91,10 +91,10 @@ if (isServer) then {
 		_geartools 		= _aigear select 1;
 
 		call {
-			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin 		call BIS_fnc_selectRandom; };
-			if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin 		call BIS_fnc_selectRandom; };
-			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin 	call BIS_fnc_selectRandom; };
-			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin 	call BIS_fnc_selectRandom; };
+			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+			if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
 		};
 
@@ -105,6 +105,8 @@ if (isServer) then {
 		_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
 		[_unit] joinSilent _unitGroup;
 
+		
+		//****Humanity system will need removed for A3 Epoch
 		call {
 			if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
 			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_add_humanity]; };
@@ -119,21 +121,25 @@ if (isServer) then {
 			_aipack = _backpack;
 		};
 		
-		if (isNil "_mission") then {
-		
-			_unit enableAI "TARGET";
-			_unit enableAI "AUTOTARGET";
-			_unit enableAI "MOVE";
-			_unit enableAI "ANIM";
-			_unit enableAI "FSM";
-		
-		};
+		_unit enableAI "TARGET";
+		_unit enableAI "AUTOTARGET";
+		_unit enableAI "MOVE";
+		_unit enableAI "ANIM";
+		_unit enableAI "FSM";
 
+		if(_aitype == "Hero") then {
+			_unit setCombatMode ai_hero_combatmode;
+			_unit setBehaviour ai_hero_behaviour;
+		} else {
+			_unit setCombatMode ai_bandit_combatmode;
+			_unit setBehaviour ai_bandit_behaviour;
+		};
+		
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 
 		if (sunOrMoon != 1) then {
-			_unit addweapon "NVGoggles";
+			_unit addweapon "NVG_EPOCH";
 		};
 
 		if (!_unarmed) then {
@@ -174,7 +180,8 @@ if (isServer) then {
 		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
 
 		if (!isNil "_mission") then {
-			wai_mission_data select _mission set [0, (((wai_mission_data select _mission) select 0) + 1)];
+			_ainum = (wai_mission_data select _mission) select 0;
+			wai_mission_data select _mission set [0, (_ainum + 1)];
 			_unit setVariable ["missionclean", "ground"];
 			_unit setVariable ["mission", _mission, true];
 		};
@@ -195,20 +202,6 @@ if (isServer) then {
 
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
-
-	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
-		} else {
-			[_unitGroup] spawn hero_behaviour;
-		};
-	} else {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
-		} else {
-			[_unitGroup] spawn bandit_behaviour;
-		};
-	};
 
 	if(_pos_z == 0) then {
 		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;

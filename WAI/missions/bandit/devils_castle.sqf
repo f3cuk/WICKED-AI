@@ -3,16 +3,18 @@ if(isServer) then {
 	private 		["_baserunover","_mission","_directions","_position","_crate","_crate_type","_num"];
 
 	// Get a safe position 80 meters from the nearest object
-	_position		= [80] call find_position;
+	_position		= [6883.49,11440.7];
 	
 	// Initialise the mission variable with the following options, [position, difficulty, mission name, mission type (MainHero/Mainbandit), minefield (true or false)] call mission_init;
-	_mission 		= [_position,"hard","Test Mission","MainHero",true] call mission_init;
+	_mission 		= [_position,"hard","Devil's Castle","MainBandit",true] call mission_init;
 
-	diag_log 		format["WAI: Mission Test Mission started at %1",_position];
+	diag_log 		format["WAI: Mission Devil's Castle started at %1",_position];
 
 	//Setup the crate
-	_crate_type 	= crates_large call BIS_fnc_selectrandom; // Choose between crates_large, crates_medium and crates_small
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+	_crate = createVehicle ["C_supplyCrate_F",[6883.49,11440.7,0.001],[],0,"CAN_COLLIDE"];
+	_crate1 = createVehicle ["C_supplyCrate_F",[6878.31,11443.5,0.002],[],0,"CAN_COLLIDE"];
+	[_crate,[2,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],4] call dynamic_crate;
+	[_crate1,[16,ai_wep_sniper],[8,crate_tools_sniper],[3,crate_items_high_value],[4,crate_backpacks_large]] call dynamic_crate;
 
 	// Crate Spawn Example
 	// Parameters:	0: _crate
@@ -20,8 +22,9 @@ if(isServer) then {
 	//				2: Max number of tools OR [MAX number of tools,tool_array]
 	//				3: Max number of items OR [MAX number of items,item_array]
 	//				4: Max number of backpacks OR [MAX number of backpacks,backpack_array]
-	[_crate,16,[8,crate_tools_sniper],[3,crate_items_high_value],[4,crate_backpacks_large]] call dynamic_crate;
+	//[_crate,16,[8,crate_tools_sniper],[3,crate_items_high_value],[4,crate_backpacks_large]] call dynamic_crate;
 	 
+	/*
 	// Create some Buildings
 	_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
 	_baserunover1 	= createVehicle ["land_fortified_nest_big",[(_position select 0) + 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
@@ -41,7 +44,7 @@ if(isServer) then {
 
 	// Make buildings flat on terrain surface
 	{ _x setVectorUp surfaceNormal position _x; } count _baserunover;
-
+	*/
 	// Group Spawn Examples
 	// Parameters:	0: Position
 	//				1: Unit Count
@@ -61,8 +64,9 @@ if(isServer) then {
 	[[_position select 0, _position select 1, 0],4,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
 	[[_position select 0, _position select 1, 0],4,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
-
-
+	[[_position select 0, _position select 1, 0],4,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;	
+	[[_position select 0, _position select 1, 0],4,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
+	
 	// Humvee Patrol Example
 	// Parameters:	0: Patrol position
 	//				1: Starting position
@@ -73,7 +77,7 @@ if(isServer) then {
 	//				6: Skin ("Hero","bandit","random","special" or "classname")
 	//				7: AI Type ("bandit","Hero" or "special") ***Used to determine humanity gain or loss***
 	//				8: Mission variable from line 9 (_mission)
-	[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","random","bandit","bandit",_mission] call vehicle_patrol;
+	//[[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","random","bandit","bandit",_mission] call vehicle_patrol;
 	 
 	// Static Turret Examples
 	// Parameters:	0: Spawn position
@@ -86,11 +90,10 @@ if(isServer) then {
 	//				7: Backpack ("random" or "classname") ***NO effect if ai_static_useweapon = false;***
 	//				8: Gear (0:ai_gear0, 1:ai_gear1, 2:ai_gear2, 3:ai_gear3, 4:ai_gear4 or "random") ***NO effect if ai_static_useweapon = false;***
 	//				9: Mission variable from line 9 (_mission)
-	};
-	[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
-	[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
-	[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
-	[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
+	
+	[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"O_HMG_01_support_high_F","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
+	[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"O_HMG_01_support_high_F","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
+	
 
 	// Heli Paradrop Example
 	// Parameters:	0: Paradrop position
@@ -107,20 +110,20 @@ if(isServer) then {
 	//				11: AI Type ("bandit","Hero" or "special") ***Used to determine humanity gain or loss***
 	//				12: Heli stay and fight after troop deployment? (true or false)
 	//				13: Mission variable from line 9 (_mission)
-	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,"random","random",4,"random","bandit","random","bandit",true,_mission] spawn heli_para;
+	[[(_position select 0), (_position select 1), 0],[0,0,0],400,"B_Heli_Attack_01_F",10,"random","random",4,"random","bandit","random","bandit",true,_mission] spawn heli_para;
 
 	// Assassination target example
 	// This is the same as normal group spawns but we assign it to a variable instead for use in the trigger below (if there are multiple units in this group you'll need to kill them all)
-	_assassinate = [[_position select 0, _position select 1, 0],1,"hard","random",4,"random","special","random","bandit",_mission] call spawn_group;
+	//_assassinate = [[_position select 0, _position select 1, 0],1,"hard","random",4,"random","special","random","bandit",_mission] call spawn_group;
 
 	// Mission objective options and messages
 	[
 		[_mission,_crate],	// mission variable (from line 9) and crate
 		["crate"], 			// Mission objective type (["crate"], or ["kill",wai_kill_percent], or ["assassinate", _assassinate])
 		[_baserunover], 	// buildings to cleanup after mission is complete, does not include the crate
-		"A Mission has spawned, hurry up to claim the loot!",	// mission announcement
-		"The mission was complete/objective reached",			// mission success
-		"The mission timed out and nobody was in the vicinity"	// mission fail
+		"Bandits have taken over Devil's Castle!  The risk is great, but the rewards are plenty!",	// mission announcement
+		"Devil's Castle is safe once again!",			// mission success
+		"The bandits have dug in and permanently secured their location."	// mission fail
 	] call mission_winorfail;
 
 	// End of mission

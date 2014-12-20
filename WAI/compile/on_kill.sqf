@@ -110,8 +110,8 @@ if (isServer) then {
 		
 	};
 
-	if(_unit hasWeapon "NVGoggles" && floor(random 100) < 20) then {
-		_unit removeWeapon "NVGoggles";
+	if(_unit hasWeapon "NVG_EPOCH" && floor(random 100) < 20) then {
+		_unit removeWeapon "NVG_EPOCH";
 	};
 
 };
