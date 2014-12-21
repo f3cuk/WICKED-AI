@@ -4,11 +4,11 @@ if(isServer) then {
 
 	if(custom_per_world) then {
 
-		ExecVM format["\WAI\static\%1.sqf",toLower(worldName)];
+		ExecVM format["\a3\wai\static\%1.sqf",toLower(worldName)];
 
 	} else {
 
-		ExecVM "\WAI\static\default.sqf";
+		ExecVM "\a3\wai\static\default.sqf";
 
 	};
 

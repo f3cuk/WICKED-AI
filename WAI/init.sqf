@@ -1,17 +1,17 @@
 if(isServer) then {
 
-	spawn_group				= compile preprocessFileLineNumbers "\WAI\compile\spawn_group.sqf";
-	spawn_static			= compile preprocessFileLineNumbers "\WAI\compile\spawn_static.sqf";
-	group_waypoints			= compile preprocessFileLineNumbers "\WAI\compile\group_waypoints.sqf";
-	heli_para				= compile preprocessFileLineNumbers "\WAI\compile\heli_para.sqf";
-	heli_patrol				= compile preprocessFileLineNumbers "\WAI\compile\heli_patrol.sqf";
-	vehicle_patrol			= compile preprocessFileLineNumbers "\WAI\compile\vehicle_patrol.sqf";
+	spawn_group				= compile preprocessFileLineNumbers "\a3\wai\compile\spawn_group.sqf";
+	spawn_static			= compile preprocessFileLineNumbers "\a3\wai\compile\spawn_static.sqf";
+	group_waypoints			= compile preprocessFileLineNumbers "\a3\wai\compile\group_waypoints.sqf";
+	heli_para				= compile preprocessFileLineNumbers "\a3\wai\compile\heli_para.sqf";
+	heli_patrol				= compile preprocessFileLineNumbers "\a3\wai\compile\heli_patrol.sqf";
+	vehicle_patrol			= compile preprocessFileLineNumbers "\a3\wai\compile\vehicle_patrol.sqf";
 
-	on_kill					= compile preprocessFileLineNumbers "\WAI\compile\on_kill.sqf";
+	on_kill					= compile preprocessFileLineNumbers "\a3\wai\compile\on_kill.sqf";
 
-	ai_monitor				= compile preprocessFileLineNumbers "\WAI\compile\ai_monitor.sqf";
-	vehicle_monitor			= compile preprocessFileLineNumbers "\WAI\compile\vehicle_monitor.sqf";
-	find_position			= compile preprocessFileLineNumbers "\WAI\compile\find_position.sqf";
+	ai_monitor				= compile preprocessFileLineNumbers "\a3\wai\compile\ai_monitor.sqf";
+	vehicle_monitor			= compile preprocessFileLineNumbers "\a3\wai\compile\vehicle_monitor.sqf";
+	find_position			= compile preprocessFileLineNumbers "\a3\wai\compile\find_position.sqf";
 
 	createCenter			EAST;
 	createCenter			RESISTANCE;
@@ -33,20 +33,20 @@ if(isServer) then {
 	ai_vehicle_units		= 0;
 	
 	//Load config
-	ExecVM "\WAI\config.sqf";
-	//ExecVM "\z\addons\dayz_server\WAI\configOverpoch.sqf";
+	ExecVM "\a3\wai\config.sqf";
+	//ExecVM "\z\addons\dayz_server\wai\configOverpoch.sqf";
 
 	waitUntil {configloaded};
-		diag_log "WAI: AI Config File Loaded";
+		diag_log "wai: AI Config File Loaded";
 
 	[] spawn ai_monitor;
 
 	if(static_missions) then {
-		ExecVM "\WAI\static\init.sqf";
+		ExecVM "\a3\wai\static\init.sqf";
 	};
 	
 	if (wai_mission_system) then {
-		ExecVM "\WAI\missions\init.sqf";
+		ExecVM "\a3\wai\missions\init.sqf";
 	};
 
 };
