@@ -4,14 +4,14 @@ if(isServer) then {
 
 	diag_log "WAI: Initialising missions";
 
-	dynamic_crate 					= compile preprocessFileLineNumbers "\WAI\compile\dynamic_crate.sqf";
-	custom_publish  				= compile preprocessFileLineNumbers "\WAI\compile\custom_publish_vehicle.sqf";
+	dynamic_crate 					= compile preprocessFileLineNumbers "\a3\wai\compile\dynamic_crate.sqf";
+	custom_publish  				= compile preprocessFileLineNumbers "\a3\wai\compile\custom_publish_vehicle.sqf";
 
 	// Mission functions
-	call 							compile preprocessFileLineNumbers "\WAI\compile\mission_functions.sqf";
-	mission_init					= compile preprocessFileLineNumbers "\WAI\compile\mission_init.sqf";
-	mission_winorfail				= compile preprocessFileLineNumbers "\WAI\compile\mission_winorfail.sqf";
-	minefield						= compile preprocessFileLineNumbers "\WAI\compile\minefield.sqf";
+	call 							compile preprocessFileLineNumbers "\a3\wai\compile\mission_functions.sqf";
+	mission_init					= compile preprocessFileLineNumbers "\a3\wai\compile\mission_init.sqf";
+	mission_winorfail				= compile preprocessFileLineNumbers "\a3\wai\compile\mission_winorfail.sqf";
+	minefield						= compile preprocessFileLineNumbers "\a3\wai\compile\minefield.sqf";
 	
 	{
 		wai_mission_markers set [count wai_mission_markers, _x];
@@ -85,7 +85,7 @@ if(isServer) then {
 				_result 			= 0;
 
 				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
-				execVM format ["\WAI\missions\hero\%1.sqf",_mission];
+				execVM format ["\a3\wai\missions\hero\%1.sqf",_mission];
 			};
 
 			if (_result == 2) then {
@@ -95,7 +95,7 @@ if(isServer) then {
 				_result 			= 0;
 
 				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
-				execVM format ["\WAI\missions\bandit\%1.sqf",_mission];
+				execVM format ["\a3\wai\missions\bandit\%1.sqf",_mission];
 			};
 
 			
