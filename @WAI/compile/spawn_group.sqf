@@ -1,6 +1,6 @@
 if (isServer) then {
 
-    private ["_rocket","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+    private ["_rocket","_count","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_vest","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_pos_x 			= _position select 0;
@@ -14,6 +14,8 @@ if (isServer) then {
 	_skin 				= _this select 6;
 	_gear 				= _this select 7;
 	_aitype				= _this select 8;
+	_vest				= _this select 9;
+	_count			    = (if(count _this > 1)then[{(_this select 1) max 6},{8}]); //Unit Count (min 6 - default 8)
 	
 	if (typeName _gun == "ARRAY") then {
 		_launcher		= _gun select 1;
@@ -31,30 +33,33 @@ if (isServer) then {
 		_mission = nil;
 	};
 	
-	_cnt			    = (if(count _this > 1)then[{(_this select 1) max 6},{8}]); //Unit Count (min 6 - default 8)
 	_aiweapon 			= [];
 	_aigear 			= [];
 	_aiskin 			= "";
 	_aicskill 			= [];
 	_aipack 			= "";
+	_aivest				= "";
 	_current_time		= time;
 	_unarmed			= false;
 
-	//if(_aitype == "Hero") then {
-		//_unitGroup	= createGroup RESISTANCE;
+	/*if(_aitype == "Hero") then {
+		//_unitGroup	= createGroup RESISTANCE;		//  this section not needed for A3 Epoch
 	//} else {
+		//_unitGroup	= createGroup EAST;
+	};*/
+	
+	
 	_unitGroup	= createGroup RESISTANCE;
-	while{count (units _unitGroup) < _cnt}do{
-	_unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
-	sleep 0.1;
-};
+	while{count (units _unitGroup) < _count}do{
+		_unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
+		sleep 0.1;
+		};
+		
+		_unitGroup setVariable["LASTLOGOUT_EPOCH",99999999];
+		count units _unitGroup;
 
-{
-//_x call SEM_fnc_AIkilledEH;
-//_x call SEM_fnc_stripUnit;
-_x setVariable["LASTLOGOUT_EPOCH",99999999];
-}count units _unitGroup;
-};
+
+
 
 	if(_pos_z == 0) then {
 		if(floor(random 2) == 1) then { 
@@ -80,21 +85,21 @@ _x setVariable["LASTLOGOUT_EPOCH",99999999];
 			} else {
 				if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
 				if(_gun == "unarmed") 	exitWith { _unarmed = true; };
+				_weapon = _gun;
 			}
 		};
 
 		if (!_unarmed) then {
-			_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
-			_weapon 		= _weaponandmag select 0;
-			_magazine 		= _weaponandmag select 1;
+			_weapon 	= _aiweapon call BIS_fnc_selectRandom;
+			_magazine 	= _weapon 	call find_suitable_ammunition;
 		};
 
 		call {
 			if(typeName(_gear) == "SCALAR") then {
-				if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
-				if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
+				if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
+				if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
 			} else {
-				if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+				if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
 			};
 		};
 		
@@ -102,10 +107,10 @@ _x setVariable["LASTLOGOUT_EPOCH",99999999];
 		_geartools 		= _aigear select 1;
 
 		call {
-			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-			//if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };  //currently there is no distinction between heroes and bandits
-			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin 		call BIS_fnc_selectRandom; };
+			//if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin 		call BIS_fnc_selectRandom; };
+			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin 	call BIS_fnc_selectRandom; };
+			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin 	call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
 		};
 
@@ -114,17 +119,14 @@ _x setVariable["LASTLOGOUT_EPOCH",99999999];
 		};
 
 		
-		
 
-		
-		//****Humanity system will need removed for A3 Epoch
 		call {
-			if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
-			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_add_humanity]; };
-			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["humanity", ai_special_humanity]; };
+			//if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
+			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["krypto", ai_add_krypto]; };
+			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["krypto", ai_special_krypto]; };
 		};
 
-		if (!isNil "_gain") then { _unit setVariable ["humanity", _gain]; };
+		if (!isNil "_gain") then { _unit setVariable ["krypto", _gain]; };
 
 		call {
 			if(_backpack == "random") 	exitWith { _aipack = ai_packs call BIS_fnc_selectRandom; };
@@ -132,25 +134,27 @@ _x setVariable["LASTLOGOUT_EPOCH",99999999];
 			_aipack = _backpack;
 		};
 		
-		_unit enableAI "TARGET";
-		_unit enableAI "AUTOTARGET";
-		_unit enableAI "MOVE";
-		_unit enableAI "ANIM";
-		_unit enableAI "FSM";
-
-		if(_aitype == "Hero") then {
-			_unit setCombatMode ai_hero_combatmode;
-			_unit setBehaviour ai_hero_behaviour;
-		} else {
-			_unit setCombatMode ai_bandit_combatmode;
-			_unit setBehaviour ai_bandit_behaviour;
+		call {
+			if(_vest == "random") 	exitWith { _aivest = ai_vests call BIS_fnc_selectRandom; };
+			if(_vest == "none") 	exitWith { };
+			_aivest = _vest;
 		};
 		
+		if (isNil "_mission") then {
+		
+			_unit enableAI "TARGET";
+			_unit enableAI "AUTOTARGET";
+			_unit enableAI "MOVE";
+			_unit enableAI "ANIM";
+			_unit enableAI "FSM";
+		
+		};
+
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 
 		if (sunOrMoon != 1) then {
-			_unit addweapon "NVG_EPOCH";
+			_unit addweapon "NVG_Epoch";
 		};
 
 		if (!_unarmed) then {
@@ -163,8 +167,13 @@ _x setVariable["LASTLOGOUT_EPOCH",99999999];
 
 		if(_backpack != "none") then {
 			_unit addBackpack _aipack;
+			_unit addItemToBackpack _ai_gear_random;
 		};
 
+		if(_vest != "none") then {
+			_unit addvest _aivest;
+			_unit addItemToVest _ai_gear_random;
+		};
 		{
 			_unit addMagazine _x
 		} count _gearmagazines;
@@ -191,8 +200,7 @@ _x setVariable["LASTLOGOUT_EPOCH",99999999];
 		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
 
 		if (!isNil "_mission") then {
-			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0, (_ainum + 1)];
+			wai_mission_data select _mission set [0, (((wai_mission_data select _mission) select 0) + 1)];
 			_unit setVariable ["missionclean", "ground"];
 			_unit setVariable ["mission", _mission, true];
 		};
@@ -213,6 +221,20 @@ _x setVariable["LASTLOGOUT_EPOCH",99999999];
 
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
+
+	/*if(_aitype == "Hero") then {
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn hero_behaviour;
+		} else {
+			[_unitGroup] spawn hero_behaviour;
+		};
+	} else {*/
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn bandit_behaviour;
+		} else {
+			[_unitGroup] spawn bandit_behaviour;
+		};
+	//};
 
 	if(_pos_z == 0) then {
 		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;

@@ -8,7 +8,7 @@ if(!isDedicated) then {
 		_message 	= _this select 1;
 		
 		call {
-			if(_type == "radio")		exitWith { if(player hasWeapon "ItemRadio") then { systemChat _message; }; };
+			if(_type == "radio")		exitWith { if(player hasWeapon "EpochRadio0") then { systemChat _message; }; };
 			if(_type == "global")		exitWith { systemChat _message; };
 		};
 	};

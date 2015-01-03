@@ -34,8 +34,7 @@ if(isServer) then {
 	
 	//Load config
 	ExecVM "\a3\wai\config.sqf";
-	//ExecVM "\z\addons\dayz_server\wai\configOverpoch.sqf";
-
+	
 	waitUntil {configloaded};
 		diag_log "wai: AI Config File Loaded";
 
