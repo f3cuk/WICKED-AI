@@ -158,13 +158,13 @@ if(isServer) then {
 		if (typeOf(_crate) in (crates_large + crates_medium + crates_small)) then {
 
 			if(wai_crates_smoke && sunOrMoon == 1) then {
-				_marker = "smokeShellPurple" createVehicle getPosATL _crate;
+				_marker = "FlareWhite_F" createVehicle getPosATL _crate;
 				_marker setPosATL (getPosATL _crate);
 				_marker attachTo [_crate,[0,0,0]];
 			};
 
 			if (wai_crates_flares && sunOrMoon != 1) then {
-				_marker = "RoadFlare" createVehicle getPosATL _crate;
+				_marker = "FlareWhite_F" createVehicle getPosATL _crate;
 				_marker setPosATL (getPosATL _crate);
 				_marker attachTo [_crate, [0,0,0]];
 				
@@ -172,8 +172,8 @@ if(isServer) then {
 				
 				{
 					if(isPlayer _x && _x != player) then {
-						PVDZE_send = [_x,"RoadFlare",[_marker,0]];
-						publicVariableServer "PVDZE_send";
+						EPOCH_sendPublicVariableClient = [_x,"FlareWhite_F",[_marker,0]];
+						publicVariableServer "EPOCH_sendPublicVariableClient";
 					};
 				} count _in_range;
 

@@ -24,7 +24,6 @@ if (isServer) then {
 
 	call {
 		if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-		//if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
 		if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
 		if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
@@ -34,19 +33,17 @@ if (isServer) then {
 		_aiskin = _aiskin call BIS_fnc_selectRandom;
 	};
 
-	//if(_aitype == "Hero") then {
-		
-	//} else {
+	
 	_unitGroup	= createGroup RESISTANCE;
-	_unitGroup setVariable["LASTLOGOUT_EPOCH",99999999];
-	//};
+	_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_unitGroup setVariable["LAST_CHECK",1000000000000]; 
+	
 
 	_pilot 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	
 	[_pilot] joinSilent _unitGroup;
 	
 	call {
-		//if (_aitype == "Hero") 		exitWith { _pilot setVariable ["Hero",true,true]; };
 		if (_aitype == "Bandit") 	exitWith { _pilot setVariable ["Bandit",true,true]; };
 		if (_aitype == "Special") 	exitWith { _pilot setVariable ["Special",true,true]; };
 	};
@@ -60,20 +57,22 @@ if (isServer) then {
 	_helicopter 		flyInHeight 150;
 	_helicopter 		lock true;
 	_helicopter 		addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
+	_helicopter			setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_helicopter			setVariable["LAST_CHECK",1000000000000]; 
 
 	_pilot 				assignAsDriver _helicopter;
 	_pilot 				moveInDriver _helicopter;
-	_pilot				setVariable["LASTLOGOUT_EPOCH",99999999];
+	_pilot   			setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_pilot	 			setVariable["LAST_CHECK",1000000000000]; 
 
 	_gunner 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	_gunner 			assignAsGunner _helicopter;
 	_gunner 			moveInTurret [_helicopter,[0]];
-	_gunner				setVariable["LASTLOGOUT_EPOCH",99999999];
+	_gunner				setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_gunner				setVariable["LAST_CHECK",1000000000000]; 
 
-	[_gunner] 			joinSilent _unitGroup;
-
+	
 	call {
-		//if (_aitype == "Hero") 		exitWith { _gunner setVariable ["Hero",true,true]; };
 		if (_aitype == "Bandit") 	exitWith { _gunner setVariable ["Bandit",true,true]; };
 		if (_aitype == "Special") 	exitWith { _gunner setVariable ["Special",true,true]; };
 	};
@@ -83,12 +82,11 @@ if (isServer) then {
 	_gunner2 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	_gunner2			assignAsGunner _helicopter;
 	_gunner2 			moveInTurret [_helicopter,[1]];
-	[_gunner2] 			joinSilent _unitGroup;
-	_gunner2			setVariable["LASTLOGOUT_EPOCH",99999999];
+	_gunner2			setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_gunner2			setVariable["LAST_CHECK",1000000000000]; 
 	addToRemainsCollector [_helicopter, _pilot, _gunner, _gunner2];
 
 	call {
-		//if (_aitype == "Hero") 		exitWith { _gunner2 setVariable ["Hero",true,true]; };
 		if (_aitype == "Bandit") 	exitWith { _gunner2 setVariable ["Bandit",true,true]; };
 		if (_aitype == "Special") 	exitWith { _gunner2 setVariable ["Special",true,true]; };
 	};
@@ -114,26 +112,19 @@ if (isServer) then {
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
 	} forEach (units _unitgroup);
 
-	//PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];		//variable will need changed for A3 Epoch
-	//[_helicopter] spawn vehicle_monitor;
+		
+	//[_helicopter] spawn vehicle_monitor;	//will need changed for A3 Epoch
 
 	_unitGroup allowFleeing 0;
 	_unitGroup setBehaviour "AWARE";
 	_unitGroup setSpeedMode "FULL";
 
-	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
-		} else {
-			[_unitGroup] spawn hero_behaviour;
-		};
-	} else {
 		if (!isNil "_mission") then {
 			[_unitGroup, _mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};
-	};
+	
 
 	if(_wpnum > 0) then {
 

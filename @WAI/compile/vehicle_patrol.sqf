@@ -30,7 +30,6 @@ if (isServer) then {
 
 	call {
 		if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-		if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
 		if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
 		if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
@@ -40,18 +39,15 @@ if (isServer) then {
 		_aiskin = _aiskin call BIS_fnc_selectRandom;
 	};
 
-	//if(_aitype == "Hero") then {
+	
 	_unitGroup	= createGroup RESISTANCE;
 	
-	//} else {
-		//_unitGroup	= createGroup EAST;
-	//};
+	
 
 	_pilot 					= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	[_pilot] 				joinSilent _unitGroup;
 	
 	call {
-		//if (_aitype == "hero") 		exitWith { _pilot setVariable ["Hero",true,true]; };
 		if (_aitype == "bandit") 	exitWith { _pilot setVariable ["Bandit",true,true]; };
 		if (_aitype == "special") 	exitWith { _pilot setVariable ["Special",true,true]; };
 	};
@@ -70,12 +66,14 @@ if (isServer) then {
 
 	_pilot assignAsDriver 	_vehicle;
 	_pilot moveInDriver 	_vehicle;
-	_pilot setVariable["LASTLOGOUT_EPOCH",99999999];
+	_pilot setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_pilot setVariable["LAST_CHECK",1000000000000]; 
 
 	_gunner 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 	_gunner 				assignAsGunner _vehicle;
 	_gunner 				moveInTurret [_vehicle,[0]];
-	_gunner					setVariable["LASTLOGOUT_EPOCH",99999999];
+	_gunner 				setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_gunner					setVariable["LAST_CHECK",1000000000000]; 
 	
 	call {
 		if (_aitype == "hero") 		exitWith { _gunner setVariable ["Hero",true,true]; };
@@ -117,19 +115,12 @@ if (isServer) then {
 
 	_unitGroup 				allowFleeing 0;
 
-	/*if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
-		} else {
-			[_unitGroup] spawn hero_behaviour;
-		};
-	} else {*/
 		if (!isNil "_mission") then {
 			[_unitGroup, _mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};
-	//};
+	
 
 	_unitGroup 				setBehaviour "AWARE";
 	_unitGroup 				setCombatMode "RED";

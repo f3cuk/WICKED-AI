@@ -32,10 +32,8 @@ if (isServer) then {
 
 	//if(_aitype == "Hero") then {
 	_unitGroup	= createGroup RESISTANCE;
-	_unitGroup setVariable["LASTLOGOUT_EPOCH",99999999];
-	//} else {
-	//	_unitGroup	= createGroup EAST;
-	//};
+	_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_unitGroup setVariable["LAST_CHECK",1000000000000]; 
 	
 	if (!isServer) exitWith {};
 
@@ -44,7 +42,6 @@ if (isServer) then {
 
 		call {
 			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-			if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
 			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
 			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
@@ -67,7 +64,6 @@ if (isServer) then {
 		addToRemainsCollector [_static];
 		
 		call {
-			//if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true,true]; };
 			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true,true]; };
 			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true,true]; };
 		};
@@ -186,19 +182,13 @@ if (isServer) then {
 
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
-	/*if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
-		} else {
-			[_unitGroup] spawn hero_behaviour;
-		};
-	} else {*/
+	
 		if (!isNil "_mission") then {
 			[_unitGroup, _mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};
-	//};
+	
 
 	diag_log format ["WAI: Spawned in %1 %2",_unitnumber,_class];
 

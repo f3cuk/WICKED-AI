@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_crypto","_banditkills","_humankills","_kryptogain"];
+	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_crypto","_banditkills","_humankills","_cryptogain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
@@ -38,30 +38,20 @@ if (isServer) then {
 
 	if (isPlayer _player) then {
 
-		//private ["_banditkills","_humanity","_humankills"];
+		
 		private ["_crypto"];
 
-		_krypto 		= _player getVariable["crypto",0];
-		//_banditkills 	= _player getVariable["banditKills",0];
-		//_humankills 	= _player getVariable["humanKills",0];
+		_crypto 		= _player getVariable["crypto",0];
+		
 
-		if (ai_krypto_gain) then {
+		if (ai_crypto_gain) then {
 			_gain = _unit getVariable ["crypto", 0];
 			call {
-				//if (_unit getVariable ["Hero", false]) exitWith { _player setVariable ["humanity",(_humanity - _gain),true]; };
-				if (_unit getVariable ["Bandit", false]) exitWith { _player setVariable ["crypto",(_krypto + _gain),true]; };					
-				//if (_unit getVariable ["Special", false]) exitWith { if (_humanity < 0) then { _player setVariable ["humanity",(_humanity - _gain),true]; } else { _player setVariable ["humanity",(_humanity + _gain),true]; }; };
-			};
+				if (_unit getVariable ["Bandit", false]) exitWith { _player setVariable ["crypto",(_crypto + _gain),true]; };					
+				};
 		};
 
-		/*if (ai_kills_gain) then {
-			if (_unit getVariable ["Hero", false]) then {
-				_player setVariable ["humanKills",(_humankills + 1),true];
-			} else {
-				_player setVariable ["banditKills",(_banditkills + 1),true];
-			};
-		};*/
-
+		
 		if (ai_clear_body) then {
 			{_unit removeMagazine _x;} count (magazines _unit);
 			{_unit removeWeapon _x;} count (weapons _unit);

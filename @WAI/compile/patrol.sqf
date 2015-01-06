@@ -17,6 +17,8 @@ if (isServer) then {
 
 		_unitgroup setBehaviour "COMBAT";
 		_unitgroup setCombatMode "YELLOW";
+		_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
+		_unitGroup setVariable["LAST_CHECK",1000000000000]; 
 
 		{
 

@@ -41,7 +41,6 @@ if(isServer) then {
 	};
 	
 	call {
-		//if(_type == "mainhero")		exitWith { _name = "[Bandits] " + _name; };
 		if(_type == "mainbandit")	exitWith { _name = "[Bandits] " + _name; };
 		if(_type == "special")		exitWith { _name = "[Special] " + _name; };
 	};

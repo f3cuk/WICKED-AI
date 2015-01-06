@@ -8,7 +8,6 @@ if(isServer) then {
 	vehicle_patrol			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\vehicle_patrol.sqf";
 
 	on_kill					= compile preprocessFileLineNumbers "\x\addons\WAI\compile\on_kill.sqf";
-	//hero_behaviour			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\hero_behaviour.sqf";
 	bandit_behaviour		= compile preprocessFileLineNumbers "\x\addons\WAI\compile\bandit_behaviour.sqf";
 
 	dynamic_crate 			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\dynamic_crate.sqf";

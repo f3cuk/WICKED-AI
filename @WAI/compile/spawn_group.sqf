@@ -42,20 +42,15 @@ if (isServer) then {
 	_current_time		= time;
 	_unarmed			= false;
 
-	/*if(_aitype == "Hero") then {
-		//_unitGroup	= createGroup RESISTANCE;		//  this section not needed for A3 Epoch
-	//} else {
-		//_unitGroup	= createGroup EAST;
-	};*/
-	
-	
+		
 	_unitGroup	= createGroup RESISTANCE;
 	while{count (units _unitGroup) < _count}do{
 		_unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
 		sleep 0.1;
 		};
 		
-		_unitGroup setVariable["LASTLOGOUT_EPOCH",99999999];
+		_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
+		_unitGroup setVariable["LAST_CHECK",1000000000000]; 
 		count units _unitGroup;
 
 
@@ -108,7 +103,6 @@ if (isServer) then {
 
 		call {
 			if(_skin == "random") 	exitWith { _aiskin = ai_all_skin 		call BIS_fnc_selectRandom; };
-			//if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin 		call BIS_fnc_selectRandom; };
 			if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin 	call BIS_fnc_selectRandom; };
 			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin 	call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
@@ -121,7 +115,6 @@ if (isServer) then {
 		
 
 		call {
-			//if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
 			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["krypto", ai_add_krypto]; };
 			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["krypto", ai_special_krypto]; };
 		};
@@ -222,19 +215,12 @@ if (isServer) then {
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
-	/*if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
-		} else {
-			[_unitGroup] spawn hero_behaviour;
-		};
-	} else {*/
 		if (!isNil "_mission") then {
 			[_unitGroup, _mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};
-	//};
+	
 
 	if(_pos_z == 0) then {
 		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;

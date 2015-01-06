@@ -6,9 +6,9 @@ if(!isDedicated) then {
 	
 		_type 		= _this select 0;
 		_message 	= _this select 1;
-		
+		_Radios = ["EpochRadio0","EpochRadio1","EpochRadio2","EpochRadio3","EpochRadio4","EpochRadio5","EpochRadio6","EpochRadio7","EpochRadio8","EpochRadio9"];
 		call {
-			if(_type == "radio")		exitWith { if(player hasWeapon "EpochRadio0") then { systemChat _message; }; };
+			if(_type == "radio")		exitWith { if(player hasWeapon "_Radios") then { systemChat _message; }; };
 			if(_type == "global")		exitWith { systemChat _message; };
 		};
 	};

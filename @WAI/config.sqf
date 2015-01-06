@@ -22,23 +22,15 @@ if(isServer) then {
 		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
 		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_hero_combatmode			= "RED";		// combatmode of hero AI
-		ai_hero_behaviour			= "COMBAT";		// behaviour of hero AI
-
 		ai_friendly_behaviour		= false;		// make ai friendly towards comrades
-
-		player_bandit				= -5000;		// this is the amount you declare someone to be a bandit on your server, bandit AI will not attack you if ai_friendly_behaviour is true
-		player_hero					= 5000;			// this is the amount you declare someone to be a hero on your server, hero AI will not attack you if ai_friendly_behaviour is true
 
 		ai_share_info				= true;			// AI share info on player position
 		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
 
 		ai_kills_gain				= true;			// add kill to bandit/human kill score
-		ai_humanity_gain			= true;			// gain humanity for killing AI
-		ai_add_humanity				= 50;			// amount of humanity gained for killing a bandit AI
-		ai_remove_humanity			= 50;			// amount of humanity lost for killing a hero AI
-		ai_special_humanity			= 150;			// amount of humanity gain or loss for killing a special AI dependant on player alignment
-		
+		ai_crypto_gain				= true;			// gain crypto for killing AI
+		ai_add_crypto				= 50;			// amount of crypto gained for killing a bandit AI
+				
 		ai_skill_extreme			= [["aimingAccuracy",1.00],["aimingShake",1.00],["aimingSpeed",1.00],["endurance",1.00],["spotDistance",1.00],["spotTime",1.00],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]]; 	// Extreme
 		ai_skill_hard				= [["aimingAccuracy",0.80],["aimingShake",0.80],["aimingSpeed",0.80],["endurance",1.00],["spotDistance",0.80],["spotTime",0.80],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]]; 	// Hard
 		ai_skill_medium				= [["aimingAccuracy",0.60],["aimingShake",0.60],["aimingSpeed",0.60],["endurance",1.00],["spotDistance",0.60],["spotTime",0.60],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];	// Medium
@@ -46,7 +38,7 @@ if(isServer) then {
 		ai_skill_random				= [ai_skill_extreme,ai_skill_hard,ai_skill_hard,ai_skill_hard,ai_skill_hard,ai_skill_medium,ai_skill_medium,ai_skill_medium,ai_skill_medium,ai_skill_easy];
 
 		ai_static_useweapon			= true;	// Allows AI on static guns to have a loadout 	
-		ai_static_weapons			= ["O_HMG_01_support_high_F","O_static_AT_F","O_static_AA_F"];	// static guns **MAY BE BANNED IN EPOCH ANTIHACK***
+		ai_static_weapons			= ["O_HMG_01_support_high_F","O_static_AT_F","O_static_AA_F"];	// static guns 
 
 		ai_static_skills			= false;	// Allows you to set custom array for AI on static weapons. (true: On false: Off) 
 		ai_static_array				= [["aimingAccuracy",0.20],["aimingShake",0.70],["aimingSpeed",0.75],["endurance",1.00],["spotDistance",0.70],["spotTime",0.50],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];
@@ -66,11 +58,10 @@ if(isServer) then {
 		ai_wep_launchers_AA			= ["launch_O_Titan_F"];
 		
 		ai_packs					= ["B_AssaultPack_cbr","B_AssaultPack_dgtl","B_AssaultPack_khk","B_AssaultPack_mcamo","B_AssaultPack_ocamo","B_AssaultPack_rgr","B_AssaultPack_sgg","B_Carryall_cbr","B_Carryall_khk","B_Carryall_mcamo"];
-		ai_vests					= ["V_TacVest_camo","Weapon_V_PlateCarrierH_CTRG","Weapon_V_PlateCarrierL_CTRG","Vest_V_TacVestCamo_khk","Vest_V_Chestrig_oli","Vest_V_BandollierB_oli","Vest_V_TacVest_brn","Vest_V_Chestrig_rgr","Vest_V_PlateCarrierGL_rgr"];
-		ai_hero_skin				= ["O_sniper_F","O_recon_F","O_G_Soldier_A_F","O_G_officer_F","O_G_Soldier_SL_F"];
-		ai_bandit_skin				= ["O_sniper_F","O_recon_medic_F","O_officer_F","O_G_Soldier_A_F","O_G_Soldier_LAT_F"];
-		ai_special_skin				= ["O_support_Mort_F"];
-		ai_all_skin					= [ai_hero_skin,ai_bandit_skin,ai_special_skin];
+		ai_vests					= ["V_1_EPOCH","V_2_EPOCH","V_3_EPOCH","V_4_EPOCH","V_5_EPOCH","V_6_EPOCH","V_7_EPOCH","V_8_EPOCH","V_9_EPOCH","V_10_EPOCH","V_11_EPOCH","V_12_EPOCH","V_13_EPOCH","V_14_EPOCH","V_15_EPOCH","V_16_EPOCH","V_17_EPOCH","V_18_EPOCH","V_19_EPOCH","V_20_EPOCH","V_21_EPOCH","V_22_EPOCH","V_23_EPOCH","V_24_EPOCH","V_25_EPOCH","V_26_EPOCH","V_27_EPOCH","V_28_EPOCH","V_29_EPOCH","V_30_EPOCH","V_31_EPOCH","V_32_EPOCH","V_33_EPOCH","V_34_EPOCH","V_35_EPOCH","V_36_EPOCH","V_37_EPOCH","V_38_EPOCH","V_39_EPOCH","V_40_EPOCH"];
+		ai_bandit_skin				= ["U_O_CombatUniform_ocamo","U_O_GhillieSuit","U_O_PilotCoveralls","U_O_Wetsuit","U_OG_Guerilla1_1","U_OG_Guerilla2_1","U_OG_Guerilla2_3","U_OG_Guerilla3_1","U_OG_Guerilla3_2","U_OG_leader","U_Wetsuit_uniform","U_Wetsuit_White","U_Wetsuit_Blue","U_Wetsuit_Purp","U_Wetsuit_Camo","U_Camo_uniform","U_ghillie1_uniform","U_ghillie2_uniform","U_ghillie3_uniform","U_CamoBlue_uniform","U_CamoBrn_uniform","U_CamoRed_uniform"];
+		ai_special_skin				= ["U_C_Poloshirt_stripped","U_C_Poloshirt_blue","U_C_Poloshirt_burgundy","U_C_Poloshirt_tricolour","U_C_Poloshirt_salmon","U_C_Poloshirt_redwhite","U_C_Poor_1","U_C_WorkerCoveralls","U_C_Journalist","U_C_Scientist","U_OrestesBody"];
+		ai_all_skin					= [ai_bandit_skin,ai_special_skin];
 
 		ai_add_skin					= true;			// adds unit skin to inventory on death
 	/* END AI CONFIG */
@@ -96,7 +87,6 @@ if(isServer) then {
 		wai_mission_fuel			= [5,60];							// fuel inside mission spawned vehicles [min%,max%]
 		wai_vehicle_damage			= [20,70];							// damages to spawn vehicles with [min%,max%]
 		wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
-		wai_linux_server			= false;							// false = Windows (HiveExt.dll)		true = Linux Server (writer.pl)		has no effect when "wai_keep_vehicles = false;"
 		wai_lock_vehicles			= true;								// lock mission vehicles and add keys to random AI bodies (be careful with ai_clean_dead if this is true
 
 		wai_crates_smoke			= true;								// pop smoke on crate when mission is finished during daytime
@@ -116,22 +106,9 @@ if(isServer) then {
 
 		// Missions
 		wai_radio_announce			= true;								// Setting this to true will announce the missions to those that hold a radio only
-		wai_hero_limit				= 1;								// define how many hero missions can run at once
 		wai_bandit_limit			= 1;								// define how many bandit missions can run at once
 
-		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
-										["patrol",10],
-										["black_hawk_crash",11],
-										["armed_vehicle",11],
-										["bandit_base",7],
-										["captured_mv22",6],
-										["ikea_convoy",7],
-										["destroyed_ural",10],
-										["disabled_milchopper",9],
-										["mayors_mansion",9],
-										["weapon_cache",10],
-										["bandit_patrol",10]
-									];
+		
 		wai_bandit_missions			= [
 										["patrol",10],
 										["armed_vehicle",10],
@@ -147,20 +124,19 @@ if(isServer) then {
 									];
 		
 		// Vehicle arrays
-		armed_vehicle 				= ["I_MRAP_03_hmg_F"]; //MAY BE BANNED VEHICLE CLASS IN EPOCH ANTIHACK
-		armed_chopper 				= ["B_Heli_Attack_01_F"]; //MAY BE BANNED VEHICLE CLASS IN EPOCH ANTIHACK
+		armed_vehicle 				= ["I_MRAP_03_hmg_F"]; 
+		armed_chopper 				= ["B_Heli_Attack_01_F"]; 
 		civil_chopper 				= ["B_Heli_Light_01_EPOCH","B_Heli_Transport_01_EPOCH","B_Heli_Transport_01_camo_EPOCH","O_Heli_Light_02_unarmed_EPOCH","I_Heli_Transport_02_EPOCH","I_Heli_light_03_unarmed_EPOCH"];
 		military_unarmed 			= ["B_SDV_01_EPOCH","B_MRAP_01_EPOCH","B_Truck_01_transport_EPOCH","O_Truck_02_covered_EPOCH","O_Truck_02_transport_EPOCH","O_Truck_03_covered_EPOCH","O_Truck_02_box_EPOCH"];
 		cargo_trucks 				= ["C_Van_01_box_EPOCH","C_Van_01_transport_EPOCH"];
-		refuel_trucks				= ["O_Truck_02_fuel_F","O_Truck_03_fuel_F","B_Truck_01_fuel_F"]; //MAY BE BANNED VEHICLE CLASSES IN EPOCH ANTIHACK
+		refuel_trucks				= ["O_Truck_02_fuel_F","O_Truck_03_fuel_F","B_Truck_01_fuel_F"];
 		civil_vehicles 				= ["C_Hatchback_01_EPOCH","C_Hatchback_02_EPOCH","C_Offroad_01_EPOCH","C_Quadbike_01_EPOCH","C_SUV_01_EPOCH"];
 
 		// Dynamic box array
-		crates_large				= ["Cargo_Container"];  //MAY NOT HOLD ALL NEEDED ITEMS
-		crates_medium				= ["C_supplyCrate_F"];  //MAY NOT HOLD ALL NEEDED ITEMS
-		crates_small				= ["Pelican_EPOCH"];  //MAY NOT HOLD ALL NEEDED ITEMS
-
-		crate_weapons_buildables	= [["ChainSaw","CSGAS"],["ChainSawB","CSGAS"],["ChainSawG","CSGAS"],["ChainSawP","CSGAS"],["ChainSawR","CSGAS"]];
+		crates_large				= ["Cargo_Container"]; 
+		crates_medium				= ["C_supplyCrate_F"];  
+		crates_small				= ["Pelican_EPOCH"];  
+		crate_weapons_buildables    = [["MeleeSledge","swing"],["Hatchet","swing"],["ChainSawG","CSGAS"],["ChainSawP","CSGAS"],["ChainSawR","CSGAS"]];
 		
 		crate_tools					= ["Hatchet","MeleeSledge","Binocular","Rangefinder","ItemCompass","ItemGPS","NVG_EPOCH"];
 		crate_tools_buildable		= ["ItemMixOil","Hatchet","MeleeSledge","ChainSaw","jerrycan_Epoch"];
@@ -172,7 +148,6 @@ if(isServer) then {
 		crate_items_buildables		= ["ItemMixOil",["ItemScraps",10],["ItemCorrugated",6],["ItemCorrugatedLg",6],"CSGAS","MeleeSledge","sledge_swing",'hatchet',"hatchet_swing",["EnergyPack",3],"EnergyPackLg",["CircuitParts",3],"Pelt_EPOCH","JackKit","PaintCanBlk","PaintCanBlu","PaintCanBrn","PaintCanGrn","PaintCanOra","PaintCanPur","PaintCanRed","PaintCanTeal","PaintCanYel","KitCinderWall","KitPlotPole","MortarBucket","KitFoundation","KitShelf","KitTiPi","KitFirePlace","KitWoodRamp","KitWoodStairs","KitWoodFloor","KitStudWall"];
 		crate_items_vehicle_repair	= ["VehicleRepair","VehicleRepairLg"];
 		crate_items_medical			= ["Defib_EPOCH","Heal_EPOCH","FAK"];
-		crate_items_chainbullets	= [];		//NEED TO THINK OF SOMETHING ELSE TO GO HERE OR PULL IT OUT
 		crate_items_sniper			= ["Rangefinder","U_O_GhillieSuit","NVG_Epoch",["FAK",2]];
 		crate_items_president		= ["ItemDocument","ItemGoldBar10oz"];
 
