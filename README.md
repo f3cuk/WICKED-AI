@@ -77,7 +77,7 @@ Note: These are on by default, change *wai_radio_announce* in config.sqf to *fal
 	Add below:
 	
 	~~~~java
-	_nil = [] execVM "custom\remote_message\remote_message.sqf";
+	_nil = [] execVM "custom\remote\remote.sqf";
 	~~~~
 
 3. Copy the remote_message folder into your custom folder, if you do not have this one yet simply create it.
