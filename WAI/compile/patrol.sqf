@@ -22,7 +22,7 @@ if (isServer) then {
 
 			if(_leader == _x) then {
 				_x assignAsDriver _vehicle;
-				_x action["getInDriver",_vehicle];
+				_x moveInDriver _vehicle;
 				diag_log format["WAI: %1 assigned as driver",_x];
 			} else {
 
@@ -62,7 +62,7 @@ if (isServer) then {
 			};
 
 			if(_runmonitor) then {
-				diag_log "WAI: Vehhicle became undriveable, ejecting crew.";
+				diag_log "WAI: Vehicle became undriveable, ejecting crew.";
 			};
 
 			deleteWaypoint [_unitgroup, all];
@@ -81,10 +81,10 @@ if (isServer) then {
 
 		for "_i" from 1 to _num_waypoints do {
 
-			_rand_nr 	= ceil(random((_count_wp - 1)));
-			_waypoint 	= (_waypoint_data select _rand_nr);
+			_rand_nr = ceil(random((_count_wp - 1)));
+			_waypoint = (_waypoint_data select _rand_nr);
 			_waypoints set[_rand_nr,-1];
-			_waypoints	= _waypoints - [-1];
+			_waypoints = _waypoints - [-1];
 			
 			_wp = _unitgroup addWaypoint [(_waypoint select 1),0];
 			
@@ -112,7 +112,11 @@ if (isServer) then {
 				[nil,nil,rTitleText,_msg,"PLAIN",10] call RE;
 			};
 			
-			waitUntil{sleep 1; (_vehicle distance (_waypoint select 1) < 30)};
+			waitUntil{sleep 1;((_vehicle distance (_waypoint select 1) < 30) || !(alive leader _unitgroup) || (!canMove _vehicle))};
+
+			if(!(alive leader _unitgroup) || (!canMove _vehicle)) exitWith {
+				diag_log "WAI: Crew has been ejected, stopping creation of new waypoints.";
+			};
 
 			_waypoint_prev = (_waypoint select 0);
 		};
