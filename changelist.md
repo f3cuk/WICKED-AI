@@ -6,6 +6,7 @@ Type | Description
 `enhancement` | Added the Bandit Patrol hero mission by Havoc302 @Jossy
 `enhancement` | Added multiple mission support, run as many missions as you want @Jossy
 `enhancement` | Removed the need for ammunition classnames in the AI/Loot weapon arrays @Jossy
+`feature` | Native Linux server support @BangL
 `feature` | Added the ability to make Hero AI friendly toward Hero players and vice versa for Bandits @Jossy
 `feature` | Added the ability to lock mission vehicles with keys on AI @Jossy
 `feature` | Added the possibility of announcing missions over the radio
