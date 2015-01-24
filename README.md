@@ -81,7 +81,50 @@ Note: These are on by default, change *wai_radio_announce* in config.sqf to *fal
 	~~~~
 
 3. Copy the remote_message folder into your custom folder, if you do not have this one yet simply create it.
-4. Repack your mission pbo.
+4. If you want to be able to switch the radio on or off go to step 5 (note: right click by maca required), else go to step 7 and both remove switch_on_off.sqf and radio.ogg from the remote folder.
+5. Open extra_hc.hpp
+
+	Find:
+	~~~~java
+	class ExtraRc {
+	~~~~
+
+	Add below:
+	~~~~java
+		class ItemRadio {
+			class switchOnOff {
+				text = "Switch ON/OFF";
+				script = "execVM 'custom\remote\switch_on_off.sqf'";
+			};
+		};
+	~~~~
+
+6. Open description.ext
+
+	Find:
+	~~~~
+	class DayZ_loadingScreen
+	~~~~
+
+	Add above
+	~~~~java
+	class CfgSounds
+	{
+		sounds[] =
+		{
+			Radio_Message_Sound
+		};
+		class Radio_Message_Sound
+		{
+			name = "Radio_Message_Sound";
+			sound[] = {custom\remote\radio.ogg,0.4,1};
+			titles[] = {};
+		};
+	};
+	~~~~
+7. Repack your mission pbo.
+
+
 
 ### Versioning
 
