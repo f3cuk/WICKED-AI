@@ -4,6 +4,7 @@ WICKED AI 2.2.0
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.5+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
 ### Release 2.2.0
+- Native Linux server support
 - Multiple mission support
 - Automatic ammo finder (no need to specify ammo in weaponarray - config.sqf)
 - Option: Locked vehicles with keys randomly on AI
@@ -133,4 +134,5 @@ For transparency into our release cycle and in striving to maintain backward com
 ### Dev team
 - Developer **f3cuk**
 - Developer **Jossy**
+- Linux support **BangL**
 - Helping hand **nerdalertdk**
