@@ -1,2 +1,4 @@
 ### Custom settings file ###
 customsettings.sqf
+*.pbo
+*.pbo.bak
