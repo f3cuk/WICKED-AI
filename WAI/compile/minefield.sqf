@@ -1,7 +1,7 @@
 if(isServer) then {
 
 	private["_bomb","_area_max","_area_min","_position", "_area", "_num_mines","_allmines"];
-
+ 
 	_position 	= _this select 0;
 	_area_min 	= _this select 1;
 	_area_max 	= _this select 2;
@@ -9,11 +9,16 @@ if(isServer) then {
 	_allmines 	= [];
 	
 	for "_x" from 1 to _num_mines do {
-
 		private["_mine_pos","_mine"];
 		
 		_mine_pos = [_position,_area_min,_area_max,10,0,2000,0] call BIS_fnc_findSafePos;
-		_mine = createVehicle ["ATMine_Range_Mag", _mine_pos, [], 0, "CAN_COLLIDE"];
+		
+		if(surfaceIsWater _mine_pos) then {
+			_mine = createMine ["UnderwaterMineAB", _mine_pos, [], 0];
+		} else {
+			_mine = createMine ["SLAMDirectionalMine", _mine_pos, [], 0];		
+		};
+
 
 		_mine spawn {
 
@@ -29,7 +34,7 @@ if(isServer) then {
 				} count playableUnits;
 				(_vehicle_near)
 			};
-			_bomb = "ATMine_Range_Mag" createVehicle (getPosATL _this);
+			_bomb = "SLAMDirectionalMine_Wire_Mag" createVehicle (getPosATL _this);
 			sleep 3;
 			deleteVehicle _bomb;
 			deleteVehicle _this;

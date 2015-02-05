@@ -8,7 +8,7 @@ if(isServer) then {
 	_position		= [80] call find_position;
 	[_mission,_position,"Hard","bandit Base","MainBandit",true] call mission_init;
 	
-	diag_log 		format["WAI: [Mission:[Bandit] bandit Base]: Starting... %1",_position];
+	diag_log 		format["WAI: [Mission:[Bandit] Bandit Base]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;

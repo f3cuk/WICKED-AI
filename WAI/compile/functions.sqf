@@ -8,15 +8,30 @@ find_suitable_ammunition = {
 
 	if (count _ammoArray > 0) then {
 		_result = _ammoArray select 0;
-		call {
-			if(_result == "20Rnd_556x45_Stanag") 	exitWith { _result = "30Rnd_556x45_Stanag"; };
-			if(_result == "30Rnd_556x45_G36") 		exitWith { _result = "30Rnd_556x45_Stanag"; };
-			if(_result == "30Rnd_556x45_G36SD") 	exitWith { _result = "30Rnd_556x45_StanagSD"; };
-		};
 	};
 
 	_result
 
+};
+find_suitable_suppressor = {
+	
+	private["_weapon","_result","_ammoName"];
+
+	_result 	= "";
+	_weapon 	= _this;
+	_ammoName	= getText  (configFile >> "cfgWeapons" >> _weapon >> "displayName");
+
+	if(["5.56", _ammoName] call KK_fnc_inString) then {
+		_result = "muzzle_snds_M";
+	};
+	if(["6.5", _ammoName] call KK_fnc_inString) then {
+		_result = "muzzle_snds_H";
+	};
+	if(["7.62", _ammoName] call KK_fnc_inString) then {
+		_result = "muzzle_snds_H";
+	};
+	
+	_result
 };
 
 /*hero_warning = {
@@ -57,6 +72,11 @@ find_suitable_ammunition = {
 	};
 };*/
 
+/*
+Parameter(s):
+    _this select 0: <string> string to be found
+    _this select 1: <string> string to search in
+*/
 KK_fnc_inString = {
 
 	private ["_needle","_haystack","_needleLen","_hay","_found"]; 

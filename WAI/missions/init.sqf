@@ -12,7 +12,7 @@ if(isServer) then {
 	minefield						= compile preprocessFileLineNumbers "\x\addons\WAI\compile\minefield.sqf";
 	//custom_publish  				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\custom_publish_vehicle.sqf";
 	
-	//trader_markers 					= call get_trader_markers;
+	//trader_markers 				= call get_trader_markers;
 	markerready 					= true;
 	wai_mission_data				= [];
 	//wai_hero_mission				= [];

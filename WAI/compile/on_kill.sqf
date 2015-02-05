@@ -6,6 +6,7 @@ if (isServer) then {
 	_player 	= _this select 1;
 	_type 		= _this select 2;
 	_launcher 	= secondaryWeapon _unit;
+	_krypto		= _unit getVariable ["crypto", 0];
 
 	call {
 		if(_type == "ground") 	exitWith { ai_ground_units = (ai_ground_units -1); };
@@ -25,36 +26,24 @@ if (isServer) then {
 	};
 	_unit setVariable ["killedat", time];
 
-	if(ai_add_skin) then {
-
-		_skin = (typeOf _unit);
-		_skin = "Skin_" + _skin;
-
-		if (isClass (configFile >> "CfgMagazines" >> _skin)) then {
-			[_unit,_skin] call BIS_fnc_invAdd;
-		};
-
-	};
-
 	if (isPlayer _player) then {
 
-		
-		private ["_crypto"];
-
-		_crypto 		= _player getVariable["crypto",0];
-		
-
-		if (ai_crypto_gain) then {
-			_gain = _unit getVariable ["crypto", 0];
-			call {
-				if (_unit getVariable ["Bandit", false]) exitWith { _player setVariable ["crypto",(_crypto + _gain),true]; };					
-				};
-		};
-
-		
+		/*if(ai_crypto_gain)then{
+			_pos=getposATL _unit;
+			_veh=createVehicle["Land_MPS_EPOCH",_pos,[],1.5,"CAN_COLLIDE"];
+			diag_log format["ADMIN: Created crypto device for %1 with %2 at %3",_unit,_krypto,_pos];
+			_veh setVariable["Crypto",_krypto,true];
+		};*/
+				
 		if (ai_clear_body) then {
-			{_unit removeMagazine _x;} count (magazines _unit);
-			{_unit removeWeapon _x;} count (weapons _unit);
+			removeAllWeapons _unit;
+			removeAllItems _unit;
+			removeAllAssignedItems _unit;
+			removeUniform _unit;
+			removeVest _unit; 
+			removeBackpack _unit;
+			removeHeadgear _unit;
+			removeGoggles _unit;
 		};
 
 		if (ai_share_info) then {
@@ -68,20 +57,20 @@ if (isServer) then {
 	} else {
 
 		if (ai_clean_roadkill) then {
-
-			removeBackpack _unit;
 			removeAllWeapons _unit;
-
-			{
-				_unit removeMagazine _x
-			} count magazines _unit;
-
+			removeAllItems _unit;
+			removeAllAssignedItems _unit;
+			removeUniform _unit;
+			removeVest _unit; 
+			removeBackpack _unit;
+			removeHeadgear _unit;
+			removeGoggles _unit;
 		} else {
 
 			if ((random 100) <= ai_roadkill_damageweapon) then {
-
 				removeAllWeapons _unit;
-				
+				removeUniform _unit;
+				removeVest _unit; 
 			};
 
 		};

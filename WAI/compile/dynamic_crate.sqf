@@ -4,30 +4,31 @@ _crate = _this select 0;
 _crate setVariable ["ObjectID","1",true];
 _crate setVariable ["permaLoot",true];
 
+// WEAPONS
 if(typeName (_this select 1) == "ARRAY") then {
 	_num_weapons	= (_this select 1) select 0;
 	_weapons_array	= (_this select 1) select 1;
 } else {
 	_num_weapons	= _this select 1;
-	_weapons_array	= ai_wep_random call BIS_fnc_selectRandom;;
+	_weapons_array	= [ai_assault_wep,ai_machine_wep,ai_sniper_wep] call BIS_fnc_selectRandom;
 };
-
+// TOOLS
 if(typeName (_this select 2) == "ARRAY") then {
 	_num_tools	= (_this select 2) select 0;
 	_tool_array = (_this select 2) select 1;
 } else {
 	_num_tools	= _this select 2;
-	_tool_array = crate_tools;
+	_tool_array = crate_tools + ai_assault_scope + crate_tools;
 };
-
+// RANDOM
 if(typeName (_this select 3) == "ARRAY") then {
 	_num_items	= (_this select 3) select 0;
 	_item_array	= (_this select 3) select 1;
 } else {
 	_num_items	= _this select 3;
-	_item_array	= crate_items;
+	_item_array	= crate_random call BIS_fnc_selectRandom;
 };
-
+// BACKPACK
 if(typeName (_this select 4) == "ARRAY") then {
 	_num_backpacks	= (_this select 4) select 0;
 	_backpack_array = (_this select 4) select 1;
@@ -39,11 +40,6 @@ if(typeName (_this select 4) == "ARRAY") then {
 if(debug_mode) then {
 	diag_log format["WAI: Spawning in a dynamic crate with %1 guns, %2 tools, %3 items and %4 backpacks",_num_weapons,_num_tools,_num_items,_num_backpacks];
 };
-
-//PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_crate];  //object monitor variable will need changed for A3 Epoch
-
-clearWeaponCargoGlobal _crate;
-clearMagazineCargoGlobal _crate;
 
 if(_num_weapons > 0) then {
 
@@ -66,9 +62,9 @@ if(_num_tools > 0) then {
 		_tool = _tool_array call BIS_fnc_selectRandom;
 
 		if(typeName (_tool) == "ARRAY") then {
-			_crate addWeaponCargoGlobal [_tool select 0,_tool select 1];
+			_crate addItemCargoGlobal  [_tool select 0,_tool select 1];
 		} else {
-			_crate addWeaponCargoGlobal [_tool,1];
+			_crate addItemCargoGlobal  [_tool,1];
 		};
 	};
 
@@ -82,9 +78,9 @@ if(_num_items > 0) then {
 		_item = _item_array call BIS_fnc_selectRandom;
 
 		if(typeName (_item) == "ARRAY") then {
-			_crate addMagazineCargoGlobal [_item select 0,_item select 1];
+			_crate addItemCargoGlobal [_item select 0,_item select 1];
 		} else {
-			_crate addMagazineCargoGlobal [_item,1];
+			_crate addItemCargoGlobal [_item,1];
 		};
 	};
 
@@ -111,7 +107,7 @@ if(wai_high_value) then {
 	if(random 100 < wai_high_value_chance) then {
 
 		_item = crate_items_high_value call BIS_fnc_selectRandom;
-		_crate addMagazineCargoGlobal [_item,1];
+		_crate addItemCargoGlobal [_item,1];
 	};
 
 };

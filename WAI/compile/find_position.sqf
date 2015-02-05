@@ -1,3 +1,15 @@
+/*
+
+// Retrieve world center and size
+_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
+_worldCenter = [_worldSize/2,_worldSize/2,0];
+
+
+worldRadius = (getNumber(configFile >> "CfgWorlds" >> worldName >> "MapSize")/2);
+worldCenterPos = [ worldRadius, worldRadius, 0];
+*/
+
+
 if(isServer) then {
 	
 	private ["_i","_traders","_safepos","_validspot","_position"];

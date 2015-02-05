@@ -37,6 +37,7 @@ if (isServer) then {
 
 	{
 		deleteVehicle _x;
+		if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 	} count (crew _veh) + [_veh];
 
 };

@@ -86,5 +86,4 @@ if(isServer) then {
 	};
 
 	if(debug_mode) then { diag_log("WAI: Mission Data: " + str(wai_mission_data)); };
-	
 };

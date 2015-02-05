@@ -75,10 +75,8 @@ if (isServer) then {
 
 	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
 
-	_unitGroup	= createGroup RESISTANCE;
+	_unitGroup	= createGroup EAST;
 	
-	
-
 	ai_air_units = (ai_air_units +1);
 
 	_helicopter = createVehicle [_heli_class,[(_startingpos select 0),(_startingpos select 1),100],[],0,"FLY"];
@@ -95,7 +93,7 @@ if (isServer) then {
 	_pilot setVariable["LAST_CHECK",1000000000000]; 
 	_pilot assignAsDriver _helicopter;
 	_pilot moveInDriver _helicopter;
-	[_pilot] joinSilent _unitGroup
+	[_pilot] joinSilent _unitGroup;
 	
 
 	_gunner = _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
@@ -170,7 +168,7 @@ if (isServer) then {
 		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
 
 			
-				_pgroup	= createGroup RESISTANCE;
+				_pgroup	= createGroup EAST;
 			
 
 			for "_x" from 1 to _paranumber do {
@@ -212,7 +210,7 @@ if (isServer) then {
 					if(_vest == "random") 	exitWith { _aivest = ai_vests call BIS_fnc_selectRandom; };
 					if(_vest == "none") 	exitWith { };
 					_aivest = _vest;
-		};
+				};
 					
 				call {
 					if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
@@ -326,7 +324,7 @@ if (isServer) then {
 		};
 	};
 
-	if (_helipatrol) then { 
+	if (_helipatrol) then {
 		
 		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)], 100];
 		_wp1 setWaypointType "SAD";

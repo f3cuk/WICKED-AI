@@ -1,4 +1,4 @@
-isNearWater = {
+wai_isNearWater = {
 
 	private["_result","_position","_radius"];
 
@@ -17,7 +17,7 @@ isNearWater = {
 
 };
 
-isNearTown = {
+wai_isNearTown = {
 
 	private["_result","_position","_radius","_locations"];
 
@@ -35,7 +35,7 @@ isNearTown = {
 
 };
 
-isNearRoad = {
+wai_isNearRoad = {
 
 	private["_result","_position","_radius","_roads"];
 
@@ -53,7 +53,7 @@ isNearRoad = {
 
 };
 
-isSlope = {
+wai_isSlope = {
 
 	private["_pos","_result","_position","_posx","_posy","_radius","_gradient","_max","_min","_posx","_posy"];
 
@@ -77,7 +77,7 @@ isSlope = {
 
 };
 
-inDebug = {
+wai_inDebug = {
 
 	private["_result","_position","_hasdebug","_xLeft","_xRight","_yTop","_yBottom"];
 
@@ -107,6 +107,47 @@ inDebug = {
 
 	_result
 
+};
+wai_nearbyPlayers = {
+	private ["_pos", "_isNearList", "_isNear"];
+	_pos = _this select 0;
+
+	_isNearList = _pos nearEntities [["Epoch_Male_F","Epoch_Female_F"], wai_blacklist_players_range];
+	_isNear = false;
+	
+	// Check for Players
+	if ((count(_isNearList)) > 0) then {
+		{
+			if (isPlayer _x) then {
+				_isNear = true;
+			};
+		} forEach _isNearList;
+	};
+
+	if !(_isNear) then {
+		_isNearList = _pos nearEntities [["LandVehicle", "Air"], wai_blacklist_players_range];
+		{
+			{
+				if (isPlayer _x) then {
+					_isNear = true;
+				};
+			} forEach (crew _x);
+		} forEach _isNearList;
+	};
+	_isNear
+};
+
+wai_nearbyBlackspot = {
+	private ["_position", "_isNear", "_nearby"];
+	_position = _this select 0;
+	_isNear = false;
+	
+	_nearby = nearestObjects [_position, ["PlotPole_EPOCH"], wai_blacklist_range];
+	
+	if ((count _nearby) > 0) then {
+		_isNear = true;
+	};
+	_isNear
 };
 
 /*get_trader_markers = {

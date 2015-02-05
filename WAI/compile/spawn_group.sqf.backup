@@ -1,0 +1,288 @@
+if (isServer) then {
+
+    private ["_unitType","_aisoldier","_hat","_rocket","_count","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_vest","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
+	
+	/*[
+		_position,		[_position select 0,_position select 1,0]
+		_unitnumber,	3
+		_skill,			Medium
+		_aisoldier,		Random
+		_aitype,		Bandit
+		_mission
+	] call spawn_group;*/
+	
+	_position 			= _this select 0;
+		_pos_x 			= _position select 0;
+		_pos_y 			= _position select 1;
+		_pos_z 			= _position select 2;
+	_unitnumber 		= _this select 1;
+	_skill 				= _this select 2;
+	_aisoldier 			= _this select 3;
+	_aitype				= _this select 4;
+	
+	
+	if(debug_mode) then { diag_log("WAI: Spawning AI " + str(_aitype)); };
+	
+	// if soldier have AT/AA weapons
+	if (typeName _aisoldier == "ARRAY") then {
+		_launcher		= _aisoldier select 1;
+		_aisoldier		= _aisoldier select 0;
+	};
+	
+	// if misison
+	if (count _this > 5) then {
+		_mission = _this select 5;
+	} else {
+		_mission = nil;
+	};
+	
+	//
+	_unitType			= [];
+	//
+	
+	_aiweapon 			= [];
+	_aigear 			= [];
+	_aiskin 			= "";
+	_aicskill 			= [];
+	_aipack 			= "none";
+	_aivest				= "none";
+	_current_time		= time;
+	_unarmed			= false;
+
+	// Create AI group	
+	_unitGroup	= createGroup RESISTANCE;
+	_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_unitGroup setVariable["LAST_CHECK",1000000000000]; 
+	
+	
+	// Find position
+	if(_pos_z == 0) then {
+		if(floor(random 2) == 1) then { 
+			_pos_x = _pos_x - (5 + random(25));
+		} else {
+			_pos_x = _pos_x + (5 + random(25));
+		};			
+
+		if(floor(random 2) == 1) then { 
+			_pos_y = _pos_y - (5 + random(25));
+		} else {
+			_pos_y = _pos_y + (5 + random(25));
+		};
+	};
+
+	// spawn X numvbers of AI in the group
+	for "_x" from 1 to _unitnumber do {
+		_unit = [_unitGroup,[_pos_x,_pos_y,_pos_z],_aisoldier,_skill,_aitype] spawn spawn_soldier;
+
+		
+		call {
+			if(typeName(_aisoldier) == "SCALAR") then {
+				if(_aisoldier == 0) 			exitWith { _unitType = ai_assault; };
+				if(_aisoldier == 1) 			exitWith { _unitType = ai_machine; };
+				if(_aisoldier == 2) 			exitWith { _unitType = ai_sniper;};
+			} else {
+				if(_aisoldier == "random") 		exitWith { _unitType = ai_random call BIS_fnc_selectRandom; };
+				if(_aisoldier == "unarmed") 	exitWith { _unarmed = true; };
+			};
+		};
+		
+		if(_unitType == ai_sniper) then {
+			_unitnumber = 1;
+		};
+		
+		//if(debug_mode) then { diag_log("WAI: AI Type " + str(_unitType)); };
+		
+		// AI items and weapons
+		_aiweapon 			= (_unitType select 0) call BIS_fnc_selectRandom;
+		//if(debug_mode) then { diag_log("WAI: AI GEAR WEP " + str(_aiweapon)); };
+		
+		_aiweaponscope		= (_unitType select 1) call BIS_fnc_selectRandom;
+		//if(debug_mode) then { diag_log("WAI: AI GEAR SCOPE " + str(_aiweaponscope)); };
+		
+		_aigear 			= _unitType select 2;
+			if(count _aigear > 1) then {
+				_aiGearWep  = _aigear select 0;
+				_aiGearItem = _aigear select 1;
+				
+			};
+		//if(debug_mode) then { diag_log("WAI: AI GEAR item " + str(_aigear)); };
+		
+		_aiskin 			= (_unitType select 3) call BIS_fnc_selectRandom;
+		//if(debug_mode) then { diag_log("WAI: AI GEAR SKIN " + str(_aiskin)); };	
+		
+		_aipack 			= (_unitType select 4) call BIS_fnc_selectRandom;
+		//if(debug_mode) then { diag_log("WAI: AI GEAR back " + str(_aipack)); };
+		
+		_aivest				= (_unitType select 5) call BIS_fnc_selectRandom;
+		//if(debug_mode) then { diag_log("WAI: AI GEAR vest " + str(_aivest)); };
+
+		
+		_unit = _unitGroup createUnit["I_Soldier_EPOCH", [_pos_x,_pos_y,_pos_z], [], 0,"FORM"];
+		[_unit] joinSilent _unitGroup;
+	
+		call {
+			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["krypto", ai_add_krypto]; };
+			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["krypto", ai_special_krypto]; };
+		};
+
+		if (!isNil "_gain") then { _unit setVariable ["krypto", _gain]; };
+		
+		if (isNil "_mission") then {
+		
+			_unit enableAI "TARGET";
+			_unit enableAI "AUTOTARGET";
+			_unit enableAI "MOVE";
+			_unit enableAI "ANIM";
+			_unit enableAI "FSM";
+		
+		};
+
+		// "Remove existing items";
+		removeAllWeapons _unit;
+		removeAllItems _unit;
+		removeAllAssignedItems _unit;
+		removeUniform _unit;
+		removeVest _unit; 
+		removeBackpack _unit;
+		removeHeadgear _unit;
+		removeGoggles _unit;
+		
+		if(debug_mode) then { diag_log("WAI: AI removed default items"); };
+		
+		// "Must have items";
+		_unit linkItem "ItemMap";
+		_unit linkItem "ItemRadio";
+		
+		// uniform
+		_unit forceAddUniform _aiskin;
+		_unit addHeadgear Format ["H_%1_EPOCH", floor(random 91) + 1];
+		
+		if(_aivest != "") then {
+			_unit addvest _aivest;
+		} else {
+			_unit addvest Format ["V_%1_EPOCH", floor(random 39) + 1];
+		};
+		
+		
+		// So AI can at night
+		if (sunOrMoon != 1) then {
+			_unit linkItem "NVG_Epoch";
+		};
+
+		// GUNS GUNS GUNS
+		if (!_unarmed) then {
+			_muzzle = [_unit, _aiweapon, (floor(random 9) + 1)] call BIS_fnc_addWeapon;
+			_unit selectWeapon _aiweapon;
+			
+			// 50% chance for scope
+			if(floor(random 100) < 50) then {
+				_unit addPrimaryWeaponItem _aiweaponscope;
+			};
+			
+			// 20% chance for accessories
+			if(floor(random 100) < 20) then {
+				_unit addPrimaryWeaponItem (ai_wep_item call BIS_fnc_selectRandom);
+			};
+			
+			// 10% chance for accessories
+			if(floor(random 100) < 10) then {
+				_suppressor = _aiweapon call find_suitable_suppressor;
+				if(_suppressor != "") then {
+					_unit addPrimaryWeaponItem _suppressor;
+				};
+				
+			};
+			
+		};
+		
+		// give them unlimited ammo!
+		if (!_unarmed) then {
+			_unit addeventhandler ["fired", {(_this select 0) setvehicleammo 1;}];
+		};
+
+		/*if(count _aipack != 0) then {
+			_unit addBackpack _aipack;
+		};
+
+		/*{
+			_unit addItemToVest _x;
+			_unit addItemToBackpack _x;
+		} count _aiGearItem;
+
+		{
+			_unit addItemToBackpack _x;
+		} count _aiGearWep;*/
+		
+		
+		//Hipster
+		/*if(debug_mode) then {
+			_unit addHeadgear "H_78_EPOCH";
+			_unit addGoggles "G_Spectacles_Tinted";
+		};*/
+		
+		// if AI spawns on water make them ready for it
+		if (surfaceIsWater (position _unit)) then {
+			removeHeadgear _unit;
+			_unit forceAddUniform "U_O_Wetsuit" ;
+			_unit addVest "V_20_EPOCH";
+			_unit addGoggles "G_Diving";
+			
+		};
+		
+		if(debug_mode) then { diag_log("WAI: AI gear done"); };
+		
+		call {
+			if(_skill == "easy") 		exitWith { _aicskill = ai_skill_easy; };
+			if(_skill == "medium") 		exitWith { _aicskill = ai_skill_medium; };
+			if(_skill == "hard") 		exitWith { _aicskill = ai_skill_hard; };
+			if(_skill == "extreme") 	exitWith { _aicskill = ai_skill_extreme; };
+			if(_skill == "random") 		exitWith { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
+			_aicskill = ai_skill_random call BIS_fnc_selectRandom;
+		};
+
+		{
+			_unit setSkill [(_x select 0),(_x select 1)]
+		} count _aicskill;
+		
+		ai_ground_units = (ai_ground_units + 1);
+
+		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
+
+		if (!isNil "_mission") then {
+			wai_mission_data select _mission set [0, (((wai_mission_data select _mission) select 0) + 1)];
+			_unit setVariable ["missionclean", "ground"];
+			_unit setVariable ["mission", _mission, true];
+		};
+
+	};
+
+	if (!isNil "_launcher" && wai_use_launchers) then {
+		call {
+			//if (_launcher == "Random") exitWith { _launcher = (ai_launchers_AT + ai_launchers_AA) call BIS_fnc_selectRandom; };
+			if (_launcher == "at") exitWith { _launcher = ai_wep_launchers_AT call BIS_fnc_selectRandom; };
+			if (_launcher == "aa") exitWith { _launcher = ai_wep_launchers_AA call BIS_fnc_selectRandom; };
+		};
+		_rocket = _launcher call find_suitable_ammunition;
+		_unit addMagazine _rocket;
+		_unit addMagazine _rocket;
+		_unit addWeapon _launcher;
+	};
+
+	_unitGroup setFormation "Echelon L";
+	_unitGroup selectLeader ((units _unitGroup) select 0);
+
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn bandit_behaviour;
+		} else {
+			[_unitGroup] spawn bandit_behaviour;
+		};
+	
+
+	if(_pos_z == 0) then {
+		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;
+	};
+
+	diag_log format ["WAI: Spawned a group of %1 AI at %2",_unitnumber,_position];
+	
+	_unitGroup
+};

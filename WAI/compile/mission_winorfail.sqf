@@ -26,19 +26,14 @@ if(isServer) then {
 	};
 
 	{
-		
 		if (_x getVariable ["mission", nil] == _mission) then {
 			_mission_units set [count _mission_units, _x];
 		};
 
 	} count allUnits;
 	
-	if (wai_radio_announce) then {
-		RemoteMessage = ["radio","[RADIO] " + _msgstart];
-		publicVariable "RemoteMessage";
-	} else {
-		[nil,nil,rTitleText,_msgstart,"PLAIN",10] call RE;
-	};
+	RemoteMessage = [wai_announce,_msgstart];
+	publicVariable "RemoteMessage";
 	
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;
@@ -158,25 +153,15 @@ if(isServer) then {
 		if (typeOf(_crate) in (crates_large + crates_medium + crates_small)) then {
 
 			if(wai_crates_smoke && sunOrMoon == 1) then {
-				_marker = "FlareWhite_F" createVehicle getPosATL _crate;
+				_marker = "SmokeShellPurple" createVehicle getPosATL _crate;
 				_marker setPosATL (getPosATL _crate);
 				_marker attachTo [_crate,[0,0,0]];
 			};
 
 			if (wai_crates_flares && sunOrMoon != 1) then {
-				_marker = "FlareWhite_F" createVehicle getPosATL _crate;
+				_marker = "B_IR_Grenade" createVehicle getPosATL _crate;
 				_marker setPosATL (getPosATL _crate);
 				_marker attachTo [_crate, [0,0,0]];
-				
-				_in_range = _crate nearEntities ["CAManBase",1250];
-				
-				{
-					if(isPlayer _x && _x != player) then {
-						EPOCH_sendPublicVariableClient = [_x,"FlareWhite_F",[_marker,0]];
-						publicVariableServer "EPOCH_sendPublicVariableClient";
-					};
-				} count _in_range;
-
 			};
 
 		};
@@ -187,27 +172,19 @@ if(isServer) then {
 		
 			{
 				if(typeName _x == "ARRAY") then {
-				
 					{
 						deleteVehicle _x;
 					} count _x;
-				
 				} else {
-
-					deleteVehicle _x;
-					
+					deleteVehicle _x;	
 				};
 				
 			} forEach _delete_mines;
 			
 		};
 		
-		if (wai_radio_announce) then {
-			RemoteMessage = ["radio","[RADIO] " + _msgwin];
-			publicVariable "RemoteMessage";
-		} else {
-			[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
-		};
+		RemoteMessage = [wai_announce,_msgstart];
+		publicVariable "RemoteMessage";
 		
 		if (wai_clean_mission) then {
 
@@ -235,12 +212,15 @@ if(isServer) then {
 								{
 									if ((_x getVariable ["ObjectID", nil]) == nil) then {
 										deleteVehicle _x;
+										if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
+
 									};
 								} count _x;
 							
 							} else {
 								if ((_x getVariable ["ObjectID", nil]) == nil) then {
 									deleteVehicle _x;
+									if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 								};
 							};
 							
@@ -278,6 +258,7 @@ if(isServer) then {
 				};
 				
 				deleteVehicle _x;
+				if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 			};
 
 		} count allUnits + vehicles + allDead;
@@ -287,22 +268,20 @@ if(isServer) then {
 			
 				{
 					deleteVehicle _x;
+					if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 				} count _x;
 			
 			} else {
 			
 				deleteVehicle _x;
+				if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 			};
 			
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
-		if (wai_radio_announce) then {
-			RemoteMessage = ["radio","[RADIO] " + _msglose];
-			publicVariable "RemoteMessage";
-		} else {
-			[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;
-		};
-		
+		// radio, hint, global
+		RemoteMessage = ["radio",_msglose];
+		publicVariable "RemoteMessage";
 	};
 	
 	_map_marker = (wai_mission_data select _mission) select 1;

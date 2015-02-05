@@ -1,6 +1,7 @@
 if(isServer) then {
-
+	sleep 90;
 	spawn_group				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\spawn_group.sqf";
+	spawn_soldier			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\spawn_soldier.sqf";
 	spawn_static			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\spawn_static.sqf";
 	group_waypoints			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\group_waypoints.sqf";
 	heli_para				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\heli_para.sqf";
@@ -14,35 +15,18 @@ if(isServer) then {
 
 	ai_monitor				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\ai_monitor.sqf";
 	vehicle_monitor			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\vehicle_monitor.sqf";
-	find_position			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\find_position.sqf";
+	find_position			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\find_position_new.sqf";
 	load_ammo				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\load_ammo.sqf";
 
 	call 					compile preprocessFileLineNumbers "\x\addons\WAI\compile\functions.sqf";
-
-	if(isNil("DZMSInstalled")) then {
-
-		createCenter			EAST;
-		createCenter			RESISTANCE;
 	
-		WEST					setFriend [EAST,0];
-		WEST					setFriend [RESISTANCE,0];
+	createCenter			RESISTANCE;
+		
+	EAST					setFriend [RESISTANCE,0];
+	WEST					setFriend [RESISTANCE,0];
 	
-		EAST					setFriend [WEST,0];
-		EAST					setFriend [RESISTANCE,0];
-		
-		RESISTANCE				setFriend [EAST,0];
-		RESISTANCE				setFriend [WEST,0];
-
-	} else {
-	
-		createCenter			RESISTANCE;
-		
-		EAST					setFriend [RESISTANCE,0];
-		WEST					setFriend [RESISTANCE,0];
-		
-		RESISTANCE				setFriend [EAST,0];
-		RESISTANCE				setFriend [WEST,0];	
-	};
+	RESISTANCE				setFriend [EAST,0];
+	RESISTANCE				setFriend [WEST,0];	
 	
 	wai_staticloaded 		= false;
 	WAIconfigloaded			= false;
