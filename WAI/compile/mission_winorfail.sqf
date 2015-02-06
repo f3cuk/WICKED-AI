@@ -69,6 +69,7 @@ if(isServer) then {
 		_x enableAI "MOVE";
 		_x enableAI "ANIM";
 		_x enableAI "FSM";
+		_x setRank "Private";
 	} count _mission_units;
 
 	while {!_timeout && !_complete} do {

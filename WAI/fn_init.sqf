@@ -19,15 +19,15 @@ if(isServer) then {
 	load_ammo				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\load_ammo.sqf";
 
 	call 					compile preprocessFileLineNumbers "\x\addons\WAI\compile\functions.sqf";
-	
-	createCenter			RESISTANCE;
-		
-	EAST					setFriend [RESISTANCE,0];
-	WEST					setFriend [RESISTANCE,0];
-	
-	RESISTANCE				setFriend [EAST,0];
-	RESISTANCE				setFriend [WEST,0];	
-	
+	/*
+		We use epoch default createCenter and SetFriend settings
+		RESISTANCE setFriend[WEST,0];
+		WEST setFriend[RESISTANCE,0];
+		RESISTANCE setFriend[EAST,0];
+		EAST setFriend[RESISTANCE,0];
+		EAST setFriend[WEST,1];
+		WEST setFriend[EAST,1];
+	*/
 	wai_staticloaded 		= false;
 	WAIconfigloaded			= false;
 

@@ -37,7 +37,7 @@ if (isServer) then {
 	};
 	
 	// Create AI group	
-	_unitGroup	= createGroup EAST;
+	_unitGroup	= createGroup RESISTANCE;
 	_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_unitGroup setVariable["LAST_CHECK",1000000000000]; 
 		
@@ -76,6 +76,7 @@ if (isServer) then {
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
 		if (!isNil "_mission") then {
+			if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
 			[_unitGroup, _mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;

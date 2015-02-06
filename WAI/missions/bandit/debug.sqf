@@ -43,7 +43,7 @@ if(isServer) then {
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0]
-	],"O_HMG_01_high_F","Easy","bandit",_mission] call spawn_static;
+	],"O_G_Offroad_01_armed_F","Easy","bandit",_mission] call spawn_static;
 	
 	/************************************************************************************/
 	
@@ -69,7 +69,7 @@ if(isServer) then {
 		_VehiclePosition,		// Position to spawn chopper at
 		200,					// Radius of patrol
 		10,						// Number of waypoints to give
-		"B_G_Offroad_01_armed_F",	// Classname of vehicle (make sure it has driver and two gunners)
+		"O_G_Offroad_01_armed_F",	// Classname of vehicle (make sure it has driver and two gunners)
 		"Random",				// Skill level of units (easy, medium, hard, extreme, Random)
 		0,						// AI CLASS
 		"Bandit",				// AI Type, "Hero" or "Bandit".
@@ -83,7 +83,7 @@ if(isServer) then {
 		_VehiclePosition,		// Position to spawn chopper at
 		200,					// Radius of patrol
 		10,						// Number of waypoints to give
-		"B_G_Offroad_01_armed_F",	// Classname of vehicle (make sure it has driver and two gunners)
+		"O_G_Offroad_01_armed_F",	// Classname of vehicle (make sure it has driver and two gunners)
 		"Random",				// Skill level of units (easy, medium, hard, extreme, Random)
 		0,						// AI CLASS
 		"Bandit",				// AI Type, "Hero" or "Bandit".

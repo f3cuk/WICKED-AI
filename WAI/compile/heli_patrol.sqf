@@ -19,7 +19,7 @@ if (isServer) then {
 	
 	_skillarray			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
-	_unitGroup			= createGroup EAST;
+	_unitGroup			= createGroup RESISTANCE;
 	_unitGroup 			setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_unitGroup 			setVariable["LAST_CHECK",1000000000000]; 
 	_unitGroup 			setBehaviour "AWARE";
@@ -53,6 +53,7 @@ if (isServer) then {
 	[_helicopter] spawn vehicle_monitor;	//will need changed for A3 Epoch
 	
 	if (!isNil "_mission") then {
+			if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0, (_ainum + 1)];
 			_helicopter setVariable ["missionclean","air"];
@@ -111,7 +112,7 @@ if (isServer) then {
 			_wp setWaypointStatements ["true",
 			"
 				(Vehicle this) flyinheight 50;
-				(Vehicle this) limitSpeed 60;
+				(Vehicle this) limitSpeed 45;
 				if(debug_mode) then {diag_log('WAI: Heli height ' + str((position Vehicle this) select 2) + '/ Heli speed ' + str(speed this)); };
 			"];
 			if(debug_mode) then { diag_log("WAI: Heli WP" + str(_i) + " / " + str(_wp)); };

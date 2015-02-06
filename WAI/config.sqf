@@ -3,7 +3,6 @@ if(isServer) then {
 	/* GENERAL CONFIG */
 
 		debug_mode					= true;		// enable debug
-		use_blacklist				= true;		// use blacklist
 		blacklist					= [
 			[[0,16000,0],[1000,-0,0]],		   	// Left
 			[[0,16000,0],[16000.0,14580.3,0]], 	// Top
@@ -25,7 +24,7 @@ if(isServer) then {
 
 		ai_clear_body 				= false;		// instantly clear bodies
 		ai_clean_dead 				= true;			// clear bodies after certain amount of time
-		ai_cleanup_time 			= 7200;			// time to clear bodies in seconds
+		ai_cleanup_time 			= 3600;			// time to clear bodies in seconds
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
@@ -128,7 +127,7 @@ if(isServer) then {
 		wai_crates_flares			= true;								// pop flare on crate when mission is finished during nighttime
 		
 		wai_players_online			= 0; 								// number of players online before mission starts
-		wai_server_fps				= 5; 								// missions only starts if server FPS is over wai_server_fps
+		wai_server_fps				= 10; 								// missions only starts if server FPS is over wai_server_fps
 		
 		wai_kill_percent			= 0;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 

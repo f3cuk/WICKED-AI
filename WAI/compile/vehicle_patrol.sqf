@@ -2,6 +2,18 @@ if (isServer) then {
 
 	private ["_Safeposition","_driver","_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
+	/*[
+		_position,		[_position select 0,_position select 1,0]
+		_unitnumber,	[_position select 0,_position select 1,0]
+		_radius,		200
+		_wpnum,			10
+		_veh_class,		B_G_Offroad_01_armed_F
+		_skill			Medium
+		_aisoldier		0
+		_aitype			0
+		_mission		0
+	] call vehicle_patrol;*/
+	
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
 	_radius 				= _this select 2;
@@ -19,8 +31,7 @@ if (isServer) then {
 
 	_skillarray 			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
-	_unitGroup				= createGroup EAST;
-	
+	_unitGroup				= createGroup RESISTANCE;
 	_unitGroup 				setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_unitGroup 				setVariable["LAST_CHECK",1000000000000]; 
 	_unitGroup 				setBehaviour "AWARE";
@@ -55,6 +66,7 @@ if (isServer) then {
 	[_vehicle] spawn vehicle_monitor;
 	
 	if (!isNil "_mission") then {
+			if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0, (_ainum + 1)];
 			_vehicle setVariable ["missionclean","vehicle"];
@@ -65,7 +77,7 @@ if (isServer) then {
 	_driver 			= [_unitGroup,_position,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
 	_driver 			assignAsDriver _vehicle;
 	_driver 			moveInDriver _vehicle;
-	ai_vehicle_units 	= (ai_vehicle_units +1);
+	ai_vehicle_units 	= (ai_vehicle_units + 1);
 	if(debug_mode) then { diag_log("WAI: Spawning vehicle driver " + str(_driver)); };
 	
 	_gunner 			= [_unitGroup,_position,1,_skill,_aitype,_mission] call spawn_soldier;
@@ -74,7 +86,7 @@ if (isServer) then {
 	ai_vehicle_units 	= (ai_vehicle_units + 1);
 	if(debug_mode) then { diag_log("WAI: Spawning vehicle gunner 1 " + str(_gunner)); };
 
-	[_gunner] 			joinSilent _unitGroup;
+	[_driver,_gunner] 	joinSilent _unitGroup;
 	//Driver is leader
 	_unitGroup 			selectLeader _driver;
 	
@@ -87,6 +99,8 @@ if (isServer) then {
 		_x removeEventHandler ["killed", 0];
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
 		_x setVariable ["missionclean", "vehicle"];
+		if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
+		
 	} forEach (units _unitgroup);
 
 	
@@ -103,6 +117,7 @@ if (isServer) then {
 			_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],_radius];
 			_wp setWaypointType "SAD";
 			_wp setWaypointCompletionRadius 200;
+			_wp setWaypointSpeed "NORMAL";
 			_wp setWaypointStatements ["true",
 			"
 				if(debug_mode) then {diag_log('WAI: Vehicle speed ' + str(speed this)); };

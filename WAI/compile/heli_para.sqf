@@ -75,7 +75,7 @@ if (isServer) then {
 
 	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
 
-	_unitGroup	= createGroup EAST;
+	_unitGroup	= createGroup RESISTANCE;
 	
 	ai_air_units = (ai_air_units +1);
 

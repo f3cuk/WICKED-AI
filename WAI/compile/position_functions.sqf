@@ -150,6 +150,19 @@ wai_nearbyBlackspot = {
 	_isNear
 };
 
+wai_nearbyTrader = {
+	private ["_position", "_isNear", "_nearby"];
+	_position = _this select 0;
+	_isNear = false;
+	
+	_nearby = nearestObjects [_position, ["C_man_1"], wai_blacklist_range];
+	
+	if ((count _nearby) > 0) then {
+		_isNear = true;
+	};
+	_isNear
+};
+
 /*get_trader_markers = {
 
 	private["_result"];
