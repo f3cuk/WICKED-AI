@@ -1,4 +1,4 @@
-private ["_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
+private ["_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
 	// Spawn around buildings and 50% near roads
 	/*
 	1    Position
@@ -11,8 +11,17 @@ private ["_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys",
 	*/
 	markerready = false;
 	_position = [];
-	_chance = floor(random 3);
-	//_chance = 1;
+	
+	// Manual set mission position type
+	if (_this > 1) then {
+		_clear 	= select 0;
+		_chance = select 1;
+	} else {
+		_clear 	= select 0;
+		_chance = floor(random 3);
+	};
+	
+
 	
 	 
 	// Try 10 Times to Find a Mission Spot
@@ -27,7 +36,7 @@ private ["_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys",
 					_position = _RoadList call BIS_fnc_selectRandom;
 					_position = _position modelToWorld [0,0,0];
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [_position,0,100,5,0,3000,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [_position,0,300,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position ROAD"];
 				};
 			// Buldings
@@ -38,21 +47,21 @@ private ["_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys",
 					_cityPos=getArray(_selectedCity >> "position");
 					_cityrange=getNumber(_selectedCity >> "radiusA");
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [_cityPos,0,200,1,0,3000,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [_cityPos,0,300,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Buldings"];
 				};
 			// Wildness
 			case 2:
 				{	
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,100,0,3000,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Wildness"];
 				};
 			// Water
 			case 3:
 				{	
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,100,1,1000,1,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,1,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Water/Shore"];
 				};
 		};
@@ -71,4 +80,4 @@ private ["_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys",
 		};
 	};
 	
-	_position
+	[_position,_chance]

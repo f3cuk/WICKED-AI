@@ -19,6 +19,13 @@ if (isServer) then {
 	_skill 				= _this select 2;
 	_aisoldier 			= _this select 3;
 	_aitype				= _this select 4;
+
+	if (count _this > 5) then {
+		_mission = _this select 5;
+		diag_log(_mission);
+	} else {
+		_mission = nil;
+	};
 	
 	
 	if(debug_mode) then { diag_log("WAI: Spawning AI " + str(_aitype)); };
@@ -27,13 +34,6 @@ if (isServer) then {
 	if (typeName _aisoldier == "ARRAY") then {
 		_launcher		= _aisoldier select 1;
 		_aisoldier		= _aisoldier select 0;
-	};
-	
-	// if misison
-	if (count _this > 5) then {
-		_mission = _this select 5;
-	} else {
-		_mission = nil;
 	};
 	
 	// Create AI group	
