@@ -15,7 +15,7 @@ if(isServer) then {
 
 	ai_monitor				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\ai_monitor.sqf";
 	vehicle_monitor			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\vehicle_monitor.sqf";
-	find_position			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\find_position_new.sqf";
+	find_position			= compile preprocessFileLineNumbers "\x\addons\WAI\compile\find_position.sqf";
 	load_ammo				= compile preprocessFileLineNumbers "\x\addons\WAI\compile\load_ammo.sqf";
 
 	call 					compile preprocessFileLineNumbers "\x\addons\WAI\compile\functions.sqf";

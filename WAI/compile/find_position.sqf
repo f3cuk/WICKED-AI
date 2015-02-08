@@ -1,73 +1,83 @@
-/*
-
-// Retrieve world center and size
-_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-_worldCenter = [_worldSize/2,_worldSize/2,0];
-
-
-worldRadius = (getNumber(configFile >> "CfgWorlds" >> worldName >> "MapSize")/2);
-worldCenterPos = [ worldRadius, worldRadius, 0];
-*/
-
-
-if(isServer) then {
-	
-	private ["_i","_traders","_safepos","_validspot","_position"];
-
+private ["_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
+	// Spawn around buildings and 50% near roads
+	/*
+	1    Position
+	2    Minimum distance
+	3    Maximum distance
+	4    Maximum distance from nearest object
+	5    0 - cant be in water, 1 - ?
+	6    Terrain gradient (how steep terrain)
+	7    0 - shore mode; does not have to be in shore
+	*/
 	markerready = false;
-
-	if(use_blacklist) then {
-		_safepos		= [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0,blacklist];
+	_position = [];
+	
+	// Manual set mission position type
+	if (_this > 1) then {
+		_clear 	= select 0;
+		_chance = select 1;
 	} else {
-		_safepos		= [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0];
+		_clear 	= select 0;
+		_chance = floor(random 3);
 	};
-
-	_validspot 	= false;
-	_i 			= 1;
-
-	while{!_validspot} do {
 	
-		sleep 1;
 
-		_position 	= _safepos call BIS_fnc_findSafePos;
-		_i 			= _i + 1;
-		_validspot	= true;
-
-		if (_position call inDebug) then { if(debug_mode) then {diag_log("WAI: Invalid Position (Debug)");}; _validspot = false; }; 
-
-		if(_validspot && wai_avoid_water != 0) then {
-			if ([_position,wai_avoid_water] call isNearWater) then { if(debug_mode) then {diag_log("WAI: Invalid Position (Water)");}; _validspot = false; }; 
-		};
-
-		if (_validspot && isNil "infiSTAR_LoadStatus1" && wai_avoid_town != 0) then {
-			if ([_position,wai_avoid_town] call isNearTown) then {  if(debug_mode) then {diag_log("WAI: Invalid Position (Town)");}; _validspot = false; };
-		}; // ELSE infoSTAR is enabled, need to find another method of finding near towns
-
-		if(_validspot && wai_avoid_road != 0) then {
-			if ([_position,wai_avoid_road] call isNearRoad) then { if(debug_mode) then {diag_log("WAI: Invalid Position (Road)");}; _validspot = false; };
-		};
-
-		if (_validspot && wai_avoid_missions != 0) then {
-			if(debug_mode) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby mission markers: " + str(wai_mission_markers)); };
-			{
-				if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
-			} count wai_mission_markers;
-		};
-
-		/*if (_validspot && wai_avoid_traders != 0) then {
-			if(debug_mode) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby trader markers: " + str(trader_markers)); };
-			{
-				if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_traders)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
-			} count trader_markers;
-		};*/
-
-		if(_validspot) then {
-
-			if(debug_mode) then { diag_log("Loop complete, valid position " +str(_position) + " in " + str(_i) + " attempts"); };
 	
+	 
+	// Try 10 Times to Find a Mission Spot
+	for "_x" from 1 to 10 do {
+		switch (_chance) do
+		{
+			// ROAD
+			case 0:
+				{
+					_RoadList = epoch_centerMarkerPosition nearRoads EPOCH_dynamicVehicleArea;
+					waitUntil{!isNil "BIS_fnc_selectRandom"};
+					_position = _RoadList call BIS_fnc_selectRandom;
+					_position = _position modelToWorld [0,0,0];
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [_position,0,300,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
+					diag_log format["WAI: position ROAD"];
+				};
+			// Buldings
+			case 1:
+				{
+					_allCitys=(configfile >> "CfgWorlds" >> worldName >> "Names")call BIS_fnc_returnChildren;
+					_selectedCity=_allCitys select(floor random(count _allCitys));
+					_cityPos=getArray(_selectedCity >> "position");
+					_cityrange=getNumber(_selectedCity >> "radiusA");
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [_cityPos,0,300,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
+					diag_log format["WAI: position Buldings"];
+				};
+			// Wildness
+			case 2:
+				{	
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,0,blacklist] call BIS_fnc_findSafePos;
+					diag_log format["WAI: position Wildness"];
+				};
+			// Water
+			case 3:
+				{	
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,1,blacklist] call BIS_fnc_findSafePos;
+					diag_log format["WAI: position Water/Shore"];
+				};
 		};
-
+		
+		_isNearPlayer = [_position] call wai_nearbyPlayers;
+		_isNearTrader = [_position] call wai_nearbyTrader;
+		_isNearBlackspot = [_position] call wai_nearbyBlackspot;
+		
+		
+		if ((!_isNearPlayer) && (!_isNearBlackspot) && (!_isNearTrader)) then {
+			_x = 20;
+			diag_log format["WAI: Good position At %1",_position];
+		} else {
+			_position = [];
+			diag_log format["WAI: Bad position %1",_position];
+		};
 	};
-	_position set [2, 0];
-	_position
-};
+	
+	[_position,_chance]
