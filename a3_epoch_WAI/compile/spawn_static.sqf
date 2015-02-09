@@ -12,19 +12,24 @@ if (isServer) then {
 	} else {
 		_mission = nil;
 	};
+	if(debug_mode) then { diag_log("WAI: Static Mis " + str(_mission)); };
 	
 	_position2 		= [];
 	_unitnumber 	= count _position;
 	
 	if(debug_mode) then { diag_log("WAI: Static AI " + str(_class)); };
 
-	_unitGroup	= createGroup EAST;
+	_unitGroup	= createGroup RESISTANCE;
 	_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_unitGroup setVariable["LAST_CHECK",1000000000000]; 
 	
 	{
+		call {
+			if (_class == "Random") exitWith { _class = ai_static_weapons call BIS_fnc_selectRandom; };
+		};
 		
 		_position2 = _x;
+		_position2 = _position2 findEmptyPosition [0,10,_class];
 		if(debug_mode) then { diag_log("WAI: Static AI POS " + str(_position2)); };
 		
 		_pos_x 			= _position2 select 0;
@@ -46,19 +51,23 @@ if (isServer) then {
 		} else {
 			_unit = [_unitGroup,[_pos_x,_pos_y,_pos_z],"unarmed",_skill,_aitype,_mission] call spawn_soldier;
 		};
+		ai_emplacement_units = (ai_emplacement_units + 1);
 
 		// Make it an static unit
 		_unit setVariable ["missionclean", "static"];
 		_unit removeEventHandler ["killed", 0];
 		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "static"] call on_kill;}];
 		
-		_static = createVehicle [_class, [(_position2 select 0),(_position2 select 1),(_position2 select 2)], [], 10, "FORM"];
-		_static setDir round(random 360);
-		_static setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
+		_static 		= createVehicle [_class, [(_position2 select 0),(_position2 select 1),(_position2 select 2)], [], 0, "CAN_COLLIDE"];
 		
-		_static setVariable["LASTLOGOUT_EPOCH",1000000000000];
-		_static setVariable["LAST_CHECK",1000000000000];
-		_static lock true;
+		//_position		= _position findEmptyPosition [0,10,_crate_type];
+		//_crate 		= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+		
+		_static 		setDir round(random 360);
+		_static 		setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
+		_static 		setVariable["LASTLOGOUT_EPOCH",1000000000000];
+		_static 		setVariable["LAST_CHECK",1000000000000];
+		_static 		lock true;
 			
 		// Cleanup
 		addToRemainsCollector [_static];
@@ -76,7 +85,6 @@ if (isServer) then {
 		EPOCH_VehicleSlots = EPOCH_VehicleSlots - [(EPOCH_VehicleSlots select 0)];
 		EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
 
-		ai_emplacement_units = (ai_emplacement_units + 1);
 		_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
 		
 		_unit moveingunner _static;

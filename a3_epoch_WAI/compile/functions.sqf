@@ -16,7 +16,9 @@ wai_spawn_create = {
 		_crate_type = crates_large call BIS_fnc_selectRandom;
 	};
 	// Create the create
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+	_position		= _position findEmptyPosition [0,10,_crate_type];
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),(_position select 2)],[],0,"CAN_COLLIDE"];
+	
 	// Clean up
 	_crate setVariable ["ObjectID","1",true];
 	// God mod
@@ -28,7 +30,7 @@ wai_spawn_create = {
 	clearItemCargoGlobal _crate;
 	clearBackpackCargoGlobal _crate;
 	
-	_create
+	_crate
 };
 find_suitable_ammunition = {
 

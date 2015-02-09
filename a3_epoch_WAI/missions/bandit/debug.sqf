@@ -41,7 +41,7 @@ if(isServer) then {
 		@Return
 			select 0 = crate
 	*/
-	_create = [1,_position] call wai_spawn_create;
+	_crate = [1,_position] call wai_spawn_create;
 
 	//Base
 	_baserunover 	= createVehicle ["Land_UWreck_MV22_F",[((_position select 0) + 5), ((_position select 1) + 5), 0],[],10,"FORM"];
@@ -79,10 +79,11 @@ if(isServer) then {
 			5 = Mission number
 			@Return
 	*/
+	/*
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0]
-	],"O_HMG_01_high_F","Easy","bandit",_mission] call spawn_static;
+	],"O_HMG_01_high_F","Easy","bandit",_mission] call spawn_static;*/
 	
 	/**************************************** Heli ********************************************/
 	/*
@@ -101,7 +102,7 @@ if(isServer) then {
 		@Return
 			heli
 	*/
-	[
+	/*[
 		[_position select 0,_position select 1,0],				// Position to patrol
 		[0,0,0],				// Position to spawn chopper at
 		200,					// Radius of patrol
@@ -112,9 +113,9 @@ if(isServer) then {
 		"Bandit",				// AI Type, "Hero" or "Bandit".
 		_mission
 	] call heli_patrol;
-	
+	*/
 	/**************************************** Vehicle ********************************************/
-	_VehiclePosition = [_position, random 1000, random 360] call BIS_fnc_relPos; 
+	_VehiclePosition = [_position, 1500, random 360] call BIS_fnc_relPos; 
 	/*
 		@﻿Description
 			Spawn vehicle thats drive to the mission
@@ -152,9 +153,9 @@ if(isServer) then {
 			0 = (array)		Mission number and crate
 			1 = (array)		"crate", "kill" OR ["assassinate", _unitGroup]
 			2 = (array)		cleanup objects
-			3 = Start message
-			4 = Win message
-			5 = Fail massage		
+			3 = (str)		Start message
+			4 = (str)		Win message
+			5 = (str)		Fail massage		
 		@Return
 			true or false
 	*/
@@ -162,9 +163,9 @@ if(isServer) then {
 		[_mission,_crate],	// mission number and crate
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 	// cleanup objects
-		"A MV22 carrying supplies has crashed and bandites are securing the site! Check your map for the location!",	// mission announcement
-		"Bandits have secured the crashed MV22!",																	// mission success
-		"Bandits did not secure the crashed MV22 in time"															// mission fail
+		"A MV22 carrying supplies has crashed and rebels are securing the site! Check your map for the location!",	// mission announcement
+		"Rebels have secured the crashed MV22!",																	// mission success
+		"Rebels did not secure the crashed MV22 in time"															// mission fail
 	] call mission_winorfail;
 
 	if(_complete) then {

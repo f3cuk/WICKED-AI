@@ -1,4 +1,4 @@
-private ["_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
+private ["_chance","_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
 	// Spawn around buildings and 50% near roads
 	/*
 	1    Position
@@ -11,18 +11,13 @@ private ["_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_a
 	*/
 	markerready = false;
 	_position = [];
+	_clear 	= _this select 0;
+	_chance = floor(random 3);
 	
 	// Manual set mission position type
-	if (_this > 1) then {
-		_clear 	= select 0;
-		_chance = select 1;
-	} else {
-		_clear 	= select 0;
-		_chance = floor(random 3);
+	if (count _this == 2) then {
+		_chance = _this select 1;
 	};
-	
-
-	
 	 
 	// Try 10 Times to Find a Mission Spot
 	for "_x" from 1 to 10 do {
@@ -80,4 +75,4 @@ private ["_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_a
 		};
 	};
 	
-	[_position,_chance]
+	[_position, _chance]

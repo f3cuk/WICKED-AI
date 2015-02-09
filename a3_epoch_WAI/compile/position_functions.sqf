@@ -142,7 +142,7 @@ wai_nearbyBlackspot = {
 	_position = _this select 0;
 	_isNear = false;
 	
-	_nearby = nearestObjects [_position, ["PlotPole_EPOCH"], wai_blacklist_range];
+	_nearby = nearestObjects [_position, ["PlotPole_EPOCH","ProtectionZone_Invisible_F"], wai_blacklist_range];
 	
 	if ((count _nearby) > 0) then {
 		_isNear = true;

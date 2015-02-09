@@ -179,7 +179,7 @@ if (isServer) then {
 	if (surfaceIsWater (position _unit)) then {
 		removeHeadgear _unit;
 		_unit forceAddUniform "U_O_Wetsuit" ;
-		_unit addVest "V_20";
+		_unit addVest "V_20_EPOCH";
 		_unit addGoggles "G_Diving";
 		_muzzle = [_unit, "arifle_SDAR_F", 3, "20Rnd_556x45_UW_mag"] call BIS_fnc_addWeapon;
 

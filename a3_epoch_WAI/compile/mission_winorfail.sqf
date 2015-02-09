@@ -28,11 +28,10 @@ if(isServer) then {
 	{
 		if (_x getVariable ["mission", nil] == _mission) then {
 			_mission_units set [count _mission_units, _x];
-			if(debug_mode) then { diag_log("WAI: _mission_units " + str(_mission_units)); };
-			
 		};
 
 	} count allUnits;
+	if(debug_mode) then { diag_log("WAI: _mission_units " + str(_mission_units)); };
 	
 	RemoteMessage = [wai_announce,_msgstart];
 	publicVariable "RemoteMessage";
@@ -178,7 +177,7 @@ if(isServer) then {
 			
 		};
 		
-		RemoteMessage = [wai_announc,_msgwin];
+		RemoteMessage = [wai_announce,_msgwin];
 		publicVariable "RemoteMessage";
 		
 		if (wai_clean_mission) then {
@@ -275,7 +274,7 @@ if(isServer) then {
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
 		// radio, hint, global
-		RemoteMessage = [wai_announc,_msglose];
+		RemoteMessage = [wai_announce,_msglose];
 		publicVariable "RemoteMessage";
 	};
 	

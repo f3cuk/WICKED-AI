@@ -28,6 +28,7 @@ if (isServer) then {
 	} else {
 		_mission 			= nil;
 	};
+	if(debug_mode) then { diag_log("WAI: Vehicle Mis " + str(_mission)); };
 
 	_skillarray 			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
@@ -41,7 +42,9 @@ if (isServer) then {
 	if(debug_mode) then { diag_log("WAI: Spawning vehicle patrol at " + str(mapGridPosition(_startingpos))); };
 	if(debug_mode) then { diag_log("WAI: Driving to " + str(mapGridPosition(_position))); };
 	
+	
 	_Safeposition 			= [_startingpos,0,50,2,0,1000,0] call BIS_fnc_findSafePos;
+	_Safeposition 			= _Safeposition findEmptyPosition [0,10,_veh_class];
 	_vehicle 				= createVehicle [_veh_class, [(_Safeposition select 0),(_Safeposition select 1), 0], [], 0, "CAN_COLLIDE"];
 	_vehicle 				setFuel 1;
 	_vehicle 				engineOn true;
