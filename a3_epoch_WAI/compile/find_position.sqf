@@ -1,4 +1,4 @@
-private ["_chance","_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
+private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
 	// Spawn around buildings and 50% near roads
 	/*
 	1    Position
@@ -52,12 +52,19 @@ private ["_chance","_clear","_isNearBlackspot","_cityrange","_cityPos","_selecte
 					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Wildness"];
 				};
-			// Water
+			// Shore
 			case 3:
 				{	
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
 					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,1,blacklist] call BIS_fnc_findSafePos;
-					diag_log format["WAI: position Water/Shore"];
+					diag_log format["WAI: position Shore"];
+				};
+			// Water (for special missions)
+			case 4:
+				{	
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,5,20,0,blacklist] call BIS_fnc_findSafePos;
+					diag_log format["WAI: position Water"];
 				};
 		};
 		
@@ -65,12 +72,11 @@ private ["_chance","_clear","_isNearBlackspot","_cityrange","_cityPos","_selecte
 		_isNearTrader = [_position] call wai_nearbyTrader;
 		_isNearBlackspot = [_position] call wai_nearbyBlackspot;
 		
-		
 		if ((!_isNearPlayer) && (!_isNearBlackspot) && (!_isNearTrader)) then {
 			_x = 20;
 			diag_log format["WAI: Good position At %1",_position];
 		} else {
-			_position = [];
+			_x = 1;
 			diag_log format["WAI: Bad position %1",_position];
 		};
 	};

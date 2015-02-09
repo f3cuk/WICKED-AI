@@ -1,29 +1,37 @@
 wai_spawn_create = {
-	private["_crate","_crate_size","_position","_crate_type"];
+	private["_height","_crate","_crate_size","_position","_crate_type"];
 	_crate_size = _this select 0;
 	_position	= _this select 1;
+	if(debug_mode) then { diag_log("WAI: BOX SPAWN POS" + str(_position)); };
 	
 	/* Create type*/
-	if(_crate_size == 0) then {
-		_crate_type = crates_small call BIS_fnc_selectRandom;
+	switch (_crate_size) do
+	{
+		// small
+		case 0:
+			{
+				_crate_type = crates_small call BIS_fnc_selectRandom;
+			};
+		// Medium
+		case 1:
+			{
+				_crate_type = crates_medium call BIS_fnc_selectRandom;
+			};
+		// large
+		case 2:
+			{
+				_crate_type = crates_large call BIS_fnc_selectRandom;
+			};
 	};
-	
-	if(_crate_size == 1) then {
-		_crate_type = crates_medium call BIS_fnc_selectRandom;
-	};
-	
-	if(_crate_size == 2) then {
-		_crate_type = crates_large call BIS_fnc_selectRandom;
-	};
+		
 	// Create the create
-	_position		= _position findEmptyPosition [0,10,_crate_type];
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),(_position select 2)],[],0,"CAN_COLLIDE"];
+	//_position		= _position findEmptyPosition [0,10,_crate_type];
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	
 	// Clean up
 	_crate setVariable ["ObjectID","1",true];
 	// God mod
 	_crate addEventHandler ["HandleDamage", {}];
-	
 	/* CLEAR CREATE */
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;

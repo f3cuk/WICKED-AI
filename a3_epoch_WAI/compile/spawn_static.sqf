@@ -29,7 +29,6 @@ if (isServer) then {
 		};
 		
 		_position2 = _x;
-		_position2 = _position2 findEmptyPosition [0,10,_class];
 		if(debug_mode) then { diag_log("WAI: Static AI POS " + str(_position2)); };
 		
 		_pos_x 			= _position2 select 0;
@@ -58,11 +57,7 @@ if (isServer) then {
 		_unit removeEventHandler ["killed", 0];
 		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "static"] call on_kill;}];
 		
-		_static 		= createVehicle [_class, [(_position2 select 0),(_position2 select 1),(_position2 select 2)], [], 0, "CAN_COLLIDE"];
-		
-		//_position		= _position findEmptyPosition [0,10,_crate_type];
-		//_crate 		= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
-		
+		_static 		= createVehicle [_class, [(_position2 select 0),(_position2 select 1),0], [], 0, "CAN_COLLIDE"];
 		_static 		setDir round(random 360);
 		_static 		setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
 		_static 		setVariable["LASTLOGOUT_EPOCH",1000000000000];
@@ -86,14 +81,12 @@ if (isServer) then {
 		EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
 
 		_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
-		
 		_unit moveingunner _static;
 		reload _unit;
 		
 		if (!isNil "_mission") then {
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0, (_ainum + 1)];
-			_static setVariable ["missionclean","static"];
 			_static setVariable ["mission",_mission];
 		};
 

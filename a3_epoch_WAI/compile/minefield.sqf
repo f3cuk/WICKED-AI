@@ -15,11 +15,15 @@ if(isServer) then {
 		
 		if(surfaceIsWater _mine_pos) then {
 			_mine = createMine ["UnderwaterMineAB", _mine_pos, [], 0];
+			//_mine = createVehicle ["UnderwaterMineAB", _mine_pos, [], 0, "CAN_COLLIDE"];
 		} else {
-			_mine = createMine ["SLAMDirectionalMine", _mine_pos, [], 0];		
+			_mine = createMine ["SLAMDirectionalMine", _mine_pos, [], 0];	
+			//_mine = createVehicle ["SLAMDirectionalMine", _mine_pos, [], 0, "CAN_COLLIDE"];
 		};
-
-
+		
+		// Let AI know
+		RESISTANCE revealMine _mine;
+		
 		_mine spawn {
 
 			private["_vehicle_near","_bomb"];

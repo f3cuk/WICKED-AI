@@ -22,7 +22,6 @@ if (isServer) then {
 
 	if (count _this > 5) then {
 		_mission = _this select 5;
-		diag_log(_mission);
 	} else {
 		_mission = nil;
 	};

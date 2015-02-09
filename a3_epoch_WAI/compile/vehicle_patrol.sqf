@@ -38,11 +38,8 @@ if (isServer) then {
 	_unitGroup 				setBehaviour "AWARE";
 	_unitGroup 				allowFleeing 0;
 	
-	
 	if(debug_mode) then { diag_log("WAI: Spawning vehicle patrol at " + str(mapGridPosition(_startingpos))); };
 	if(debug_mode) then { diag_log("WAI: Driving to " + str(mapGridPosition(_position))); };
-	
-	
 	_Safeposition 			= [_startingpos,0,50,2,0,1000,0] call BIS_fnc_findSafePos;
 	_Safeposition 			= _Safeposition findEmptyPosition [0,10,_veh_class];
 	_vehicle 				= createVehicle [_veh_class, [(_Safeposition select 0),(_Safeposition select 1), 0], [], 0, "CAN_COLLIDE"];
@@ -54,8 +51,8 @@ if (isServer) then {
 	_vehicle 				lock true;
 	_vehicle				setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_vehicle				setVariable["LAST_CHECK",1000000000000];
-	_vehicle 				disableTIEquipment true; // Disable Thermal
-	_vehicle 				call EPOCH_server_setVToken; 	// Set Token
+	_vehicle 				disableTIEquipment true; 	// Disable Thermal
+	_vehicle 				call EPOCH_server_setVToken;// Set Token
 	
 	addToRemainsCollector [_vehicle]; 	// Cleanup
 	
@@ -69,24 +66,20 @@ if (isServer) then {
 	[_vehicle] spawn vehicle_monitor;
 	
 	if (!isNil "_mission") then {
-			if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
-			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0, (_ainum + 1)];
-			_vehicle setVariable ["missionclean","vehicle"];
-			_vehicle setVariable ["mission",_mission];
+		_ainum = (wai_mission_data select _mission) select 0;
+		wai_mission_data select _mission set [0, (_ainum + 1)];
+		_vehicle setVariable ["mission",_mission];
 	};
 	
-	
+	/* CREW START */	
 	_driver 			= [_unitGroup,_position,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
 	_driver 			assignAsDriver _vehicle;
 	_driver 			moveInDriver _vehicle;
-	ai_vehicle_units 	= (ai_vehicle_units + 1);
 	if(debug_mode) then { diag_log("WAI: Spawning vehicle driver " + str(_driver)); };
 	
 	_gunner 			= [_unitGroup,_position,1,_skill,_aitype,_mission] call spawn_soldier;
 	_gunner 			assignAsGunner _vehicle;
 	_gunner 			moveInTurret [_vehicle,[0]];
-	ai_vehicle_units 	= (ai_vehicle_units + 1);
 	if(debug_mode) then { diag_log("WAI: Spawning vehicle gunner 1 " + str(_gunner)); };
 
 	[_driver,_gunner] 	joinSilent _unitGroup;
@@ -100,18 +93,18 @@ if (isServer) then {
 	{
 		// Make it an vehicle unit
 		_x removeEventHandler ["killed", 0];
+		_x setVariable ["missionclean", "static"];
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
-		_x setVariable ["missionclean", "vehicle"];
-		if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
-		
+		ai_vehicle_units 	= (ai_vehicle_units + 1);		
 	} forEach (units _unitgroup);
-
 	
 	if (!isNil "_mission") then {
 		[_unitGroup, _mission] spawn bandit_behaviour;
 	} else {
 		[_unitGroup] spawn bandit_behaviour;
 	};
+	
+	/* CREW END */
 
 	if(_wpnum > 0) then {
 
@@ -119,7 +112,7 @@ if (isServer) then {
 		{		
 			_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],_radius];
 			_wp setWaypointType "SAD";
-			_wp setWaypointCompletionRadius 200;
+			_wp setWaypointCompletionRadius 50;
 			_wp setWaypointSpeed "NORMAL";
 			_wp setWaypointStatements ["true",
 			"

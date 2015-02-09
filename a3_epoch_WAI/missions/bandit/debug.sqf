@@ -79,11 +79,11 @@ if(isServer) then {
 			5 = Mission number
 			@Return
 	*/
-	/*
+
 	[[
 		[(_position select 0) + 25, (_position select 1) + 25, 0],
 		[(_position select 0) - 25, (_position select 1) - 25, 0]
-	],"O_HMG_01_high_F","Easy","bandit",_mission] call spawn_static;*/
+	],"O_HMG_01_high_F","Easy","bandit",_mission] call spawn_static;
 	
 	/**************************************** Heli ********************************************/
 	/*
@@ -115,7 +115,7 @@ if(isServer) then {
 	] call heli_patrol;
 	*/
 	/**************************************** Vehicle ********************************************/
-	_VehiclePosition = [_position, 1500, random 360] call BIS_fnc_relPos; 
+	_VehiclePosition = [_position, 700, random 360] call BIS_fnc_relPos; 
 	/*
 		@﻿Description
 			Spawn vehicle thats drive to the mission
@@ -135,7 +135,7 @@ if(isServer) then {
 	[
 		[_position select 0,_position select 1,0],		// Position to patrol
 		_VehiclePosition,		// Position to spawn chopper at
-		200,					// Radius of patrol
+		300,					// Radius of patrol
 		10,						// Number of waypoints to give
 		"O_G_Offroad_01_armed_F",	// Classname of vehicle (make sure it has driver and two gunners)
 		"Random",				// Skill level of units (easy, medium, hard, extreme, Random)
