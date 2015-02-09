@@ -2,18 +2,6 @@ if (isServer) then {
 
 	private ["_Safeposition","_driver","_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
-	/*[
-		_position,		[_position select 0,_position select 1,0]
-		_unitnumber,	[_position select 0,_position select 1,0]
-		_radius,		200
-		_wpnum,			10
-		_veh_class,		B_G_Offroad_01_armed_F
-		_skill			Medium
-		_aisoldier		0
-		_aitype			0
-		_mission		0
-	] call vehicle_patrol;*/
-	
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
 	_radius 				= _this select 2;
@@ -35,12 +23,11 @@ if (isServer) then {
 	_unitGroup				= createGroup RESISTANCE;
 	_unitGroup 				setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_unitGroup 				setVariable["LAST_CHECK",1000000000000]; 
-	_unitGroup 				setBehaviour "AWARE";
 	_unitGroup 				allowFleeing 0;
 	
 	if(debug_mode) then { diag_log("WAI: Spawning vehicle patrol at " + str(mapGridPosition(_startingpos))); };
 	if(debug_mode) then { diag_log("WAI: Driving to " + str(mapGridPosition(_position))); };
-	_Safeposition 			= [_startingpos,0,50,2,0,1000,0] call BIS_fnc_findSafePos;
+	_Safeposition 			= [_startingpos,0,50,2,0,20,0] call BIS_fnc_findSafePos;
 	_Safeposition 			= _Safeposition findEmptyPosition [0,10,_veh_class];
 	_vehicle 				= createVehicle [_veh_class, [(_Safeposition select 0),(_Safeposition select 1), 0], [], 0, "CAN_COLLIDE"];
 	_vehicle 				setFuel 1;
@@ -51,10 +38,15 @@ if (isServer) then {
 	_vehicle 				lock true;
 	_vehicle				setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_vehicle				setVariable["LAST_CHECK",1000000000000];
-	_vehicle 				disableTIEquipment true; 	// Disable Thermal
-	_vehicle 				call EPOCH_server_setVToken;// Set Token
 	
-	addToRemainsCollector [_vehicle]; 	// Cleanup
+	// Cleanup
+	addToRemainsCollector [_vehicle];
+	
+	// Disable Thermal
+	_vehicle disableTIEquipment true; 	
+	
+	// Set Token
+	_vehicle call EPOCH_server_setVToken;
 	
 	// Set Vehicle Slot
 	EPOCH_VehicleSlotsLimit = EPOCH_VehicleSlotsLimit + 1;
@@ -68,7 +60,8 @@ if (isServer) then {
 	if (!isNil "_mission") then {
 		_ainum = (wai_mission_data select _mission) select 0;
 		wai_mission_data select _mission set [0, (_ainum + 1)];
-		_vehicle setVariable ["mission",_mission];
+		//_vehicle setVariable ["missionclean","vehicle"];
+		_vehicle setVariable ["mission",_mission];;
 	};
 	
 	/* CREW START */	
@@ -93,9 +86,9 @@ if (isServer) then {
 	{
 		// Make it an vehicle unit
 		_x removeEventHandler ["killed", 0];
-		_x setVariable ["missionclean", "static"];
+		_x setVariable ["missionclean", "vehicle"];
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
-		ai_vehicle_units 	= (ai_vehicle_units + 1);		
+		ai_vehicle_units = (ai_vehicle_units + 1);		
 	} forEach (units _unitgroup);
 	
 	if (!isNil "_mission") then {
@@ -112,7 +105,7 @@ if (isServer) then {
 		{		
 			_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],_radius];
 			_wp setWaypointType "SAD";
-			_wp setWaypointCompletionRadius 50;
+			_wp setWaypointCompletionRadius 200;
 			_wp setWaypointSpeed "NORMAL";
 			_wp setWaypointStatements ["true",
 			"

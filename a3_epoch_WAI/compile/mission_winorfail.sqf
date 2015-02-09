@@ -206,7 +206,7 @@ if(isServer) then {
 								{
 									if ((_x getVariable ["ObjectID", nil]) == nil) then {
 										deleteVehicle _x;
-										if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
+										//if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 
 									};
 								} count _x;
@@ -214,7 +214,7 @@ if(isServer) then {
 							} else {
 								if ((_x getVariable ["ObjectID", nil]) == nil) then {
 									deleteVehicle _x;
-									if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
+									//if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 								};
 							};
 							
@@ -246,7 +246,7 @@ if(isServer) then {
 							if(_cleanunits == "air") 		exitWith { ai_air_units = (ai_air_units -1); };
 							if(_cleanunits == "vehicle") 	exitWith { ai_vehicle_units = (ai_vehicle_units -1); };
 							if(_cleanunits == "static") 	exitWith { ai_emplacement_units = (ai_emplacement_units -1); };
-							if(debug_mode) then { diag_log("WAI: DELETE " + str(_cleanunits)); };
+							//if(debug_mode) then { diag_log("WAI: DELETE " + str(_cleanunits)); };
 						};
 					};
 				};

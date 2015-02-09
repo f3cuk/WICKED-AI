@@ -28,12 +28,12 @@ if (isServer) then {
 
 	if (isPlayer _player) then {
 
-		/*if(ai_crypto_gain)then{
+		if(ai_crypto_gain)then{
 			_pos=getposATL _unit;
 			_veh=createVehicle["Land_MPS_EPOCH",_pos,[],1.5,"CAN_COLLIDE"];
 			diag_log format["ADMIN: Created crypto device for %1 with %2 at %3",_unit,_krypto,_pos];
 			_veh setVariable["Crypto",_krypto,true];
-		};*/
+		};
 				
 		if (ai_clear_body) then {
 			removeAllWeapons _unit;
@@ -55,6 +55,9 @@ if (isServer) then {
 		};
 
 	} else {
+	
+		// Blow front wheel
+		_player setHit ["pravy kolo",1]
 
 		if (ai_clean_roadkill) then {
 			removeAllWeapons _unit;

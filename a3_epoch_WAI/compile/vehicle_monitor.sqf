@@ -31,6 +31,8 @@ if (isServer) then {
 		_player_present = false;
 		{
 			if((isPlayer _x) && (_x distance _veh <= 750)) exitWith { _player_present = true };
+			// Vec god mod when there is no players
+			_veh setDamage 0;
 		} count playableUnits;
 		(!_player_present)
 	};

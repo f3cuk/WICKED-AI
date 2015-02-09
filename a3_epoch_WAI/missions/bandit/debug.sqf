@@ -102,18 +102,18 @@ if(isServer) then {
 		@Return
 			heli
 	*/
-	/*[
+	[
 		[_position select 0,_position select 1,0],				// Position to patrol
 		[0,0,0],				// Position to spawn chopper at
 		200,					// Radius of patrol
 		10,						// Number of waypoints to give
-		"B_Heli_Light_01_F",	// Classname of vehicle (make sure it has driver and two gunners)
+		"B_Heli_Light_01_EPOCH",	// Classname of vehicle (make sure it has driver and two gunners)
 		"Random",				// Skill level of units (easy, medium, hard, extreme, Random)
 		"Random",				// AI CLASS
 		"Bandit",				// AI Type, "Hero" or "Bandit".
 		_mission
 	] call heli_patrol;
-	*/
+	
 	/**************************************** Vehicle ********************************************/
 	_VehiclePosition = [_position, 700, random 360] call BIS_fnc_relPos; 
 	/*
@@ -137,7 +137,7 @@ if(isServer) then {
 		_VehiclePosition,		// Position to spawn chopper at
 		300,					// Radius of patrol
 		10,						// Number of waypoints to give
-		"O_G_Offroad_01_armed_F",	// Classname of vehicle (make sure it has driver and two gunners)
+		"O_G_Offroad_01_armed_F",// Classname of vehicle (make sure it has driver and two gunners)
 		"Random",				// Skill level of units (easy, medium, hard, extreme, Random)
 		0,						// AI CLASS
 		"Bandit",				// AI Type, "Hero" or "Bandit".

@@ -53,18 +53,17 @@ if (isServer) then {
 	[_helicopter] spawn vehicle_monitor;	//will need changed for A3 Epoch
 	
 	if (!isNil "_mission") then {
-			if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0, (_ainum + 1)];
-			_helicopter setVariable ["missionclean","air"];
+			//_helicopter setVariable ["missionclean","air"];
 			_helicopter setVariable ["mission",_mission];
 	};
 	
+	/* CREW START */	
 	_pilot 				= [_unitGroup,_position,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
 	[_pilot] 			joinSilent _unitGroup;
 	_pilot 				assignAsDriver _helicopter;
 	_pilot 				moveInDriver _helicopter;
-	ai_air_units 		= (ai_air_units +1);
 	if(debug_mode) then { diag_log("WAI: Spawning Heli pilot " + str(_pilot)); };
 	
 	//Pilot is leader
@@ -75,7 +74,7 @@ if (isServer) then {
 	_gunner 			assignAsCargo _helicopter;
 	_gunner 			moveInCargo [_helicopter,2];
 	_gunner				enablePersonTurret [2,true];
-	ai_air_units 		= (ai_air_units + 1);
+
 	if(debug_mode) then { diag_log("WAI: Spawning Heli gunner 1 " + str(_gunner)); };
 
 	_gunner2 			= [_unitGroup,_position,1,_skill,_aitype,_mission] call spawn_soldier;
@@ -83,7 +82,6 @@ if (isServer) then {
 	_gunner2			assignAsCargo _helicopter;
 	_gunner2 			moveInCargo [_helicopter,4];
 	_gunner2			enablePersonTurret [4,true];
-	ai_air_units 		= (ai_air_units + 1);
 	if(debug_mode) then { diag_log("WAI: Spawning Heli gunner 2 " + str(_gunner2)); };
 	
 	{
@@ -95,6 +93,7 @@ if (isServer) then {
 		_x removeEventHandler ["killed", 0];
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
 		_x setVariable ["missionclean", "air"];
+		ai_air_units 		= (ai_air_units + 1);
 	} forEach (units _unitgroup);
 
 	if (!isNil "_mission") then {
@@ -102,6 +101,8 @@ if (isServer) then {
 	} else {
 		[_unitGroup] spawn bandit_behaviour;
 	};
+	
+	/* CREW END */
 	
 	if(_wpnum > 0) then {
 
@@ -122,7 +123,6 @@ if (isServer) then {
 	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100];
 	_wp setWaypointCompletionRadius 200;
 	_wp setWaypointType "CYCLE";
-	if(debug_mode) then { diag_log("WAI: Heli WP " + str(_wp)); };
 	
 	_unitGroup
 };

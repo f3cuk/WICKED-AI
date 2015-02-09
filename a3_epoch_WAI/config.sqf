@@ -26,7 +26,7 @@ if(isServer) then {
 		ai_clean_dead 				= true;			// clear bodies after certain amount of time
 		ai_cleanup_time 			= 3600;			// time to clear bodies in seconds
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
-		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
+		ai_roadkill_damageweapon	= 90;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
 		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
 		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
@@ -108,8 +108,8 @@ if(isServer) then {
 		//wai_avoid_road				= 0;								// avoid spawning missions this close to roads
 		//wai_avoid_water				= 0;								// avoid spawning missions this close to water
 		
-		wai_blacklist_players_range = 350;
-		wai_blacklist_range			= 350;
+		wai_blacklist_players_range = 1000;
+		wai_blacklist_range			= 500;
 
 		wai_mission_timer			= [300,900];							// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
@@ -129,7 +129,7 @@ if(isServer) then {
 		wai_players_online			= 0; 								// number of players online before mission starts
 		wai_server_fps				= 10; 								// missions only starts if server FPS is over wai_server_fps
 		
-		wai_kill_percent			= 0;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
+		wai_kill_percent			= 30;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 10;								// chance in percent you find above mentioned item
@@ -144,18 +144,19 @@ if(isServer) then {
 
 		
 		wai_bandit_missions			= [
-										["debug",50],
+										["sniper_team",30],
+										["rebel_base",70],
 										["patrol",0],
 										["armed_vehicle",0],
 										["black_hawk_crash",0],
 										["captured_mv22",0],
 										["broken_down_ural",0],
-										["hero_base",0],
 										["ikea_convoy",0],
 										["medi_camp",0],
 										["presidents_mansion",0],
-										["sniper_team",50],
-										["weapon_cache",0]
+										["weapon_cache",0],
+										
+										["debug",0]
 									];
 		
 		// Vehicle arrays
@@ -171,9 +172,9 @@ if(isServer) then {
 		boots						= ["B_SDV_01_EPOCH"];
 
 		// Dynamic box array
-		crates_large				= ["Cargo_Container"]; 
+		crates_large				= ["﻿Box_NATO_AmmoVeh_F"]; 
 		crates_medium				= ["C_supplyCrate_F"];  
-		crates_small				= ["Pelican_EPOCH"];
+		crates_small				= ["Pelican_EPOCH","Box_NATO_WpsSpecial_F"];
 		
 		// weapons
 		crate_weapons_buildables    = ["MultiGun",["MeleeSledge","swing"],["Hatchet","swing"],["ChainSawG","CSGAS"],["ChainSawP","CSGAS"],["ChainSawR","CSGAS"]];
@@ -204,7 +205,7 @@ if(isServer) then {
 		if(debug_mode) then {
 			wai_mission_timer		= [60,90];							// time between missions 5-15 minutes
 			wai_mission_timeout		= [300,600];
-			wai_bandit_missions		= [["debug",100]];			// time each missions takes to despawn if inactive 15-30 minutes
+			//wai_bandit_missions		= [["sniper_team",100]];			// time each missions takes to despawn if inactive 15-30 minutes
 		};
 
 	/* STATIC MISSIONS CONFIG */

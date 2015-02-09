@@ -17,7 +17,7 @@ if (isServer) then {
 	_position2 		= [];
 	_unitnumber 	= count _position;
 	
-	if(debug_mode) then { diag_log("WAI: Static AI " + str(_class)); };
+	//if(debug_mode) then { diag_log("WAI: Static AI " + str(_class)); };
 
 	_unitGroup	= createGroup RESISTANCE;
 	_unitGroup setVariable["LASTLOGOUT_EPOCH",1000000000000];
@@ -60,9 +60,10 @@ if (isServer) then {
 		_static 		= createVehicle [_class, [(_position2 select 0),(_position2 select 1),0], [], 0, "CAN_COLLIDE"];
 		_static 		setDir round(random 360);
 		_static 		setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
+		_static 		addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
+		_static 		lock true;
 		_static 		setVariable["LASTLOGOUT_EPOCH",1000000000000];
 		_static 		setVariable["LAST_CHECK",1000000000000];
-		_static 		lock true;
 			
 		// Cleanup
 		addToRemainsCollector [_static];
@@ -79,30 +80,28 @@ if (isServer) then {
 		_static setVariable ["VEHICLE_SLOT",(EPOCH_VehicleSlots select 0),true];
 		EPOCH_VehicleSlots = EPOCH_VehicleSlots - [(EPOCH_VehicleSlots select 0)];
 		EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
-
-		_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
-		_unit moveingunner _static;
-		reload _unit;
+		
+		[_static] spawn vehicle_monitor;
 		
 		if (!isNil "_mission") then {
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0, (_ainum + 1)];
+			//_static setVariable ["missionclean","static"];
 			_static setVariable ["mission",_mission];
 		};
-
-		[_static] spawn vehicle_monitor;
+		
+		_unit moveingunner _static;
+		reload _unit;
 
 	} forEach _position;
 
 	_unitGroup selectLeader ((units _unitGroup) select 0);
-
 	
-		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
-		} else {
-			[_unitGroup] spawn bandit_behaviour;
-		};
-	
+	if (!isNil "_mission") then {
+		[_unitGroup, _mission] spawn bandit_behaviour;
+	} else {
+		[_unitGroup] spawn bandit_behaviour;
+	};
 
 	diag_log format ["WAI: Spawned in %1 %2",_unitnumber,_class];
 

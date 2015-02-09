@@ -8,6 +8,7 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 	5    0 - cant be in water, 1 - ?
 	6    Terrain gradient (how steep terrain)
 	7    0 - shore mode; does not have to be in shore
+	8	 blacklist
 	*/
 	markerready = false;
 	_position = [];
@@ -49,21 +50,21 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 			case 2:
 				{	
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Wildness"];
 				};
 			// Shore
 			case 3:
 				{	
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,5,20,1,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,0,20,1,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Shore"];
 				};
 			// Water (for special missions)
 			case 4:
 				{	
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,5,20,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Water"];
 				};
 		};
