@@ -57,7 +57,7 @@ if (isServer) then {
 	} else {
 	
 		// Blow front wheel
-		_player setHit ["pravy kolo",1]
+		_player setHit ["pravy kolo",1];
 
 		if (ai_clean_roadkill) then {
 			removeAllWeapons _unit;

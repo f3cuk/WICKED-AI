@@ -172,7 +172,7 @@ if(isServer) then {
 		boots						= ["B_SDV_01_EPOCH"];
 
 		// Dynamic box array
-		crates_large				= ["﻿Box_NATO_AmmoVeh_F"]; 
+		crates_large				= ["Box_NATO_AmmoVeh_F"]; 
 		crates_medium				= ["C_supplyCrate_F"];  
 		crates_small				= ["Pelican_EPOCH","Box_NATO_WpsSpecial_F"];
 		
