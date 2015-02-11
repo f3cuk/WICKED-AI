@@ -42,30 +42,3 @@ if (count _this > 1) then {
 		} count allUnits;				
 	}];
 } forEach (units _group);
-
-/*if (ai_friendly_behaviour) then {
-
-	while {({alive _x} count units _group) > 0} do {
-
-		if (!_guarding) then { _position = getPosATL ((units _group) select 0); };
-		{
-			_player = _x;
-			if((isPlayer _player) && ((_player distance _position) <= 1200)) then {
-
-				_agro = name _player in (_x getVariable ["Aggressors", []]);
-
-				if (_player getVariable ["humanity", 0] < player_bandit) then {
-				
-					if ((_player distance _position < 120 && _guarding) || _agro) then {
-						_player setCaptive false;
-					} else {
-						_player setCaptive true;
-					};
-
-				};
-			};
-		} forEach playableUnits;
-
-		sleep 1;
-	};
-};*/

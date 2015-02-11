@@ -1,12 +1,12 @@
 if (isServer) then {
 
-	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_crypto","_banditkills","_humankills","_cryptogain"];
+	private ["_pos","_veh","_krypto","_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_crypto","_banditkills","_humankills","_cryptogain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
 	_type 		= _this select 2;
 	_launcher 	= secondaryWeapon _unit;
-	_krypto		= _unit getVariable ["crypto", 0];
+	_krypto		= _unit getVariable ["krypto", 0];
 
 	call {
 		if(_type == "ground") 	exitWith { ai_ground_units = (ai_ground_units -1); };
@@ -27,11 +27,12 @@ if (isServer) then {
 	_unit setVariable ["killedat", time];
 
 	if (isPlayer _player) then {
-
-		if(ai_crypto_gain)then{
+		
+		// AI drops krypto on death 50% chance
+		if(ai_crypto_gain && (floor(random 100) < 50)) then {
 			_pos=getposATL _unit;
 			_veh=createVehicle["Land_MPS_EPOCH",_pos,[],1.5,"CAN_COLLIDE"];
-			diag_log format["ADMIN: Created crypto device for %1 with %2 at %3",_unit,_krypto,_pos];
+			diag_log format["ADMIN: Created crypto device for %1 with %2 at %3","WAI BOT",_krypto,_pos];
 			_veh setVariable["Crypto",_krypto,true];
 		};
 				
@@ -57,7 +58,7 @@ if (isServer) then {
 	} else {
 	
 		// Blow front wheel
-		_player setHit ["pravy kolo",1];
+		(vehicle _player) sethit ["wheel_1_1_steering", 1];
 
 		if (ai_clean_roadkill) then {
 			removeAllWeapons _unit;

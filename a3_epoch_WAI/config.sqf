@@ -31,12 +31,12 @@ if(isServer) then {
 		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
 		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		ai_friendly_behaviour		= false;		// make ai friendly towards comrades
+		//ai_friendly_behaviour		= false;		// make ai friendly towards comrades
 
 		ai_share_info				= true;			// AI share info on player position
 		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
 
-		ai_kills_gain				= true;			// add kill to bandit/human kill score
+		//ai_kills_gain				= true;			// add kill to bandit/human kill score
 		ai_crypto_gain				= true;			// gain crypto for killing AI
 		ai_add_krypto				= 50;			// amount of crypto gained for killing a bandit AI
 		ai_special_krypto			= 100;			// amount of crypto gained for killing a bandit AI
@@ -93,7 +93,7 @@ if(isServer) then {
 		ai_wep_water 				= ["speargun_epoch","arifle_SDAR_F"];
 		
 		// AT/AA launchers
-		ai_wep_launchers_AT			= ["launch_NLAW_F","launch_RPG32_F"];
+		ai_wep_launchers_AT			= ["launch_RPG32_F"];
 		ai_wep_launchers_AA			= ["launch_O_Titan_F"];
 		
 	/* END AI CONFIG */
@@ -102,13 +102,13 @@ if(isServer) then {
 		wai_mission_system			= true;	// use built in mission system
 
 		wai_mission_markers			= ["DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker"];
-		wai_avoid_missions			= 250;								// avoid spawning missions this close to other missions, these are defined in wai_mission_markers
+		wai_avoid_missions			= 300;								// avoid spawning missions this close to other missions, these are defined in wai_mission_markers
 		//wai_avoid_traders				= 0;								// avoid spawning missions this close to traders
 		//wai_avoid_town				= 0;								// avoid spawning missions this close to towns, *** doesn't function with infiSTAR enabled ***
 		//wai_avoid_road				= 0;								// avoid spawning missions this close to roads
 		//wai_avoid_water				= 0;								// avoid spawning missions this close to water
 		
-		wai_blacklist_players_range = 1000;
+		wai_blacklist_players_range = 750;
 		wai_blacklist_range			= 500;
 
 		wai_mission_timer			= [300,900];							// time between missions 5-15 minutes
@@ -129,7 +129,7 @@ if(isServer) then {
 		wai_players_online			= 0; 								// number of players online before mission starts
 		wai_server_fps				= 10; 								// missions only starts if server FPS is over wai_server_fps
 		
-		wai_kill_percent			= 30;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
+		wai_kill_percent			= 0;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 10;								// chance in percent you find above mentioned item
@@ -204,8 +204,8 @@ if(isServer) then {
 	
 		if(debug_mode) then {
 			wai_mission_timer		= [60,90];							// time between missions 5-15 minutes
-			wai_mission_timeout		= [300,600];
-			//wai_bandit_missions		= [["sniper_team",100]];			// time each missions takes to despawn if inactive 15-30 minutes
+			wai_mission_timeout		= [6000,9000];
+			wai_bandit_missions		= [["debug",100]];			// time each missions takes to despawn if inactive 15-30 minutes
 		};
 
 	/* STATIC MISSIONS CONFIG */

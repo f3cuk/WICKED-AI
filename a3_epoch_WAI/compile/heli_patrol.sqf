@@ -16,6 +16,7 @@ if (isServer) then {
 	} else {
 		_mission 		= nil;
 	};
+	if(debug_mode) then { diag_log("WAI: Heli mission " + str(_mission)); };
 	
 	_skillarray			= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
@@ -35,42 +36,23 @@ if (isServer) then {
 	_helicopter 		setVehicleAmmo 1;
 	_helicopter 		flyInHeight 150;
 	_helicopter 		lock true;
-	_helicopter 		addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
-	_helicopter			setVariable["LASTLOGOUT_EPOCH",1000000000000];
-	_helicopter			setVariable["LAST_CHECK",1000000000000];
-	_helicopter 		disableTIEquipment true; // Disable Thermal
-	_helicopter 		call EPOCH_server_setVToken; 	// Set Token
 	
-	addToRemainsCollector [_helicopter]; 	// Cleanup
-	
-	// Set Vehicle Slot
-	EPOCH_VehicleSlotsLimit = EPOCH_VehicleSlotsLimit + 1;
-	EPOCH_VehicleSlots pushBack (str EPOCH_VehicleSlotsLimit);
-	_helicopter setVariable ["VEHICLE_SLOT",(EPOCH_VehicleSlots select 0),true];
-	EPOCH_VehicleSlots = EPOCH_VehicleSlots - [(EPOCH_VehicleSlots select 0)];
-	EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
-	
-	[_helicopter] spawn vehicle_monitor;	//will need changed for A3 Epoch
+	_helicopter 		= _helicopter call wai_vehicle_protect;
 	
 	if (!isNil "_mission") then {
-			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0, (_ainum + 1)];
-			//_helicopter setVariable ["missionclean","air"];
-			_helicopter setVariable ["mission",_mission];
+		_ainum = (wai_mission_data select _mission) select 0;
+		wai_mission_data select _mission set [0, (_ainum + 1)];
+		//_helicopter setVariable ["missionclean","air"];
+		_helicopter setVariable ["mission",_mission];
 	};
 	
 	/* CREW START */	
 	_pilot 				= [_unitGroup,_position,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
-	[_pilot] 			joinSilent _unitGroup;
 	_pilot 				assignAsDriver _helicopter;
 	_pilot 				moveInDriver _helicopter;
 	if(debug_mode) then { diag_log("WAI: Spawning Heli pilot " + str(_pilot)); };
-	
-	//Pilot is leader
-	_unitGroup 			selectLeader _pilot;
 
 	_gunner 			= [_unitGroup,_position,1,_skill,_aitype,_mission] call spawn_soldier;
-	[_gunner] 			joinSilent _unitGroup;
 	_gunner 			assignAsCargo _helicopter;
 	_gunner 			moveInCargo [_helicopter,2];
 	_gunner				enablePersonTurret [2,true];
@@ -78,11 +60,14 @@ if (isServer) then {
 	if(debug_mode) then { diag_log("WAI: Spawning Heli gunner 1 " + str(_gunner)); };
 
 	_gunner2 			= [_unitGroup,_position,1,_skill,_aitype,_mission] call spawn_soldier;
-	[_gunner] 			joinSilent _unitGroup;
 	_gunner2			assignAsCargo _helicopter;
 	_gunner2 			moveInCargo [_helicopter,4];
 	_gunner2			enablePersonTurret [4,true];
 	if(debug_mode) then { diag_log("WAI: Spawning Heli gunner 2 " + str(_gunner2)); };
+	
+	[_pilot,_gunner,_gunner2] 	joinSilent _unitGroup;
+	//Pilot is leader
+	_unitGroup 			selectLeader _pilot;
 	
 	{
 		_pilot setSkill [_x,1]
@@ -109,19 +94,19 @@ if (isServer) then {
 		for "_i" from 1 to _wpnum do {
 			_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],_radius];
 			_wp setWaypointType "MOVE";
-			_wp setWaypointCompletionRadius 200;
+			_wp setWaypointCompletionRadius 100;
 			_wp setWaypointStatements ["true",
 			"
 				(Vehicle this) flyinheight 50;
 				(Vehicle this) limitSpeed 45;
-				if(debug_mode) then {diag_log('WAI: Heli height ' + str((position Vehicle this) select 2) + '/ Heli speed ' + str(speed this)); };
+				if(ddebug_mode) then {diag_log('WAI: Heli height ' + str((position Vehicle this) select 2) + '/ Heli speed ' + str(speed this)); };
 			"];
-			if(debug_mode) then { diag_log("WAI: Heli WP" + str(_i) + " / " + str(_wp)); };
+			//if(debug_mode) then { diag_log("WAI: Heli WP" + str(_i) + " / " + str(_wp)); };
 		};
 	};
 
-	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100];
-	_wp setWaypointCompletionRadius 200;
+	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],_radius];
+	_wp setWaypointCompletionRadius 100;
 	_wp setWaypointType "CYCLE";
 	
 	_unitGroup

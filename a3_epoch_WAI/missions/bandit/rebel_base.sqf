@@ -5,7 +5,7 @@ if(isServer) then {
 	// Get mission number, important we do this early
 	_mission 		= count wai_mission_data -1;
 
-	_fn_position	= [5] call find_position;
+	_fn_position	= [100] call find_position;
 	_position		= _fn_position select 0;
 	_missionType	= _fn_position select 1;
 	[_mission,_position,"Hard","Rebel Base","MainBandit",true] call mission_init;

@@ -3,24 +3,25 @@ if(isServer) then {
 
 	// Get mission number, important we do this early
 	_mission 		= count wai_mission_data -1;
+	waitUntil{!isNil "_mission"};
 	/*
-		@﻿Description
+		@Description
 			Find position for mission
-		@﻿Parameter
+		@Parameter
 			0 = Clear space for position
 			1 = (optional) [0 = Road, 1 = Buldings, 2 = Wildness, 3 = Water/Coast]
 		@Return
 			select 0 = position
 			select 1 = position type
 	*/
-	_fn_position	= [5] call find_position;
+	_fn_position	= [50] call find_position;
 	_position		= _fn_position select 0;
 	_missionType	= _fn_position select 1;
 	
 	/*
-		@﻿Description
+		@Description
 			Mission options
-		@﻿Parameter
+		@Parameter
 			0 = Mission number
 			1 = Mission position
 			2 = difficulty "easy","medium","hard","extreme"
@@ -31,11 +32,11 @@ if(isServer) then {
 		@Return
 			null
 	*/
-	[_mission,_position,"Medium","MV22 Crash","MainBandit",true] call mission_init;
+	[_mission,_position,"Medium","MV22 Crash","MainBandit",false] call mission_init;
 	diag_log 		format["WAI: [Mission: MV22 Crash]: Starting... %1", mapGridPosition(_position)];
 	/*
-		@﻿Description
-		@﻿Parameter
+		@Description
+		@Parameter
 			0 = Crate type[0 = small, 1 = medium, 2 = large]
 			1 = Mission position
 		@Return
@@ -48,9 +49,9 @@ if(isServer) then {
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	/*
-		@﻿Description
+		@Description
 			Spawn AI soldiers
-		@﻿Parameter
+		@Parameter
 			0 = (array)			Mission Position
 			1 = (int)			Number of AI
 			2 = (str)			Skill "easy","medium","hard","extreme","random"
@@ -60,17 +61,18 @@ if(isServer) then {
 		@Return
 			Group of AI
 	*/
+	
 	/**************************************** Troops ********************************************/
 	
-	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",[1,"AT"],"bandit",_mission] call spawn_group;
-	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium","Random","bandit",_mission] call spawn_group;
-	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",0,"bandit",_mission] call spawn_group;
+	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",[1,"AT"],"bandit",_mission] spawn spawn_group;
+	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium","Random","bandit",_mission] spawn spawn_group;
+	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",0,"bandit",_mission] spawn spawn_group;
 
 	/**************************************** Static ********************************************/
 	/*
-		@﻿Description
+		@Description
 			Spawn Static gun
-		@﻿Parameter
+		@Parameter
 			0 = (array)			Mission position [GUN_1,GUN_2,GUN_3]
 			1 = (str)			Static gun class name
 			2 = (str)			Skill "easy","medium","hard","extreme","random"
@@ -80,16 +82,21 @@ if(isServer) then {
 			@Return
 	*/
 
-	[[
-		[(_position select 0) + 25, (_position select 1) + 25, 0],
-		[(_position select 0) - 25, (_position select 1) - 25, 0]
-	],"O_HMG_01_high_F","Easy","bandit",_mission] call spawn_static;
+	[
+		[
+			[(_position select 0) + 25, (_position select 1) + 25, 0],
+			[(_position select 0) - 25, (_position select 1) - 25, 0]
+		],
+		"O_HMG_01_high_F",
+		"Easy","bandit",
+		_mission
+	] spawn spawn_static;
 	
 	/**************************************** Heli ********************************************/
 	/*
-		@﻿Description
+		@Description
 			Spawn heli thats fly to the mission
-		@﻿Parameter
+		@Parameter
 			0 = (array)			Patrol position
 			1 = (array)			Start position
 			2 = (int)			Radius of patrol 
@@ -117,9 +124,9 @@ if(isServer) then {
 	/**************************************** Vehicle ********************************************/
 	_VehiclePosition = [_position, 700, random 360] call BIS_fnc_relPos; 
 	/*
-		@﻿Description
+		@Description
 			Spawn vehicle thats drive to the mission
-		@﻿Parameter
+		@Parameter
 			0 = (array)			Patrol position
 			1 = (array)			Start position
 			2 = (int)			Radius of patrol 
@@ -135,9 +142,9 @@ if(isServer) then {
 	[
 		[_position select 0,_position select 1,0],		// Position to patrol
 		_VehiclePosition,		// Position to spawn chopper at
-		300,					// Radius of patrol
+		250,					// Radius of patrol
 		10,						// Number of waypoints to give
-		"O_G_Offroad_01_armed_F",// Classname of vehicle (make sure it has driver and two gunners)
+		"B_MRAP_01_hmg_F",// Classname of vehicle (make sure it has driver and two gunners)
 		"Random",				// Skill level of units (easy, medium, hard, extreme, Random)
 		0,						// AI CLASS
 		"Bandit",				// AI Type, "Hero" or "Bandit".
@@ -145,11 +152,75 @@ if(isServer) then {
 	] call vehicle_patrol;
 	
 	/************************************************************************************/
+		/*
+		@Description
+			Spawn 
+		@Parameter
+			0 = (array)			Patrol position
+			1 = (array)			Start position
+			2 = (int)			Trigger Radius
+			3 = (str)			Classname of vehicle
+			4 = (int)			Number of paraunits
+			5 = (str)			Skill "easy","medium","hard","extreme","random"
+			6 = (str,int,array)	Ai "random","unarmed" OR [0 = Assault, 1 = machinegun 2 = sniper,] OR [0-2,AT],[0-2,AA](at = anti tank, aa, anti air)
+			7 = (str,array)		Ai type "bandit","special" OR ["bandit",Krypto amount],["special",krypto amount]
+			8 = (bool)			Heli will patrol misison
+			9 = (int)			Mission number
+		@Return
+			vehicle
+	*/
+		
+	/*[
+		[(_position select 0),(_position select 1),0],
+		[0,0,0],
+		400,
+		"B_Heli_Transport_01_camo_EPOCH",
+		6,
+		"Random",
+		"Random",
+		"bandit",
+		false,
+		_mission
+	] call heli_para;*/
+
+	/************************************************************************************/
+		/*
+		@Description
+			Spawn 
+		@Parameter
+			0 = (array)			Patrol position
+			1 = (array)			Start position
+			2 = (int)			Trigger Radius
+			3 = (str)			Classname of vehicle
+			4 = (int)			Number of paraunits
+			5 = (str)			Skill "easy","medium","hard","extreme","random"
+			6 = (str,int,array)	Ai "random","unarmed" OR [0 = Assault, 1 = machinegun 2 = sniper,] OR [0-2,AT],[0-2,AA](at = anti tank, aa, anti air)
+			7 = (str,array)		Ai type "bandit","special" OR ["bandit",Krypto amount],["special",krypto amount]
+			8 = (bool)			Heli will patrol misison
+			9 = (int)			Mission number
+		@Return
+			vehicle
+	*/
+		
+	[
+		[(_position select 0),(_position select 1),0],
+		[0,0,0],
+		400,
+		"B_Heli_Transport_01_camo_EPOCH",
+		6,
+		"Random",
+		"Random",
+		"bandit",
+		false,
+		_mission
+	] spawn heli_para;
+	
+	/************************************************************************************/
 
 	/*
-		@﻿Description
+		@Description
 			Run mission start, end and cleanup
-		@﻿Parameter
+		@Parameter
 			0 = (array)		Mission number and crate
 			1 = (array)		"crate", "kill" OR ["assassinate", _unitGroup]
 			2 = (array)		cleanup objects
@@ -170,9 +241,9 @@ if(isServer) then {
 
 	if(_complete) then {
 	/*
-		@﻿Description
+		@Description
 			Spawns loot in _crate
-		@﻿Parameter
+		@Parameter
 			0 = (object)	Crate
 			1 = (int)		Number of weapons OR [Weapon count, weapon type] TYPE: ai_assault_wep, ai_machine_wep, ai_sniper_wep
 			2 = (int)		Number of Tools/item [item count, item type] TYPE: crate_tools, ai_assault_scope

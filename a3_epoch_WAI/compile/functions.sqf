@@ -1,3 +1,23 @@
+wai_vehicle_protect = {
+	private["_vehicle"];
+	_vehicle = _this;
+	
+	_vehicle addEventHandler ["GetOut",{_vehicle setFuel 0;_vehicle setDamage 1;}];
+	_vehicle setVariable["LASTLOGOUT_EPOCH",1000000000000];
+	_vehicle setVariable["LAST_CHECK",1000000000000];
+	_vehicle disableTIEquipment true; // Disable Thermal
+	_vehicle call EPOCH_server_setVToken; // Set Token
+	addToRemainsCollector [_vehicle]; 	// Cleanup
+	// Set Vehicle Slot
+	EPOCH_VehicleSlotsLimit = EPOCH_VehicleSlotsLimit + 1;
+	EPOCH_VehicleSlots pushBack (str EPOCH_VehicleSlotsLimit);
+	_vehicle setVariable ["VEHICLE_SLOT",(EPOCH_VehicleSlots select 0),true];
+	EPOCH_VehicleSlots = EPOCH_VehicleSlots - [(EPOCH_VehicleSlots select 0)];
+	EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
+	[_vehicle] spawn vehicle_monitor;
+	if(debug_mode) then { diag_log("WAI: vehicle setup for " + str(_vehicle) + " is done."); };
+	_vehicle
+};
 wai_spawn_create = {
 	private["_height","_crate","_crate_size","_position","_crate_type"];
 	_crate_size = _this select 0;
@@ -39,6 +59,17 @@ wai_spawn_create = {
 	clearBackpackCargoGlobal _crate;
 	
 	_crate
+};
+wai_paraLandSafe = {
+    private ["_unit"];
+    _unit = _this select 0;
+    (vehicle _unit) allowDamage false;// Set parachute invincible to prevent exploding if it hits buildings
+    waitUntil {isTouchingGround _unit || (position _unit select 2) < 1 };
+    _unit allowDamage false;
+    _unit action ["EJECT", vehicle _unit];
+    _unit setvelocity [0,0,0];
+    sleep 1;// Para Units sometimes get damaged on landing. Wait to prevent this.
+    _unit allowDamage true;
 };
 find_suitable_ammunition = {
 

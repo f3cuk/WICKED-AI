@@ -21,6 +21,20 @@ if(isServer) then {
 	
 	[[(_position select 0) + (random(30)+1),(_position select 1) - (random(35)+1),0],2,"easy","random","bandit",_mission] call spawn_group;
 	
+	//PARA
+	[
+		[(_position select 0),(_position select 1),0],
+		[0,0,0],
+		200,
+		"B_Heli_Transport_01_camo_EPOCH",
+		4,
+		"Random",
+		"Random",
+		"bandit",
+		false,
+		_mission
+	] spawn heli_para;
+	
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate

@@ -16,6 +16,14 @@ wai_isNearWater = {
 	_result
 
 };
+wai_GetPos = {
+	private "_pos";
+	_pos = getPosASL _this; 
+	if !(surfaceIsWater _pos) then {
+		_pos = ASLToATL _pos;
+	};
+	_pos
+};
 
 wai_isNearTown = {
 
@@ -162,33 +170,3 @@ wai_nearbyTrader = {
 	};
 	_isNear
 };
-
-/*get_trader_markers = {
-
-	private["_result"];
-
-	_result = [];
-
-	call {
-		if(worldName == "Takistan")			exitWith { _result = ["Trader_City_Nur","Trader_City_Garm","Wholesaler","Wholesaler_1","Airplane Dealer","BanditTrader","BlackMarketVendor"]; };
-		if(worldName == "Zargabad")			exitWith { _result = ["HeroCamp","BanditCamp"]; };
-		if(worldName == "Dingor")			exitWith { _result = ["RaceTrack","RepairGuy","PlaneVendor","Wholesale","HighWeapons/ammo","Parts","Choppers","lowEndCars","LowEndWeapons","HighEndCars","MedicalandBags","Wholesaler","BagsNFood","Wholesalers","DirtTrackVendor","OffRoad4x4","BoatVendor","BoatVendor1","BoatVendor2","BagVendor1","BagVendor2","Doctor2","BanditTrader","HeroTrader"]; };
-		if(worldName == "Lingor")			exitWith { _result = ["RaceTrack","RepairGuy","PlaneVendor","Wholesale","HighWeapons/ammo","Parts","Choppers","lowEndCars","LowEndWeapons","HighEndCars","MedicalandBags","Wholesaler","BagsNFood","Wholesalers","DirtTrackVendor","OffRoad4x4","BoatVendor","BoatVendor1","BoatVendor2","BagVendor1","BagVendor2","Doctor2","BanditTrader","HeroTrader"]; };
-		if(worldName == "Chernarus")		exitWith { _result = ["Tradercitystary","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Klen","BoatDealerEast","TradercityBash","HeroTrader"]; };
-		if(worldName == "isladuala")		exitWith { _result = ["st_2","st_3","st_4","st_3_1","st_3_1_1","st_3_1_1_1","st_3_2","st_3_2_1","st_3_2_2","st_3_2_3","st_3_2_3_1"]; };
-		if(worldName == "Tavi")				exitWith { _result = ["TraderCityLyepestok","TraderCitySabina","TraderCityBilgrad","TraderCityBranibor","BanditVendor","HeroVendor","AircraftDealer","AircraftDealer2","Misc.Vendor","Misc.Vendor2","BoatDealer","BoatDealer2","BoatDealer3","BoatDealer4","Wholesaler","Wholesaler2"]; };
-		if(worldName == "Namalsk")			exitWith { _result = ["GerneralPartsSupplies","WholesalerNorth","Doctor","HighEndWeaponsAmmo","HeroVendor","VehicleFriendly","NeutralVendors","WholesalerSouth","LowEndWeaponsAmmo","BoatVendor","Bandit Trader","PlaneVendor"]; };
-		if(worldName == "Panthera2")		exitWith { _result = ["AirVehiclesF","WholesalerNorth","HeroVehicles","NeutralAirVehicles","Boats","NeutralTraders","NeutralTraderCity2","WholesaleSouth","PlanicaTraders","IslandVehiclePartsVendors","Boat2"]; };
-		if(worldName == "Sara")				exitWith { _result = ["Tradercitycorazol","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Ixel","BoatDealerEast","TradercityBag","HeroTrader"]; };
-		if(worldName == "FDF_Isle1_a")		exitWith { _result = ["wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Jesco","TradercityBash","HeroTrader"]; };
-		if(worldName == "fapovo")			exitWith { _result = ["BanditTrader","AirVehicleUnarmed","TraderCity1","TraderCity2","Wholesaler","BanditVendor","HeroVendor","BoatVendor"]; };
-		if(worldName == "Caribou")			exitWith { _result = ["boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","NorthNeutralVendors","SouthNeutralVendors","HeroTrader","BlackMarket","SouthWestWholesale"]; };
-		if(worldName == "smd_sahrani_A2")	exitWith { _result = ["Tradercitycorazol","wholesaleSouth","boatTraderEast","BoatDealerSouth","AirVehicles","BanditDen","Ixel","BoatDealerEast","TradercityBag","HeroTrader","BlackMarket"]; };
-		if(worldName == "cmr_ovaron")		exitWith { _result = ["AirVehiclesF","WholesalerWest","HeroVehicles","NeutralAirVehicles","Boats","NeutralTraders","NeutralTraderCity2","WholesaleSouth","PlanicaTraders","IslandVehiclePartsVendors"]; };
-		if(worldName == "Napf") 			exitWith { _result = ["NeutralTraderCity","FriendlyTraderCity","HeroVendor","BanditVendor","West Wholesaler","NorthWholesaler","NorthBoatVendor","SouthBoatVendor","NeutralTraderCity","NeutralTraderCIty2","UnarmedAirVehicles"]; };
-		if(worldName == "sauerland")		exitWith { _result = ["NeutralTraderCity","FriendlyTraderCity","HeroVendor","UnarmedAirVehicles","SouthWholesaler","NorthWholesaler","BanditVendor","NeutralTraderCIty2"]; };
-	};
-
-	_result
-
-};*/
