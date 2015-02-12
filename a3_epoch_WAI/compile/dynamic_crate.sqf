@@ -3,6 +3,7 @@ private ["_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_n
 _crate = _this select 0;
 _crate setVariable ["ObjectID","1",true];
 _crate setVariable ["permaLoot",true];
+_crate allowdamage true;
 
 // WEAPONS
 if(typeName (_this select 1) == "ARRAY") then {

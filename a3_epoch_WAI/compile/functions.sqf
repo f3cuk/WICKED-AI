@@ -2,19 +2,24 @@ wai_vehicle_protect = {
 	private["_vehicle"];
 	_vehicle = _this;
 	
-	_vehicle addEventHandler ["GetOut",{_vehicle setFuel 0;_vehicle setDamage 1;}];
+	_vehicle addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
 	_vehicle setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_vehicle setVariable["LAST_CHECK",1000000000000];
+	
 	_vehicle disableTIEquipment true; // Disable Thermal
 	_vehicle call EPOCH_server_setVToken; // Set Token
+	
 	addToRemainsCollector [_vehicle]; 	// Cleanup
+	
 	// Set Vehicle Slot
 	EPOCH_VehicleSlotsLimit = EPOCH_VehicleSlotsLimit + 1;
 	EPOCH_VehicleSlots pushBack (str EPOCH_VehicleSlotsLimit);
 	_vehicle setVariable ["VEHICLE_SLOT",(EPOCH_VehicleSlots select 0),true];
 	EPOCH_VehicleSlots = EPOCH_VehicleSlots - [(EPOCH_VehicleSlots select 0)];
 	EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
+	
 	[_vehicle] spawn vehicle_monitor;
+	
 	if(debug_mode) then { diag_log("WAI: vehicle setup for " + str(_vehicle) + " is done."); };
 	_vehicle
 };
@@ -51,7 +56,8 @@ wai_spawn_create = {
 	// Clean up
 	_crate setVariable ["ObjectID","1",true];
 	// God mod
-	_crate addEventHandler ["HandleDamage", {}];
+	_crate allowdamage false;
+	
 	/* CLEAR CREATE */
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;

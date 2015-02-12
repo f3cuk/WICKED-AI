@@ -68,7 +68,6 @@ if (isServer) then {
 	//if(debug_mode) then { diag_log("WAI: AI GEAR vest " + str(_aivest)); };
 	
 	_unit = _unitGroup createUnit["I_Soldier_EPOCH", [_pos_x,_pos_y,_pos_z], [], 0,"FORM"];
-	[_unit] joinSilent _unitGroup;
 	_unit allowFleeing 0;
 
 	call {

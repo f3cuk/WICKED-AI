@@ -29,7 +29,7 @@ if (isServer) then {
 	{
 		sleep 10;
 		_player_present = false;
-		//if(debug_mode) then {_player_present = true; };
+		if(debug_mode) then {_player_present = true; };
 		{
 			if((isPlayer _x) && (_x distance [_pos_x,_pos_y,0] <= _triggerdis)) then {
 				_player_present = true;
@@ -45,12 +45,9 @@ if (isServer) then {
 	};
 
 	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
-	
-	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,mapGridPosition(_position)]; };
-	
-	RemoteMessage = [wai_announce,"Stay alert, reinforcements incoming!"];
-	publicVariable "RemoteMessage";
-	
+
+	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
+
 	/* HELI SETUP START */
 	_unitGroup			= createGroup RESISTANCE;
 	_unitGroup 			setVariable["LASTLOGOUT_EPOCH",1000000000000];
@@ -59,7 +56,7 @@ if (isServer) then {
 	_unitGroup 			setSpeedMode "FULL";
 	_unitGroup			allowFleeing 0;
 
-	if(debug_mode) then { diag_log("WAI: Spawning Heli para at " + str(mapGridPosition(_startingpos))); };
+	if(debug_mode) then { diag_log("WAI: Spawning Heli patrol at " + str(mapGridPosition(_startingpos))); };
 	if(debug_mode) then { diag_log("WAI: Flying to " + str(mapGridPosition(_position))); };
 	
 	_helicopter 		= createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 200], [], 0, "FLY"];
@@ -68,51 +65,56 @@ if (isServer) then {
 	_helicopter 		setVehicleAmmo 1;
 	_helicopter 		flyInHeight 150;
 	_helicopter 		lock true;
-
 	_helicopter 		= _helicopter call wai_vehicle_protect;
-		
+	
+	
 	if (!isNil "_mission") then {
 		_ainum = (wai_mission_data select _mission) select 0;
 		wai_mission_data select _mission set [0, (_ainum + 1)];
-		//_helicopter setVariable ["missionclean","air"];
 		_helicopter setVariable ["mission",_mission];
 	};
 	
 	/* CREW START */	
-	_pilot 				= [_unitGroup,_startingpos,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
+	_pilot 				= [_unitGroup,_position,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
 	_pilot 				assignAsDriver _helicopter;
 	_pilot 				moveInDriver _helicopter;
 	if(debug_mode) then { diag_log("WAI: Spawning Heli pilot " + str(_pilot)); };
 	
-	_gunner 			= [_unitGroup,_startingpos,1,_skill,_aitype,_mission] call spawn_soldier;
-	_gunner 			assignAsGunner _helicopter;
-	_gunner 			moveInGunner _helicopter;
+	_gunner 			= [_unitGroup,_position,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
+	_gunner 			assignAsCargo _helicopter;
+	_gunner 			moveInCargo [_helicopter,2];
+	_gunner				enablePersonTurret [2,true];
 	if(debug_mode) then { diag_log("WAI: Spawning Heli gunner 1 " + str(_gunner)); };
 
-	_gunner2 			= [_unitGroup,_startingpos,1,_skill,_aitype,_mission] call spawn_soldier;
-	_gunner2			assignAsGunner _helicopter;
-	_gunner2 			moveInGunner _helicopter;
+	_gunner2 			= [_unitGroup,_position,"unarmed",_skill,_aitype,_mission] call spawn_soldier;
+	_gunner2			assignAsCargo _helicopter;
+	_gunner2 			moveInCargo [_helicopter,4];
+	_gunner2			enablePersonTurret [4,true];
 	if(debug_mode) then { diag_log("WAI: Spawning Heli gunner 2 " + str(_gunner2)); };
 	
-	[_pilot,_gunner,_gunner2] joinSilent _unitGroup;
+	[_pilot,_gunner,_gunner2] 	joinSilent _unitGroup;
 	//Pilot is leader
 	_unitGroup 			selectLeader _pilot;
+	
 		
 	{
 		_pilot setSkill [_x,1]
 	} count _skillarray;
 	
 	{
-		_gunner setSkill [_x,0.7];
-		_gunner2 setSkill [_x,0.7];
+		_gunner 	setSkill [_x,0.7];
+		_gunner2 	setSkill [_x,0.7];
 	} count _skillarray;
 	
 	{
+		// uniform
+		_x forceAddUniform "U_B_HeliPilotCoveralls";
+		_x addHeadgear "H_32_EPOCH";
 		// Make it an AIR unit
 		_x removeEventHandler ["killed", 0];
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
 		_x setVariable ["missionclean", "air"];
-		ai_air_units = (ai_air_units + 1);
+		ai_air_units 		= (ai_air_units + 1);
 	} forEach (units _unitgroup);
 
 	if (!isNil "_mission") then {
@@ -126,20 +128,30 @@ if (isServer) then {
 	// Add waypoints to the chopper group.
 	_wp = _unitGroup addWaypoint [[(_position select 0), (_position select 1)], 0];
 	_wp setWaypointType "MOVE";
-	_wp setWaypointSpeed "FULL";
 	_wp setWaypointCompletionRadius 100;
 	
 	/* HELI SETUP END */
 	_drop = True;
+	
+	
+	waitUntil((speed _helicopter) > 200);
+	if (alive _helicopter) then {
+		_time = ceil((_helicopter distance _position) / (speed _helicopter) + 1); // taking 2 minutes into account for the engine to start
+		diag_log (format ["Helicopter ETA is %1 minutes",_time]);
+	};
+	
+	
+	
 	while {(alive _helicopter) && (_drop)} do {
 
 		private ["_dir","_magazine","_weapon","_weapon","_chute","_para","_pgroup"];
 		sleep 1;
-		
 		_helipos = getpos _helicopter ;
-	
+		//if(debug_mode) then {diag_log('WAI: Heli height ' + str(mapGridPosition(_helipos)) + '/ Heli speed ' + str(speed _helicopter)); };
+
+
 		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
-				if(debug_mode) then { diag_log("WAI: para pos" + str(_helipos)); };
+				
 				_pgroup			= createGroup RESISTANCE;
 				_pgroup 		setVariable["LASTLOGOUT_EPOCH",1000000000000];
 				_pgroup 		setVariable["LAST_CHECK",1000000000000]; 
@@ -147,6 +159,7 @@ if (isServer) then {
 				_pgroup			allowFleeing 0;
 				_dir 			= direction _helicopter;
 			
+
 			for "_x" from 1 to _paranumber do {
 				
 				// AI
@@ -163,21 +176,21 @@ if (isServer) then {
 				// Parachut
 				_chute = createVehicle ["Steerable_Parachute_F", position _unit, [], ((_dir)- 5 + (random 10)), 'FLY'];
 				_chute setPos (getPos _unit);
-				addToRemainsCollector [_chute]; // A3 cleanup
+				addToRemainsCollector [_chute];
 				_unit assignAsDriver _chute;
 				_unit moveIndriver _chute;
 				_unit allowdamage true;		
 			};
+			_pgroup selectLeader ((units _pgroup) select 0);
 			// LAND SAFE
 			{ 
 			  [_x] spawn wai_paraLandSafe;
 			} forEach (units _pgroup);
 			
 			_drop = false;
-			_pgroup selectLeader ((units _pgroup) select 0);
 
 			if(debug_mode) then { diag_log format ["WAI: Spawned in %1 ai units for paradrop",_paranumber]; };
-			
+
 			[_pgroup,_position,_skill] call group_waypoints;
 			
 				if (!isNil "_mission") then {
@@ -191,7 +204,7 @@ if (isServer) then {
 
 	if (_helipatrol) then {
 		
-		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)], _triggerdis];
+		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)], 100];
 		_wp1 setWaypointType "SAD";
 		_wp1 setWaypointCompletionRadius 150;
 		_unitGroup setBehaviour "AWARE";

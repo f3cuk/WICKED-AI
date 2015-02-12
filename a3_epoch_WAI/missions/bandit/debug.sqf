@@ -88,9 +88,9 @@ if(isServer) then {
 			[(_position select 0) - 25, (_position select 1) - 25, 0]
 		],
 		"O_HMG_01_high_F",
-		"Easy","bandit",
+		"hard","bandit",
 		_mission
-	] spawn spawn_static;
+	] call spawn_static;
 	
 	/**************************************** Heli ********************************************/
 	/*
@@ -170,7 +170,7 @@ if(isServer) then {
 			vehicle
 	*/
 		
-	/*[
+	[
 		[(_position select 0),(_position select 1),0],
 		[0,0,0],
 		400,
@@ -181,7 +181,7 @@ if(isServer) then {
 		"bandit",
 		false,
 		_mission
-	] call heli_para;*/
+	] call heli_para;
 
 	/************************************************************************************/
 		/*
@@ -205,7 +205,7 @@ if(isServer) then {
 	[
 		[(_position select 0),(_position select 1),0],
 		[0,0,0],
-		400,
+		500,
 		"B_Heli_Transport_01_camo_EPOCH",
 		6,
 		"Random",
@@ -214,6 +214,7 @@ if(isServer) then {
 		false,
 		_mission
 	] spawn heli_para;
+	
 	
 	/************************************************************************************/
 

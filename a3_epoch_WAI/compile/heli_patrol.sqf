@@ -42,7 +42,6 @@ if (isServer) then {
 	if (!isNil "_mission") then {
 		_ainum = (wai_mission_data select _mission) select 0;
 		wai_mission_data select _mission set [0, (_ainum + 1)];
-		//_helicopter setVariable ["missionclean","air"];
 		_helicopter setVariable ["mission",_mission];
 	};
 	
@@ -74,11 +73,13 @@ if (isServer) then {
 	} count _skillarray;
 
 	{
+		_x forceAddUniform "U_B_HeliPilotCoveralls";
+		_x addHeadgear "H_32_EPOCH";
 		// Make it an AIR unit
 		_x removeEventHandler ["killed", 0];
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
 		_x setVariable ["missionclean", "air"];
-		ai_air_units 		= (ai_air_units + 1);
+		ai_air_units = (ai_air_units + 1);
 	} forEach (units _unitgroup);
 
 	if (!isNil "_mission") then {
@@ -94,7 +95,7 @@ if (isServer) then {
 		for "_i" from 1 to _wpnum do {
 			_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],_radius];
 			_wp setWaypointType "MOVE";
-			_wp setWaypointCompletionRadius 100;
+			_wp setWaypointCompletionRadius 50;
 			_wp setWaypointStatements ["true",
 			"
 				(Vehicle this) flyinheight 50;

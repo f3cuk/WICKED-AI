@@ -5,7 +5,7 @@ if(isServer) then {
 	// Get mission number, important we do this early
 	_mission 		= count wai_mission_data -1;
 
-	_fn_position	= [100] call find_position;
+	_fn_position	= [150] call find_position;
 	_position		= _fn_position select 0;
 	_missionType	= _fn_position select 1;
 	[_mission,_position,"Hard","Rebel Base","MainBandit",true] call mission_init;
@@ -50,8 +50,8 @@ if(isServer) then {
 		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 	// cleanup objects
 		"Rebel have setup a heavily fortified base",	// mission announcement
-		"Survivers have captured the bandit base",										// mission success
-		"Survivers did not capture the base in time"									// mission fail
+		"Survivers have captured the bandit base",		// mission success
+		"Survivers did not capture the base in time"	// mission fail
 	] call mission_winorfail;
 
 	if(_complete) then {
