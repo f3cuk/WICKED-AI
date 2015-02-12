@@ -2,7 +2,7 @@ if(isServer) then {
 
 	/* GENERAL CONFIG */
 
-		debug_mode					= true;		// enable debug
+		debug_mode					= false;		// enable debug
 		blacklist					= [
 			[[0,16000,0],[1000,-0,0]],		   	// Left
 			[[0,16000,0],[16000.0,14580.3,0]], 	// Top
@@ -144,14 +144,15 @@ if(isServer) then {
 
 		
 		wai_bandit_missions			= [
-										["sniper_team",30],
-										["rebel_base",70],
+										["sniper_team",20],
+										["rebel_base",40],
+										["ikea_convoy",40],
+										
 										["patrol",0],
 										["armed_vehicle",0],
 										["black_hawk_crash",0],
 										["captured_mv22",0],
 										["broken_down_ural",0],
-										["ikea_convoy",0],
 										["medi_camp",0],
 										["presidents_mansion",0],
 										["weapon_cache",0],

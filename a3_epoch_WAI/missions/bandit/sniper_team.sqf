@@ -16,7 +16,7 @@ if(isServer) then {
 
 	_crate = [0,_position] call wai_spawn_create;
 	//Base
-	_baserunover 	= createVehicle ["Land_HelipadEmpty_F",[((_position select 0) + 5), ((_position select 1) + 5), -50],[],10,"CAN_COLLIDE"];
+	_baserunover 	= createVehicle ["Land_HelipadEmpty_F",[((_position select 0) + 5), ((_position select 1) + 5), -150],[],10,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 	
 	_unitGroup = [[(_position select 0) + (random(30)+1),(_position select 1) - (random(35)+1),0],2,"easy","random","bandit",_mission] call spawn_group;
@@ -25,10 +25,10 @@ if(isServer) then {
 	[
 		[(_position select 0),(_position select 1),0],
 		[0,0,0],
-		200,
+		400,
 		"B_Heli_Transport_01_camo_EPOCH",
 		4,
-		"Random",
+		"medium",
 		"Random",
 		"bandit",
 		false,

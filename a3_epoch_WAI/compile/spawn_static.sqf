@@ -64,32 +64,14 @@ if (isServer) then {
 		_static 		lock true;
 		_static 		setVariable["LASTLOGOUT_EPOCH",1000000000000];
 		_static 		setVariable["LAST_CHECK",1000000000000];
-			
-		// Cleanup
-		addToRemainsCollector [_static];
-		
-		// Disable Thermal
-		_static disableTIEquipment true;
-		
-		// Set Token
-		_static call EPOCH_server_setVToken;
-		
-		// Set Vehicle Slot
-		EPOCH_VehicleSlotsLimit = EPOCH_VehicleSlotsLimit + 1;
-		EPOCH_VehicleSlots pushBack (str EPOCH_VehicleSlotsLimit);
-		_static setVariable ["VEHICLE_SLOT",(EPOCH_VehicleSlots select 0),true];
-		EPOCH_VehicleSlots = EPOCH_VehicleSlots - [(EPOCH_VehicleSlots select 0)];
-		EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
-		
-		[_static] spawn vehicle_monitor;
+		_static 		= _static call wai_vehicle_protect;
 		
 		if (!isNil "_mission") then {
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0, (_ainum + 1)];
-			//_static setVariable ["missionclean","static"];
 			_static setVariable ["mission",_mission];
 		};
-		
+		[_unit] joinSilent _unitGroup;
 		_unit moveingunner _static;
 		reload _unit;
 

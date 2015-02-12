@@ -51,7 +51,8 @@ wai_spawn_create = {
 		
 	// Create the create
 	//_position		= _position findEmptyPosition [0,10,_crate_type];
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+	_position = [_position,0,1,2,0,20,0] call BIS_fnc_findSafePos;
+	_crate 			= createVehicle [_crate_type,_position,[],0,"CAN_COLLIDE"];
 	
 	// Clean up
 	_crate setVariable ["ObjectID","1",true];

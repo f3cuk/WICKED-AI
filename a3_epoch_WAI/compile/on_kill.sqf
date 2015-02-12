@@ -85,6 +85,7 @@ if (isServer) then {
 
 		_rockets = _launcher call find_suitable_ammunition;
 		_unit removeWeapon _launcher;
+		removeBackpack _unit;
 		
 		{
 			if(_x == _rockets) then {

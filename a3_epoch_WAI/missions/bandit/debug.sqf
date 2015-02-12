@@ -64,9 +64,9 @@ if(isServer) then {
 	
 	/**************************************** Troops ********************************************/
 	
-	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",[1,"AT"],"bandit",_mission] spawn spawn_group;
-	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium","Random","bandit",_mission] spawn spawn_group;
-	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",0,"bandit",_mission] spawn spawn_group;
+	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",[1,"AT"],"bandit",_mission] call spawn_group;
+	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium","Random","bandit",_mission] call spawn_group;
+	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],3,"Medium",0,"bandit",_mission] call spawn_group;
 
 	/**************************************** Static ********************************************/
 	/*
@@ -169,11 +169,11 @@ if(isServer) then {
 		@Return
 			vehicle
 	*/
-		
+	
 	[
 		[(_position select 0),(_position select 1),0],
 		[0,0,0],
-		400,
+		800,
 		"B_Heli_Transport_01_camo_EPOCH",
 		6,
 		"Random",
@@ -181,7 +181,7 @@ if(isServer) then {
 		"bandit",
 		false,
 		_mission
-	] call heli_para;
+	] spawn heli_para;
 
 	/************************************************************************************/
 		/*
@@ -202,10 +202,10 @@ if(isServer) then {
 			vehicle
 	*/
 		
-	[
+	/*[
 		[(_position select 0),(_position select 1),0],
 		[0,0,0],
-		500,
+		100,
 		"B_Heli_Transport_01_camo_EPOCH",
 		6,
 		"Random",
@@ -213,7 +213,7 @@ if(isServer) then {
 		"bandit",
 		false,
 		_mission
-	] spawn heli_para;
+	] spawn heli_para;*/
 	
 	
 	/************************************************************************************/

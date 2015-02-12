@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_mission_data","_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_vest","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+	private ["_helieta","_mission_data","_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_vest","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 	_position 		= _this select 0;
 		_pos_x			= _position select 0;
@@ -52,7 +52,7 @@ if (isServer) then {
 	_unitGroup			= createGroup RESISTANCE;
 	_unitGroup 			setVariable["LASTLOGOUT_EPOCH",1000000000000];
 	_unitGroup 			setVariable["LAST_CHECK",1000000000000]; 
-	_unitGroup 			setBehaviour "CARELESS";
+	_unitGroup 			setBehaviour "COMBAT";
 	_unitGroup 			setSpeedMode "FULL";
 	_unitGroup			allowFleeing 0;
 
@@ -134,32 +134,34 @@ if (isServer) then {
 	_drop = True;
 	
 	
-	waitUntil((speed _helicopter) > 200);
+	/*waitUntil{(_helicopter distance _position) < 3000};
+	
 	if (alive _helicopter) then {
-		_time = ceil((_helicopter distance _position) / (speed _helicopter) + 1); // taking 2 minutes into account for the engine to start
-		diag_log (format ["Helicopter ETA is %1 minutes",_time]);
-	};
-	
-	
+		_helipos = getpos _helicopter;
+		_helieta = ceil(((_helipos distance _position) / (speed _helicopter)) / EPOCH_timeMultiplier);
+		diag_log (format ["Reinforcement ETA %1 minutes",_helieta]);
+		
+		_heliEtaMsg = format ["Reinforcement ETA is %1 minutes",_helieta];
+		RemoteMessage = [wai_announce,_heliEtaMsg];
+		publicVariable "RemoteMessage";
+	};*/
 	
 	while {(alive _helicopter) && (_drop)} do {
 
 		private ["_dir","_magazine","_weapon","_weapon","_chute","_para","_pgroup"];
 		sleep 1;
-		_helipos = getpos _helicopter ;
+		_helipos = getpos _helicopter;
 		//if(debug_mode) then {diag_log('WAI: Heli height ' + str(mapGridPosition(_helipos)) + '/ Heli speed ' + str(speed _helicopter)); };
 
-
-		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
+		if (_helipos distance [(_position select 0),(_position select 1),100] <= 100) then {
 				
 				_pgroup			= createGroup RESISTANCE;
 				_pgroup 		setVariable["LASTLOGOUT_EPOCH",1000000000000];
 				_pgroup 		setVariable["LAST_CHECK",1000000000000]; 
-				_pgroup 		setBehaviour "CARELESS";
+				_pgroup 		setBehaviour "COMBAT";
 				_pgroup			allowFleeing 0;
 				_dir 			= direction _helicopter;
 			
-
 			for "_x" from 1 to _paranumber do {
 				
 				// AI
@@ -171,15 +173,17 @@ if (isServer) then {
 				_unit disableCollisionWith _helicopter;
 				_unit allowdamage false;
 				_unit setDir (_dir + 90);
-				sleep 0.55;//So units are not too far spread out when they land.
 				
 				// Parachut
 				_chute = createVehicle ["Steerable_Parachute_F", position _unit, [], ((_dir)- 5 + (random 10)), 'FLY'];
+				_chute disableCollisionWith _helicopter;
 				_chute setPos (getPos _unit);
 				addToRemainsCollector [_chute];
 				_unit assignAsDriver _chute;
 				_unit moveIndriver _chute;
 				_unit allowdamage true;		
+				
+				sleep 0.55;//So units are not too far spread out when they land.
 			};
 			_pgroup selectLeader ((units _pgroup) select 0);
 			// LAND SAFE
@@ -207,7 +211,7 @@ if (isServer) then {
 		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)], 100];
 		_wp1 setWaypointType "SAD";
 		_wp1 setWaypointCompletionRadius 150;
-		_unitGroup setBehaviour "AWARE";
+		_unitGroup setBehaviour "COMBAT";
 		_unitGroup setSpeedMode "NORMAL";
 
 	} else {
@@ -216,7 +220,7 @@ if (isServer) then {
 			_x doMove [(_startingpos select 0), (_startingpos select 1), 100]
 		} count (units _unitGroup);
 		
-		_unitGroup setBehaviour "CARELESS";
+		_unitGroup setBehaviour "AWARE ";
 		_unitGroup setSpeedMode "FULL";
 
 		_cleanheli = true;
