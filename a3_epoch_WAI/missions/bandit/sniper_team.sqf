@@ -12,16 +12,17 @@ if(isServer) then {
 	
 	[_mission,_position,"easy","Sniper Team","MainBandit",true] call mission_init;
 
-	diag_log 		format["WAI: [Mission:[Bandit] Sniper Team]: Starting... %1",_position];
+	diag_log 		format["WAI: [Mission: Sniper Team]: Starting... %1",_position];
 
 	_crate = [0,_position] call wai_spawn_create;
-	//Base
+	
+	// Base
 	_baserunover 	= createVehicle ["Land_HelipadEmpty_F",[((_position select 0) + 5), ((_position select 1) + 5), -150],[],10,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
-	
+	// Unit
 	_unitGroup = [[(_position select 0) + (random(30)+1),(_position select 1) - (random(35)+1),0],2,"easy","random","bandit",_mission] call spawn_group;
 	
-	//PARA
+	// PARA
 	[
 		[(_position select 0),(_position select 1),0],
 		[0,0,0],
@@ -35,7 +36,7 @@ if(isServer) then {
 		_mission
 	] spawn heli_para;
 	
-	//Condition
+	// Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate
 		["assassinate",_unitGroup], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],

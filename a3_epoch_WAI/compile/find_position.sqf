@@ -32,7 +32,7 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 					_position = _RoadList call BIS_fnc_selectRandom;
 					_position = _position modelToWorld [0,0,0];
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [_position,0,300,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [_position,0,50,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position ROAD"];
 				};
 			// Buldings
@@ -43,7 +43,7 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 					_cityPos=getArray(_selectedCity >> "position");
 					_cityrange=getNumber(_selectedCity >> "radiusA");
 					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [_cityPos,0,300,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [_cityPos,0,100,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Buldings"];
 				};
 			// Wildness
@@ -67,6 +67,15 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Water"];
 				};
+			/*
+			AIRPORT
+			
+			Ok, i see, in configfile >> "CfgWorlds" >> "Stratis" >> "Names", Airport1's type is set to "nameLocal" instead of "airport". 
+			use can use nearestLocations [pos,"nameLocal",rad] and then loop the result array checking if " text _location == "airfield" "	
+			technically you could run that once, and with location use '_location setType "airport"', then it should find it with nearestlocations, although i had no luck in the 10 minutes i've been playing around
+			
+			http://forums.bistudio.com/showthread.php?85340-AI-landing
+			*/
 		};
 		
 		_isNearPlayer = [_position] call wai_nearbyPlayers;

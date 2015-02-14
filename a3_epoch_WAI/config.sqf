@@ -10,13 +10,12 @@ if(isServer) then {
 			[[13000,15000,0],[14000,14000,0]], 	// Middle spawn
 			[[05900,17100,0],[06400,16600,0]], 	// West spawn
 			[[18200,14500,0],[18800,14100,0]], 	// East spawn
-			[[24400,19200,0],[22900,16700,0]]   //spawn box
+			[[22561,19336,0],[24551,16947,0]], 	// salt lake
+			[[10545,11025,0],[11140,10423,0]], 	// Drimea
 			//Cherno
 			// Need data
 			//Bornholm
 			// Need data
-			
-		];
 
 	/* END GENERAL CONFIG */
 
@@ -36,7 +35,6 @@ if(isServer) then {
 		ai_share_info				= true;			// AI share info on player position
 		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
 
-		//ai_kills_gain				= true;			// add kill to bandit/human kill score
 		ai_crypto_gain				= true;			// gain crypto for killing AI
 		ai_add_krypto				= 50;			// amount of crypto gained for killing a bandit AI
 		ai_special_krypto			= 100;			// amount of crypto gained for killing a bandit AI
@@ -52,11 +50,6 @@ if(isServer) then {
 
 		ai_static_skills			= false;	// Allows you to set custom array for AI on static weapons. (true: On false: Off) 
 		ai_static_array				= [["aimingAccuracy",0.20],["aimingShake",0.70],["aimingSpeed",0.75],["endurance",1.00],["spotDistance",0.70],["spotTime",0.50],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];
-
-		//ai_gear0 					= [["FAK"],["ItemWatch","NVG_EPOCH","Rangefinder","ItemCompass","Binocular","ItemGPS"]];
-		//ai_gear1					= [["FAK"],["ItemGPS","Binocular"]];
-		//ai_gear_random			= [ai_gear0,ai_gear1];	// Allows the possibility of random gear
-
 		
 		ai_assault_wep				= ["arifle_Katiba_GL_F","arifle_MX_GL_F","arifle_MX_GL_Black_F","arifle_Mk20_GL_F","arifle_Mk20_GL_plain_F","arifle_TRG21_GL_F","AKM_EPOCH","arifle_Katiba_C_F","arifle_Katiba_F","arifle_MXC_F","arifle_MX_F","arifle_MX_Black_F","arifle_MXC_Black_F","arifle_TRG21_F","arifle_TRG20_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_Mk20C_F","arifle_Mk20_F","m16_EPOCH","m16Red_EPOCH","m4a3_EPOCH"];	// Assault
 		ai_assault_scope			= ["optic_Arco","optic_Hamr","optic_Aco","optic_ACO_grn","optic_Aco_smg","optic_ACO_grn_smg","optic_Holosight","optic_Holosight_smg","optic_MRCO","optic_NVS"];
@@ -81,7 +74,7 @@ if(isServer) then {
 		ai_sniper_backpack			= ["B_Kitbag_cbr","B_Kitbag_mcamo","B_Kitbag_rgr","B_Kitbag_sgg"];
 		ai_sniper_vest				= [""];
 		ai_sniper					= [ai_sniper_wep,ai_sniper_scope,ai_sniper_gear,ai_sniper_skin,ai_sniper_backpack,ai_sniper_vest];
-	
+
 		ai_random					= [ai_assault,ai_assault,ai_assault,ai_sniper,ai_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
 		
 		// Weapons accessories
@@ -145,8 +138,9 @@ if(isServer) then {
 		
 		wai_bandit_missions			= [
 										["sniper_team",20],
-										["rebel_base",40],
-										["ikea_convoy",40],
+										["rebel_base",20],
+										["medi_camp",30],
+										["ikea_convoy",30],
 										
 										["patrol",0],
 										["armed_vehicle",0],
@@ -204,9 +198,11 @@ if(isServer) then {
 	/* END WAI MISSIONS CONFIG */
 	
 		if(debug_mode) then {
+			wai_remove_launcher		= false;	
 			wai_mission_timer		= [60,90];							// time between missions 5-15 minutes
 			wai_mission_timeout		= [6000,9000];
-			wai_bandit_missions		= [["debug",100]];			// time each missions takes to despawn if inactive 15-30 minutes
+			//wai_bandit_missions		= [["debug",100]];			// time each missions takes to despawn if inactive 15-30 minutes
+			wai_bandit_missions		= [["medi_camp",100]];			// time each missions takes to despawn if inactive 15-30 minutes
 		};
 
 	/* STATIC MISSIONS CONFIG */

@@ -12,11 +12,11 @@ if(isServer) then {
 	_mission 		= count wai_mission_data -1;
 	waitUntil{!isNil "_mission"};
 
-	_fn_position	= [30] call find_position;
+	_fn_position	= [50] call find_position;
 	_position		= _fn_position select 0;
 	_missionType	= _fn_position select 1;
 	
-	[_mission,_position,"Medium","Medical Supply Camp","MainBandit",true] call mission_init;
+	[_mission,_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
 	diag_log 		format["WAI: [Mission:  Medical Supply Camp]: Starting... %1",_position];
 
 	//Setup the crate
@@ -24,15 +24,16 @@ if(isServer) then {
 
 	//Medical Supply Camp
 	//Create the scenery
-	_base1 = createVehicle ["Land_Medevac_house_V1_F",[(_position select 0) - 5.939,(_position select 1) + 10.0459,0],[], 0, "CAN_COLLIDE"];
-	_base1 setDir -31.158424;
-	_base1 setVehicleLock "LOCKED";
-	_base1 setPos [(_position select 0) - 5.939,(_position select 1) + 10.0459,0];
+	/* 
+	_device = createVehicle ["Land_Device_assembled_F",[(_position select 0) - 5.939,(_position select 1) + 10.0459,0],[], 0, "CAN_COLLIDE"];
+	_device setDir -31.158424;
+	_device setVehicleLock "LOCKED";
+	_device setPos [(_position select 0) - 5.939,(_position select 1) + 10.0459,0];
 
-	_base2 = createVehicle ["Land_StallWater_F",[(_position select 0) + 6.3374, (_position select 1) - 11.1944,0],[], 0, "CAN_COLLIDE"];
-	_base2 setDir -211.14516;
-	_base2 setVehicleLock "LOCKED";
-	_base2 setPos [(_position select 0) + 6.3374, (_position select 1) - 11.1944,0];
+	_laptop = createVehicle ["Land_Laptop_device_F",[(_position select 0) + 6.3374, (_position select 1) - 11.1944,0],[], 0, "CAN_COLLIDE"];
+	_laptop setDir -211.14516;
+	_laptop setVehicleLock "LOCKED";
+	_laptop setPos [(_position select 0) + 6.3374, (_position select 1) - 11.1944,0];
 
 	_base3 = createVehicle ["Land_Rampart_F",[(_position select 0) + 12.2456, (_position select 1) + 6.249,0],[], 0, "CAN_COLLIDE"];
 	_base3 setDir -120.93051;
@@ -45,12 +46,12 @@ if(isServer) then {
 	_base5 = createVehicle ["Land_CratesWooden_F",[(_position select 0) - 7.1519, (_position select 1) + 1.8144,0],[], 0, "CAN_COLLIDE"];
 	_base5 setDir -29.851013;
 
-	_base6 = createVehicle ["Land_CratesPlastic_F",[(_position select 0) - 7.4116, (_position select 1) + 2.5244,0],[], 0, "CAN_COLLIDE"];
+	_base6 = createVehicle ["Land_CratesWooden_F",[(_position select 0) - 7.4116, (_position select 1) + 2.5244,0],[], 0, "CAN_COLLIDE"];
 
 	_base7 = createVehicle ["WeaponHolder_ItemToolbox",[(_position select 0) - 7.7041, (_position select 1) + 3.332,0],[], 0, "CAN_COLLIDE"];
 	_base7 setDir -106.46461;
 
-	_base8 = createVehicle ["Land_MarketShelter_F",[(_position select 0) + 4.1738, (_position select 1) - 7.9112],[], 0, "CAN_COLLIDE"];
+	_base8 = createVehicle ["CamoNet_INDP_F",[(_position select 0) + 4.1738, (_position select 1) - 7.9112],[], 0, "CAN_COLLIDE"];
 	_base8 setDir -27.004126;
 	_base8 setPos [(_position select 0) + 4.1738, (_position select 1) - 7.9112];
 
@@ -78,8 +79,8 @@ if(isServer) then {
 	_base17 = createVehicle ["Land_CampingChair_V2_F",[(_position select 0) + 5.0542, (_position select 1) - 3.4649,0],[], 0, "CAN_COLLIDE"];
 	_base17 setDir 55.969147;
 
-	_baserunover = [_base1,_base2,_base3,_base4,_base5,_base6,_base7,_base8,_base9,_base10,_base11,_base12,_base13,_base14,_base15,_base16,_base17];
-	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
+	_baserunover = [_device,_laptop,_base3,_base4,_base5,_base6,_base7,_base8,_base9,_base10,_base11,_base12,_base13,_base14,_base15,_base16,_base17];
+	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover; */
 
 	//Troops
 	[[(_position select 0) + (random(10)+1),(_position select 1) - (random(15)+1),0],4,"Medium",[1,"AT"],"bandit",_mission] call spawn_group;
@@ -88,7 +89,7 @@ if(isServer) then {
 
 	//Condition
 	_complete = [
-		[_mission,_crate],				// mission number and crate
+		[_mission,_laptop],				// mission number and crate
 		["kill"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 				// cleanup objects
 		"A soldier squad have set up a medical re-supply camp! Check your map for the location!",	// mission announcement
@@ -97,7 +98,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,0,0,[30,crate_items_medical+crate_items_vehicle_repair],2] call dynamic_crate;
+		[_crate,0,0,[30,crate_items_medical],2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Medical Supply Camp]: Ended at %1",_position];

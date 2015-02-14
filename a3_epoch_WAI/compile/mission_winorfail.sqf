@@ -125,6 +125,14 @@ if(isServer) then {
 					if (alive _x) exitWith {_complete = false;};
 				} count units _objectivetarget;
 			};
+			
+			if (_type == "bomb") exitWith {
+				{
+					if((isPlayer _x) && (_x distance _position <= 1)) then {
+						_complete = true;
+					};
+				} count playableUnits;
+			};
 
 			if (_type == "resource") exitWith {
 				_node 		= (_this select 1) select 1;
@@ -246,7 +254,6 @@ if(isServer) then {
 							if(_cleanunits == "air") 		exitWith { ai_air_units = (ai_air_units -1); };
 							if(_cleanunits == "vehicle") 	exitWith { ai_vehicle_units = (ai_vehicle_units -1); };
 							if(_cleanunits == "static") 	exitWith { ai_emplacement_units = (ai_emplacement_units -1); };
-							//if(debug_mode) then { diag_log("WAI: DELETE " + str(_cleanunits)); };
 						};
 					};
 				};
@@ -256,6 +263,15 @@ if(isServer) then {
 			};
 
 		} count allUnits + vehicles + allDead;
+		
+		/*
+		
+		BOMB STUFF 
+		if(_type == "bomb") then {
+			BOOOOOOM
+		};
+		
+		*/
 		
 		{
 			if(typeName _x == "ARRAY") then {
