@@ -2,7 +2,7 @@ if(isServer) then {
 
 	/* GENERAL CONFIG */
 
-		debug_mode					= false;		// enable debug
+		debug_mode					= true;		// enable debug
 		blacklist					= [
 			[[0,16000,0],[1000,-0,0]],		   	// Left
 			[[0,16000,0],[16000.0,14580.3,0]], 	// Top
@@ -11,7 +11,8 @@ if(isServer) then {
 			[[05900,17100,0],[06400,16600,0]], 	// West spawn
 			[[18200,14500,0],[18800,14100,0]], 	// East spawn
 			[[22561,19336,0],[24551,16947,0]], 	// salt lake
-			[[10545,11025,0],[11140,10423,0]], 	// Drimea
+			[[10545,11025,0],[11140,10423,0]]
+		];			// Drimea
 			//Cherno
 			// Need data
 			//Bornholm
@@ -36,6 +37,7 @@ if(isServer) then {
 		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
 
 		ai_crypto_gain				= true;			// gain crypto for killing AI
+		ai_crypto_gain_drop			= 50;			// chance of drop in %
 		ai_add_krypto				= 50;			// amount of crypto gained for killing a bandit AI
 		ai_special_krypto			= 100;			// amount of crypto gained for killing a bandit AI
 				
@@ -104,7 +106,7 @@ if(isServer) then {
 		wai_blacklist_players_range = 750;
 		wai_blacklist_range			= 500;
 
-		wai_mission_timer			= [300,900];							// time between missions 5-15 minutes
+		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
 		wai_timeout_distance		= 1000;								// if a player is this close to a mission then it won't time-out
 		
@@ -169,7 +171,7 @@ if(isServer) then {
 		// Dynamic box array
 		crates_large				= ["Box_NATO_AmmoVeh_F"]; 
 		crates_medium				= ["C_supplyCrate_F"];  
-		crates_small				= ["Pelican_EPOCH","Box_NATO_WpsSpecial_F"];
+		crates_small				= ["Box_NATO_WpsSpecial_F"];
 		
 		// weapons
 		crate_weapons_buildables    = ["MultiGun",["MeleeSledge","swing"],["Hatchet","swing"],["ChainSawG","CSGAS"],["ChainSawP","CSGAS"],["ChainSawR","CSGAS"]];
@@ -199,10 +201,10 @@ if(isServer) then {
 	
 		if(debug_mode) then {
 			wai_remove_launcher		= false;	
-			wai_mission_timer		= [60,90];							// time between missions 5-15 minutes
-			wai_mission_timeout		= [6000,9000];
-			//wai_bandit_missions		= [["debug",100]];			// time each missions takes to despawn if inactive 15-30 minutes
-			wai_bandit_missions		= [["medi_camp",100]];			// time each missions takes to despawn if inactive 15-30 minutes
+			wai_mission_timer		= [60,60];
+			wai_mission_timeout		= [300,300];
+			//wai_bandit_missions		= [["debug",100]];			
+			wai_bandit_missions		= [["nuke",100]];			
 		};
 
 	/* STATIC MISSIONS CONFIG */

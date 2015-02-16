@@ -29,7 +29,7 @@ if (isServer) then {
 	if (isPlayer _player) then {
 		
 		// AI drops krypto on death 50% chance
-		if(ai_crypto_gain && (floor(random 100) < 50)) then {
+		if(ai_crypto_gain && (floor(random 100) < ai_crypto_gain_drop)) then {
 			_pos=getposATL _unit;
 			_veh=createVehicle["Land_MPS_EPOCH",_pos,[],1.5,"CAN_COLLIDE"];
 			diag_log format["ADMIN: Created crypto device for %1 with %2 at %3","WAI BOT",_krypto,_pos];
@@ -57,9 +57,11 @@ if (isServer) then {
 
 	} else {
 	
-		// Blow front wheel
-		(vehicle _player) sethit ["wheel_1_1_steering", 1];
-
+		if(_player driver (vehicle _player)) then {
+			WAIclient = ["vehiclehit",_player];
+			publicVariable "WAIclient";
+		};
+	
 		if (ai_clean_roadkill) then {
 			removeAllWeapons _unit;
 			removeAllItems _unit;
@@ -73,8 +75,13 @@ if (isServer) then {
 
 			if ((random 100) <= ai_roadkill_damageweapon) then {
 				removeAllWeapons _unit;
+				removeAllItems _unit;
+				removeAllAssignedItems _unit;
 				removeUniform _unit;
 				removeVest _unit; 
+				removeBackpack _unit;
+				removeHeadgear _unit;
+				removeGoggles _unit;
 			};
 
 		};

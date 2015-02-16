@@ -21,8 +21,13 @@ if(isServer) then {
 	_killpercent 	= _max_ai - (_max_ai * (wai_kill_percent / 100));
 	_mission_units	= [];
 
-	if(_type == "patrol") then {
-		_start = true
+	if((_type == "patrol")) then {
+		_start = true;
+	};
+	
+	if(_type == "bomb") then {
+		_start = true;
+		_timeout_time = 1800;
 	};
 
 	{
@@ -70,7 +75,7 @@ if(isServer) then {
 		sleep 1;
 		_currenttime = time;
 		{
-			if((isPlayer _x) && (_x distance _position <= wai_timeout_distance)) then {
+			if((isPlayer _x) && (_x distance _position <= wai_timeout_distance) && (_type != "bomb") ) then {
 				_player_near = true;
 			};
 			
@@ -264,14 +269,30 @@ if(isServer) then {
 
 		} count allUnits + vehicles + allDead;
 		
-		/*
 		
-		BOMB STUFF 
+		
+		//BOMB STUFF 
 		if(_type == "bomb") then {
-			BOOOOOOM
+			private["_bomb"];
+			{
+				if (isPlayer _x) then {
+					WAIclient = ["nuke",_position];
+					publicVariable "WAIclient";
+					uiSleep 10;
+					[["earthQuake",_position],(owner _x)] call EPOCH_sendPublicVariableClient;
+				};
+			} forEach playableUnits;
+			
+			{
+				//_bomb = "M_Mo_82mm_AT_LG" createVehicle (getpos _x);
+				_bomb = "Bo_GBU12_LGB_MI10" createVehicle (getpos _x);
+				//_bomb setVelocity [0,5,-45];
+				_bomb setVectorDirAndUp [[0,0,1],[0,-1,0]];
+				_bomb setVelocity [0,0,-1000];
+				_x setDamage 1;
+			} forEach (_position nearObjects 300);
 		};
-		
-		*/
+
 		
 		{
 			if(typeName _x == "ARRAY") then {

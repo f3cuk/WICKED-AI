@@ -67,20 +67,22 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Water"];
 				};
+			//AIRPORT (for special missions)
 			/*
-			AIRPORT
-			
-			Ok, i see, in configfile >> "CfgWorlds" >> "Stratis" >> "Names", Airport1's type is set to "nameLocal" instead of "airport". 
-			use can use nearestLocations [pos,"nameLocal",rad] and then loop the result array checking if " text _location == "airfield" "	
-			technically you could run that once, and with location use '_location setType "airport"', then it should find it with nearestlocations, although i had no luck in the 10 minutes i've been playing around
-			
-			http://forums.bistudio.com/showthread.php?85340-AI-landing
+			case 5:
+				{
+					Ok, i see, in configfile >> "CfgWorlds" >> "Stratis" >> "Names", Airport1's type is set to "nameLocal" instead of "airport". 
+					use can use nearestLocations [pos,"nameLocal",rad] and then loop the result array checking if " text _location == "airfield" "	
+					technically you could run that once, and with location use '_location setType "airport"', then it should find it with nearestlocations, although i had no luck in the 10 minutes i've been playing around
+				
+					http://forums.bistudio.com/showthread.php?85340-AI-landing
+				};
 			*/
 		};
 		
-		_isNearPlayer = [_position] call wai_nearbyPlayers;
-		_isNearTrader = [_position] call wai_nearbyTrader;
-		_isNearBlackspot = [_position] call wai_nearbyBlackspot;
+		_isNearPlayer 		= [_position] call wai_nearbyPlayers;
+		_isNearTrader 		= [_position] call wai_nearbyTrader;
+		_isNearBlackspot 	= [_position] call wai_nearbyBlackspot;
 		
 		if ((!_isNearPlayer) && (!_isNearBlackspot) && (!_isNearTrader)) then {
 			_x = 20;
