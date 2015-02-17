@@ -29,7 +29,7 @@ if(isServer) then {
 		400,
 		"B_Heli_Transport_01_camo_EPOCH",
 		4,
-		"medium",
+		"easy",
 		"Random",
 		"bandit",
 		false,
@@ -38,12 +38,12 @@ if(isServer) then {
 	
 	// Condition
 	_complete = [
-		[_mission,_crate],	// mission number and crate
-		["assassinate",_unitGroup], 			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
-		[_baserunover], 		// cleanup objects
+		[_mission,_crate],			// mission number and crate
+		["assassinate",_unitGroup], // ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
+		[_baserunover], 			// cleanup objects
 		"Our scouts have spottede a sniper team, check the map for there location",	// mission announcement
-		"Bandits have killed the snipers!",											// mission success
-		"Bandits did not secure the sniper rifles in time"							// mission fail
+		"Survivers have killed the snipers!",											// mission success
+		"Survivers did not secure the sniper rifles in time"							// mission fail
 	] call mission_winorfail;
 	
 	if(_complete) then {

@@ -21,53 +21,51 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 	};
 	 
 	// Try 10 Times to Find a Mission Spot
+	waitUntil{!isNil "BIS_fnc_findSafePos"};
 	for "_x" from 1 to 10 do {
 		switch (_chance) do
 		{
-			// ROAD
+			// Road
 			case 0:
 				{
 					_RoadList = epoch_centerMarkerPosition nearRoads EPOCH_dynamicVehicleArea;
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_position = _RoadList call BIS_fnc_selectRandom;
 					_position = _position modelToWorld [0,0,0];
-					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [_position,0,50,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [_position,0,50,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position ROAD"];
 				};
-			// Buldings
+			// City
 			case 1:
 				{
-					_allCitys=(configfile >> "CfgWorlds" >> worldName >> "Names")call BIS_fnc_returnChildren;
+					/*_allCitys=(configfile >> "CfgWorlds" >> worldName >> "Names")call BIS_fnc_returnChildren;
 					_selectedCity=_allCitys select(floor random(count _allCitys));
 					_cityPos=getArray(_selectedCity >> "position");
-					_cityrange=getNumber(_selectedCity >> "radiusA");
-					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [_cityPos,0,100,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
-					diag_log format["WAI: position Buldings"];
+					_cityrange=getNumber(_selectedCity >> "radiusA");*/
+					_allCitys = nearestLocations [epoch_centerMarkerPosition, ["NameVillage","NameCity","NameCityCapital"], EPOCH_dynamicVehicleArea]; 
+					_cityPos = position (_allCitys select (floor (random (count _allCitys)))); 
+					_position = [_cityPos,0,150,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
+					diag_log format["WAI: position City"];
 				};
 			// Wildness
 			case 2:
 				{	
-					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,0,15,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Wildness"];
 				};
 			// Shore
 			case 3:
 				{	
-					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,0,20,1,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,0,EPOCH_dynamicVehicleArea,_clear,0,10,1,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Shore"];
 				};
 			// Water (for special missions)
 			case 4:
 				{	
-					waitUntil{!isNil "BIS_fnc_findSafePos"};
-					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,0,20,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Water"];
 				};
-			//AIRPORT (for special missions)
+			// AIRPORT (for special missions)
 			/*
 			case 5:
 				{
@@ -81,10 +79,11 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 		};
 		
 		_isNearPlayer 		= [_position] call wai_nearbyPlayers;
-		_isNearTrader 		= [_position] call wai_nearbyTrader;
 		_isNearBlackspot 	= [_position] call wai_nearbyBlackspot;
+		//_isNearTrader 		= [_position] call wai_nearbyTrader;
 		
-		if ((!_isNearPlayer) && (!_isNearBlackspot) && (!_isNearTrader)) then {
+		//if ((!_isNearPlayer) && (!_isNearBlackspot) && (!_isNearTrader)) then {
+		if ((!_isNearPlayer) && (!_isNearBlackspot)) then {
 			_x = 20;
 			diag_log format["WAI: Good position At %1",_position];
 		} else {

@@ -27,7 +27,9 @@ if(isServer) then {
 	
 	if(_type == "bomb") then {
 		_start = true;
-		_timeout_time = 1800;
+		_timeout_time = wai_timeout_bomb;
+		// Debug 
+		if(debug_mode) then {_timeout_time = 300;};
 	};
 
 	{
@@ -67,7 +69,7 @@ if(isServer) then {
 		_x enableAI "MOVE";
 		_x enableAI "ANIM";
 		_x enableAI "FSM";
-		_x setRank "Private";
+		_x setRank  "Private";
 	} count _mission_units;
 
 	while {!_timeout && !_complete} do {
@@ -133,7 +135,7 @@ if(isServer) then {
 			
 			if (_type == "bomb") exitWith {
 				{
-					if((isPlayer _x) && (_x distance _position <= 1)) then {
+					if((isPlayer _x) && (_x distance _position <= 2)) then {
 						_complete = true;
 					};
 				} count playableUnits;
@@ -190,6 +192,7 @@ if(isServer) then {
 			
 		};
 		
+		// WINNING
 		RemoteMessage = [wai_announce,_msgwin];
 		publicVariable "RemoteMessage";
 		
@@ -269,48 +272,47 @@ if(isServer) then {
 
 		} count allUnits + vehicles + allDead;
 		
-		
-		
 		//BOMB STUFF 
 		if(_type == "bomb") then {
 			private["_bomb"];
 			{
-				if (isPlayer _x) then {
+				// only send to players with in view distance
+				if((isPlayer _x) && (_x distance _position <= 1600)) then {
+					// Magic happens
 					WAIclient = ["nuke",_position];
 					publicVariable "WAIclient";
-					uiSleep 10;
-					[["earthQuake",_position],(owner _x)] call EPOCH_sendPublicVariableClient;
 				};
-			} forEach playableUnits;
+			} count playableUnits;
 			
+			// Wait for countdown
+			sleep 10;
 			{
 				//_bomb = "M_Mo_82mm_AT_LG" createVehicle (getpos _x);
-				_bomb = "Bo_GBU12_LGB_MI10" createVehicle (getpos _x);
 				//_bomb setVelocity [0,5,-45];
+				_bomb = "Bo_GBU12_LGB_MI10" createVehicle (getpos _x);
 				_bomb setVectorDirAndUp [[0,0,1],[0,-1,0]];
 				_bomb setVelocity [0,0,-1000];
 				_x setDamage 1;
-			} forEach (_position nearObjects 300);
+			} forEach (_position nearObjects (wai_blacklist_range - 50));// Player base protection
 		};
-
-		
+	
 		{
 			if(typeName _x == "ARRAY") then {
 			
 				{
 					deleteVehicle _x;
-					if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
+					//if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 				} count _x;
 			
 			} else {
 			
 				deleteVehicle _x;
-				if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
+				//if(debug_mode) then { diag_log("WAI: DELETE " + str(_x)); };
 			};
 			
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
-		// radio, hint, global
+		// Loosing :(
 		RemoteMessage = [wai_announce,_msglose];
 		publicVariable "RemoteMessage";
 	};

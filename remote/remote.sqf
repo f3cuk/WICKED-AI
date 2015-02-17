@@ -1,128 +1,38 @@
 if(!isDedicated) then {
 	fnc_wai_client = {
-		private ["_type","_position","_i"];
+		private ["_type","_position","_i","_isInside"];
 		_type 		= _this select 0;
-		if (count _this == 2) then {
-		_position = _this select 1;
-	};
+		// can be used as option variable
+		if (count _this > 1) then {
+			_position = _this select 1;
+		};
 		
 		switch (_type) do {
 			// NUKE
 			case "nuke":
 			{
 				// Count down 10 sec.
-				for [{_i=0}, {_i<10}, {_i=_i+1}] do
-				{
-					0 =["<t size='0.8' shadow='0' color='#99ffffff'>Nuke countdown: " + _i + "</t>", 0, 1, 5, 2, 0, 1] spawn bis_fnc_dynamictext;
-					uiSleep 1;
-				};
-					
-				if((isPlayer player) && (player distance _position <= 300)) then {
-					EPOCH_playerToxicity = 75;
+				0 = [_position] spawn {
+					private["_position","_number"];
+					_number 	= 10;
+					_position 	= _this select 0;
+					while {_number > 0} do {
+						sleep 1;
+						_number = _number - 1;
+						0 = ["<t size='0.8' shadow='0' color='#99ffffff'>Nuclear detonation in " + str(_number) + "</t>", 0, 1, 5, 2, 0, 1] spawn bis_fnc_dynamictext;
+					};
+					_position call EPOCH_client_earthQuake;
+					playsound "Alarm_BLUFOR";
 				};
 				
-				if((isPlayer player) && (player distance _position <= 1000)) then {
-					//////////////////////////////////////////////////////////////
-					// MADE BY MOERDERHOSCHI
-					// EDITED VERSION OF THE ARMA2 ORIGINAL SCRIPT
-					// ARMED-ASSAULT.DE
-					// 06.11.2013
-					//////////////////////////////////////////////////////////////
-					private ["_Cone","_top","_top2","_smoke","_Wave","_light"];
-					_Cone = "#particlesource" createVehicleLocal _position;
-					_Cone setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 7, 48], "", "Billboard", 1, 10, [0, 0, 0],
-									[0, 0, 0], 0, 1.275, 1, 0, [40,80], [[0.25, 0.25, 0.25, 0], [0.25, 0.25, 0.25, 0.5], 
-									[0.25, 0.25, 0.25, 0.5], [0.25, 0.25, 0.25, 0.05], [0.25, 0.25, 0.25, 0]], [0.25], 0.1, 1, "", "", _position];
-					_Cone setParticleRandom [2, [1, 1, 30], [1, 1, 30], 0, 0, [0, 0, 0, 0.1], 0, 0];
-					_Cone setParticleCircle [10, [-10, -10, 20]];
-					_Cone setDropInterval 0.005;
-					_top = "#particlesource" createVehicleLocal _position;
-					_top setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 3, 48, 0], "", "Billboard", 1, 20, [0, 0, 0],
-									[0, 0, 60], 0, 1.7, 1, 0, [60,80,100], [[1, 1, 1, -10],[1, 1, 1, -7],[1, 1, 1, -4],[1, 1, 1, -0.5],[1, 1, 1, 0]], [0.05], 1, 1, "", "", _position];
-					_top setParticleRandom [0, [75, 75, 15], [17, 17, 10], 0, 0, [0, 0, 0, 0], 0, 0, 360];
-					_top setDropInterval 0.002;
-					_top2 = "#particlesource" createVehicleLocal _position;
-					_top2 setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 3, 112, 0], "", "Billboard", 1, 20, [0, 0, 0],
-									[0, 0, 60], 0, 1.7, 1, 0, [60,80,100], [[1, 1, 1, 0.5],[1, 1, 1, 0]], [0.07], 1, 1, "", "", _position];
-					_top2 setParticleRandom [0, [75, 75, 15], [17, 17, 10], 0, 0, [0, 0, 0, 0], 0, 0, 360];
-					_top2 setDropInterval 0.002;
-					_smoke = "#particlesource" createVehicleLocal _position;
-					_smoke setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 7, 48, 1], "", "Billboard", 1, 25, [0, 0, 0],
-									[0, 0, 60], 0, 1.7, 1, 0, [40,15,120], 
-									[[1, 1, 1, 0.4],[1, 1, 1, 0.7],[1, 1, 1, 0.7],[1, 1, 1, 0.7],[1, 1, 1, 0.7],[1, 1, 1, 0.7],[1, 1, 1, 0.7],[1, 1, 1, 0]]
-									, [0.5, 0.1], 1, 1, "", "", _position];
-					_smoke setParticleRandom [0, [10, 10, 15], [15, 15, 7], 0, 0, [0, 0, 0, 0], 0, 0, 360];
-					_smoke setDropInterval 0.002;
-					_Wave = "#particlesource" createVehicleLocal _position;
-					_Wave setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 7, 48], "", "Billboard", 1, 20, [0, 0, 0],
-									[0, 0, 0], 0, 1.5, 1, 0, [50, 100], [[0.1, 0.1, 0.1, 0.5], 
-									[0.5, 0.5, 0.5, 0.5], [1, 1, 1, 0.3], [1, 1, 1, 0]], [1,0.5], 0.1, 1, "", "", _position];
-					_Wave setParticleRandom [2, [20, 20, 20], [5, 5, 0], 0, 0, [0, 0, 0, 0.1], 0, 0];
-					_Wave setParticleCircle [50, [-80, -80, 2.5]];
-					_Wave setDropInterval 0.0002;
-					_light = "#lightpoint" createVehicleLocal [((_position select 0)),(_position select 1),((_position select 2)+500)];
-					_light setLightAmbient[1500, 1200, 1000];
-					_light setLightColor[1500, 1200, 1000];
-					_light setLightBrightness 100000.0;
-					//*******************************************************************
-					_Wave setDropInterval 0.001;
-					deletevehicle _top;
-					deletevehicle _top2;
-					uisleep 4.5;
-
-					_i = 0;
-					while {_i < 100} do
-					{
-						_light setLightBrightness 100.0 - _i;
-						_i = _i + 1;
-						sleep 0.1;
-					};
-					deleteVehicle _light;
-					uisleep 2;
-					_smoke setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 7, 48, 1], "", "Billboard", 1, 25, [0, 0, 0],
-									[0, 0, 45], 0, 1.7, 1, 0, [40,25,80], 
-									[[1, 1, 1, 0.2],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0]]
-									, [0.5, 0.1], 1, 1, "", "", _position];
-
-					_Cone setDropInterval 0.01;
-					_smoke setDropInterval 0.006;
-					_Wave setDropInterval 0.001;
-					uisleep 2;
-					_smoke setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 7, 48, 1], "", "Billboard", 1, 25, [0, 0, 0],
-									[0, 0, 30], 0, 1.7, 1, 0, [40,25,80], 
-									[[1, 1, 1, 0.2],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0.3],[1, 1, 1, 0]]
-									, [0.5, 0.1], 1, 1, "", "", _position];
-					_smoke setDropInterval 0.012;
-					_Cone setDropInterval 0.02;
-					_Wave setDropInterval 0.01;
-					uisleep 15;
-					deleteVehicle _Wave;
-					deleteVehicle _cone;
-					deleteVehicle _smoke;
-					
-					//--- Ash
-					uisleep 20;
-					[] spawn {
-						private ["_pos","_parray","_snow"];
-						_pos = position player;
-						_parray = [["A3\Data_F\ParticleEffects\Universal\Universal", 16, 12, 8, 1],"","Billboard",1,4,[0,0,0],[0,0,0],1,0.000001,0,1.4,[0.05,0.05],[[0.1,0.1,0.1,1]],[0,1],0.2,1.2,"","",vehicle player];
-						_snow = "#particlesource" createVehicleLocal _pos;  
-						_snow setParticleParams _parray;
-						_snow setParticleRandom [0, [10, 10, 7], [0, 0, 0], 0, 0.01, [0, 0, 0, 0.1], 0, 0];
-						_snow setParticleCircle [0.0, [0, 0, 0]];
-						_snow setDropInterval 0.01;
-						uisleep 120;
-						deleteVehicle _snow;
-					};
-				};
+				0 = [_position] execVM "itsatrap\remote\nuke.sqf";
 			};
 			case "vehiclehit": {
 				// Blow front wheels
 				// _position is used as _player
-				if(_position driver (vehicle _position)) then {
-					(vehicle _position) sethit ["wheel_1_1_steering", 1];
-					(vehicle _position) sethit ["wheel_2_1_steering", 1];
-				};
+				(vehicle _position) sethit ["wheel_1_1_steering", 1];
+				(vehicle _position) sethit ["wheel_2_1_steering", 1];
+
 			};
 		};
 	
@@ -137,7 +47,7 @@ if(!isDedicated) then {
 		
 		_hint = parseText format["
 		<t align='center' color='#FF0033' shadow='1' size='1.5'>Mission</t><br/>
-		<t size='1.0' align='center' color='#ffffff'>%2</t><br/>",_message];
+		<t size='1.0' align='center' color='#ffffff'>%1</t><br/>",_message];
 
 		call {
 			if(_type == "radio") exitWith {
@@ -148,15 +58,14 @@ if(!isDedicated) then {
                     
 					if (_hasRadio) then {
 						hintSilent _hint;
+						playSound "RadioAmbient6";
 					};
                 };
 			};
 			
 			if(_type == "global") exitWith { systemChat _message; };
 			if(_type == "hint") exitWith { hintSilent _hint; };
-			if(_type == "text") exitWith { 
-				0 =["<t size='0.8' shadow='0' color='#99ffffff'>" + _message + "</t>", 0, 1, 5, 2, 0, 1] spawn bis_fnc_dynamictext;
-			};
+			if(_type == "text") exitWith { 0 =["<t size='0.8' shadow='0' color='#99ffffff'>" + _message + "</t>", 0, 1, 5, 2, 0, 1] spawn bis_fnc_dynamictext; };
 		};
 	};
 	"RemoteMessage" addPublicVariableEventHandler { (_this select 1) call fnc_remote_message; };

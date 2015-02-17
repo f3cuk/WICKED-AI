@@ -2,7 +2,7 @@ if(isServer) then {
 
 	/* GENERAL CONFIG */
 
-		debug_mode					= true;		// enable debug
+		debug_mode					= false;		// enable debug
 		blacklist					= [
 			[[0,16000,0],[1000,-0,0]],		   	// Left
 			[[0,16000,0],[16000.0,14580.3,0]], 	// Top
@@ -11,13 +11,13 @@ if(isServer) then {
 			[[05900,17100,0],[06400,16600,0]], 	// West spawn
 			[[18200,14500,0],[18800,14100,0]], 	// East spawn
 			[[22561,19336,0],[24551,16947,0]], 	// salt lake
-			[[10545,11025,0],[11140,10423,0]]
-		];			// Drimea
+			[[10545,11025,0],[11140,10423,0]]	// Drimea
+					
 			//Cherno
 			// Need data
 			//Bornholm
 			// Need data
-
+		];
 	/* END GENERAL CONFIG */
 
 	/* AI CONFIG */
@@ -31,20 +31,21 @@ if(isServer) then {
 		ai_bandit_combatmode		= "RED";		// combatmode of bandit AI
 		ai_bandit_behaviour			= "COMBAT";		// behaviour of bandit AI
 
-		//ai_friendly_behaviour		= false;		// make ai friendly towards comrades
-
 		ai_share_info				= true;			// AI share info on player position
 		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
 
 		ai_crypto_gain				= true;			// gain crypto for killing AI
 		ai_crypto_gain_drop			= 50;			// chance of drop in %
 		ai_add_krypto				= 50;			// amount of crypto gained for killing a bandit AI
-		ai_special_krypto			= 100;			// amount of crypto gained for killing a bandit AI
-				
-		ai_skill_extreme			= [["aimingAccuracy",1.00],["aimingShake",1.00],["aimingSpeed",1.00],["endurance",1.00],["spotDistance",1.00],["spotTime",1.00],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]]; 	// Extreme
-		ai_skill_hard				= [["aimingAccuracy",0.80],["aimingShake",0.80],["aimingSpeed",0.80],["endurance",1.00],["spotDistance",0.80],["spotTime",0.80],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]]; 	// Hard
-		ai_skill_medium				= [["aimingAccuracy",0.60],["aimingShake",0.60],["aimingSpeed",0.60],["endurance",1.00],["spotDistance",0.60],["spotTime",0.60],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];	// Medium
-		ai_skill_easy				= [["aimingAccuracy",0.40],["aimingShake",0.50],["aimingSpeed",0.50],["endurance",1.00],["spotDistance",0.50],["spotTime",0.50],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];	// Easy
+		ai_special_krypto			= 100;			// amount of crypto gained for killing a special AI
+		ai_crypto_bomb				= 5000;			// amount of krypto gaind for defusing the nuke/bomb
+		
+
+		// https://community.bistudio.com/wiki/AI_Sub-skills#general
+		ai_skill_extreme			= [["aimingAccuracy",1.00],["aimingShake",1.00],["aimingSpeed",1.00],["spotDistance",1.00],["spotTime",1.00],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]]; 	// Extreme
+		ai_skill_hard				= [["aimingAccuracy",0.70],["aimingShake",0.70],["aimingSpeed",0.70],["spotDistance",0.70],["spotTime",0.80],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",0.70]]; 	// Hard
+		ai_skill_medium				= [["aimingAccuracy",0.60],["aimingShake",0.60],["aimingSpeed",0.60],["spotDistance",0.60],["spotTime",0.60],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",0.60]];	// Medium
+		ai_skill_easy				= [["aimingAccuracy",0.30],["aimingShake",0.50],["aimingSpeed",0.50],["spotDistance",0.50],["spotTime",0.50],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",0.50]];	// Easy
 		ai_skill_random				= [ai_skill_extreme,ai_skill_hard,ai_skill_hard,ai_skill_hard,ai_skill_hard,ai_skill_medium,ai_skill_medium,ai_skill_medium,ai_skill_medium,ai_skill_easy];
 
 		ai_static_useweapon			= true;	// Allows AI on static guns to have a loadout 	
@@ -94,54 +95,56 @@ if(isServer) then {
 	/* END AI CONFIG */
 
 	/* WAI MISSIONS CONFIG */
-		wai_mission_system			= true;	// use built in mission system
+		wai_mission_system			= true;				// use built in mission system
 
 		wai_mission_markers			= ["DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker"];
-		wai_avoid_missions			= 300;								// avoid spawning missions this close to other missions, these are defined in wai_mission_markers
-		//wai_avoid_traders				= 0;								// avoid spawning missions this close to traders
-		//wai_avoid_town				= 0;								// avoid spawning missions this close to towns, *** doesn't function with infiSTAR enabled ***
-		//wai_avoid_road				= 0;								// avoid spawning missions this close to roads
-		//wai_avoid_water				= 0;								// avoid spawning missions this close to water
+		wai_avoid_missions			= 300;				// avoid spawning missions this close to other missions, these are defined in wai_mission_markers
+		//wai_avoid_traders				= 0;			// avoid spawning missions this close to traders
+		//wai_avoid_town				= 0;			// avoid spawning missions this close to towns, *** doesn't function with infiSTAR enabled ***
+		//wai_avoid_road				= 0;			// avoid spawning missions this close to roads
+		//wai_avoid_water				= 0;			// avoid spawning missions this close to water
 		
-		wai_blacklist_players_range = 750;
-		wai_blacklist_range			= 500;
+		wai_blacklist_players_range = 750;				// distance to players
+		wai_blacklist_range			= 600;				// Distiance to base, traders, spawnpoint
 
-		wai_mission_timer			= [300,900];						// time between missions 5-15 minutes
-		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
-		wai_timeout_distance		= 1000;								// if a player is this close to a mission then it won't time-out
+		wai_mission_timer			= [300,900];		// time between missions 5-15 minutes
+		wai_mission_timeout			= [900,1800]; 		// time each missions takes to despawn if inactive 15-30 minutes
+		wai_timeout_distance		= 1000;				// if a player is this close to a mission then it won't time-out
+		wai_timeout_bomb			= 1800;				// How long bomb missions is, when it times out it gos BOOM
 		
-		wai_clean_mission			= true;								// clean all mission buildings after a certain period
-		wai_clean_mission_time		= 900;								// time after a mission is complete to clean mission buildings
+		wai_clean_mission			= true;				// clean all mission buildings after a certain period
+		wai_clean_mission_time		= 900;				// time after a mission is complete to clean mission buildings
 
-		//wai_mission_fuel			= [5,60];							// fuel inside mission spawned vehicles [min%,max%]
-		//wai_vehicle_damage		= [20,70];							// damages to spawn vehicles with [min%,max%]
-		//wai_keep_vehicles			= true;								// save vehicles to database and keep them after restart
-		//wai_lock_vehicles			= true;								// lock mission vehicles and add keys to random AI bodies (be careful with ai_clean_dead if this is true
+		//wai_mission_fuel			= [5,60];			// fuel inside mission spawned vehicles [min%,max%]
+		//wai_vehicle_damage		= [20,70];			// damages to spawn vehicles with [min%,max%]
+		//wai_keep_vehicles			= true;				// save vehicles to database and keep them after restart
+		//wai_lock_vehicles			= true;				// lock mission vehicles and add keys to random AI bodies (be careful with ai_clean_dead if this is true
 
-		wai_crates_smoke			= true;								// pop smoke on crate when mission is finished during daytime
-		wai_crates_flares			= true;								// pop flare on crate when mission is finished during nighttime
+		wai_crates_smoke			= true;				// pop smoke on crate when mission is finished during daytime
+		wai_crates_flares			= true;				// pop flare on crate when mission is finished during nighttime
 		
-		wai_players_online			= 0; 								// number of players online before mission starts
-		wai_server_fps				= 10; 								// missions only starts if server FPS is over wai_server_fps
+		wai_players_online			= 0; 				// number of players online before mission starts
+		wai_server_fps				= 10; 				// missions only starts if server FPS is over wai_server_fps
 		
-		wai_kill_percent			= 0;								// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
+		wai_kill_percent			= 0;				// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 
-		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
-		wai_high_value_chance		= 10;								// chance in percent you find above mentioned item
+		wai_high_value				= true;				// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
+		wai_high_value_chance		= 10;				// chance in percent you find above mentioned item
 
-		wai_enable_minefield		= true;								// enable minefields to better defend missions
-		wai_use_launchers			= true;								// add a rocket launcher to each spawned AI group
-		wai_remove_launcher			= true;								// remove rocket launcher from AI on death
+		wai_enable_minefield		= true;				// enable minefields to better defend missions
+		wai_use_launchers			= true;				// add a rocket launcher to each spawned AI group
+		wai_remove_launcher			= true;				// remove rocket launcher from AI on death
 
 		// Missions
-		wai_announce				= "radio";			// Setting this to true will announce the missions to those that hold a radio only
+		wai_announce				= "radio";			// Setting this to true will announce the missions to those that hold a radio only "radio", "global", "hint", "text"
 		wai_bandit_limit			= 1;				// define how many bandit missions can run at once
-
 		
+		//Syntax ["MISSION NAME","CHANGE"] Change must equal 100 when put together 
 		wai_bandit_missions			= [
+										["nuke",10],
 										["sniper_team",20],
 										["rebel_base",20],
-										["medi_camp",30],
+										["medi_camp",20],
 										["ikea_convoy",30],
 										
 										["patrol",0],
@@ -149,7 +152,6 @@ if(isServer) then {
 										["black_hawk_crash",0],
 										["captured_mv22",0],
 										["broken_down_ural",0],
-										["medi_camp",0],
 										["presidents_mansion",0],
 										["weapon_cache",0],
 										
@@ -158,7 +160,7 @@ if(isServer) then {
 		
 		// Vehicle arrays
 		armed_vehicle 				= []; 
-		armed_chopper 				= [];
+		armed_chopper 				= ["B_Heli_Transport_01_camo_EPOCH"];
 		refuel_trucks				= [];
 		
 		civil_chopper 				= ["B_Heli_Light_01_EPOCH","B_Heli_Transport_01_EPOCH","B_Heli_Transport_01_camo_EPOCH","O_Heli_Light_02_unarmed_EPOCH","I_Heli_Transport_02_EPOCH","I_Heli_light_03_unarmed_EPOCH"];
@@ -178,7 +180,7 @@ if(isServer) then {
 		crate_tools					= ["Hatchet","Binocular","Rangefinder","ItemCompass","ItemGPS","NVG_EPOCH","EpochRadio0"];
 		crate_tools_sniper			= ["ItemCompass","ItemWatch","Binocular","Rangefinder","NVG_EPOCH","ItemGPS","EpochRadio0"];
 		
-		//magazine
+		//item
 		crate_tools_buildable		= ["ItemMixOil","jerrycan_Epoch","EpochRadio0"];
 		
 		crate_items					= ["ItemSodaRbull","ItemSodaOrangeSherbet","ItemSodaPurple","ItemSodaOrangeSherbet","ItemSodaMocha","ItemSodaBurst","FoodBioMeat","FoodSnooter","FoodWalkNSons","ItemMixOil","ItemScraps","ItemCorrugated","ItemCorrugatedLg","CSGAS","EnergyPack","EnergyPackLg","WhiskeyNoodle","CircuitParts","VehicleRepair","VehicleRepairLg","Pelt_EPOCH","JackKit","PaintCanBlk","PaintCanBlu","PaintCanBrn","PaintCanGrn","PaintCanOra","PaintCanPur","PaintCanRed","PaintCanTeal","PaintCanYel","Towelette","KitCinderWall","KitPlotPole","MortarBucket","KitFoundation","KitShelf","KitTiPi","KitFirePlace","KitWoodRamp","KitWoodStairs","KitWoodFloor","KitStudWall","ItemMixOil","emptyjar_epoch","jerrycan_epoch"];
@@ -199,6 +201,7 @@ if(isServer) then {
 
 	/* END WAI MISSIONS CONFIG */
 	
+		// DEBUG SETTINGS
 		if(debug_mode) then {
 			wai_remove_launcher		= false;	
 			wai_mission_timer		= [60,60];

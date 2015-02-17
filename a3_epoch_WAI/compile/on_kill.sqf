@@ -28,7 +28,7 @@ if (isServer) then {
 
 	if (isPlayer _player) then {
 		
-		// AI drops krypto on death 50% chance
+		// AI drops krypto on death
 		if(ai_crypto_gain && (floor(random 100) < ai_crypto_gain_drop)) then {
 			_pos=getposATL _unit;
 			_veh=createVehicle["Land_MPS_EPOCH",_pos,[],1.5,"CAN_COLLIDE"];
@@ -57,7 +57,8 @@ if (isServer) then {
 
 	} else {
 	
-		if(_player driver (vehicle _player)) then {
+		_veh = vehicle _player;
+		if(driver _v == _player) then {
 			WAIclient = ["vehiclehit",_player];
 			publicVariable "WAIclient";
 		};
