@@ -11,11 +11,12 @@ Now Wicked AI is now available for Arma 3 Epoch
 - Better markers
 - Nuke/bomb missions
 - Good framework for custom missions
-- AI drop krypto when killed
+- AI drops krypto when killed
 
 ### Upcoming in 1.1.0
 - More missions
 - Vehicle patrols
+- Treasure Hunt
 
 ### Version history
 
@@ -23,12 +24,12 @@ Now Wicked AI is now available for Arma 3 Epoch
 ### Installation Instructions
 1. Copy a3_epoch_WAI.pbo to your epoch server folder (Arma3\@EpochHive\addons)
 2. Copy the "remote" folder to your mission pbo
-3. Add this to your init.sqf ``` [] execVM "remote\remote.sqf"; ``` 
+3. Add this to your init.sqf ``` [] execVM "remote\remote.sqf"; ``` in you mission pbo
 4. Repack mission
 5. Start the server for awesome missions
+6. (optional) unpack a3_epoch_WAI.pbo to edit config file
 
 ### Versioning
-
 For transparency into our release cycle and in striving to maintain backward compatibility, bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/)
 Sometimes we screw up, but we'll adhere to those rules whenever possible.
 

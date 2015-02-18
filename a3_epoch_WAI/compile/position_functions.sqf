@@ -16,6 +16,7 @@ wai_isNearWater = {
 	_result
 
 };
+
 wai_GetPos = {
 	private "_pos";
 	_pos = getPosASL _this; 
@@ -116,6 +117,7 @@ wai_inDebug = {
 	_result
 
 };
+
 wai_nearbyPlayers = {
 	private ["_pos", "_isNearList", "_isNear"];
 	_pos = _this select 0;

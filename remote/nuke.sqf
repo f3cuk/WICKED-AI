@@ -1,3 +1,4 @@
+private ["_Cone","_top","_top2","_smoke","_Wave","_light","_isInside","_position"];
 _position = _this select 0;
 if((isPlayer player) && (player distance _position <= 1600)) then {
 	// sleep for countdown
@@ -7,7 +8,6 @@ if((isPlayer player) && (player distance _position <= 1600)) then {
 	// EDITED VERSION OF THE ARMA2 ORIGINAL SCRIPT
 	// ARMED-ASSAULT.DE
 	//////////////////////////////////////////////////////////////
-	private ["_Cone","_top","_top2","_smoke","_Wave","_light"];
 	_Cone = "#particlesource" createVehicleLocal _position;
 	_Cone setParticleParams [["A3\Data_F\ParticleEffects\Universal\universal.p3d", 16, 7, 48], "", "Billboard", 1, 10, [0, 0, 0],
 					[0, 0, 0], 0, 1.275, 1, 0, [40,80], [[0.25, 0.25, 0.25, 0], [0.25, 0.25, 0.25, 0.5], 
@@ -67,7 +67,6 @@ if((isPlayer player) && (player distance _position <= 1600)) then {
 		"colorCorrections" ppEffectCommit 2;
 	};
 
-
 	"dynamicBlur" ppEffectAdjust [2];
 	"dynamicBlur" ppEffectCommit 1;
 
@@ -88,9 +87,10 @@ if((isPlayer player) && (player distance _position <= 1600)) then {
 	//*******************************************************************
 	//--- Ash START
 	//*******************************************************************
-	uiSleep 20;
+	
 	[] spawn {
 		private ["_pos","_parray","_snow"];
+		uiSleep 20;
 		_pos = position player;
 		_parray = [["A3\Data_F\ParticleEffects\Universal\Universal", 16, 12, 8, 1],"","Billboard",1,4,[0,0,0],[0,0,0],1,0.000001,0,1.4,[0.05,0.05],[[0.1,0.1,0.1,1]],[0,1],0.2,1.2,"","",vehicle player];
 		_snow = "#particlesource" createVehicleLocal _pos;  
@@ -112,6 +112,7 @@ if((isPlayer player) && (player distance _position <= 1600)) then {
 	_isInside = call EPOCH_fnc_isInsideBuilding;
 	if((isPlayer player) && (player distance _position <= 750) && !_isInside) then {
 		EPOCH_playerToxicity = 85;
+		EPOCH_playerSoiled = 85;
 	};
 	
 	_Wave setDropInterval 0.001;

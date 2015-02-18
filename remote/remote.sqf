@@ -1,8 +1,8 @@
 if(!isDedicated) then {
 	fnc_wai_client = {
-		private ["_type","_position","_i","_isInside"];
+		private ["_type","_position","_i"];
 		_type 		= _this select 0;
-		// can be used as option variable
+		// Can be used as option variable
 		if (count _this > 1) then {
 			_position = _this select 1;
 		};
@@ -17,9 +17,9 @@ if(!isDedicated) then {
 					_number 	= 10;
 					_position 	= _this select 0;
 					while {_number > 0} do {
-						sleep 1;
 						_number = _number - 1;
 						0 = ["<t size='0.8' shadow='0' color='#99ffffff'>Nuclear detonation in " + str(_number) + "</t>", 0, 1, 5, 2, 0, 1] spawn bis_fnc_dynamictext;
+						sleep 1;
 					};
 					_position call EPOCH_client_earthQuake;
 					playsound "Alarm_BLUFOR";
@@ -27,6 +27,7 @@ if(!isDedicated) then {
 				
 				0 = [_position] execVM "itsatrap\remote\nuke.sqf";
 			};
+			// 
 			case "vehiclehit": {
 				// Blow front wheels
 				// _position is used as _player

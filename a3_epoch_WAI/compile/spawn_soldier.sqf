@@ -104,7 +104,7 @@ if (isServer) then {
 	
 	// "Must have items";
 	_unit linkItem "ItemMap";
-	_unit linkItem "ItemRadio";
+	_unit linkItem "EpochRadio0";
 	
 	// uniform
 	_unit forceAddUniform _aiskin;

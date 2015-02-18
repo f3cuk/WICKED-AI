@@ -29,7 +29,7 @@ if(isServer) then {
 		_start = true;
 		_timeout_time = wai_timeout_bomb;
 		// Debug 
-		if(debug_mode) then {_timeout_time = 300;};
+		//if(debug_mode) then {_timeout_time = 300;};
 	};
 
 	{
@@ -94,7 +94,7 @@ if(isServer) then {
 				if(wai_kill_percent == 0) then {
 
 					{
-						if((isPlayer _x) && (_x distance _position <= 10)) then {
+						if((isPlayer _x) && (_x distance _position <= 30)) then {
 							_complete = true;
 						};
 					} count playableUnits;
@@ -103,7 +103,7 @@ if(isServer) then {
 
 					if(((wai_mission_data select _mission) select 0) <= _killpercent) then {
 						{
-							if((isPlayer _x) && (_x distance _position <= 10)) then {
+							if((isPlayer _x) && (_x distance _position <= 30)) then {
 								_complete = true;
 							};
 						} count playableUnits;

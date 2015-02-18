@@ -2,7 +2,7 @@ if(isServer) then {
 
 	/* GENERAL CONFIG */
 
-		debug_mode					= false;		// enable debug
+		debug_mode					= true;		// enable debug
 		blacklist					= [
 			[[0,16000,0],[1000,-0,0]],		   	// Left
 			[[0,16000,0],[16000.0,14580.3,0]], 	// Top
@@ -36,8 +36,8 @@ if(isServer) then {
 
 		ai_crypto_gain				= true;			// gain crypto for killing AI
 		ai_crypto_gain_drop			= 50;			// chance of drop in %
-		ai_add_krypto				= 50;			// amount of crypto gained for killing a bandit AI
-		ai_special_krypto			= 100;			// amount of crypto gained for killing a special AI
+		ai_add_krypto				= 100;			// amount of crypto gained for killing a bandit AI
+		ai_special_krypto			= 1000;			// amount of crypto gained for killing a special AI
 		ai_crypto_bomb				= 5000;			// amount of krypto gaind for defusing the nuke/bomb
 		
 
@@ -176,7 +176,7 @@ if(isServer) then {
 		crates_small				= ["Box_NATO_WpsSpecial_F"];
 		
 		// weapons
-		crate_weapons_buildables    = ["MultiGun",["MeleeSledge","swing"],["Hatchet","swing"],["ChainSawG","CSGAS"],["ChainSawP","CSGAS"],["ChainSawR","CSGAS"]];
+		crate_weapons_buildables    = ["MultiGun"];
 		crate_tools					= ["Hatchet","Binocular","Rangefinder","ItemCompass","ItemGPS","NVG_EPOCH","EpochRadio0"];
 		crate_tools_sniper			= ["ItemCompass","ItemWatch","Binocular","Rangefinder","NVG_EPOCH","ItemGPS","EpochRadio0"];
 		
@@ -202,13 +202,13 @@ if(isServer) then {
 	/* END WAI MISSIONS CONFIG */
 	
 		// DEBUG SETTINGS
-		if(debug_mode) then {
+		/*if(debug_mode) then {
 			wai_remove_launcher		= false;	
 			wai_mission_timer		= [60,60];
 			wai_mission_timeout		= [300,300];
 			//wai_bandit_missions		= [["debug",100]];			
 			wai_bandit_missions		= [["nuke",100]];			
-		};
+		};*/
 
 	/* STATIC MISSIONS CONFIG */
 
