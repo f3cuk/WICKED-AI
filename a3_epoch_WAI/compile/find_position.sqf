@@ -1,4 +1,4 @@
-private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
+private ["_airportPos","_allAirports","_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos","_selectedCity","_allCitys","_RoadList","_worldSize","_worldCenter","_position", "_isNear", "_nearby","_spawnRadius","_result"];
 	// Spawn around buildings and 50% near roads
 	/*
 	1    Position
@@ -33,15 +33,11 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 					_position = _RoadList call BIS_fnc_selectRandom;
 					_position = _position modelToWorld [0,0,0];
 					_position = [_position,0,50,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
-					diag_log format["WAI: position ROAD"];
+					diag_log format["WAI: position Road"];
 				};
 			// City
 			case 1:
 				{
-					/*_allCitys=(configfile >> "CfgWorlds" >> worldName >> "Names")call BIS_fnc_returnChildren;
-					_selectedCity=_allCitys select(floor random(count _allCitys));
-					_cityPos=getArray(_selectedCity >> "position");
-					_cityrange=getNumber(_selectedCity >> "radiusA");*/
 					_allCitys = nearestLocations [epoch_centerMarkerPosition, ["NameVillage","NameCity","NameCityCapital"], EPOCH_dynamicVehicleArea]; 
 					_cityPos = position (_allCitys select (floor (random (count _allCitys)))); 
 					_position = [_cityPos,0,150,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
@@ -65,17 +61,20 @@ private ["_height","_chance","_clear","_isNearBlackspot","_cityrange","_cityPos"
 					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Water"];
 				};
-			// AIRPORT (for special missions)
-			/*
+			// Airports (for special missions)
 			case 5:
 				{
-					Ok, i see, in configfile >> "CfgWorlds" >> "Stratis" >> "Names", Airport1's type is set to "nameLocal" instead of "airport". 
+					_allAirports = nearestLocations [epoch_centerMarkerPosition, ["Airport"], EPOCH_dynamicVehicleArea]; 
+					_airportPos = position (_allAirports select (floor (random (count _allAirports)))); 
+					_position = [_airportPos,0,50,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
+					diag_log format["WAI: position airport"];
+					
+					/*Ok, i see, in configfile >> "CfgWorlds" >> "Stratis" >> "Names", Airport1's type is set to "nameLocal" instead of "airport". 
 					use can use nearestLocations [pos,"nameLocal",rad] and then loop the result array checking if " text _location == "airfield" "	
 					technically you could run that once, and with location use '_location setType "airport"', then it should find it with nearestlocations, although i had no luck in the 10 minutes i've been playing around
 				
-					http://forums.bistudio.com/showthread.php?85340-AI-landing
+					http://forums.bistudio.com/showthread.php?85340-AI-landing*/
 				};
-			*/
 		};
 		
 		_isNearPlayer 		= [_position] call wai_nearbyPlayers;

@@ -68,14 +68,19 @@ wai_spawn_create = {
 	_crate
 };
 wai_paraLandSafe = {
-    private ["_unit"];
+	// Author: Beerkan:
+    // Additional contributions cobra4v320, itsatrap
+    private ["_smoke","_unit"];
     _unit = _this select 0;
-    (vehicle _unit) allowDamage false;// Set parachute invincible to prevent exploding if it hits buildings
+    (vehicle _unit) allowDamage false;
     waitUntil {isTouchingGround _unit || (position _unit select 2) < 1 };
     _unit allowDamage false;
     _unit action ["EJECT", vehicle _unit];
     _unit setvelocity [0,0,0];
-    sleep 1;// Para Units sometimes get damaged on landing. Wait to prevent this.
+    sleep 1;
+	if(wai_crates_smoke && ((leader group _unit) == _unit)) then {
+        _smoke = "SmokeShellRed" createVehicle (getPos _unit);
+    };
     _unit allowDamage true;
 };
 find_suitable_ammunition = {
@@ -115,6 +120,7 @@ find_suitable_suppressor = {
 };
 
 /*
+Author: http://killzonekid.com/arma-scripting-tutorials-how-to-find-a-string-within-a-string/
 Parameter(s):
     _this select 0: <string> string to be found
     _this select 1: <string> string to search in

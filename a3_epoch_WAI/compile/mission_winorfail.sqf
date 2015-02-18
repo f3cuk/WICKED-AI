@@ -28,6 +28,7 @@ if(isServer) then {
 	if(_type == "bomb") then {
 		_start = true;
 		_timeout_time = wai_timeout_bomb;
+		
 		// Debug 
 		//if(debug_mode) then {_timeout_time = 300;};
 	};
@@ -247,6 +248,30 @@ if(isServer) then {
 	};
 	
 	if (_timeout) then {
+		
+		//BOMB STUFF 
+		if(_type == "bomb") then {
+			private["_bomb"];
+			{
+				// only send to players with in view distance
+				if((isPlayer _x) && (_x distance _position <= 1600)) then {
+					// Magic happens
+					WAIclient = ["nuke",_position];
+					publicVariable "WAIclient";
+				};
+			} count playableUnits;
+			
+			// Wait for countdown
+			sleep 20;
+			{
+				_bomb = "Bo_GBU12_LGB_MI10" createVehicle (getpos _x);
+				_bomb setVectorDirAndUp [[0,0,1],[0,-1,0]];
+				_bomb setVelocity [0,0,-1000];
+				_x setDamage 1;
+			} forEach (_position nearObjects (wai_blacklist_range - 50));// Player base protection
+		};
+		
+		// Delete AI
 		{
 		
 			if (_x getVariable ["mission", nil] == _mission) then {
@@ -272,30 +297,7 @@ if(isServer) then {
 
 		} count allUnits + vehicles + allDead;
 		
-		//BOMB STUFF 
-		if(_type == "bomb") then {
-			private["_bomb"];
-			{
-				// only send to players with in view distance
-				if((isPlayer _x) && (_x distance _position <= 1600)) then {
-					// Magic happens
-					WAIclient = ["nuke",_position];
-					publicVariable "WAIclient";
-				};
-			} count playableUnits;
-			
-			// Wait for countdown
-			sleep 10;
-			{
-				//_bomb = "M_Mo_82mm_AT_LG" createVehicle (getpos _x);
-				//_bomb setVelocity [0,5,-45];
-				_bomb = "Bo_GBU12_LGB_MI10" createVehicle (getpos _x);
-				_bomb setVectorDirAndUp [[0,0,1],[0,-1,0]];
-				_bomb setVelocity [0,0,-1000];
-				_x setDamage 1;
-			} forEach (_position nearObjects (wai_blacklist_range - 50));// Player base protection
-		};
-	
+		// Delete scenery
 		{
 			if(typeName _x == "ARRAY") then {
 			
@@ -312,7 +314,7 @@ if(isServer) then {
 			
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
-		// Loosing :(
+		// Loosing
 		RemoteMessage = [wai_announce,_msglose];
 		publicVariable "RemoteMessage";
 	};

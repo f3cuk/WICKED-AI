@@ -76,7 +76,7 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],				// mission number and crate
-		["kill"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
+		["crate"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 		[_baserunover], 				// cleanup objects
 		"A soldier squad have set up a medical re-supply camp! Check your map for the location!",	// mission announcement
 		"Survivors have taken control of the medical supply camp!",									// mission success
@@ -84,7 +84,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,0,0,[30,crate_items_medical+crate_items_vehicle_repair],2] call dynamic_crate;
+		[_crate,0,0,[30,crate_items_medical+crate_items_vehicle_repair+crate_items_food],2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Medical Supply Camp]: Ended at %1",_position];

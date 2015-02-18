@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_pos","_veh","_krypto","_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_crypto","_banditkills","_humankills","_cryptogain"];
+	private ["_grpUnits","_pos","_veh","_krypto","_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_crypto","_banditkills","_humankills","_cryptogain"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
@@ -57,11 +57,11 @@ if (isServer) then {
 
 	} else {
 	
-		_veh = vehicle _player;
-		if(driver _v == _player) then {
+		//_veh = vehicle _player;
+		//if(driver _veh == _player) then {
 			WAIclient = ["vehiclehit",_player];
 			publicVariable "WAIclient";
-		};
+		//};
 	
 		if (ai_clean_roadkill) then {
 			removeAllWeapons _unit;
@@ -87,6 +87,16 @@ if (isServer) then {
 
 		};
 
+	};
+	
+	// Promotion
+	// credit: https://github.com/SMVampire/VEMF/
+	if ((count (units group _unit)) > 1) then {
+		if ((leader group _unit) == _unit) then {
+			_grpUnits = units group _unit;
+			_grpUnits = _grpUnits - [_unit];
+			(group _unit) selectLeader (_grpUnits call BIS_fnc_selectRandom);
+		};
 	};
 
 	if(wai_remove_launcher && _launcher != "") then {
