@@ -57,11 +57,10 @@ if (isServer) then {
 
 	} else {
 	
-		//_veh = vehicle _player;
-		//if(driver _veh == _player) then {
+		if (isPlayer (driver _player)) then {
 			WAIclient = ["vehiclehit",_player];
 			publicVariable "WAIclient";
-		//};
+		};
 	
 		if (ai_clean_roadkill) then {
 			removeAllWeapons _unit;

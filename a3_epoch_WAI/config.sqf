@@ -141,11 +141,12 @@ if(isServer) then {
 		
 		//Syntax ["MISSION NAME","CHANGE"] Change must equal 100 when put together 
 		wai_bandit_missions			= [
-										["nuke",10],
-										["sniper_team",20],
-										["rebel_base",20],
+										["nuke",2],
+										["sniper_team",23],
+										["rebel_base",25],
 										["medi_camp",20],
 										["ikea_convoy",30],
+										
 										
 										["patrol",0],
 										["armed_vehicle",0],
@@ -169,6 +170,9 @@ if(isServer) then {
 
 		civil_vehicles 				= ["C_Hatchback_01_EPOCH","C_Hatchback_02_EPOCH","C_Offroad_01_EPOCH","C_Quadbike_01_EPOCH","C_SUV_01_EPOCH"];
 		boots						= ["B_SDV_01_EPOCH"];
+		
+		wreck_water					= ["Land_UWreck_FishingBoat_F","Land_UWreck_Heli_Attack_02_F","Land_UWreck_MV22_F","Land_Wreck_Traw2_F","Land_Wreck_Traw_F"];
+		wreck						= [];
 
 		// Dynamic box array
 		crates_large				= ["Box_NATO_AmmoVeh_F"]; 
@@ -202,13 +206,13 @@ if(isServer) then {
 	/* END WAI MISSIONS CONFIG */
 	
 		// DEBUG SETTINGS
-		/*if(debug_mode) then {
+		if(debug_mode) then {
 			wai_remove_launcher		= false;	
 			wai_mission_timer		= [60,60];
 			wai_mission_timeout		= [300,300];
 			//wai_bandit_missions		= [["debug",100]];			
-			wai_bandit_missions		= [["nuke",100]];			
-		};*/
+			wai_bandit_missions		= [["treasure_hunt_water",100]];			
+		};
 
 	/* STATIC MISSIONS CONFIG */
 

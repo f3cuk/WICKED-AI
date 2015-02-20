@@ -78,14 +78,13 @@ if (isServer) then {
 	_unitGroup setFormation "ECH LEFT";
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
-		if (!isNil "_mission") then {
-			if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
-			[_unitGroup, _mission] spawn bandit_behaviour;
-		} else {
-			[_unitGroup] spawn bandit_behaviour;
-		};
+	if (!isNil "_mission") then {
+		if(debug_mode) then { diag_log("WAI: mission nr " + str(_mission)); };
+		[_unitGroup, _mission] spawn bandit_behaviour;
+	} else {
+		[_unitGroup] spawn bandit_behaviour;
+	};
 	
-
 	if(_pos_z == 0) then {
 		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;
 	};

@@ -58,7 +58,7 @@ private ["_airportPos","_allAirports","_height","_chance","_clear","_isNearBlack
 			// Water (for special missions)
 			case 4:
 				{	
-					_position = [epoch_centerMarkerPosition,1,EPOCH_dynamicVehicleArea,_clear,0,10,0,blacklist] call BIS_fnc_findSafePos;
+					_position = [epoch_centerMarkerPosition,0,(EPOCH_dynamicVehicleArea-1500),_clear,1,10,0,blacklist] call BIS_fnc_findSafePos;
 					diag_log format["WAI: position Water"];
 				};
 			// Airports (for special missions)

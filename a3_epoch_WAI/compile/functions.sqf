@@ -12,11 +12,11 @@ wai_vehicle_protect = {
 	addToRemainsCollector [_vehicle]; 	// Cleanup
 	
 	// Set Vehicle Slot
-	EPOCH_VehicleSlotsLimit = EPOCH_VehicleSlotsLimit + 1;
+	/*EPOCH_VehicleSlotsLimit = EPOCH_VehicleSlotsLimit + 1;
 	EPOCH_VehicleSlots pushBack (str EPOCH_VehicleSlotsLimit);
 	_vehicle setVariable ["VEHICLE_SLOT",(EPOCH_VehicleSlots select 0),true];
 	EPOCH_VehicleSlots = EPOCH_VehicleSlots - [(EPOCH_VehicleSlots select 0)];
-	EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;
+	EPOCH_VehicleSlotCount = count EPOCH_VehicleSlots;*/
 	
 	[_vehicle] spawn vehicle_monitor;
 	
@@ -51,8 +51,8 @@ wai_spawn_create = {
 		
 	// Create the create
 	//_position		= _position findEmptyPosition [0,10,_crate_type];
-	_position = [_position,0,1,2,0,20,0] call BIS_fnc_findSafePos;
-	_crate 			= createVehicle [_crate_type,_position,[],0,"CAN_COLLIDE"];
+	_position 	= [_position,0,1,2,0,20,0] call BIS_fnc_findSafePos;
+	_crate 		= createVehicle [_crate_type,_position,[],0,"CAN_COLLIDE"];
 	
 	// Clean up
 	_crate setVariable ["ObjectID","1",true];

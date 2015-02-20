@@ -24,7 +24,7 @@ if(isServer) then {
 		// Let AI know
 		RESISTANCE revealMine _mine;
 		
-		_mine spawn {
+		/*_mine spawn {
 
 			private["_vehicle_near","_bomb"];
 			
@@ -42,7 +42,7 @@ if(isServer) then {
 			sleep 3;
 			deleteVehicle _bomb;
 			deleteVehicle _this;
-		};
+		};*/
 
 		_allmines set [(count _allmines), _mine];
 
