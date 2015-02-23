@@ -126,6 +126,7 @@ if(isServer) then {
 		wai_players_online			= 0; 				// number of players online before mission starts
 		wai_server_fps				= 10; 				// missions only starts if server FPS is over wai_server_fps
 		
+		// Don't use might be buged 
 		wai_kill_percent			= 0;				// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 
 		wai_high_value				= true;				// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
