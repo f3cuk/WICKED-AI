@@ -95,7 +95,7 @@ if(isServer) then {
 				if(wai_kill_percent == 0) then {
 
 					{
-						if((isPlayer _x) && (_x distance _position <= 10)) then {
+						if((isPlayer _x) && (_x distance _position <= 30)) then {
 							_complete = true;
 						};
 					} count playableUnits;
@@ -104,7 +104,7 @@ if(isServer) then {
 
 					if(((wai_mission_data select _mission) select 0) <= _killpercent) then {
 						{
-							if((isPlayer _x) && (_x distance _position <= 10)) then {
+							if((isPlayer _x) && (_x distance _position <= 30)) then {
 								_complete = true;
 							};
 						} count playableUnits;
