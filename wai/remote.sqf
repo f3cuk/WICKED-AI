@@ -24,7 +24,7 @@ if(!isDedicated) then {
 					playsound "Alarm_BLUFOR";
 				};
 				
-				0 = [_position] execVM "itsatrap\wai\nuke.sqf";
+				0 = [_position] execVM "wai\nuke.sqf";
 			};
 			// 
 			case "vehiclehit": {
