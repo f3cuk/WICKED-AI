@@ -23,8 +23,8 @@ Now Wicked AI is now available for Arma 3 Epoch
 
 ### Installation Instructions
 1. Copy a3_epoch_WAI.pbo to your epoch server folder (Arma3\@EpochHive\addons)
-2. Copy the "remote" folder to your mission pbo
-3. Add this to your init.sqf ``` [] execVM "remote\remote.sqf"; ``` in you mission pbo
+2. Copy the "wai" folder to your mission pbo
+3. Add this to your init.sqf ``` [] execVM "wai\remote.sqf"; ``` in you mission pbo
 4. Repack mission
 5. Start the server for awesome missions
 6. (optional) unpack a3_epoch_WAI.pbo to edit config file
