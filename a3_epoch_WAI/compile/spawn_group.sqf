@@ -67,8 +67,8 @@ if (isServer) then {
 			if (_launcher == "aa") exitWith { _launcher = ai_wep_launchers_AA call BIS_fnc_selectRandom; };
 		};
 		_rocket = _launcher call find_suitable_ammunition;
-		_unit addMagazine _rocket;
-		_unit addMagazine _rocket;
+		_unit addItemToBackpack _rocket;
+		_unit addItemToBackpack _rocket;
 		_unit addWeapon _launcher;
 		_unit addBackpack "B_Carryall_mcamo";
 		

@@ -210,8 +210,9 @@ if(isServer) then {
 			wai_remove_launcher		= false;	
 			wai_mission_timer		= [60,60];
 			wai_mission_timeout		= [300,300];
-			//wai_bandit_missions		= [["debug",100]];			
-			wai_bandit_missions		= [["treasure_hunt_water",100]];			
+			wai_bandit_missions		= [["debug",100]];			
+			//wai_bandit_missions		= [["nuke",100]];			
+			//wai_bandit_missions		= [["treasure_hunt_water",100]];			
 		};
 
 	/* STATIC MISSIONS CONFIG */

@@ -30,7 +30,7 @@ if(isServer) then {
 		_timeout_time = wai_timeout_bomb;
 		
 		// Debug 
-		//if(debug_mode) then {_timeout_time = 300;};
+		if(debug_mode) then {_timeout_time = 300;};
 	};
 
 	{
