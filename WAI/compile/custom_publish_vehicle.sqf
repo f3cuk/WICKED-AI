@@ -201,7 +201,7 @@ if (isServer) then {
 						_outcome 	= _result select 0;
 						waitUntil {!isNil "_outcome"};
 						if(debug_mode) then { diag_log ("HIVE: WRITE: "+ str(_key)); };
-						if(_outcome != "PASS") then {
+						if(_outcome == "PASS") then {
 							_oid = _result select 1;
 							_vehicle setVariable ["ObjectID", _oid, true];
 							if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
