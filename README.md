@@ -83,7 +83,7 @@ Note: These are on by default, change *wai_radio_announce* in config.sqf to *fal
 	_nil = [] execVM "custom\remote\remote.sqf";
 	~~~~
 
-3. Copy the remote_message folder into your custom folder, if you do not have this one yet simply create it.
+3. Copy the ***remote*** folder into your custom folder, if you do not have this one yet simply create it.
 4. If you want to be able to switch the radio on or off go to step 5 (note: right click by maca required), else go to step 6 and both remove switch_on_off.sqf and radio.ogg from the remote folder.
 5. Open extra_hc.hpp
 
