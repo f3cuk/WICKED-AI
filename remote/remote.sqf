@@ -8,8 +8,15 @@ if(!isDedicated) then {
 		_message 	= _this select 1;
 		
 		call {
-			if(_type == "radio")		exitWith { if(player hasWeapon "ItemRadio") then { systemChat _message; }; };
-			if(_type == "global")		exitWith { systemChat _message; };
+			if(_type == "radio") exitWith { 
+				if(player hasWeapon "ItemRadio") then { 
+					if(player getVariable["radiostate",true]) then {
+						systemChat _message;
+						[objNull,player,rSAY,"Radio_Message_Sound",30] call RE;
+					};
+				}; 
+			};
+			if(_type == "global") exitWith { systemChat _message; };
 		};
 	};
 	
