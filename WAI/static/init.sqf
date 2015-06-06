@@ -11,5 +11,5 @@ if(isServer) then {
 		ExecVM "\z\addons\dayz_server\WAI\static\default.sqf";
 
 	};
-
+	wai_staticloaded = true;
 };

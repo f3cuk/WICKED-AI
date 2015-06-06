@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_ainum","_unarmed","_aicskill","_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_weaponandmag","_gearmagazines","_geartools","_unit"];
+	private ["_ainum","_unarmed","_aicskill","_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_class 				= _this select 1;
@@ -16,8 +16,8 @@ if (isServer) then {
 	};
 	
 	if ((count _this == 10) OR (count _this == 6)) then {
-		if (count _this == 10) then {_mission = _this select 9;};
-		if (count _this == 6) then {_mission = _this select 5;};
+		if (count _this == 10) 	then { _mission = _this select 9; };
+		if (count _this == 6) 	then { _mission = _this select 5; };
 	} else {
 		_mission = nil;
 	};
@@ -76,14 +76,6 @@ if (isServer) then {
 		_unit enableAI "ANIM";
 		_unit enableAI "FSM";
 		
-		if(_aitype == "Hero") then {
-			_unit setCombatMode ai_hero_combatmode;
-			_unit setBehaviour ai_hero_behaviour;
-		} else {
-			_unit setCombatMode ai_bandit_combatmode;
-			_unit setBehaviour ai_bandit_behaviour;
-		};
-		
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 		
@@ -100,16 +92,15 @@ if (isServer) then {
 				};
 			};
 
-			_weaponandmag 	= _aiweapon call BIS_fnc_selectRandom;
-			_weapon 		= _weaponandmag select 0;
-			_magazine 		= _weaponandmag select 1;
+			_weapon 	= _aiweapon call BIS_fnc_selectRandom;
+			_magazine 	= _weapon call find_suitable_ammunition;
 			
 			call {
 				if(typeName(_gear) == "SCALAR") then {
-					if(_gear == 0) 			exitWith {_aigear = ai_gear0;};
-					if(_gear == 1) 			exitWith {_aigear = ai_gear1;};
+					if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
+					if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
 				} else {
-					if(_gear == "random") 	exitWith {_aigear = ai_gear_random call BIS_fnc_selectRandom;};
+					if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
 				};
 			};
 
@@ -186,6 +177,20 @@ if (isServer) then {
 	} forEach _position;
 
 	_unitGroup selectLeader ((units _unitGroup) select 0);
+
+	if(_aitype == "Hero") then {
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn hero_behaviour;
+		} else {
+			[_unitGroup] spawn hero_behaviour;
+		};
+	} else {
+		if (!isNil "_mission") then {
+			[_unitGroup, _mission] spawn bandit_behaviour;
+		} else {
+			[_unitGroup] spawn bandit_behaviour;
+		};
+	};
 
 	diag_log format ["WAI: Spawned in %1 %2",_unitnumber,_class];
 

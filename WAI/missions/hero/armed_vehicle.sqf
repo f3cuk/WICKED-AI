@@ -2,12 +2,15 @@ if(isServer) then {
 
 	private 		["_complete","_crate","_mission","_static_gun","_crate_type","_rndnum","_playerPresent","_vehname","_vehicle","_position","_vehclass"];
 
+	// Get mission number, important we do this early
+	_mission 		= count wai_mission_data -1;
+
 	//Armed Land Vehicle
 	_vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
 	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 	_position		= [30] call find_position;
-	_mission		= [_position,"Medium",format["Disabled %1",_vehname],"MainHero",true] call mission_init;
+	[_mission,_position,"Medium",format["Disabled %1",_vehname],"MainHero",true] call mission_init;
 	
 	diag_log 		format["WAI: [Mission:[Hero] Armed Vehicle]: Starting... %1",_position];
 
@@ -17,7 +20,7 @@ if(isServer) then {
 	
 	//Troops
 	_rndnum = (2 + round (random 4));
-	[[_position select 0,_position select 1,0],_rndnum,"Medium","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+	[[_position select 0,_position select 1,0],_rndnum,"Medium",["Random","AT"],3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],_rndnum,"Medium","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],_rndnum,"Medium","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
@@ -28,7 +31,7 @@ if(isServer) then {
 	],_static_gun,"Medium","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 	
 	//Spawn Vehicle
-	_vehicle		= [_vehclass,_position] call custom_publish;
+	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
 	
 	if(debug_mode) then {
 		diag_log format["WAI: [Hero] armed_vehicle spawned a %1",_vehname];
@@ -50,5 +53,5 @@ if(isServer) then {
 
 	diag_log format["WAI: [Bandit] armed_vehicle ended at %1",_position];
 	
-	h_missionrunning = false;
+	h_missionsrunning = h_missionsrunning - 1;
 };
