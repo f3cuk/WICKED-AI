@@ -68,7 +68,7 @@ if (isServer) then {
 			_isglass = ["glass", _selection] call KK_fnc_inString;
 
 			if(!_isglass && _dam > 0.1) then {
-				_hit = [_vehicle,_selection,_dam] call object_setHitServer;
+				_vehicle setHit[_selection,_dam];
 				if(debug_mode) then { diag_log(format["WAI: Calculated damage for %1 is %2",str(_selection),str(_dam)]); };
 			};
 
