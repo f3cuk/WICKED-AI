@@ -73,6 +73,31 @@ if(isServer) then {
 
 		ai_add_skin					= true;			// adds unit skin to inventory on death
 		
+		/* AI Cache Units */
+		ai_cache_units			= false;
+		/**Range for Re-Activation*************/
+		/****** Default: 800 ******************/
+		ai_cache_units_reactivation_range = 800;
+		/**Time untill units are Frozen again**/
+		/************* Default: 30 ************/
+		ai_cache_units_refreeze = 30;
+		/****** Log Actions to RPT File? ******/
+		/*********** Default: true ************/
+		ai_cache_units_freeze_log = true;
+		/******** Unassign Waypoints?  ********/
+		/*********** Default: false ***********/
+		ai_cache_units_unassign_waypoints = false;
+		/******** Randomize Position?  ********/
+		/******** Distance to Randomize *******/
+		/*********** Default: true ************/
+		/*********** Distance: 20 *************/
+		ai_cache_units_randomize_position = true;
+		ai_cache_units_randomize_distance = 20;
+		/********** Hide un-used AI?  *********/
+		/*********** Default: true ************/
+		ai_cache_unites_hide_ai = true;
+		/* AI Cache Units End */
+		
 	/* END AI CONFIG */
 
 	/* WAI MISSIONS CONFIG */

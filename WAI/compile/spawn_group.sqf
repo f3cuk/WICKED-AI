@@ -213,7 +213,9 @@ if (isServer) then {
 	if(_pos_z == 0) then {
 		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;
 	};
-
+	if(ai_cache_units) then {
+		[_unitGroup] spawn cache_units;
+	};
 	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2",_unitnumber,_position,_aitype];
 	
 	_unitGroup
