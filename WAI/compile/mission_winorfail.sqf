@@ -168,14 +168,8 @@ if(isServer) then {
 				_marker setPosATL (getPosATL _crate);
 				_marker attachTo [_crate, [0,0,0]];
 				
-				_in_range = _crate nearEntities ["CAManBase",1250];
-				
-				{
-					if(isPlayer _x && _x != player) then {
-						PVDZE_send = [_x,"RoadFlare",[_marker,0]];
-						publicVariableServer "PVDZE_send";
-					};
-				} count _in_range;
+				PVDZ_obj_RoadFlare = [_marker,0];
+				publicVariable "PVDZ_obj_RoadFlare";
 
 			};
 

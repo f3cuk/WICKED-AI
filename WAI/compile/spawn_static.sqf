@@ -156,7 +156,7 @@ if (isServer) then {
 		ai_emplacement_units = (ai_emplacement_units + 1);
 		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "static"] call on_kill;}];
 		_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
-		PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_static];
+		dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_static];
 			
 		if (sunOrMoon != 1) then {
 			_unit addweapon "NVGoggles";

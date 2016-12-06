@@ -65,7 +65,7 @@ if (isServer) then {
 	_vehicle allowCrewInImmobile true; 
 	_vehicle lock true;
 
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_vehicle];
+	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_vehicle];
 
 	_pilot assignAsDriver _vehicle;
 	_pilot moveInDriver _vehicle;

@@ -65,7 +65,7 @@ if (isServer) then {
 				_dam = 0.8
 			};
 
-			_isglass = ["glass", _selection] call KK_fnc_inString;
+			_isglass = ["glass", _selection] call fnc_inString;
 
 			if(!_isglass && _dam > 0.1) then {
 				_vehicle setHit[_selection,_dam];
@@ -81,7 +81,7 @@ if (isServer) then {
 
 	};
 	
-	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
+	_vehicle addeventhandler ["HandleDamage",{ _this call fnc_veh_handleDam } ];
 	
 	if (wai_lock_vehicles) then {
 		_keyid = ceil(random(12500));
@@ -108,7 +108,7 @@ if (isServer) then {
 		_vehicle setVariable ["CharacterID","0",true];
 	};
 
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_vehicle];
+	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_vehicle];
 
 	if(wai_keep_vehicles) then {
 		

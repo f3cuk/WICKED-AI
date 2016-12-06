@@ -40,7 +40,7 @@ if(debug_mode) then {
 	diag_log format["WAI: Spawning in a dynamic crate with %1 guns, %2 tools, %3 items and %4 backpacks",_num_weapons,_num_tools,_num_items,_num_backpacks];
 };
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_crate];
+dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_crate];
 
 clearWeaponCargoGlobal _crate;
 clearMagazineCargoGlobal _crate;

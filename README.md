@@ -106,7 +106,7 @@ Note: These are on by default, change *wai_radio_announce* in config.sqf to *fal
 
 	Find:
 	~~~~
-	class DayZ_loadingScreen
+	#include "\z\addons\dayz_code\gui\description.hpp"
 	~~~~
 
 	Add above

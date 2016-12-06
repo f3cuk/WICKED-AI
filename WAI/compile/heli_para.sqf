@@ -130,7 +130,7 @@ if (isServer) then {
 		_x addmagazine "8Rnd_9x18_Makarov";
 	} count (units _unitgroup);
 
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
+	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;
 
 	_unitGroup allowFleeing 0;
