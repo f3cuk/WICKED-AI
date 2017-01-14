@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private["_killedat"];
+	private ["_killedat","_sound"];
 
 	diag_log "WAI: AI Monitor Started";
 
