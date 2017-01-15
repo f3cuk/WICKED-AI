@@ -26,7 +26,7 @@ if (isServer) then {
 						};
 					};
 				};
-			} count allDead;
+			} forEach allDead;
 		};
 
 		if(debug_mode) then {
