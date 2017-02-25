@@ -39,7 +39,7 @@ if(isServer) then {
 	} else {
 		[nil,nil,rTitleText,_msgstart,"PLAIN",10] call RE;
 	};
-	
+
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;
 
@@ -52,7 +52,7 @@ if(isServer) then {
 
 	while {!_start && !_timeout} do {
 
-		sleep 1;
+		uiSleep 1;
 		_currenttime = time;
 
 		{
@@ -78,7 +78,7 @@ if(isServer) then {
 
 	while {!_timeout && !_complete} do {
 
-		sleep 1;
+		uiSleep 1;
 		_currenttime = time;
 		{
 			if((isPlayer _x) && (_x distance _position <= wai_timeout_distance)) then {
@@ -157,7 +157,7 @@ if(isServer) then {
 
 		if (typeOf(_crate) in (crates_large + crates_medium + crates_small)) then {
 
-			if(wai_crates_smoke && sunOrMoon == 1) then {
+			if (wai_crates_smoke && sunOrMoon == 1) then {
 				_marker = "smokeShellPurple" createVehicle getPosATL _crate;
 				_marker setPosATL (getPosATL _crate);
 				_marker attachTo [_crate,[0,0,0]];
@@ -212,7 +212,6 @@ if(isServer) then {
 				_finish_time = time;
 				_cleaned = false;
 				while {!_cleaned} do {
-
 					_playernear = false;
 
 					{
@@ -222,29 +221,16 @@ if(isServer) then {
 					_currenttime = time;
 
 					if ((_currenttime - _finish_time >= wai_clean_mission_time) && !_playernear) then {
-
 						{
-							if(typeName _x == "ARRAY") then {
-							
-								{
-									if ((_x getVariable ["ObjectID", nil]) == nil) then {
-										deleteVehicle _x;
-									};
-								} count _x;
-							
+							if (typeName _x == "ARRAY") then {
+								{deleteVehicle _x;} count _x;
 							} else {
-								if ((_x getVariable ["ObjectID", nil]) == nil) then {
-									deleteVehicle _x;
-								};
+								deleteVehicle _x;
 							};
-							
 						} forEach _clean;
-
 						_cleaned = true;
-
 					};
-					
-					sleep 1;
+					uiSleep 1;
 				};
 			};
 		};
@@ -278,16 +264,12 @@ if(isServer) then {
 		
 		{
 			if(typeName _x == "ARRAY") then {
-			
 				{
 					deleteVehicle _x;
 				} count _x;
-			
 			} else {
-			
 				deleteVehicle _x;
-			};
-			
+			};			
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
 		if (wai_radio_announce) then {

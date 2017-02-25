@@ -9,7 +9,7 @@ if(typeName (_this select 1) == "ARRAY") then {
 	_weapons_array	= (_this select 1) select 1;
 } else {
 	_num_weapons	= _this select 1;
-	_weapons_array	= ai_wep_random call BIS_fnc_selectRandom;;
+	_weapons_array	= ai_wep_random call BIS_fnc_selectRandom;
 };
 
 if(typeName (_this select 2) == "ARRAY") then {
