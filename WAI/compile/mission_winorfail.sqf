@@ -223,9 +223,11 @@ if(isServer) then {
 					if ((_currenttime - _finish_time >= wai_clean_mission_time) && !_playernear) then {
 						{
 							if (typeName _x == "ARRAY") then {
-								{deleteVehicle _x;} count _x;
+								{
+									if !(_x isKindOf "AllVehicles") then {deleteVehicle _x;};
+								} count _x;
 							} else {
-								deleteVehicle _x;
+								if !(_x isKindOf "AllVehicles") then {deleteVehicle _x;};
 							};
 						} forEach _clean;
 						_cleaned = true;
