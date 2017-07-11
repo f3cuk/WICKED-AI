@@ -1,22 +1,13 @@
-WICKED AI 2.2.0
+WICKED AI 2.2.1
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.2.0
-- Native Linux server support
-- Multiple mission support
-- Automatic ammo finder (no need to specify ammo in weaponarray - config.sqf)
-- Option: Locked vehicles with keys randomly on AI
-- Option: Friendly AI
-- Added: Bandit Patrol mission
-- [And much more](https://github.com/f3cuk/WICKED-AI/blob/master/changelist.md)
-
-### Upcoming in 2.3.0+
-- More missions
-- Further enhancements
+### Release 2.2.1
+- Added support for 1.0.6+ (ebayShopper)
 
 ### Version history
+- 11-07-2017 : Release 2.2.1
 - 06-06-2015 : Release 2.2.0
 - 11-11-2014 : BETA release v3 (2.2.0)
 - 11-11-2014 : BETA release v2 (2.2.0)
@@ -134,7 +125,4 @@ Note: These are on by default, change *wai_radio_announce* in config.sqf to *fal
 For transparency into our release cycle and in striving to maintain backward compatibility, bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes we screw up, but we'll adhere to those rules whenever possible.
 
 ### Dev team
-- Developer **f3cuk**
-- Developer **Jossy**
-- Linux support **BangL**
-- Helping hand **nerdalertdk**
+- None active
