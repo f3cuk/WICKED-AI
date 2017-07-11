@@ -1,6 +1,10 @@
+# Current version 2.2.1
 
-# Current version 2.2.0
+Type | Description
+------------: | :------------
+`enhancement` | Added support for Epoch 1.0.6 @ebayShopper
 
+## Version 2.1.4
 Type | Description
 ------------: | :------------
 `enhancement` | Added the Bandit Patrol hero mission by Havoc302 @Jossy
@@ -11,22 +15,28 @@ Type | Description
 `feature` | Added the ability to make Hero AI friendly toward Hero players and vice versa for Bandits @Jossy
 `feature` | Added the ability to lock mission vehicles with keys on AI @Jossy
 `feature` | Added the possibility of announcing missions over the radio
-|
-Version | **2.1.4**
 `bug` | Fixed problem with GuerillaCacheBox_EP1 not spawning
-|
-Version | **2.1.3**
+
+## Version 2.1.3
+Type | Description
+------------: | :------------
 `bug` | Fixed typo in Mayors Mansion mission @Jossy
-|
-Version | **2.1.2**
+
+## Version 2.1.2
+Type | Description
+------------: | :------------
 `enhancement` | Added output variable to all unit group spawns @Jossy
 `enhancement` | Position the mayor inside a random room until player arrives @Jossy
 `bug` | Fixed bad vehicle on "none" backpack @Jossy
- |
- Version | **2.1.1**
+
+## Version 2.1.1
+Type | Description
+------------: | :------------
 `bug` | Fixed crate despawning @f3cuk
- |
- Version | **2.1.0**
+
+## Version 2.1.0
+Type | Description
+------------: | :------------
 `feature` | Added Hero and Bandit AI support @Jossy
 `feature` | Added possibility to add AI skin to inventory
 `feature` | Added posibily of finding a high value item in any crate
@@ -46,23 +56,35 @@ Version | **2.1.2**
 `enhancement` | Changed mission marker colors to resemble mission difficulty @Jossy
 `bug` | Removed tank traps due to stupid AI engaging them @Jossy
 `bug` | Fixed typos in dynamic ammo box, ItemEpinephin(e) and trying to spawn ItemKeyKit as magazine @Jossy
- |
-Version | **2.0.5**
-``bug` | Fixed missing ; on ikea_convoy.sqf
- |
-Version | **2.0.4**
-``bug` | Fixed bug with tanktraps not disappearing on Ikea mission
- | 
-Version | **2.0.3**
+
+## Version 2.0.5
+Type | Description
+------------: | :------------
+`bug` | Fixed missing ; on ikea_convoy.sqf
+
+## Version 2.0.4
+Type | Description
+------------: | :------------
+`bug` | Fixed bug with tanktraps not disappearing on Ikea mission
+
+## Version 2.0.3
+Type | Description
+------------: | :------------
 `bug` | Fixed bug with tanktraps not disappearing on MV-22 mission
- | 
-Version | **2.0.2**
+
+## Version 2.0.2
+Type | Description
+------------: | :------------
 `bug` | Fixed bug with nightvision on paratroops
- | 
-Version | **2.0.1**
+
+## Version 2.0.1
+Type | Description
+------------: | :------------
 `bug` | Fixed bug with roadflare on mission succes
- | 
-Version | **2.0.0**
+
+## Version 2.0.0
+Type | Description
+------------: | :------------
 `enhancement` | Major code overhaul and folder structure change
 `feature` | Added possibility of rotating static mission per map
 `feature` | Added possibility of tanktrapping missions @f3cuk / @nerdalertk
@@ -78,8 +100,10 @@ Version | **2.0.0**
 `enhancement` | Added option to not save vehicles to database
 `bug` | Fixed some incorrect varnames @osuapoc / @nerdalertdk
 `bug` | Less chance of AI killing eachother @nerdalertdk
- | 
-Version | **1.9.3**
+
+## Version 1.9.3
+Type | Description
+------------: | :------------
 `enhancement` | Normalized the use of Random throughout, when you want something random, use "Random" and not "Random" or ""
 `enhancement` | Implemented custom_ai_skill throughout. In the future use either "easy", "medium", "hard", "extreme" or "Random" to define a skillset. Numeric skillsets will fallback on "Random".
 `enhancement` | Added IsServer checks on all files that could possibly be used in a harmfull manner (will probably roll this out on more files)
@@ -89,14 +113,20 @@ Version | **1.9.3**
 `enhancement` | Changed heli and vehicle patrol with possibility of random skill
 `bug` | Fixed mayors mansion typo
 `bug` | Fixed added _aicskill private var vehicle_patrol.sqf
- | 
-Version | **1.9.2**
+
+## Version 1.9.2
+Type | Description
+------------: | :------------
 `bug` | Fixed box on medi camp missions
- | 
-Version | **1.9.1**
+
+## Version 1.9.1
+Type | Description
+------------: | :------------
 `bug` | Fixed skillset on missions
- | 
-Version | **1.9.0**
+
+## Version 1.9.0
+Type | Description
+------------: | :------------
 `new feature` | Added possibility to blacklist certain area's (default set stary)
 `enhancement` | General code cleanup including removal of unused private vars
 `enhancement` | Overhaul making missions more dynamic
@@ -106,17 +136,19 @@ Version | **1.9.0**
 `enhancement` | Re-added custom spawns as per request
 `bug` | Fixed armed military mission with M2 spawning inside eachoter
 `bug` | Fixed crashed blackhawk with loot crate spawning inside helicopter
- | 
-Version | **1.8.0**
-`new feature` | Randomized clothes;
-`enhancement` | Customized loot;
-`enhancement` | Tried to nerve the 50 cals a bit, making them less accurate;
-`enhancement` | Changed weapons;
-`enhancement` | Improved vehicles;
-`enhancement` | Changed skill settings;
-`enhancement` | Added dynamic loot on Weapon cache missions;
-`bug` | Fixed some missions;
-`bug` | Fixed the heli para backpack issue;
-`bug` | Fixed the heli para spawning in after the mission has already been done.
-`removal` | Removed the C130 mission cause i cant seem to fix the glitching;
-`removal` | Removed EMS cache cause its practically the same as Weapon cache;
+
+## Version 1.8.0
+Type | Description
+------------: | :------------
+`new feature` | Randomized clothes
+`enhancement` | Customized loot
+`enhancement` | Tried to nerve the 50 cals a bit, making them less accurate
+`enhancement` | Changed weapons
+`enhancement` | Improved vehicles
+`enhancement` | Changed skill settings
+`enhancement` | Added dynamic loot on Weapon cache missions
+`bug` | Fixed some missions
+`bug` | Fixed the heli para backpack issue
+`bug` | Fixed the heli para spawning in after the mission has already been done
+`removal` | Removed the C130 mission cause i cant seem to fix the glitching
+`removal` | Removed EMS cache cause its practically the same as Weapon cache
