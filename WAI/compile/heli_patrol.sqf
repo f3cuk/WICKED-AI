@@ -100,7 +100,7 @@ if (isServer) then {
 	} count _aicskill;
 
 	{
-		_x addweapon "Makarov";
+		_x addweapon "Makarov_DZ";
 		_x addmagazine "8Rnd_9x18_Makarov";
 		_x addmagazine "8Rnd_9x18_Makarov";
 	} count (units _unitgroup);
@@ -109,7 +109,7 @@ if (isServer) then {
 		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
 	} forEach (units _unitgroup);
 
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
+	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;
 
 	_unitGroup allowFleeing 0;

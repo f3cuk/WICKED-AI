@@ -65,7 +65,7 @@ if (isServer) then {
 				diag_log "WAI: Vehicle became undriveable, ejecting crew.";
 			};
 
-			deleteWaypoint [_unitgroup, all];
+			 while {(count (waypoints _unitgroup)) > 0} do {deleteWaypoint ((waypoints _unitgroup) select 0);};
 
 			waitUntil { (speed _vehicle < 10) };	// Wait until vehicle slows down before ejecting crew
 

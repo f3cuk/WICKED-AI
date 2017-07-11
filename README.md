@@ -1,7 +1,7 @@
 WICKED AI 2.2.0
 ==============
 
-Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.5+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
+Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
 ### Release 2.2.0
 - Native Linux server support
@@ -106,7 +106,7 @@ Note: These are on by default, change *wai_radio_announce* in config.sqf to *fal
 
 	Find:
 	~~~~
-	class DayZ_loadingScreen
+	#include "\z\addons\dayz_code\gui\description.hpp"
 	~~~~
 
 	Add above

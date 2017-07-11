@@ -9,7 +9,7 @@ if(typeName (_this select 1) == "ARRAY") then {
 	_weapons_array	= (_this select 1) select 1;
 } else {
 	_num_weapons	= _this select 1;
-	_weapons_array	= ai_wep_random call BIS_fnc_selectRandom;;
+	_weapons_array	= ai_wep_random call BIS_fnc_selectRandom;
 };
 
 if(typeName (_this select 2) == "ARRAY") then {
@@ -40,7 +40,7 @@ if(debug_mode) then {
 	diag_log format["WAI: Spawning in a dynamic crate with %1 guns, %2 tools, %3 items and %4 backpacks",_num_weapons,_num_tools,_num_items,_num_backpacks];
 };
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_crate];
+dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_crate];
 
 clearWeaponCargoGlobal _crate;
 clearMagazineCargoGlobal _crate;

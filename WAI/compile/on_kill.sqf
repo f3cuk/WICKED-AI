@@ -24,6 +24,7 @@ if (isServer) then {
 		};
 	};
 	_unit setVariable ["killedat", time];
+	_unit setVariable ["bodyName","unknown",false]; //Only needed on server to prevent immediate cleanup in sched_corpses.sqf
 
 	if(ai_add_skin) then {
 

@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private["_killedat"];
+	private ["_killedat","_sound"];
 
 	diag_log "WAI: AI Monitor Started";
 
@@ -11,10 +11,22 @@ if (isServer) then {
 				_killedat = _x getVariable "killedat";
 				if (!isNil "_killedat") then {
 					if ((time - _killedat) >= ai_cleanup_time) then {
-						deleteVehicle _x;
+						//Delete flies and body
+						PVCDZ_flies = [0,_x];
+						publicVariable "PVCDZ_flies";
+						_sound = _x getVariable ["sched_co_fliesSource", nil];
+						if !(isNil "_sound") then {
+							detach _sound;
+							deleteVehicle _sound;
+						};
+						_x spawn {
+							// Wait for PVEH to finish on all clients
+							uiSleep 15;
+							_this call sched_co_deleteVehicle;
+						};
 					};
 				};
-			} count allDead;
+			} forEach allDead;
 		};
 
 		if(debug_mode) then {
