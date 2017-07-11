@@ -4,7 +4,7 @@ Type | Description
 ------------: | :------------
 `enhancement` | Added support for Epoch 1.0.6 @ebayShopper
 
-## Version 2.1.4
+## Version 2.2.0
 Type | Description
 ------------: | :------------
 `enhancement` | Added the Bandit Patrol hero mission by Havoc302 @Jossy
@@ -15,6 +15,10 @@ Type | Description
 `feature` | Added the ability to make Hero AI friendly toward Hero players and vice versa for Bandits @Jossy
 `feature` | Added the ability to lock mission vehicles with keys on AI @Jossy
 `feature` | Added the possibility of announcing missions over the radio
+
+## Version 2.1.4
+Type | Description
+------------: | :------------
 `bug` | Fixed problem with GuerillaCacheBox_EP1 not spawning
 
 ## Version 2.1.3
