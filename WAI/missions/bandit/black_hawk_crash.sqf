@@ -40,7 +40,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,5,5,10,2] call dynamic_crate;
+		[_crate,5,5,10,3,2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Black Hawk Crash]: Ended at %1",_position];

@@ -41,7 +41,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,10,4,0,2] call dynamic_crate;
+		[_crate,10,4,0,3,2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Hero] Weapon Cache]: Ended at %1",_position];

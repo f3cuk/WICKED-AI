@@ -39,7 +39,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,4,8,36,2] call dynamic_crate;
+		[_crate,4,8,36,3,2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Hero] Ural Attack]: Ended at %1",_position];

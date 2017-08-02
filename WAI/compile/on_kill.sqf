@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
+	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain","_cash"];
 	
 	_unit 		= _this select 0;
 	_player 	= _this select 1;
@@ -25,6 +25,12 @@ if (isServer) then {
 	};
 	_unit setVariable ["killedat", time];
 	_unit setVariable ["bodyName","unknown",false]; //Only needed on server to prevent immediate cleanup in sched_corpses.sqf
+	
+	//Credit to Zupa for original "add money to ai" code.
+	if (ai_hasMoney && Z_singleCurrency) then {
+		_cash = round(random ai_moneyAmount) * 10; // adds money to ai wallets in 10x increments. 
+		_unit setVariable[Z_MoneyVariable,_cash ,true];
+	};
 
 	if(ai_add_skin) then {
 

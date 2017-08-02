@@ -48,7 +48,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,0,0,[25,crate_items_chainbullets],2] call dynamic_crate;
+		[_crate,0,0,[25,crate_items_chainbullets],3,2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Bandit] armed_vehicle ended at %1",_position];

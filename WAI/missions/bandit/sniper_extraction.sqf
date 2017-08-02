@@ -51,7 +51,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],2] call dynamic_crate;
+		[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Sniper Extraction]: Ended at %1",_position];

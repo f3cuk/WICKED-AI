@@ -3,6 +3,10 @@ if(isServer) then {
 	/* GENERAL CONFIG */
 
 		debug_mode					= false;		// enable debug
+		
+		use_staticspawnpoints		= false;		//setting this to true will disable the dynamic mission spawning system and enable server owners to define their own mission spawn points in the array below.
+		staticspawnpoints			= []; 			//static spawn points should be in format [[x,y,z],[x,y,z]];
+		
 		use_blacklist				= true;			// use blacklist
 		blacklist					= [
 			[[0,16000,0],[1000,-0,0]],				// Left
@@ -12,7 +16,14 @@ if(isServer) then {
 	/* END GENERAL CONFIG */
 
 	/* AI CONFIG */
-
+		
+		ai_show_remaining			= false;			//this will show the ai count in the mission markers.
+		
+		ai_hasMoney					= false; 		//If you have ZSC installed then setting this to true will place money in ai wallets.
+		ai_moneyAmount				= 1000;			//If ai_hasMoney=true, this defines what's the max amount of money an AI can hold,
+													//this value gets multiplied by 10, means if ai_moneyAmount=3000; the maximum amount
+													//an AI can hold is 30000
+		
 		ai_clear_body 				= false;		// instantly clear bodies
 		ai_clean_dead 				= true;			// clear bodies after certain amount of time
 		ai_cleanup_time 			= 7200;			// time to clear bodies in seconds
@@ -58,9 +69,10 @@ if(isServer) then {
 		ai_gear4					= [["ItemBandage","ItemEpinephrine","ItemPainkiller"],["ItemGPS","ItemKeyKit"]];
 		ai_gear_random				= [ai_gear0,ai_gear1,ai_gear2,ai_gear3,ai_gear4];	// Allows the possibility of random gear
 
-		ai_wep_assault				= ["M16A4_ACOG_DZ","Sa58V_RCO_EP1","SCAR_L_STD_Mk4CQT","M8_sharpshooter","M4A1_HWS_GL_camo","SCAR_L_STD_HOLO","M4A3_CCO_EP1","M4A3_CCO_EP1","M4A1_AIM_SD_camo","M16A4","m8_carbine","L85_Holo_DZ","Sa58V_CCO_EP1"];	// Assault
-		ai_wep_machine				= ["RPK74_DZ","Mk48_CCO_DZ","M249_DZ","Pecheneg_DZ","M240_DZ"];	// Light machine guns
-		ai_wep_sniper				= ["M14_CCO_DZ","SCAR_H_LNG_Sniper_SD","M110_NVG_EP1","SVD_Gh_DZ","VSS_Vintorez","DMR_DZ","M40A3_Gh_DZ"];	// Sniper rifles
+		ai_wep_pistol				= ["Makarov_DZ","M1911_DZ","Revolver_DZ","G17_DZ","Makarov_SD_DZ","M9_DZ","M9_SD_DZ","revolver_gold_EP1"];
+		ai_wep_assault				= ["m8_compact","m8_holo_sd","m8_carbine","SCAR_H_CQC_CCO","SCAR_H_CQC_CCO_SD","M4A1_AIM_SD_camo","G36_C_SD_camo","G36C_DZ","G36C_camo","G36A_Camo_DZ","G36K_Camo_DZ","M16A2_DZ","M16A4_DZ","M4A1_DZ","M4A1_HWS_GL_camo","M4A1_HWS_GL_SD_Camo","M4A3_CCO_EP1","SCAR_L_CQC","SCAR_L_CQC_CCO_SD","SCAR_L_CQC_Holo","SCAR_L_CQC_EGLM_Holo","SCAR_L_STD_EGLM_RCO","SCAR_L_STD_HOLO","SCAR_L_STD_Mk4CQT","L85_Holo_DZ","BAF_L85A2_RIS_SUSAT","BAF_L85A2_RIS_ACOG","SA58_DZ","Sa58V_CCO_EP1","Sa58V_RCO_EP1","AKS74U_DZ","AKM_DZ","AK74_DZ","FNFAL_DZ"];	// Assault
+		ai_wep_machine				= ["M8_SAW","m240_scoped_EP1_DZE","M60A4_EP1_DZE","MG36_camo","MG36","RPK74_DZ","Mk48_CCO_DZ","M249_DZ","Pecheneg_DZ","M240_DZ","L110A1_DZ","M249_m145_EP1_DZE","Mk48_DZ","RPK_DZ","UK59_DZ","PKM_DZ","BAF_L86A2_ACOG"];	// Light machine guns
+		ai_wep_sniper				= ["m8_sharpshooter","SCAR_H_STD_EGLM_Spect","M4SPR","M24_DZ","SVD_DZ","M24_des_EP1","M14_DZ","M14_CCO_DZ","SCAR_H_LNG_Sniper_SD","M110_NVG_EP1","SVD_Gh_DZ","VSS_Vintorez","DMR_DZ","DMR_Gh_DZ","M40A3_Gh_DZ","FN_FAL_ANPVS4_DZE"];	// Sniper rifles
 		ai_wep_random				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
 		ai_wep_launchers_AT			= ["M136","RPG18","JAVELIN"];
 		ai_wep_launchers_AA			= ["Strela","Igla","STINGER"];
@@ -111,7 +123,7 @@ if(isServer) then {
 		wai_avoid_water				= 50;								// avoid spawning missions this close to water
 
 		
-		wai_mission_timer			= [30,900];							// time between missions 5-15 minutes
+		wai_mission_timer			= [300,900];							// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
 		wai_timeout_distance		= 1000;								// if a player is this close to a mission then it won't time-out
 		
@@ -140,36 +152,63 @@ if(isServer) then {
 		wai_remove_launcher			= true;								// remove rocket launcher from AI on death
 
 		// Missions
-		wai_radio_announce			= true;								// Setting this to true will announce the missions to those that hold a radio only
+		wai_radio_announce			= false;								// Setting this to true will announce the missions to those that hold a radio only
 		wai_hero_limit				= 1;								// define how many hero missions can run at once
 		wai_bandit_limit			= 1;								// define how many bandit missions can run at once
 
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
-										["patrol",10],
-										["black_hawk_crash",11],
-										["armed_vehicle",11],
-										["bandit_base",7],
-										["captured_mv22",6],
-										["ikea_convoy",7],
-										["destroyed_ural",10],
-										["disabled_milchopper",9],
-										["mayors_mansion",9],
-										["weapon_cache",10],
-										["bandit_patrol",10]
-									];
+										["patrol",4],
+										["black_hawk_crash",4],
+										["armed_vehicle",4],
+										["bandit_base",5],
+										["captured_mv22",4],
+										["ikea_convoy",5],
+										["destroyed_ural",4],
+										["disabled_milchopper",4],
+										["mayors_mansion",5],
+										["weapon_cache",4],
+										["bandit_patrol",4],
+										["gem_tower",4],
+										["cannibal_cave",5],
+										["crop_raider",4],
+										["drone_pilot",4], 
+										["slaughter_house",4],
+										["drugbust",4],
+										["armybase",4],
+										["abandoned_trader",4],
+										["lumberjack",4],
+										["tankcolumn",4],
+										["macdonald",4],
+										["radioshack",4],
+										["junkyard",4]
+										
+							];
 		wai_bandit_missions			= [
-										["patrol",10],
-										["armed_vehicle",10],
-										["black_hawk_crash",10],
-										["captured_mv22",6],
-										["broken_down_ural",12],
-										["hero_base",6],
-										["ikea_convoy",8],
-										["medi_camp",14],
-										["presidents_mansion",6],
-										["sniper_extraction",8],
-										["weapon_cache",10]
-									];
+										["patrol",4],
+										["armed_vehicle",4],
+										["black_hawk_crash",4],
+										["captured_mv22",4],
+										["broken_down_ural",4],
+										["hero_base",5],
+										["ikea_convoy",5],
+										["medi_camp",4],
+										["presidents_mansion",5],
+										["sniper_extraction",4],
+										["weapon_cache",4],
+										["gem_tower",4],
+										["cannibal_cave",5],
+										["crop_raider",4],
+										["drone_pilot",4], 
+										["slaughter_house",4],
+										["drugbust",4],
+										["armybase",4],
+										["abandoned_trader",4],
+										["lumberjack",4],
+										["tankcolumn",4],
+										["macdonald",4],
+										["radioshack",4],
+										["junkyard",4]
+							];
 		
 		// Vehicle arrays
 		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
@@ -178,7 +217,7 @@ if(isServer) then {
 		military_unarmed 			= ["GAZ_Vodnik_MedEvac","HMMWV_Ambulance","HMMWV_Ambulance_CZ_DES_EP1","HMMWV_DES_EP1","HMMWV_DZ","HMMWV_M1035_DES_EP1","LandRover_CZ_EP1","LandRover_TK_CIV_EP1","UAZ_CDF","UAZ_INS","UAZ_RU","UAZ_Unarmed_TK_CIV_EP1","UAZ_Unarmed_TK_EP1","UAZ_Unarmed_UN_EP1"];
 		cargo_trucks 				= ["Kamaz_DZE","MTVR_DES_EP1","Ural_CDF","Ural_TK_CIV_EP1","Ural_UN_EP1","V3S_Open_TK_CIV_EP1","V3S_Open_TK_EP1"];
 		refuel_trucks				= ["KamazRefuel_DZ","MtvrRefuel_DES_EP1_DZ","UralRefuel_TK_EP1_DZ","V3S_Refuel_TK_GUE_EP1_DZ"];
-		civil_vehicles 				= ["hilux1_civil_1_open","hilux1_civil_2_covered","hilux1_civil_3_open_EP1","SUV_Blue","SUV_Camo","SUV_Charcoal","SUV_Green","SUV_Orange","SUV_Pink","SUV_Red","SUV_Silver","SUV_TK_CIV_EP1","SUV_White","SUV_Yellow"];
+		civil_vehicles 				= ["hilux1_civil_1_open_DZE","hilux1_civil_2_covered_DZE","hilux1_civil_3_open_DZE","SUV_Blue","SUV_Camo","SUV_Charcoal","SUV_Green","SUV_Orange","SUV_Pink","SUV_Red","SUV_Silver","SUV_TK_CIV_EP1","SUV_White","SUV_Yellow"];
 
 		// Dynamic box array
 		crates_large				= ["USVehicleBox","RUVehicleBox","TKVehicleBox_EP1"];
@@ -200,6 +239,9 @@ if(isServer) then {
 		crate_items_chainbullets	= ["2000Rnd_762x51_M134","200Rnd_762x51_M240","100Rnd_127x99_M2","150Rnd_127x107_DSHKM"];
 		crate_items_sniper			= [["ItemPainkiller",5],"Skin_Sniper1_DZ","Skin_CZ_Soldier_Sniper_EP1_DZ","Skin_GUE_Soldier_Sniper_DZ"];
 		crate_items_president		= ["ItemDocument","ItemGoldBar10oz"];
+		crate_items_gems			= ["ItemRuby","ItemCitrine","ItemEmerald","ItemAmethyst","ItemSapphire","ItemObsidian","ItemTopaz"];
+		crate_items_crop_raider		= ["ItemKiloHemp"];
+		crate_items_wood			= [["ItemWoodFloorQuarter",5],["ItemWoodStairs",2],["ItemWoodLadder",2],["ItemWoodWallThird",5],"ItemWoodWallGarageDoor",["ItemWoodWallLg",3],"ItemWoodWallWithDoorLg","wood_ramp_kit"];
 
 		crate_backpacks_all			= ["DZ_Patrol_Pack_EP1","DZ_Assault_Pack_EP1","DZ_Czech_Vest_Pouch","DZ_TerminalPack_EP1","DZ_ALICE_Pack_EP1","DZ_TK_Assault_Pack_EP1","DZ_CompactPack_EP1","DZ_British_ACU","DZ_GunBag_EP1","DZ_CivilBackpack_EP1","DZ_Backpack_EP1","DZ_LargeGunBag_EP1"];
 		crate_backpacks_large		= ["DZ_GunBag_EP1","DZ_Backpack_EP1","DZ_LargeGunBag_EP1","DZ_CivilBackpack_EP1"];

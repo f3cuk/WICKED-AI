@@ -50,7 +50,7 @@ if(isServer) then {
 
 		[_position, _color, _name, _mission] spawn {
 
-			private["_position","_color","_name","_running","_mission","_type","_marker","_dot"];
+			private["_position","_color","_name","_running","_mission","_type","_marker","_dot","_text","_airemain"];
 
 			_position	= _this select 0;
 			_color 		= _this select 1;
@@ -62,17 +62,22 @@ if(isServer) then {
 
 				_type	= (wai_mission_data select _mission) select 1;
 				
+				if (ai_show_remaining) then {
+				_airemain	= (wai_mission_data select _mission) select 0;
+				_text	= format["%1 [%2 Remaining]",_name,_airemain];
+				} else {_text = _name};
+				
 				_marker 		= createMarker [_type + str(_mission), _position];
 				_marker 		setMarkerColor _color;
 				_marker 		setMarkerShape "ELLIPSE";
 				_marker 		setMarkerBrush "Solid";
 				_marker 		setMarkerSize [300,300];
-				_marker 		setMarkerText _name;
+				_marker 		setMarkerText _text;
 
 				_dot 			= createMarker [_type + str(_mission) + "dot", _position];
 				_dot 			setMarkerColor "ColorBlack";
 				_dot 			setMarkerType "mil_dot";
-				_dot 			setMarkerText _name;
+				_dot 			setMarkerText _text;
 
 				sleep 1;
 

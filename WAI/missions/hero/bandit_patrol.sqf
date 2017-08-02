@@ -45,7 +45,7 @@ if(isServer) then {
 
 
 	if(_complete) then {
-		[_crate,4,8,36,2] call dynamic_crate;
+		[_crate,4,8,36,3,2] call dynamic_crate;
 	};
 
 

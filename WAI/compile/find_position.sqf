@@ -12,6 +12,27 @@ if(isServer) then {
 
 	_validspot 	= false;
 	_i 			= 1;
+	
+	if (use_staticspawnpoints) then {
+		while{!_validspot} do {
+			_safepos = staticspawnpoints;
+			_position 	= _safepos call BIS_fnc_selectRandom;
+			_i			= _i + 1;
+			_validspot    = true;
+			if (_validspot && wai_avoid_missions != 0) then {
+			if(debug_mode) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby mission markers: " + str(wai_mission_markers)); };
+				{
+					if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
+				} count wai_mission_markers;
+			};
+			if(_validspot) then {
+
+				if(debug_mode) then { diag_log("Loop complete, valid position " +str(_position) + " in " + str(_i) + " attempts"); };
+	
+			};
+		};
+		
+	} else {
 
 	while{!_validspot} do {
 	
@@ -55,6 +76,7 @@ if(isServer) then {
 	
 		};
 
+	};
 	};
 	_position set [2, 0];
 	_position

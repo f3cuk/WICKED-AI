@@ -57,7 +57,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,0,0,[40,crate_items_president],2] call dynamic_crate;
+		[_crate,0,0,[40,crate_items_president],3,2] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Bandit] presidents_mansion ended at %1",_position];
