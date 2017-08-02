@@ -5,6 +5,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Release 2.2.1
 - Added support for 1.0.6+ (ebayShopper)
+- Added new features: Static spawn points, AI counter, ZSC check wallet, Pistols spawn in crates, Caveman's mission pack   (JasonTM)
 
 ### Version history
 - 11-07-2017 : Release 2.2.1
