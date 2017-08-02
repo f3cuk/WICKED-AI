@@ -17,7 +17,7 @@ if(isServer) then {
 
 	/* AI CONFIG */
 		
-		ai_show_remaining			= false;			//this will show the ai count in the mission markers.
+		ai_show_remaining			= false;		//this will show the ai count in the mission markers.
 		
 		ai_hasMoney					= false; 		//If you have ZSC installed then setting this to true will place money in ai wallets.
 		ai_moneyAmount				= 1000;			//If ai_hasMoney=true, this defines what's the max amount of money an AI can hold,
@@ -72,7 +72,7 @@ if(isServer) then {
 		ai_wep_pistol				= ["Makarov_DZ","M1911_DZ","Revolver_DZ","G17_DZ","Makarov_SD_DZ","M9_DZ","M9_SD_DZ","revolver_gold_EP1"];
 		ai_wep_assault				= ["m8_compact","m8_holo_sd","m8_carbine","SCAR_H_CQC_CCO","SCAR_H_CQC_CCO_SD","M4A1_AIM_SD_camo","G36_C_SD_camo","G36C_DZ","G36C_camo","G36A_Camo_DZ","G36K_Camo_DZ","M16A2_DZ","M16A4_DZ","M4A1_DZ","M4A1_HWS_GL_camo","M4A1_HWS_GL_SD_Camo","M4A3_CCO_EP1","SCAR_L_CQC","SCAR_L_CQC_CCO_SD","SCAR_L_CQC_Holo","SCAR_L_CQC_EGLM_Holo","SCAR_L_STD_EGLM_RCO","SCAR_L_STD_HOLO","SCAR_L_STD_Mk4CQT","L85_Holo_DZ","BAF_L85A2_RIS_SUSAT","BAF_L85A2_RIS_ACOG","SA58_DZ","Sa58V_CCO_EP1","Sa58V_RCO_EP1","AKS74U_DZ","AKM_DZ","AK74_DZ","FNFAL_DZ"];	// Assault
 		ai_wep_machine				= ["M8_SAW","m240_scoped_EP1_DZE","M60A4_EP1_DZE","MG36_camo","MG36","RPK74_DZ","Mk48_CCO_DZ","M249_DZ","Pecheneg_DZ","M240_DZ","L110A1_DZ","M249_m145_EP1_DZE","Mk48_DZ","RPK_DZ","UK59_DZ","PKM_DZ","BAF_L86A2_ACOG"];	// Light machine guns
-		ai_wep_sniper				= ["m8_sharpshooter","SCAR_H_STD_EGLM_Spect","M4SPR","M24_DZ","SVD_DZ","M24_des_EP1","M14_DZ","M14_CCO_DZ","SCAR_H_LNG_Sniper_SD","M110_NVG_EP1","SVD_Gh_DZ","VSS_Vintorez","DMR_DZ","DMR_Gh_DZ","M40A3_Gh_DZ","FN_FAL_ANPVS4_DZE"];	// Sniper rifles
+		ai_wep_sniper				= ["M14_CCO_Gh_DZ","Mosin_PU_DZ","m8_sharpshooter","SCAR_H_STD_EGLM_Spect","M4SPR","M24_DZ","SVD_DZ","M24_des_EP1","M14_DZ","M14_CCO_DZ","SCAR_H_LNG_Sniper_SD","M110_NVG_EP1","SVD_Gh_DZ","VSS_Vintorez","DMR_DZ","DMR_Gh_DZ","M40A3_Gh_DZ","FN_FAL_ANPVS4_DZE"];	// Sniper rifles
 		ai_wep_random				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
 		ai_wep_launchers_AT			= ["M136","RPG18","JAVELIN"];
 		ai_wep_launchers_AA			= ["Strela","Igla","STINGER"];
