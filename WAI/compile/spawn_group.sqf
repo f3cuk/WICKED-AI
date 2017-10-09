@@ -69,12 +69,12 @@ if (isServer) then {
 			} else {
 				if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
 				if(_gun == "unarmed") 	exitWith { _unarmed = true; };
-				_weapon = _gun;
+				_aiweapon = _gun;
 			}
 		};
 
 		if (!_unarmed) then {
-			_weapon 	= _aiweapon call BIS_fnc_selectRandom;
+			_weapon 	= if (typeName (_aiweapon) == "ARRAY") then {_aiweapon call BIS_fnc_selectRandom} else {_aiweapon};
 			_magazine 	= _weapon 	call find_suitable_ammunition;
 		};
 
