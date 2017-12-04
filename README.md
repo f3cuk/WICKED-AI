@@ -1,13 +1,18 @@
-WICKED AI 2.2.1
+WICKED AI 2.2.2
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.2.1
-- Added support for 1.0.6+ (ebayShopper)
-- Added new features: Static spawn points, AI counter, ZSC check wallet, Pistols spawn in crates, Caveman's mission pack, 1.0.6+ classnames (JasonTM)
+### Release 2.2.2 (worldwidesorrow)
+- Integrated Caveman's mission pack.
+- Optional AI counter in mission marker loops.
+- ZSC check wallet option.
+- Optional mission static spawn points.
+- Updated with 1.0.6+ classnames in weapon arrays and vehicles.
+- Pistol spawning in crates.
 
 ### Version history
+- 04-12-2017 : Release 2.2.2
 - 11-07-2017 : Release 2.2.1
 - 06-06-2015 : Release 2.2.0
 - 11-11-2014 : BETA release v3 (2.2.0)
