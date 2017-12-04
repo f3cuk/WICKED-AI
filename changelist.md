@@ -1,5 +1,15 @@
-# Current version 2.2.1
+# Current version 2.2.2
 
+Type | Description
+------------: | :------------
+`enhancement` | Integrated Caveman's mission pack. @worldwidesorrow
+`enhancement` | Optional AI counter in mission marker loops. @worldwidesorrow
+`enhancement` | ZSC check wallet option. @worldwidesorrow
+`enhancement` | Optional mission static spawn points. @worldwidesorrow
+`enhancement` | Updated with 1.0.6+ classnames in weapon arrays and vehicles. @worldwidesorrow
+`enhancement` | Pistol spawning in crates. @worldwidesorrow
+
+## Version 2.2.1
 Type | Description
 ------------: | :------------
 `enhancement` | Added support for Epoch 1.0.6 @ebayShopper
