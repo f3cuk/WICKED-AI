@@ -50,7 +50,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,0,0,[80,crate_items_medical],0] call dynamic_crate;
+		[_crate,0,0,[80,crate_items_medical],3,0] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Hero] Captured MV22]: Ended at %1",_position];

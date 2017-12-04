@@ -64,7 +64,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,16,4,0,4] call dynamic_crate;
+		[_crate,16,4,0,3,4] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Hero] Mayors Mansion]: Ended at %1",_position];

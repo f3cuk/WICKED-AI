@@ -1,4 +1,4 @@
-private ["_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array"];
+private ["_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array","_num_pistols","_pistols_array","_pistol","_pistolammo"];
 
 _crate = _this select 0;
 _crate setVariable ["ObjectID","1",true];
@@ -29,15 +29,23 @@ if(typeName (_this select 3) == "ARRAY") then {
 };
 
 if(typeName (_this select 4) == "ARRAY") then {
-	_num_backpacks	= (_this select 4) select 0;
-	_backpack_array = (_this select 4) select 1;
+	_num_pistols	= (_this select 4) select 0;
+	_pistols_array	= (_this select 4) select 1;
 } else {
-	_num_backpacks = _this select 4;
+	_num_pistols	= _this select 4;
+	_pistols_array	= ai_wep_pistol
+};
+
+if(typeName (_this select 5) == "ARRAY") then {
+	_num_backpacks	= (_this select 5) select 0;
+	_backpack_array = (_this select 5) select 1;
+} else {
+	_num_backpacks = _this select 5;
 	_backpack_array = crate_backpacks_all;
 };
 
 if(debug_mode) then {
-	diag_log format["WAI: Spawning in a dynamic crate with %1 guns, %2 tools, %3 items and %4 backpacks",_num_weapons,_num_tools,_num_items,_num_backpacks];
+	diag_log format["WAI: Spawning in a dynamic crate with %1 guns, %2 tools, %3 items and %4 pistols and %5 backpacks",_num_weapons,_num_tools,_num_items,_num_pistols,_num_backpacks];
 };
 
 dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_crate];
@@ -86,6 +94,19 @@ if(_num_items > 0) then {
 		} else {
 			_crate addMagazineCargoGlobal [_item,1];
 		};
+	};
+
+};
+
+if(_num_pistols > 0) then {
+
+	_num_pistols = (ceil((_num_pistols) / 2) + floor(random (_num_pistols / 2)));
+
+	for "_i" from 1 to _num_pistols do {
+		_pistol = _pistols_array call BIS_fnc_selectRandom;
+		_pistolammo = _pistol call find_suitable_ammunition;
+		_crate addWeaponCargoGlobal [_pistol,1];
+		_crate addMagazineCargoGlobal [_pistolammo, (1 + floor(random 5))];
 	};
 
 };

@@ -268,7 +268,7 @@ if (isServer) then {
 				
 				ai_ground_units = (ai_ground_units + 1);
 				_para addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
-				_chute = createVehicle ["ParachuteEast", [(_helipos select 0), (_helipos select 1), (_helipos select 2)], [], 0, "NONE"];
+				_chute = createVehicle ["ParachuteWest", [(_helipos select 0), (_helipos select 1), (_helipos select 2)], [], 0, "NONE"];
 				_para moveInDriver _chute;
 				[_para] joinSilent _pgroup;
 

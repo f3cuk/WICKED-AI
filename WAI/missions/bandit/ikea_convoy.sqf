@@ -59,7 +59,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],4] call dynamic_crate;
+		[_crate,[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Lunch break Convoy]: Ended at %1",_position];

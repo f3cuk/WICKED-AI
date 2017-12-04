@@ -1,11 +1,19 @@
-private ["_agro","_player","_guarding","_group","_unit","_position"];
+/*
+	The code that is commented out in this file is due to it posting errors in the server rpt.
+	The culprit seems to be the helicopter crew in the para-spawning function. Credit to Salival
+	for the temporary fix. - JasonTM
+*/
 
-_count 			= count _this;
+//private ["_agro","_player","_guarding","_group","_unit","_position"];
+private ["_group"];
+
+//_count 			= count _this;
 _group			= _this select 0;
 
 _group setCombatMode ai_hero_combatmode;
 _group setBehaviour ai_hero_behaviour;
 
+/*
 _guarding = false;
 
 if (count _this > 1) then {
@@ -69,3 +77,4 @@ if (ai_friendly_behaviour) then {
 		sleep 1;
 	};
 };
+*/
