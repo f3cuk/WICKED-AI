@@ -162,6 +162,8 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 
 6. Copy the ***scripts*** folder over to your mission folder. If you already have this folder from ZSC install or another mod, then transfer the appropriate files over to the radio folder.
 
+7. Copy ***stringtable.xml*** to your mission folder.
+
 #### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
 	
 1. Extra_Rc - I could not find a public repository of an updated version of extra_rc by maca134, so I made one: ***[Download Here](https://github.com/worldwidesorrow/Extra-Rc/archive/master.zip)*** Here are the install instructions ***[Install Instructions](https://github.com/worldwidesorrow/Extra-Rc/blob/master/README.md)***
