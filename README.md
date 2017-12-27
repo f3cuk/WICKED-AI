@@ -232,7 +232,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	iben_wai_ACuseAddon = true;
 	```
 	
-	Visit ***[This Thread](https://epochmod.com/forum/topic/44646-release-iwac-autoclaim-addon-for-wai-v11/)*** for complete information on how to use this addon.
+	Visit ***[This Thread](https://epochmod.com/forum/topic/44646-release-iwac-autoclaim-addon-for-wai-v11/)*** for complete information on how to use the Auto Mission Claim addon.
 
 
 
