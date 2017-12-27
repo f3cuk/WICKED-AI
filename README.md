@@ -164,7 +164,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 
 #### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
 	
-1. Extra_Rc - I could not find a public repository of an updated version of extra_rc by maca134, so I made one: ***[Download Here](https://github.com/worldwidesorrow/Extra-Rc/archive/master.zip)*** ***[Install Instructions](https://github.com/worldwidesorrow/Extra-Rc/blob/master/README.md)
+1. Extra_Rc - I could not find a public repository of an updated version of extra_rc by maca134, so I made one: ***[Download Here](https://github.com/worldwidesorrow/Extra-Rc/archive/master.zip)*** ***[Install Instructions](https://github.com/worldwidesorrow/Extra-Rc/blob/master/README.md)***
 
 	By default, in DayZ Epoch, right click actions are disabled for ItemRadio when the group system is disabled. If you want to use right click actions on ItemRadio without enabling the group system...
 	Find:
