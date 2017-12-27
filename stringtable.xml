@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project name="DayZMission">
+  <Package name="IBEN_WAI_AC">
+    <Key ID="STR_IWAC_INFOSYS">
+      <English>[AUTOCLAIM INFOSYS]</English>
+    </Key>
+    <Key ID="STR_IWAC_MARKER_TIMEOUT">
+      <English>&#160;[Timeout %1s]</English>
+      <German>&#160;[Auszeit %1s]</German>
+    </Key>
+    <Key ID="STR_IWAC_MARKER_ACTIVE">
+      <English>&#160;[Active]</English>
+      <German>&#160;[Aktiv]</German>
+    </Key>
+    <Key ID="STR_IWAC_MARKER_UNKNOWN">
+      <English>Claimed by a player</English>
+      <German>Von Spieler beansprucht</German>
+    </Key>
+    <Key ID="STR_IWAC_LEAVE_OR_CLAIM">
+      <English>%1 %2, you are in mission claiming zone. You have %3s to decide stay or leave...</English>
+      <German>%1 %2, du befindest dich in einer Missionszone! Du hast %3s Bedenkzeit die Zone zu verlassen oder zu bleiben...</German>
+    </Key>
+    <Key ID="STR_IWAC_CLAIMED">
+      <English>%1 %2, you have claimed mission. Good luck!</English>
+      <German>%1 %2, du hast die Mission für dich beansprucht. Viel Glück!</German>
+    </Key>
+    <Key ID="STR_IWAC_TIMEOUT_START">
+      <English>%1 %2 out of fight... Claiming rights reserved for %3s. Hurry up!</English>
+      <German>%1 %2 ist nicht mehr im Kampf... Beanspruchung reserviert für %3s. Beeile dich!</German>
+    </Key>
+    <Key ID="STR_IWAC_TIMEOUT_INTERRUPT">
+      <English>%1 Welcome back %2. Shutting down timeout... Good luck!</English>
+      <German>%1 Willkommen zurück %2! Auszeit wird abgeschaltet... Viel Glück!</German>
+    </Key>
+  </Package>
+</Project>
