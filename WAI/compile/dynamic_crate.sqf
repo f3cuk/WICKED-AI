@@ -73,7 +73,7 @@ if(typeName (_this select 1) == "ARRAY") then {
 	
 	if(_num_weapons > 0) then {
 
-	//_num_weapons = (ceil((_num_weapons) / 2) + floor(random (_num_weapons / 2)));
+	_num_weapons = (ceil((_num_weapons) / 2) + floor(random (_num_weapons / 2)));
 
 		for "_i" from 1 to _num_weapons do {
 			_weapon = _weapons_array call BIS_fnc_selectRandom;
@@ -87,7 +87,7 @@ if(typeName (_this select 1) == "ARRAY") then {
 	
 	if(_num_weapons > 0) then {
 
-	//_num_weapons = (ceil((_num_weapons) / 2) + floor(random (_num_weapons / 2)));
+	_num_weapons = (ceil((_num_weapons) / 2) + floor(random (_num_weapons / 2)));
 
 		for "_i" from 1 to _num_weapons do {
 			_weapons_array	= ai_wep_random call BIS_fnc_selectRandom;
@@ -102,7 +102,7 @@ if(typeName (_this select 1) == "ARRAY") then {
 
 if(_num_tools > 0) then {
 
-	//_num_tools	= (ceil((_num_tools) / 2) + floor(random (_num_tools / 2)));
+	_num_tools	= (ceil((_num_tools) / 2) + floor(random (_num_tools / 2)));
 
 	for "_i" from 1 to _num_tools do {
 		_tool = _tool_array call BIS_fnc_selectRandom;
@@ -118,7 +118,7 @@ if(_num_tools > 0) then {
 
 if(_num_items > 0) then {
 
-	//_num_items	= (ceil((_num_items) / 2) + floor(random (_num_items / 2)));
+	_num_items	= (ceil((_num_items) / 2) + floor(random (_num_items / 2)));
 
 	for "_i" from 1 to _num_items do {
 		_item = _item_array call BIS_fnc_selectRandom;
@@ -134,7 +134,7 @@ if(_num_items > 0) then {
 
 if(_num_pistols > 0) then {
 
-	//_num_pistols = (ceil((_num_pistols) / 2) + floor(random (_num_pistols / 2)));
+	_num_pistols = (ceil((_num_pistols) / 2) + floor(random (_num_pistols / 2)));
 
 	for "_i" from 1 to _num_pistols do {
 		_pistol = _pistols_array call BIS_fnc_selectRandom;
@@ -147,7 +147,7 @@ if(_num_pistols > 0) then {
 
 if(_num_backpacks > 0) then {
 
-	//_num_backpacks	= (ceil((_num_backpacks) / 2) + floor(random (_num_backpacks / 2)));
+	_num_backpacks	= (ceil((_num_backpacks) / 2) + floor(random (_num_backpacks / 2)));
 
 	for "_i" from 1 to _num_backpacks do {
 		_backpack = _backpack_array call BIS_fnc_selectRandom;
