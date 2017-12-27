@@ -90,7 +90,7 @@ Note: This version of WAI uses files which are adapted from ZSC for radio and dy
 	```sqf
 	[] execVM "dayz_code\compile\remote_message.sqf";
 	```
-	#### If you already have ZSC installed then just verify that this line is already there.
+	If you already have ZSC installed then just verify that this line is already there.
 	
 3. Open description.ext
 
