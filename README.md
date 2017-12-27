@@ -70,7 +70,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 6. Repack your server pbo.
 
-##### Mission Folder
+### Mission Folder
 
 Note: This version of WAI uses files which are adapted from ZSC for radio and dynamic text mission announcements. If you already have ZSC installed then some of the lines of code and files will already exist. Read the instructions carefully.
 
