@@ -179,7 +179,7 @@ if (isServer) then {
 
 				call {
 					if (typeName(_gun) == "SCALAR") then {
-						if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
+						if(_gun == 0) 			exitWith { _aiweapon = ai_wep_random call BIS_fnc_selectRandom; };
 						if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
 						if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
 					} else {

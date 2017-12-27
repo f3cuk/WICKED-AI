@@ -83,7 +83,7 @@ if (isServer) then {
 	
 	_vehicle addeventhandler ["HandleDamage",{ _this call fnc_veh_handleDam } ];
 	
-	if (wai_lock_vehicles) then {
+	if (wai_mission_vehicles != "KeyinCrate") then {
 		_keyid = ceil(random(12500));
 		_vehicle setVariable ["CharacterID",str(_keyid),true];
 
@@ -95,17 +95,27 @@ if (isServer) then {
 			if ((_keyid > 10000) && (_keyid <= 12500)) 	exitWith {_carkey = format["ItemKeyBlack%1",_keyid-10000];};
 		};
 
-		_ailist = [];
-		{
-			if (_x getVariable ["mission",nil] == _mission) then {_ailist set [count _ailist, _x];};
-		} count allUnits;
+			if (wai_mission_vehicles == "KeyinVehicle") then {
+				
+				_vehicle addWeaponCargoGlobal [_carkey,1];
+			};
+			
+			if (wai_mission_vehicles == "KeyonAI") then {
+				_ailist = [];
+				{
+					if (_x getVariable ["mission",nil] == _mission) then {_ailist set [count _ailist, _x];};
+				} count allUnits;
 
-		_unit = _ailist select (floor(random(count _ailist)));
-		_unit addWeapon _carkey;
-		
-		_vehicle setvehiclelock "locked";
-	} else {
-		_vehicle setVariable ["CharacterID","0",true];
+				_unit = _ailist select (floor(random(count _ailist)));
+				_unit addWeapon _carkey;
+			
+				_vehicle setvehiclelock "locked";
+			};
+			
+			if (wai_mission_vehicles == "NoVehicleKey") then {
+				
+				_vehicle setVariable ["CharacterID","0",true];
+			};
 	};
 
 	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_vehicle];

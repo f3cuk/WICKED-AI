@@ -13,6 +13,7 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	[_crate] call wai_crate_setup;
 	
 	//Troops
 	_rndnum = 5 + round (random 3);
@@ -59,7 +60,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4] call dynamic_crate;
+		[_crate,[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4,[_vehicle,_vehicle2,_vehicle3]] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Hero] Disabled Convoy]: Ended at %1",_position];

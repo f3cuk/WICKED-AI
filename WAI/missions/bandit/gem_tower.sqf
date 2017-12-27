@@ -13,11 +13,12 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0) -20,(_position select 1) + 11,0],[],0,"CAN_COLLIDE"];
+	[_crate] call wai_crate_setup;
 	
 	//Buildings
 _baserunover0 = createVehicle ["Land_Misc_Coltan_Heap_EP1",[(_position select 0) - 3.41, (_position select 1) + 16.4,-1],[], 0, "CAN_COLLIDE"];;
-_baserunover1 = createVehicle ["MAP_Ind_SiloVelke_01",[(_position select 0) - 0.01, (_position select 1) - 0.01,-0.25],[], 0, "CAN_COLLIDE"];
-_baserunover2 = createVehicle ["MAP_Ind_SiloVelke_01",[(_position select 0) - 21, (_position select 1) - 0.4,-0.25],[], 0, "CAN_COLLIDE"];
+_baserunover1 = createVehicle ["Land_Ind_SiloVelke_01",[(_position select 0) - 0.01, (_position select 1) - 0.01,-0.25],[], 0, "CAN_COLLIDE"];
+_baserunover2 = createVehicle ["Land_Ind_SiloVelke_01",[(_position select 0) - 21, (_position select 1) - 0.4,-0.25],[], 0, "CAN_COLLIDE"];
 _baserunover3 = createVehicle ["Land_Misc_Coltan_Heap_EP1",[(_position select 0) - 31, (_position select 1) + 12,-2],[], 0, "CAN_COLLIDE"];
 _baserunover4 = createVehicle ["Land_A_Castle_Bastion",[(_position select 0) - 21, (_position select 1) + 11,-0.2],[], 0, "CAN_COLLIDE"];
 _baserunover5 = createVehicle ["Land_Misc_Coltan_Heap_EP1",[(_position select 0) - 26, (_position select 1) + 34,-2],[], 0, "CAN_COLLIDE"];

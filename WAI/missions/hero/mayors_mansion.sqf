@@ -13,6 +13,7 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
 	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	[_crate] call wai_crate_setup;
 	 
 	//Mayors Mansion
 	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];

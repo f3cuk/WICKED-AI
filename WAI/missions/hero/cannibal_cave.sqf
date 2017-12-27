@@ -14,6 +14,7 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectrandom; // Choose between crates_large, crates_medium and crates_small
 	_crate 			= createVehicle [_crate_type,[(_position select 0) + 5,(_position select 1) + 7,0],[],0,"CAN_COLLIDE"];
+	[_crate] call wai_crate_setup;
 
 
 	// Create some Buildings

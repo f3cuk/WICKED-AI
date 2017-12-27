@@ -18,6 +18,7 @@ diag_log  format["WAI: [Mission:[Bandit] Hippy Commune]: Starting... %1",_positi
 //Setup the crate
 _crate_type  = crates_small call BIS_fnc_selectRandom;
 _crate  = createVehicle [_crate_type,[(_position select 0) + 2,(_position select 1),0],[],0,"CAN_COLLIDE"];
+[_crate] call wai_crate_setup;
 
 
 //Buildings
@@ -57,7 +58,7 @@ _baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserun
 _num = 4 + round (random 3);
 [[(_position select 0) + 9, (_position select 1) - 13, 0],_num,"Hard",["Random","AT"],4,"Random","Rocker3_DZ","Random","Hero",_mission] call spawn_group;
 [[(_position select 0) + 13, (_position select 1) + 15, 0],4,"Hard","Random",4,"Random","Rocker1_DZ","Random","Hero",_mission] call spawn_group;
-[[(_position select 0) - 23, (_position select 1) - 25, 0],4,"Hard","Random",4,"Random","(Rocker2_DZ","Random","Hero",_mission] call spawn_group;
+[[(_position select 0) - 23, (_position select 1) - 25, 0],4,"Hard","Random",4,"Random","Rocker2_DZ","Random","Hero",_mission] call spawn_group;
 [[(_position select 0) - 13, (_position select 1) + 15, 0],4,"Hard","Random",4,"Random","Policeman","Random","Hero",_mission] call spawn_group;
 [[_position select 0, _position select 1, 0],4,"Hard","Random",4,"Random","Policeman","Random","Hero",_mission] call spawn_group;
 

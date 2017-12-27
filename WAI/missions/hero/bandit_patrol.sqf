@@ -16,6 +16,7 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type  = crates_small call BIS_fnc_selectRandom;
 	_crate  = createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
+	[_crate] call wai_crate_setup;
 
 
 	//Civil vehicle
@@ -45,7 +46,7 @@ if(isServer) then {
 
 
 	if(_complete) then {
-		[_crate,4,8,36,3,2] call dynamic_crate;
+		[_crate,4,8,36,3,2,_vehicle] call dynamic_crate;
 	};
 
 
