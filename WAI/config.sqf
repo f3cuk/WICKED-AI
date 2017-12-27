@@ -4,7 +4,7 @@ if(isServer) then {
 
 		debug_mode					= false;		// enable debug
 		
-		use_staticspawnpoints		= true;			// setting this to true will disable the dynamic mission spawning system and enable server owners to define their own mission spawn points in WAI\configs\spawnpoints.sqf.
+		use_staticspawnpoints		= false;			// setting this to true will disable the dynamic mission spawning system and enable server owners to define their own mission spawn points in WAI\configs\spawnpoints.sqf.
 		
 		use_blacklist				= true;			// You can edit the blacklist per map in file WAI\configs\blacklist.sqf.
 
@@ -124,7 +124,7 @@ if(isServer) then {
 		wai_avoid_water				= 50;								// avoid spawning missions this close to water
 
 		
-		wai_mission_timer			= [90,300];							// time between missions 5-15 minutes
+		wai_mission_timer			= [300,900];							// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800]; 						// time each missions takes to despawn if inactive 15-30 minutes
 		wai_timeout_distance		= 1000;								// if a player is this close to a mission then it won't time-out
 		
@@ -155,8 +155,8 @@ if(isServer) then {
 
 		// Missions
 		wai_mission_announce		= "DynamicText";					// Options: "Radio", "DynamicText", "titleText".
-		wai_hero_limit				= 3;								// define how many hero missions can run at once
-		wai_bandit_limit			= 3;								// define how many bandit missions can run at once
+		wai_hero_limit				= 1;								// define how many hero missions can run at once
+		wai_bandit_limit			= 1;								// define how many bandit missions can run at once
 
 		wai_hero_missions			= [ 								// ["mission filename",% chance of picking this mission],Make sure the chances add up to 100,or it will not be accurate percentages
 										["patrol",4],
