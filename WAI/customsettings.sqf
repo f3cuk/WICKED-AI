@@ -14,7 +14,7 @@ if (isServer) then {
 
   // -------------------------------------------------------------------------
   // :: Turn ON/OFF addon
-  iben_wai_ACuseAddon = true;
+  iben_wai_ACuseAddon = false;
 
   // -------------------------------------------------------------------------
   // :: Exclude missions by type from autoclaiming:
