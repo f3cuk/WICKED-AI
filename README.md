@@ -218,7 +218,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	
 	Just change the value after the equal sign.
 	
-2. You can now enable dynamic text messages that run near the top of the screen by adjusting the value of the following variable in config.sqf
+2. You can now enable dynamic text messages that run near the top of the screen by adjusting the value of the following variable in config.sqf ***[Screenshot](https://github.com/worldwidesorrow/RandomDayZ/blob/master/dynamictext.jpg)*** of dynamic text message.
 
 	```sqf
 	wai_mission_announce = "DynamicText"; // Options: "Radio", "DynamicText", "titleText".
@@ -229,6 +229,8 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	```sqf
 	iben_wai_ACuseAddon = true;
 	```
+	
+	Visit ***[This Thread](https://epochmod.com/forum/topic/44646-release-iwac-autoclaim-addon-for-wai-v11/)*** for complete information on how to use this addon.
 
 
 
