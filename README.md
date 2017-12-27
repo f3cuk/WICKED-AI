@@ -164,7 +164,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 
 #### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
 	
-1. Extra_Rc - I could not find a public repository of an updated version of extra_rc by maca134, so I made one: ***[Download Here](https://github.com/worldwidesorrow/Extra-Rc/archive/master.zip)***
+1. Extra_Rc - I could not find a public repository of an updated version of extra_rc by maca134, so I made one: ***[Download Here](https://github.com/worldwidesorrow/Extra-Rc/archive/master.zip)*** ***[Install Instructions](https://github.com/worldwidesorrow/Extra-Rc/blob/master/README.md)
 
 	By default, in DayZ Epoch, right click actions are disabled for ItemRadio when the group system is disabled. If you want to use right click actions on ItemRadio without enabling the group system...
 	Find:
@@ -202,7 +202,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	["ItemRadio","Toggle Power","execVM 'scripts\radio\switch_on_off.sqf';","true"]
 	```
 	
-	If you want to enable right click actions without having the group system enabled then find overwrites\click_actions\ui_selectSlot.sqf and apply the same changes as in the extra_rc option. Note: you will have to move the word 'or' from line 17 to line 18 in from of (!dayz_groupSystem && _item == "ItemRadio").
+	If you want to enable right click actions without having the group system enabled then find overwrites\click_actions\ui_selectSlot.sqf and apply the same changes as in the extra_rc option. Note: you will have to move the word 'or' front line 17 to line 18 in from of (!dayz_groupSystem && _item == "ItemRadio").
 
 #### Repack your mission pbo.
 
