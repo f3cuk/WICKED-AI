@@ -73,7 +73,8 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 ##### Mission Folder
 
 Note: This version of WAI uses files which are adapted from ZSC for radio and dynamic text mission announcements. If you already have ZSC installed then some of the lines of code and files will already exist. Read the instructions carefully.
-	#	To enable radio or dynamic text mission announcements, change *wai_mission_announce* in WAI\config.sqf to *"Radio"* or *"DynamicText"*.
+
+ To enable radio or dynamic text mission announcements, change *wai_mission_announce* in WAI\config.sqf to *"Radio"* or *"DynamicText"*.
 
 1. Go to your mission pbo and unpack it.
 2. Open init.sqf
@@ -89,7 +90,7 @@ Note: This version of WAI uses files which are adapted from ZSC for radio and dy
 	```sqf
 	[] execVM "dayz_code\compile\remote_message.sqf";
 	```
-	# If you already have ZSC installed then just verify that this line is already there.
+	#### If you already have ZSC installed then just verify that this line is already there.
 	
 3. Open description.ext
 
