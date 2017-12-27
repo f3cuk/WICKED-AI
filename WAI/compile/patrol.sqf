@@ -105,10 +105,15 @@ if (isServer) then {
 			
 			sleep random(10);
 			
-			if (wai_radio_announce) then {
-				RemoteMessage = ["radio",_msg];
+			if (wai_mission_announce == "Radio") then {
+				RemoteMessage = ["radio","[RADIO] " + _msg];
 				publicVariable "RemoteMessage";
-			} else {
+			};
+			if (wai_mission_announce == "DynamicText") then {
+				RemoteMessage = ["dynamic_text", ["Mission Announcement",_msg]];
+				publicVariable "RemoteMessage";
+			};
+			if (wai_mission_announce == "titleText") then {
 				[nil,nil,rTitleText,_msg,"PLAIN",10] call RE;
 			};
 			

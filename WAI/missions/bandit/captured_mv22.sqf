@@ -13,6 +13,7 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1),0],[],0,"CAN_COLLIDE"];
+	[_crate] call wai_crate_setup;
 	
 	//Medical Tent
 	_baserunover 	= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
@@ -51,7 +52,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,0,0,[80,crate_items_medical],3,0] call dynamic_crate;
+		[_crate,0,0,[80,crate_items_medical],3,0,_vehicle] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Captured MV22]: Ended at %1",_position];

@@ -10,13 +10,27 @@ find_suitable_ammunition = {
 		_result = _ammoArray select 0;
 		call {
 			if(_result == "20Rnd_556x45_Stanag") 	exitWith { _result = "30Rnd_556x45_Stanag"; };
-			if(_result == "30Rnd_556x45_G36") 		exitWith { _result = "30Rnd_556x45_Stanag"; };
-			if(_result == "30Rnd_556x45_G36SD") 	exitWith { _result = "30Rnd_556x45_StanagSD"; };
+			//if(_result == "30Rnd_556x45_G36") 		exitWith { _result = "30Rnd_556x45_Stanag"; };
+			//if(_result == "30Rnd_556x45_G36SD") 	exitWith { _result = "30Rnd_556x45_StanagSD"; };
 		};
 	};
 
 	_result
 
+};
+
+wai_crate_setup = {
+
+	private ["_crate"];
+	
+	_crate = _this select 0;
+	_crate setVariable ["ObjectID","1",true];
+	_crate setVariable ["permaLoot",true];
+	clearWeaponCargoGlobal _crate;
+	clearMagazineCargoGlobal _crate;
+	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_crate];
+	_crate addEventHandler ["HandleDamage", {}];
+	
 };
 
 hero_warning = {
