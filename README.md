@@ -47,7 +47,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Installation Instructions
 
-1. Click ***[Download Zip](https://github.com/f3cuk/WICKED-AI/archive/master.zip)*** on the right sidebar of this Github page.
+1. Click ***[Clone or Download](https://github.com/f3cuk/WICKED-AI/archive/master.zip)*** the green button on the right side of the Github page.
 
 	> Recommended PBO tool for all "pack", "repack", or "unpack" steps: ***[PBO Manager](http://www.armaholic.com/page.php?id=16369)***
 
@@ -58,64 +58,75 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 	Find this code at the bottom of the file:
 
-	~~~~java
+	```sqf
 	allowConnection = true;	
-	~~~~
+	```
 	
-	And past the following code ***above*** it:
+	And add the following line ***above*** it:
 	
-	~~~~java
+	```sqf
 	[] ExecVM "\z\addons\dayz_server\WAI\init.sqf";
-	~~~~
+	```
 
 6. Repack your server pbo.
 
-##### Optional Radio messages
-Note: These are on by default, change *wai_radio_announce* in config.sqf to *false* in order to disable them.
+##### Mission Folder
+
+Note: This version of WAI uses files which are adapted from ZSC for radio and dynamic text mission announcements. If you already have ZSC installed then some of the lines of code and files will already exist. Read the instructions carefully.
+	#	To enable radio or dynamic text mission announcements, change *wai_mission_announce* in WAI\config.sqf to *"Radio"* or *"DynamicText"*.
 
 1. Go to your mission pbo and unpack it.
 2. Open init.sqf
 
 	Find:
 
-	~~~~java
-	//[false,12] execVM "\z\addons\dayz_code\compile\local_lights_init.sqf";	
-	~~~~
+	```sqf
+	waitUntil {scriptDone progress_monitor};	
+	```
 	
-	Add below:
+	And add the following line ***above*** it: 
 	
-	~~~~java
-	_nil = [] execVM "custom\remote\remote.sqf";
-	~~~~
-
-3. Copy the ***remote*** folder into your custom folder, if you do not have this one yet simply create it.
-4. If you want to be able to switch the radio on or off go to step 5 (note: right click by maca required), else go to step 6 and both remove switch_on_off.sqf and radio.ogg from the remote folder.
-5. Open extra_hc.hpp
+	```sqf
+	[] execVM "dayz_code\compile\remote_message.sqf";
+	```
+	# If you already have ZSC installed then just verify that this line is already there.
+	
+3. Open description.ext
 
 	Find:
-	~~~~java
-	class ExtraRc {
-	~~~~
-
-	Add below:
-	~~~~java
-		class ItemRadio {
-			class switchOnOff {
-				text = "Switch ON/OFF";
-				script = "execVM 'custom\remote\switch_on_off.sqf'";
-			};
-		};
-	~~~~
-
-6. Open description.ext
-
-	Find:
-	~~~~
+	
+	```sqf
 	#include "\z\addons\dayz_code\gui\description.hpp"
-	~~~~
-
-	Add above
-	~~~~java
+	```
+	
+	And add the following code block ***above*** it:
+	
+	```sqf
+	class CfgSounds
+	{
+		sounds[] =
+		{
+			Radio_Message_Sound
+			,IWAC_Message_Sound
+		};
+		class Radio_Message_Sound
+		{
+			name="Radio_Message_Sound";
+			sound[] = {scripts\radio\radio.ogg,0.4,1};
+			titles[] = {};
+		};
+		class IWAC_Message_Sound
+		{
+			name="IWAC_Message_Sound";
+			sound[] = {scripts\radio\IWACsound.ogg,0.4,1};
+			titles[] = {};
+		};
+	};
+	```
+	
+	If you already have ZSC installed, then overwrite the following code with the code above.
+	
+	```sqf
 	class CfgSounds
 	{
 		sounds[] =
@@ -125,12 +136,98 @@ Note: These are on by default, change *wai_radio_announce* in config.sqf to *fal
 		class Radio_Message_Sound
 		{
 			name = "Radio_Message_Sound";
-			sound[] = {custom\remote\radio.ogg,0.4,1};
+			sound[] = {scripts\radio\radio.ogg,0.4,1};
 			titles[] = {};
 		};
 	};
-	~~~~
-7. Repack your mission pbo.
+	```
+Note: In order for players to receive radio announcements, they must have ItemRadio in a toolbelt inventory slot, so you might want to adjust your default loadout in init.sqf if you have this feature enabled.
+
+4. Open mission.sqm
+
+	Find:
+	
+	```sqf
+	"chernarus",
+	```
+	
+	And add the following line ***below*** it:
+	
+	```sqf
+	"aif_arma1buildings",
+	```
+	
+5. Copy the ***dayz_code*** folder into your mission folder. If you already have this folder, then overwrite remote_message.sqf and verify that IWACsound.ogg and switch_on_off.sqf are in the ***scripts\radio*** directory.
+
+6. Copy the ***scripts*** folder over to your mission folder. If you already have this folder from ZSC install or another mod, then transfer the appropriate files over to the radio folder.
+
+#### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
+	
+1. Extra_Rc - I could not find a public repository of an updated version of extra_rc by maca134, so I made one: ***[Download Here](https://github.com/worldwidesorrow/Extra-Rc/archive/master.zip)***
+
+	By default, in DayZ Epoch, right click actions are disabled for ItemRadio when the group system is disabled. If you want to use right click actions on ItemRadio without enabling the group system...
+	Find:
+	
+2. Open dayz_code\compile\ui_selectSlot.sqf
+
+	Find:
+	
+	```sqf
+	or (!dayz_groupSystem && _item == "ItemRadio")
+	```
+	Comment this line out so it looks like this
+	
+	```sqf
+	//or (!dayz_groupSystem && _item == "ItemRadio")
+	```
+	
+	Find:
+	
+	```sqf
+	//if (_item == "ItemRadio") exitWith {_numActions = 0;};
+	```
+	
+	Uncomment this line so it looks like this
+	
+	```sqf
+	if (_item == "ItemRadio") exitWith {_numActions = 0;};
+	```
+
+3. If you have Deploy Anything (also called DayZEpochDeployableBike) installed, then open overwrites\click_actions\config.sqf
+
+	Add the following line to the bottom of your DZE_CLICK_ACTIONS array.
+	
+	```sqf
+	["ItemRadio","Toggle Power","execVM 'scripts\radio\switch_on_off.sqf';","true"]
+	```
+	
+	If you want to enable right click actions without having the group system enabled then find overwrites\click_actions\ui_selectSlot.sqf and apply the same changes as in the extra_rc option. Note: you will have to move the word 'or' from line 17 to line 18 in from of (!dayz_groupSystem && _item == "ItemRadio").
+
+#### Repack your mission pbo.
+
+#### Additional Config Options
+
+1. Mission Vehicle Keys
+
+	You can now choose among 4 options for mission vehicle keys. The options can be adjusted by changing the value on the following variable in WAI\config.sqf
+	
+	```sqf
+	wai_mission_vehicles = "KeyinVehicle"; // Options: "KeyonAI", "KeyinVehicle", "KeyinCrate", "NoVehicleKey".
+	```
+	
+	Just change the value after the equal sign.
+	
+2. You can now enable dynamic text messages that run near the top of the screen by adjusting the value of the following variable in config.sqf
+
+	```sqf
+	wai_mission_announce = "DynamicText"; // Options: "Radio", "DynamicText", "titleText".
+	```
+	
+3. iBen's Auto Mission Claim system can be activated by adjusting the following variable in WAI\customsettings.sqf
+
+	```sqf
+	iben_wai_ACuseAddon = true;
+	```
 
 
 
