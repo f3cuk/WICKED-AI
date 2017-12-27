@@ -3,6 +3,14 @@ WICKED AI 2.2.2
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
+### Updates for DayZ Epoch 1.0.6.2 (worldwidesorrow)
+- Streatman's new attachment system L85 and SVD models.
+- Optional dynamic text mission announcements.
+- ZSC compatible remote message system using a modified version of Salival's remote_message.sqf
+- iBen's mission auto claim addon.
+- Two new options for mission vehicle keys: key in crate & key in vehicle gear.
+- Minor bug fixes with missions.
+
 ### Release 2.2.2 (worldwidesorrow)
 - Integrated Caveman's mission pack.
 - Optional AI counter in mission marker loops.
