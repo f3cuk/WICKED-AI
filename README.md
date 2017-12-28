@@ -162,7 +162,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 
 6. Copy the ***scripts*** folder over to your mission folder. If you already have this folder from ZSC install or another mod, then transfer the appropriate files over to the radio folder.
 
-7. Copy ***stringtable.xml*** to your mission folder.
+7. Copy ***stringtable.xml*** to your mission folder. If there is already another file called stringtable.xml, then you will have to merge them.
 
 #### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
 	
