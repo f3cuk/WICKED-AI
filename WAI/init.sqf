@@ -76,10 +76,6 @@ if(isServer) then {
 		waitUntil {wai_staticloaded};
 	};
 	
-	if (wai_mission_system) then {
-		ExecVM "\z\addons\dayz_server\WAI\missions\init.sqf";
-	};
-	
 	// ---------------------------------------------------------------------------
 	// :: IWAC conditional loading
 	// :: If you want to run default WAI without addon, just set 'iben_wai_ACuseAddon'
