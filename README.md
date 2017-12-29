@@ -232,9 +232,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 
 ### Additional Config Explanations
 
-1. Mission Vehicle Keys
-
-	You can now choose among 4 options for mission vehicle keys. The options can be adjusted by changing the value on the following variable in WAI\config.sqf
+1. You can now choose among 4 options for mission vehicle keys. The options can be adjusted by changing the value on the following variable in WAI\config.sqf
 	
 	```sqf
 	wai_mission_vehicles = "KeyinVehicle"; // Options: "KeyonAI", "KeyinVehicle", "KeyinCrate", "NoVehicleKey".
