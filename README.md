@@ -208,7 +208,29 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 
 #### Repack your mission pbo.
 
-#### Additional Config Options
+### Battleye
+
+1. Open scripts.txt and add the following exceptions to the end of the appropriate lines.
+
+	For line 17 or the one that begins with keyword compile, add this exception to the end
+	
+	```sqf
+	!"\\dayz_code\\compile\\remote_message.sqf\""
+	```
+	
+	For line 38 or the one that begins with keyword hint, add this exception to the end
+	
+	```sqf
+	!="e == \"global\") exitWith {systemChat _message;};\nif (_type == \"hint\") exitWith {hint _message;};\nif (_type == \"titleCut\") exitWit"
+	```
+	
+	For line 72 or the one that begins with keyword systemChat, add this exception to the end
+	
+	```sqf
+	!=") then {\nif (player getVariable[\"radiostate\",true]) then {\nsystemChat _message;\nplaySound \"Radio_Message_Sound\";\n};\n};\n};\n\nif (_"
+	```
+
+### Additional Config Explanations
 
 1. Mission Vehicle Keys
 
