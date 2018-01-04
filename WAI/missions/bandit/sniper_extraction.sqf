@@ -17,6 +17,7 @@ if(isServer) then {
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+	[_crate] call wai_crate_setup;
 	
 	//Troops
 	_rndnum = 2 + round (random 4);
@@ -51,7 +52,7 @@ if(isServer) then {
 	] call mission_winorfail;
 
 	if(_complete) then {
-		[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2] call dynamic_crate;
+		[_crate,[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2,_vehicle] call dynamic_crate;
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Sniper Extraction]: Ended at %1",_position];
