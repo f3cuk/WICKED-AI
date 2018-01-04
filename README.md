@@ -3,7 +3,7 @@ WICKED AI 2.2.3
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Updates for DayZ Epoch 1.0.6.2 (worldwidesorrow)
+### Release 2.2.3 (Updates for DayZ Epoch 1.0.6.2) (worldwidesorrow)
 - Streatman's new attachment system L85 and SVD models.
 - Optional dynamic text mission announcements.
 - ZSC compatible remote message system using a modified version of Salival's remote_message.sqf
@@ -11,15 +11,8 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - Two new options for mission vehicle keys: key in crate & key in vehicle gear.
 - Minor bug fixes with missions.
 
-### Release 2.2.2 (worldwidesorrow)
-- Integrated Caveman's mission pack.
-- Optional AI counter in mission marker loops.
-- ZSC check wallet option.
-- Optional mission static spawn points.
-- Updated with 1.0.6+ classnames in weapon arrays and vehicles.
-- Pistol spawning in crates.
-
 ### Version history
+- 04-01-2018 : Release 2.2.3
 - 04-12-2017 : Release 2.2.2
 - 11-07-2017 : Release 2.2.1
 - 06-06-2015 : Release 2.2.0
