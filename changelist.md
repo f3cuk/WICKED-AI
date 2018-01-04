@@ -9,7 +9,7 @@ Type | Description
 `feature` | ZSC compatible remote message system using a modified version of Salival's remote_message.sqf
 `bug` | Minor bug fixes with missions.
 
-
+## Version 2.2.2
 Type | Description
 ------------: | :------------
 `enhancement` | Integrated Caveman's mission pack. @worldwidesorrow
