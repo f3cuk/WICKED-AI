@@ -1,4 +1,14 @@
-# Current version 2.2.2
+# Current version 2.2.3
+
+Type | Description
+------------: | :------------
+`enhancement` | Streatman's new attachment system L85 and SVD models.
+`enhancement` | iBen's mission auto claim addon.
+`enhancement` | Two new options for mission vehicle keys: key in crate & key in vehicle gear.
+`feature` | Optional dynamic text mission announcements.
+`feature` | ZSC compatible remote message system using a modified version of Salival's remote_message.sqf
+`bug` | Minor bug fixes with missions.
+
 
 Type | Description
 ------------: | :------------
