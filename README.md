@@ -10,6 +10,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - iBen's mission auto claim addon.
 - Two new options for mission vehicle keys: key in crate & key in vehicle gear.
 - Minor bug fixes with missions.
+- Overpoch auto-detect. This version detects the Overwatch mod and adjusts accordingly.
 
 ### Version history
 - 04-01-2018 : Release 2.2.3

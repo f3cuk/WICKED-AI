@@ -12,16 +12,18 @@ if (isServer) then {
 				if (!isNil "_killedat") then {
 					if ((time - _killedat) >= ai_cleanup_time) then {
 						//Delete flies and body
-						PVCDZ_flies = [0,_x];
-						publicVariable "PVCDZ_flies";
-						_sound = _x getVariable ["sched_co_fliesSource", nil];
-						if !(isNil "_sound") then {
-							detach _sound;
-							deleteVehicle _sound;
+						if (dayz_enableFlies) then {
+							PVCDZ_flies = [0,_x];
+							publicVariable "PVCDZ_flies";
+							_sound = _x getVariable ["sched_co_fliesSource", nil];
+							if !(isNil "_sound") then {
+								detach _sound;
+								deleteVehicle _sound;
+							};
 						};
 						_x spawn {
 							// Wait for PVEH to finish on all clients
-							uiSleep 15;
+							if (dayz_enableFlies) then {uiSleep 15;};
 							_this call sched_co_deleteVehicle;
 						};
 					};
@@ -36,7 +38,7 @@ if (isServer) then {
 			diag_log format ["WAI: %1 Active vehicle patrol units (Crew)", ai_vehicle_units];
 		};
 
-		sleep 60;
+		uiSleep 60;
 
 	};
 

@@ -25,6 +25,13 @@ if(isServer) then {
 					if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
 				} count wai_mission_markers;
 			};
+			if (_validspot && {wai_avoid_players != 0}) then {
+				if ([_position,wai_avoid_players] call isNearPlayer) then {
+					if (debug_mode) then {diag_log "WAI: Invalid Position (player)";};
+					_color = "ColorPink";
+					_validspot = false;
+				};
+			};
 			if(_validspot) then {
 
 				if(debug_mode) then { diag_log("Loop complete, valid position " +str(_position) + " in " + str(_i) + " attempts"); };
@@ -68,6 +75,14 @@ if(isServer) then {
 			{
 				if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_traders)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
 			} count trader_markers;
+		};
+
+		if (_validspot && {wai_avoid_players != 0}) then {
+			if ([_position,wai_avoid_players] call isNearPlayer) then {
+				if (debug_mode) then {diag_log "WAI: Invalid Position (player)";};
+				_color = "ColorPink";
+				_validspot = false;
+			};
 		};
 
 		if(_validspot) then {
