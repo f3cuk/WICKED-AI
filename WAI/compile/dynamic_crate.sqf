@@ -23,7 +23,11 @@ if(typeName (_this select 4) == "ARRAY") then {
 	_pistols_array	= (_this select 4) select 1;
 } else {
 	_num_pistols	= _this select 4;
-	_pistols_array	= ai_wep_pistol
+	if (WAI_Overpoch) then {
+	_pistols_array	= ai_wep_owpistol;
+	} else {
+	_pistols_array	= ai_wep_pistol;
+	};
 };
 
 if(typeName (_this select 5) == "ARRAY") then {

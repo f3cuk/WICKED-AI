@@ -53,6 +53,22 @@ isNearRoad = {
 
 };
 
+isNearPlayer = {
+	private["_result","_position","_radius"];
+
+	_result 	= false;
+	_position 	= _this select 0;
+	_radius 	= _this select 1;
+
+	{
+		if ((isPlayer _x) && (_x distance _position <= _radius)) then {
+			_result = true;
+		};
+	} count playableUnits;
+
+	_result
+};
+
 isSlope = {
 
 	private["_pos","_result","_position","_posx","_posy","_radius","_gradient","_max","_min","_posx","_posy"];

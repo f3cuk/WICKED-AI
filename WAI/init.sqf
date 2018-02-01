@@ -1,4 +1,6 @@
 if(isServer) then {
+	WAI_Overpoch			= isClass (configFile >> "CfgWeapons" >> "USSR_cheytacM200");
+	
 	cache_units				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\cache_units.sqf";
 	spawn_group				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_group.sqf";
 	spawn_static			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_static.sqf";
