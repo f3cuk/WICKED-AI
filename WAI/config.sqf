@@ -147,7 +147,7 @@ if(isServer) then {
 		wai_avoid_town				= 0;								// avoid spawning missions this close to towns, *** doesn't function with infiSTAR enabled ***
 		wai_avoid_road				= 0;								// avoid spawning missions this close to roads
 		wai_avoid_water				= 50;								// avoid spawning missions this close to water
-		wai_avoid_players 			= 500;
+		wai_avoid_players 			= 500;								// avoid spawning missions this close to a player
 
 		
 		wai_mission_timer			= [300,900];							// time between missions 5-15 minutes
@@ -175,7 +175,7 @@ if(isServer) then {
 		wai_high_value				= true;								// enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 		wai_high_value_chance		= 1;								// chance in percent you find above mentioned item
 
-		wai_enable_minefield		= true;								// enable minefields to better defend missions
+		wai_enable_minefield		= false;								// enable minefields to better defend missions
 		wai_use_launchers			= true;								// add a rocket launcher to each spawned AI group
 		wai_remove_launcher			= true;								// remove rocket launcher from AI on death
 
