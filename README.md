@@ -74,7 +74,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 	Add the following files to the list. You may already have these files or others in there. Verify that they are there.
 	
 	```sqf
-	,'scripts\radio\switch_on_off.sqf','dayz_code\compile\remote_messages.sqf'
+	,'scripts\radio\switch_on_off.sqf','dayz_code\compile\remote_message.sqf'
 	```
 	
 7. Repack your mission PBO.
