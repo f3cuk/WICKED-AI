@@ -62,7 +62,22 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 	[] ExecVM "\z\addons\dayz_server\WAI\init.sqf";
 	```
 
-6. Repack your server pbo.
+6. Navigate to the ***init*** folder and open mission_check.sqf
+
+	Find this block of code near the top:
+	
+	```sqf
+	_files = [
+	'description.ext','init.sqf','mission.sqm','rules.sqf','server_traders.sqf'
+	];
+	```
+	Add the following files to the list. You may already have these files or others in there. Verify that they are there.
+	
+	```sqf
+	,'scripts\radio\switch_on_off.sqf','dayz_code\compile\remote_messages.sqf'
+	```
+	
+7. Repack your mission PBO.
 
 ### Mission Folder
 
