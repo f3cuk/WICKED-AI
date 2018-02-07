@@ -154,3 +154,31 @@ get_trader_markers = {
 	_result
 
 };
+
+wai_validSpotCheck = {
+	
+	private ["_position","_validspot"];
+	
+	markerready = false;
+	_position = _this select 0;
+	_validspot 	= true;
+	
+	if (_validspot && wai_avoid_missions != 0) then {
+	if(debug_mode) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby mission markers: " + str(wai_mission_markers)); };
+		{
+			if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
+		} count wai_mission_markers;
+	};
+	if (_validspot && {wai_avoid_players != 0}) then {
+		if ([_position,wai_avoid_players] call isNearPlayer) then {
+			if (debug_mode) then {diag_log "WAI: Invalid Position (player)";};
+			_validspot = false;
+		};
+	};
+	if(_validspot) then {
+
+		if(debug_mode) then { diag_log("WAI: valid position found at" + str(_position));};
+
+	};
+	_validspot
+};
