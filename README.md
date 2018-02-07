@@ -11,6 +11,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - Two new options for mission vehicle keys: key in crate & key in vehicle gear.
 - Minor bug fixes with missions.
 - Overpoch auto-detect. This version detects the Overwatch mod and adjusts accordingly.
+- Added the option to use a static position for regular missions rather than use the dynamic positions.
 
 ### Version history
 - 04-01-2018 : Release 2.2.3
