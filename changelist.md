@@ -1,5 +1,10 @@
-# Current version 2.2.3
+# Current version 2.2.4
+Type | Description
+------------: | :------------
+`enhancement` | Overpoch auto-detect. This version detects the Overwatch mod and adjusts accordingly.
+`enhancement` | Added the option to use a static position for regular missions rather than use the dynamic positions.
 
+## Version 2.2.3
 Type | Description
 ------------: | :------------
 `enhancement` | Streatman's new attachment system L85 and SVD models.
