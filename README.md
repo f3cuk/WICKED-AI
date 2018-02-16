@@ -1,19 +1,14 @@
-WICKED AI 2.2.3
+WICKED AI 2.2.4
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.2.3 (Updates for DayZ Epoch 1.0.6.2) (worldwidesorrow)
-- Streatman's new attachment system L85 and SVD models.
-- Optional dynamic text mission announcements.
-- ZSC compatible remote message system using a modified version of Salival's remote_message.sqf
-- iBen's mission auto claim addon.
-- Two new options for mission vehicle keys: key in crate & key in vehicle gear.
-- Minor bug fixes with missions.
+### Release 2.2.4 (Overpoch compatibility) (worldwidesorrow)
 - Overpoch auto-detect. This version detects the Overwatch mod and adjusts accordingly.
 - Added the option to use a static position for regular missions rather than use the dynamic positions.
 
 ### Version history
+- 16-02-2018 : Release 2.2.4
 - 04-01-2018 : Release 2.2.3
 - 04-12-2017 : Release 2.2.2
 - 11-07-2017 : Release 2.2.1
@@ -271,4 +266,4 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 For transparency into our release cycle and in striving to maintain backward compatibility, bootstrap is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes we screw up, but we'll adhere to those rules whenever possible.
 
 ### Dev team
-- None active
+- worldwidesorrow
