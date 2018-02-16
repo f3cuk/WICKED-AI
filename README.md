@@ -10,6 +10,8 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - iBen's mission auto claim addon.
 - Two new options for mission vehicle keys: key in crate & key in vehicle gear.
 - Minor bug fixes with missions.
+- Overpoch auto-detect. This version detects the Overwatch mod and adjusts accordingly.
+- Added the option to use a static position for regular missions rather than use the dynamic positions.
 
 ### Version history
 - 04-01-2018 : Release 2.2.3
@@ -61,7 +63,22 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 	[] ExecVM "\z\addons\dayz_server\WAI\init.sqf";
 	```
 
-6. Repack your server pbo.
+6. Navigate to the ***init*** folder and open mission_check.sqf
+
+	Find this block of code near the top:
+	
+	```sqf
+	_files = [
+	'description.ext','init.sqf','mission.sqm','rules.sqf','server_traders.sqf'
+	];
+	```
+	Add the following files to the list. You may already have these files or others in there. Verify that they are there.
+	
+	```sqf
+	,'scripts\radio\switch_on_off.sqf','dayz_code\compile\remote_message.sqf'
+	```
+	
+7. Repack your mission PBO.
 
 ### Mission Folder
 

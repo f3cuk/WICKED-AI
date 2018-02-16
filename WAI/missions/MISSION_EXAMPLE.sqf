@@ -5,6 +5,12 @@ if(isServer) then {
 	// Get a safe position 80 meters from the nearest object
 	_position		= [80] call find_position;
 	
+	// If you want to use a static position then use this instead
+	/*
+	_position 		= [x, y, z];
+	if !([_position] call wai_validSpotCheck) exitWith {h_missionsrunning = h_missionsrunning - 1; wai_mission_data set [_mission, -1]; markerready = true;};
+	*/
+	
 	// Initialise the mission variable with the following options, [position, difficulty, mission name, mission type (MainHero/Mainbandit), minefield (true or false)] call mission_init;
 	[_mission,_position,"hard","Test Mission","MainHero",true] call mission_init;
 
