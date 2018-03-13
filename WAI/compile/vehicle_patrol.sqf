@@ -50,9 +50,9 @@ if (isServer) then {
 	[_pilot] joinSilent _unitGroup;
 	
 	call {
-		if (_aitype == "hero") 		exitWith { _pilot setVariable ["Hero",true,true]; };
-		if (_aitype == "bandit") 	exitWith { _pilot setVariable ["Bandit",true,true]; };
-		if (_aitype == "special") 	exitWith { _pilot setVariable ["Special",true,true]; };
+		if (_aitype == "hero") 		exitWith {_pilot setVariable ["Hero",true,false]; _pilot setVariable ["humanity", ai_remove_humanity];};
+		if (_aitype == "bandit") 	exitWith {_pilot setVariable ["Bandit",true,false]; _pilot setVariable ["humanity", ai_add_humanity];};
+		if (_aitype == "special") 	exitWith {_pilot setVariable ["Special",true,false]; _pilot setVariable ["humanity", ai_special_humanity];};
 	};
 	
 	ai_vehicle_units = (ai_vehicle_units + 1);
@@ -76,9 +76,9 @@ if (isServer) then {
 	[_gunner] joinSilent _unitGroup;
 	
 	call {
-		if (_aitype == "hero") 		exitWith { _gunner setVariable ["Hero",true,true]; };
-		if (_aitype == "bandit") 	exitWith { _gunner setVariable ["Bandit",true,true]; };
-		if (_aitype == "special") 	exitWith { _gunner setVariable ["Special",true,true]; };
+		if (_aitype == "hero") 		exitWith {_gunner setVariable ["Hero",true,false]; _gunner setVariable ["humanity", ai_remove_humanity];};
+		if (_aitype == "bandit") 	exitWith {_gunner setVariable ["Bandit",true,false]; _gunner setVariable ["humanity", ai_add_humanity];};
+		if (_aitype == "special") 	exitWith {_gunner setVariable ["Special",true,false]; _gunner setVariable ["humanity", ai_special_humanity];};
 	};
 	
 	{
