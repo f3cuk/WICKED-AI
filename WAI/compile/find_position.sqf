@@ -1,98 +1,96 @@
-if(isServer) then {
-	
-	private ["_i","_traders","_safepos","_validspot","_position"];
+private ["_i","_traders","_safepos","_validspot","_position"];
 
-	markerready = false;
+markerready = false;
 
-	if(use_blacklist) then {
-		_safepos		= [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0,blacklist];
-	} else {
-		_safepos		= [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0];
-	};
+if (use_blacklist) then {
+	_safepos = [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0,blacklist];
+} else {
+	_safepos = [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0];
+};
 
-	_validspot 	= false;
-	_i 			= 1;
-	
-	if (use_staticspawnpoints) then {
-		while{!_validspot} do {
-			_safepos = staticspawnpoints;
-			_position 	= _safepos call BIS_fnc_selectRandom;
-			_i			= _i + 1;
-			_validspot    = true;
-			if (_validspot && wai_avoid_missions != 0) then {
-			if(debug_mode) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby mission markers: " + str(wai_mission_markers)); };
-				{
-					if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
-				} count wai_mission_markers;
-			};
-			if (_validspot && {wai_avoid_players != 0}) then {
-				if ([_position,wai_avoid_players] call isNearPlayer) then {
-					if (debug_mode) then {diag_log "WAI: Invalid Position (player)";};
-					_color = "ColorPink";
-					_validspot = false;
-				};
-			};
-			if(_validspot) then {
+_i = 0;
+_validspot = false;
 
-				if(debug_mode) then { diag_log("Loop complete, valid position " +str(_position) + " in " + str(_i) + " attempts"); };
-	
-			};
-		};
-		
-	} else {
+while {!_validspot} do {
+	_i			= _i + 1;
+	_position 	= if (!use_staticspawnpoints) then {_safepos call BIS_fnc_findSafePos} else {staticspawnpoints call BIS_fnc_selectRandom};
+	_validspot 	= true;
 
-	while{!_validspot} do {
-	
-		sleep 1;
+	_color = "ColorBlack";
+	if (_position call inDebug) then {
+		_color = "ColorPink";
+		if (debug_mode) then {diag_log "WAI: Invalid Position (Debug)";};
+		_validspot = false;
+	}; 
 
-		_position 	= _safepos call BIS_fnc_findSafePos;
-		_i 			= _i + 1;
-		_validspot	= true;
-
-		if (_position call inDebug) then { if(debug_mode) then {diag_log("WAI: Invalid Position (Debug)");}; _validspot = false; }; 
-
-		if(_validspot && wai_avoid_water != 0) then {
-			if ([_position,wai_avoid_water] call isNearWater) then { if(debug_mode) then {diag_log("WAI: Invalid Position (Water)");}; _validspot = false; }; 
-		};
-
-		if (_validspot && isNil "infiSTAR_LoadStatus1" && wai_avoid_town != 0) then {
-			if ([_position,wai_avoid_town] call isNearTown) then {  if(debug_mode) then {diag_log("WAI: Invalid Position (Town)");}; _validspot = false; };
-		}; // ELSE infoSTAR is enabled, need to find another method of finding near towns
-
-		if(_validspot && wai_avoid_road != 0) then {
-			if ([_position,wai_avoid_road] call isNearRoad) then { if(debug_mode) then {diag_log("WAI: Invalid Position (Road)");}; _validspot = false; };
-		};
-
-		if (_validspot && wai_avoid_missions != 0) then {
-			if(debug_mode) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby mission markers: " + str(wai_mission_markers)); };
-			{
-				if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
-			} count wai_mission_markers;
-		};
-
-		if (_validspot && wai_avoid_traders != 0) then {
-			if(debug_mode) then { diag_log("WAI DEBUG: FINDPOS: Checking nearby trader markers: " + str(trader_markers)); };
-			{
-				if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_traders)) exitWith { if(debug_mode) then {diag_log("WAI: Invalid Position (Marker: " + str(_x) + ")");}; _validspot = false; };
-			} count trader_markers;
-		};
-
-		if (_validspot && {wai_avoid_players != 0}) then {
-			if ([_position,wai_avoid_players] call isNearPlayer) then {
-				if (debug_mode) then {diag_log "WAI: Invalid Position (player)";};
-				_color = "ColorPink";
+	if (_validspot && {wai_avoid_missions != 0}) then {
+		{
+			if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith {
+				if (debug_mode) then {diag_log format ["WAI: Invalid Position (Marker: %1)",_x];};
 				_validspot = false;
 			};
-		};
-
-		if(_validspot) then {
-
-			if(debug_mode) then { diag_log("Loop complete, valid position " +str(_position) + " in " + str(_i) + " attempts"); };
-	
-		};
-
+		} count wai_mission_markers;
 	};
+
+	if (_validspot && {wai_avoid_traders != 0}) then {
+		{
+			if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_traders)) exitWith {
+				if (debug_mode) then {diag_log format ["WAI: Invalid Position (Marker: %1)",_x];};
+				_color = "ColorBrown";
+				_validspot = false;
+			};
+		} count trader_markers;
 	};
-	_position set [2, 0];
-	_position
+
+	if (_validspot && {wai_avoid_water != 0}) then {
+		if ([_position,wai_avoid_water] call isNearWater) then {
+			if (debug_mode) then {diag_log "WAI: Invalid Position (Water)";};
+			_color = "ColorBlue";
+			_validspot = false;
+		}; 
+	};
+
+	if (_validspot && {wai_avoid_town != 0}) then {
+		if ([_position,wai_avoid_town] call isNearTown) then {
+			if (debug_mode) then {diag_log "WAI: Invalid Position (Town)";};
+			_color = "ColorGreen";
+			_validspot = false;
+		};
+	};
+
+	if (_validspot && {wai_avoid_road != 0}) then {
+		if ([_position,wai_avoid_road] call isNearRoad) then {
+			if (debug_mode) then {diag_log "WAI: Invalid Position (Road)";};
+			_color = "ColorGrey";
+			_validspot = false;
+		};
+	};
+
+	if (_validspot && {wai_avoid_players != 0}) then {
+		if ([_position,wai_avoid_players] call isNearPlayer) then {
+			if (debug_mode) then {diag_log "WAI: Invalid Position (player)";};
+			_color = "ColorPink";
+			_validspot = false;
+		};
+	};
+
+	if (!_validspot) then {
+		if (debug_mode) then {
+			_marker = createMarkerLocal ["spotMarker" + (str _i),[_position select 0,_position select 1]];
+			_marker setMarkerShapeLocal "ICON";
+			_marker setMarkerTypeLocal "DOT";
+			_marker setMarkerColorLocal _color;
+			_marker setMarkerSizeLocal [1.0, 1.0];
+			_marker setMarkerTextLocal "fail";
+		};
+	};
+
+	if (_validspot) then {
+		if (debug_mode) then {diag_log format ["Loop complete, valid position %1 in %2 attempts.",_position,_i];};
+	} else {
+		uiSleep 0.5;
+	};
 };
+
+_position set [2, 0];
+_position
