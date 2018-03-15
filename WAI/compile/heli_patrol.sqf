@@ -63,12 +63,6 @@ if (isServer) then {
 
 	[_gunner] 			joinSilent _unitGroup;
 
-	call {
-		if (_aitype == "Hero") 		exitWith {{ _x setVariable ["Hero",true,false]; _x setVariable ["humanity", ai_remove_humanity];} count [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Bandit") 	exitWith {{ _x setVariable ["Bandit",true,false]; _x setVariable ["humanity", ai_add_humanity];} count [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Special") 	exitWith {{ _x setVariable ["Special",true,false]; _x setVariable ["humanity", ai_special_humanity];} count [_pilot, _gunner, _gunner2]; };
-	};
-
 	ai_air_units 		= (ai_air_units + 1);
 
 	_gunner2 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
@@ -77,6 +71,12 @@ if (isServer) then {
 	[_gunner2] 			joinSilent _unitGroup;
 
 	ai_air_units 		= (ai_air_units + 1);
+	
+	call {
+		if (_aitype == "Hero") 		exitWith {{ _x setVariable ["Hero",true,false]; _x setVariable ["humanity", ai_remove_humanity];} count [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Bandit") 	exitWith {{ _x setVariable ["Bandit",true,false]; _x setVariable ["humanity", ai_add_humanity];} count [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Special") 	exitWith {{ _x setVariable ["Special",true,false]; _x setVariable ["humanity", ai_special_humanity];} count [_pilot, _gunner, _gunner2]; };
+	};
 
 	{
 		_pilot setSkill [_x,1]
