@@ -160,7 +160,12 @@ if (!isNil "_mission") then {
 	
 	ai_emplacement_units = (ai_emplacement_units + 1);
 	_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "static"] call on_kill;}];
-	_static addEventHandler ["GetOut",{(_this select 2) moveInGunner (_this select 0)}]; // Make the AI get right back in the vehicle.
+	
+	_static addEventHandler ["GetOut",{
+		_unit 	= _this select 2;
+		_static = _this select 0;
+		if (alive _unit) then {_unit moveInGunner _static};}]; // Make the AI get right back in the vehicle.
+		
 	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_static];
 		
 	if (sunOrMoon != 1) then {
