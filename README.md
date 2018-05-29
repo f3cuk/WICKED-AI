@@ -1,13 +1,14 @@
-WICKED AI 2.2.4
+WICKED AI 2.2.5
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.2.4 (Overpoch compatibility) (worldwidesorrow)
-- Overpoch auto-detect. This version detects the Overwatch mod and adjusts accordingly.
-- Added the option to use a static position for regular missions rather than use the dynamic positions.
+### Release 2.2.5 (Major Rework) (worldwidesorrow)
+- Due to reports of poor performance on high population servers, this update is mostly code optimization.
+- There are some new features included that are listed in the epochmod.com forum topic.
 
 ### Version history
+- 28-05-2018 : Release 2.2.5
 - 16-02-2018 : Release 2.2.4
 - 04-01-2018 : Release 2.2.3
 - 04-12-2017 : Release 2.2.2
@@ -37,14 +38,15 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Installation Instructions
 
-1. Click ***[Clone or Download](https://github.com/f3cuk/WICKED-AI/archive/master.zip)*** the green button on the right side of the Github page.
+1. Click ***[Clone or Download](https://github.com/worldwidesorrow/WICKED-AI/archive/master.zip)*** the green button on the right side of the Github page.
 
 	> Recommended PBO tool for all "pack", "repack", or "unpack" steps: ***[PBO Manager](http://www.armaholic.com/page.php?id=16369)***
 
 2. Extract the downloaded folder to your desktop and open it
 3. Go to your server pbo and unpack it.
 4. Navigate to the new ***dayz_server*** folder and copy the WAI folder into this folder.
-5. Navigate to the ***system*** folder and open server_monitor.sqf
+5. Navigate to directory ***dayz_server\system\scheduler*** and replace sched_corpses.sqf with the one from the download.
+6. Navigate to the ***system*** folder and open server_monitor.sqf
 
 	Find this code at the bottom of the file:
 
@@ -58,7 +60,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 	[] ExecVM "\z\addons\dayz_server\WAI\init.sqf";
 	```
 
-6. Navigate to the ***init*** folder and open mission_check.sqf
+7. Navigate to the ***init*** folder and open mission_check.sqf
 
 	Find this block of code near the top:
 	
@@ -73,7 +75,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 	,'scripts\radio\switch_on_off.sqf','dayz_code\compile\remote_message.sqf'
 	```
 	
-7. Repack your mission PBO.
+8. Repack your mission PBO.
 
 ### Mission Folder
 
@@ -165,9 +167,7 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	
 5. Copy the ***dayz_code*** folder into your mission folder. If you already have this folder, then overwrite remote_message.sqf and verify that IWACsound.ogg and switch_on_off.sqf are in the ***scripts\radio*** directory.
 
-6. Copy the ***scripts*** folder over to your mission folder. If you already have this folder from ZSC install or another mod, then transfer the appropriate files over to the radio folder.
-
-7. Copy ***stringtable.xml*** to your mission folder. If there is already another file called stringtable.xml, then you will have to merge them.
+6. Copy ***stringtable.xml*** to your mission folder. If there is already another file called stringtable.xml, then you will have to merge them.
 
 ### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
 	
@@ -232,32 +232,12 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	For line 72 or the one that begins with keyword systemChat, add this exception to the end
 	
 	```sqf
-	!=") then {\nif (player getVariable[\"radiostate\",true]) then {\nsystemChat _message;\nplaySound \"Radio_Message_Sound\";\n};\n};\n};\n\nif (_"
+	") then {\nif (player getVariable[\"radiostate\",true]) then {\nsystemChat _message;\nplaySound \"Radio_Message_Sound\";\n};\n};\n};\nif (_t"
 	```
 
-### Additional Config Explanations
+### Configuration
 
-1. You can now choose among 4 options for mission vehicle keys. The options can be adjusted by changing the value on the following variable in WAI\config.sqf
-	
-	```sqf
-	wai_mission_vehicles = "KeyinVehicle"; // Options: "KeyonAI", "KeyinVehicle", "KeyinCrate", "NoVehicleKey".
-	```
-	
-	Just change the value after the equal sign.
-	
-2. You can now enable dynamic text messages that run near the top of the screen by adjusting the value of the following variable in config.sqf ***[Screenshot](https://github.com/worldwidesorrow/RandomDayZ/blob/master/dynamictext.jpg)*** of dynamic text message.
-
-	```sqf
-	wai_mission_announce = "DynamicText"; // Options: "Radio", "DynamicText", "titleText".
-	```
-	
-3. iBen's Auto Mission Claim system can be activated by adjusting the following variable in WAI\customsettings.sqf
-
-	```sqf
-	iben_wai_ACuseAddon = true;
-	```
-	
-	Visit ***[This Thread](https://epochmod.com/forum/topic/44646-release-iwac-autoclaim-addon-for-wai-v11/)*** for complete information on how to use the Auto Mission Claim addon.
+Open file ***config.sqf*** in the WAI folder and review the configuration options. Generally, there are comments that explain the options.
 
 
 

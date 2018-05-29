@@ -1,21 +1,17 @@
-if(isServer) then {
+private ["_rndnum","_crate_type","_mission","_position","_crate","_baserunover","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7","_baserunover8","_baserunover9","_baserunover10","_baserunover11","_baserunover12","_baserunover13"];
 
-	private 		["_complete","_crate_type","_mission","_position","_crate","_baserunover","_baserunover1","_baserunover2"];
+// Get mission number, important we do this early
+_mission = count wai_mission_data -1;
 
-	// Get mission number, important we do this early
-	_mission 		= count wai_mission_data -1;
+_position = [30] call find_position;
 
-	_position		= [30] call find_position;
-	[_mission,_position,"Easy","Slaughter House","MainHero",true] call mission_init;
-	
-	diag_log 		format["WAI: [Mission:[Hero] Slaughter House]: Starting... %1",_position];
+diag_log format["WAI: [Mission:[Hero] Slaughter House]: Starting... %1",_position];
 
-	//Setup the crate
-	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) + 2.5,(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	[_crate] call wai_crate_setup;
+//Setup the crate
+_crate_type = crates_small call BIS_fnc_selectRandom;
+_crate = createVehicle [_crate_type,[(_position select 0) + 2.5,(_position select 1),0], [], 0, "CAN_COLLIDE"];
+_crate call wai_crate_setup;
 
-	//Medical Supply Camp
 //Buildings 
 _baserunover0 = createVehicle ["Land_aif_tovarna1",[(_position select 0) - 0.01, (_position select 1) - 0.01,-0.02],[], 0, "CAN_COLLIDE"];
 _baserunover1 = createVehicle ["Land_stand_meat_EP1",[(_position select 0) - 4, (_position select 1) + 2,-0.02],[], 0, "CAN_COLLIDE"];
@@ -31,34 +27,32 @@ _baserunover10 = createVehicle ["Mass_grave", [(_position select 0) - 0.3, (_pos
 _baserunover11 = createVehicle ["Axe_woodblock", [(_position select 0) - 4, (_position select 1) - 14,-0.02],[], 0, "CAN_COLLIDE"];
 _baserunover12 = createVehicle ["Land_Table_EP1",[(_position select 0) + 2, (_position select 1) - 2,-0.02],[], 0, "CAN_COLLIDE"];
 _baserunover13 = createVehicle ["MAP_icebox",[(_position select 0) - 2, (_position select 1) - 0.01,-0.02],[], 0, "CAN_COLLIDE"];
-	_baserunover 	= [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13];
-	
-	_directions = [0,0.3693,0.3693,0.3693,0.3693,0.3693,0.3693,0,188,33,0,-25,0,0];
-	{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
-	
-	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
+_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13];
 
-	//Troops
-	[[(_position select 0) + 9, (_position select 1) - 13, 0],4,"Easy",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[(_position select 0) + 13, (_position select 1) + 15, 0],4,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[(_position select 0) - 23, (_position select 1) - 25, 0],4,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	[[(_position select 0) - 13, (_position select 1) + 15, 0],4,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+_directions = [0,0.3693,0.3693,0.3693,0.3693,0.3693,0.3693,0,188,33,0,-25,0,0];
+{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
 
-	//Condition
-	_complete = [
-		[_mission,_crate],				// mission number and crate
-		["crate"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 				// cleanup objects
-		"Something smells funky down at the old Slaughter House...check your map",	// mission announcement
-		"Survivors have taken control of the Slaughter House",								// mission success
-		"Survivors were unable to capture the Slaughter House"							// mission fail
-	] call mission_winorfail;
+{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
-	if(_complete) then {
-		[_crate,10,5,[6,crate_items_chainbullets],3,[2,crate_backpacks_large]] call dynamic_crate;
-	};
+//Troops
+_rndnum = round (random 5);
+[[(_position select 0) + 9, (_position select 1) - 13, 0],5,"Easy",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[[(_position select 0) + 13, (_position select 1) + 15, 0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
-	diag_log format["WAI: [Mission:[Hero] slaughter house]: Ended at %1",_position];
-
-	h_missionsrunning = h_missionsrunning - 1;
-};
+// Array of mission variables to send
+[
+	_mission, // Mission number
+	_position, // Position of mission
+	"Easy", // Difficulty
+	"Slaughter House", // Name of Mission
+	"MainHero", // Mission Type: MainHero or MainBandit
+	true, // show mission marker?
+	true, // make minefields available for this mission
+	_crate, // crate object info
+	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
+	[_baserunover], // cleanup objects
+	"Something smells funky down at the old Slaughter House...check your map", // mission announcement
+	"Survivors have taken control of the Slaughter House", // mission success
+	"Survivors were unable to capture the Slaughter House", // mission fail
+	[10,5,[6,crate_items_chainbullets],3,[2,crate_backpacks_large]] // Dynamic crate array
+] call mission_winorfail;

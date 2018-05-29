@@ -1,51 +1,63 @@
-if(isServer) then {
+private ["_crate_type","_mission","_position","_crate","_rndnum","_baserunover","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6"];
 
-	private 		["_complete","_crate_type","_mission","_position","_crate","_playerPresent","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
+// Get mission number, important we do this early
+_mission = count wai_mission_data -1;
 
-	// Get mission number, important we do this early
-	_mission 		= count wai_mission_data -1;
+_position = [30] call find_position;
 
-	_position		= [30] call find_position;
-	[_mission,_position,"Medium","Weapon Cache","MainHero",true] call mission_init;
-	
-	diag_log 		format["WAI: [Mission:[Hero] Weapon Cache]: Starting... %1",_position];
+diag_log format["WAI: [Mission:[Hero] Weapon Cache]: Starting... %1",_position];
 
-	//Setup the crate
-	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
-	[_crate] call wai_crate_setup;
-	
-	
+//Setup the crate
+_crate_type = crates_small call BIS_fnc_selectRandom;
+_crate = createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+_crate call wai_crate_setup;
 
-	//Troops
-	_rndnum 	= (3 + round(random 3));
-	_rndgro 	= (1 + round(random 2));
-	[[_position select 0,_position select 1,0],_rndnum,"Easy",["Random","AT"],3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	for "_i" from 0 to _rndgro do {
-		[[_position select 0,_position select 1,0],_rndnum,"Easy","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-	};
 
-	//Static Guns
-	[[
-		[(_position select 0) + 10, (_position select 1) + 10, 0],
-		[(_position select 0) - 10, (_position select 1) - 10, 0]
-	],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
+//Buildings 
+_baserunover0 = createVehicle ["Land_fortified_nest_big_EP1",[(_position select 0) - 14, (_position select 1) + 23.5,0],[], 0, "CAN_COLLIDE"];
+_baserunover1 = createVehicle ["Land_fortified_nest_big_EP1",[(_position select 0) + 12, (_position select 1) - 24,-0.01],[], 0, "CAN_COLLIDE"];
+_baserunover2 = createVehicle ["Land_HBarrier_large",[(_position select 0) - 18, (_position select 1) + 1,-0.3],[], 0, "CAN_COLLIDE"];
+_baserunover3 = createVehicle ["Land_HBarrier_large",[(_position select 0) - 8, (_position select 1) - 16,-0.3],[], 0, "CAN_COLLIDE"];
+_baserunover4 = createVehicle ["Land_HBarrier_large",[(_position select 0) + 18, (_position select 1) - 1.5,-0.3],[], 0, "CAN_COLLIDE"];
+_baserunover5 = createVehicle ["Land_HBarrier_large",[(_position select 0) + 7, (_position select 1) + 16,-0.3],[], 0, "CAN_COLLIDE"];
+_baserunover6 = createVehicle ["DesertLargeCamoNet_DZ",[(_position select 0) - 1, (_position select 1),0],[], 0, "CAN_COLLIDE"];
 
-	//Condition
-	_complete = [
-		[_mission,_crate],	// mission number and crate
-		["crate"],			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
-		[],					// cleanup objects
-		"Bandits have obtained a weapon crate. Check your map for the location!",	// mission announcement
-		"Survivors have secured the weapon cache!",									// mission success
-		"Survivors did not secure the weapon cache in time"							// mission fail
-	] call mission_winorfail;
+// Adding buildings to one variable just for tidiness
+_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6];
 
-	if(_complete) then {
-		[_crate,10,4,0,3,2] call dynamic_crate;
-	};
+// Set some directions for our buildings
+_directions = [-210,-390,90,30,90,30,-26];
+{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
 
-	diag_log format["WAI: [Mission:[Hero] Weapon Cache]: Ended at %1",_position];
+// Make buildings flat on terrain surface
+{ _x setVectorUp surfaceNormal position _x; } count _baserunover;
 
-	h_missionsrunning = h_missionsrunning - 1;
-};
+//Troops
+_rndnum = round (random 5);
+[[(_position select 0) + 6.5,(_position select 1) - 12,0],5,"Easy",["Random","AT"],3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[[(_position select 0) - 8,(_position select 1) + 14,0],5,"Easy","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[[(_position select 0) - 21,(_position select 1) - 12.5,0],_rndnum,"Easy","Random",3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+
+//Static Guns
+[[
+	[(_position select 0) + 18, (_position select 1) - 13, 0],
+	[(_position select 0) - 19.5, (_position select 1) + 12, 0]
+],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
+
+// Array of mission variables to send
+[
+	_mission, // Mission number
+	_position, // Position of mission
+	"Medium", // Difficulty
+	"Weapon Cache", // Name of Mission
+	"MainHero", // Mission Type: MainHero or MainBandit
+	true, // show mission marker?
+	true, // make minefields available for this mission
+	_crate,	// crate object info
+	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
+	[], // cleanup objects
+	"Bandits have obtained a weapon crate. Check your map for the location!", // mission announcement
+	"Survivors have secured the weapon cache!", // mission success
+	"Survivors did not secure the weapon cache in time", // mission fail
+	[10,4,0,3,2] // Dynamic crate array
+] call mission_winorfail;
