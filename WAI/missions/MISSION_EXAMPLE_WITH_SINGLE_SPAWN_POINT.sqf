@@ -1,4 +1,4 @@
-// Updated mission example for DayZ Epoch 1.0.6.2. Please review missions in the hero and bandit folder for additional examples.
+// Updated single location mission example for DayZ Epoch 1.0.6+ by JasonTM. Please review missions in the hero and bandit folders for additional examples.
 
 // Include local variables in this list
 private ["_baserunover","_mission","_directions","_position","_crate","_crate_type","_num"];
@@ -6,30 +6,38 @@ private ["_baserunover","_mission","_directions","_position","_crate","_crate_ty
 // Get mission number, important we do this early
 _mission = count wai_mission_data -1;
 
-// Get a safe position 80 meters from the nearest object. You can change this number.
-_position = [80] call find_position;
+// Declare your static spawn point. You can also use static positions for your buildings, vehicles, and crate.
+// Normally with the z coordinate you will just use 0 because 0 means that it is on the ground.
+// Round the coordinates you get from the editor to whole numbers to make it easier. Ex. 1783.42963 is just 1783.
+_position = [x, y, 0];
+
+// If this is a hero mission use this line - delete if not
+if !([_position] call wai_validSpotCheck) exitWith {h_missionsrunning = h_missionsrunning - 1; wai_mission_data set [_mission, -1]; WAI_MarkerReady = true;};
+// if this is a bandit mission use this line - delete if not
+if !([_position] call wai_validSpotCheck) exitWith {b_missionsrunning = b_missionsrunning - 1; wai_mission_data set [_mission, -1]; WAI_MarkerReady = true;};
 
 diag_log format["WAI: Mission Test Mission started at %1",_position];
 
 //Setup the crate
-_crate_type 	= crates_large call BIS_fnc_selectrandom; // Choose between crates_large, crates_medium, and crates_small
-_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+_crate_type = crates_large call BIS_fnc_selectrandom; // Choose between crates_large, crates_medium, and crates_small
+_crate = createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 _crate call wai_crate_setup; // This function wipes the crate and sets variables. It must be called.
  
-// Create some Buildings
-_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover1 	= createVehicle ["land_fortified_nest_big",[(_position select 0) + 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover2 	= createVehicle ["land_fortified_nest_big",[(_position select 0), (_position select 1) - 40,-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover3 	= createVehicle ["land_fortified_nest_big",[(_position select 0), (_position select 1) + 40,-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover4 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) - 10, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover5 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) + 10, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover6 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0), (_position select 1) - 10,-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover7 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0), (_position select 1) + 10,-0.2],[], 0, "CAN_COLLIDE"];
+// Create some Buildings with static coordinates
+_baserunover0 = createVehicle ["land_fortified_nest_big",[x,y,0],[], 0, "CAN_COLLIDE"];
+_baserunover1 = createVehicle ["land_fortified_nest_big",[x,y,0],[], 0, "CAN_COLLIDE"];
+_baserunover2 = createVehicle ["land_fortified_nest_big",[x,y,0],[], 0, "CAN_COLLIDE"];
+_baserunover3 = createVehicle ["land_fortified_nest_big",[x,y,0],[], 0, "CAN_COLLIDE"];
+_baserunover4 = createVehicle ["Land_Fort_Watchtower",[x,y,0],[], 0, "CAN_COLLIDE"];
+_baserunover5 = createVehicle ["Land_Fort_Watchtower",[x,y,0],[], 0, "CAN_COLLIDE"];
+_baserunover6 = createVehicle ["Land_Fort_Watchtower",[x,y,0],[], 0, "CAN_COLLIDE"];
+_baserunover7 = createVehicle ["Land_Fort_Watchtower",[x,y,0],[], 0, "CAN_COLLIDE"];
 
 // Adding buildings to one variable just for tidiness
 _baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7];
 
-// Set some directions for our buildings
+// Set some directions for our buildings - This method uses the array _baserunover above and sets the direction to each element in order.
+// This makes the buildings conform to the terrain
 _directions = [90,270,0,180,0,180,270,90];
 { _x setDir (_directions select _forEachIndex) } forEach _baserunover;
 

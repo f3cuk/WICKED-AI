@@ -1,23 +1,16 @@
-if(isServer) then {
+private ["_baserunover","_mission","_directions","_position","_crate","_crate_type","_rndnum","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7","_baserunover8","_baserunover9","_baserunover10","_baserunover11","_baserunover12","_baserunover13","_baserunover14","_baserunover15","_baserunover16","_baserunover17","_baserunover18","_baserunover19","_baserunover20","_baserunover21","_baserunover22","_baserunover23"];
 
-	private 		["_baserunover","_mission","_directions","_position","_crate","_crate_type","_num"];
+_mission = count wai_mission_data -1;
 
-	_mission 		= count wai_mission_data -1;
-	// Get a safe position 80 meters from the nearest object
-	_position		= [80] call find_position;
-	
-	// Initialise the mission variable with the following options, [position, difficulty, mission name, mission type (MainHero/Mainbandit), minefield (true or false)] call mission_init;
-	[_mission,_position,"hard","Cannibal Cave","MainHero",true] call mission_init;
+_position = [80] call find_position;
 
-	diag_log 		format["WAI: Mission:[Hero] Cannibal started at %1",_position];
+diag_log format["WAI: Mission:[Hero] Cannibal started at %1",_position];
 
-	//Setup the crate
-	_crate_type 	= crates_large call BIS_fnc_selectrandom; // Choose between crates_large, crates_medium and crates_small
-	_crate 			= createVehicle [_crate_type,[(_position select 0) + 5,(_position select 1) + 7,0],[],0,"CAN_COLLIDE"];
-	[_crate] call wai_crate_setup;
+//Setup the crate
+_crate_type = crates_large call BIS_fnc_selectrandom;
+_crate = createVehicle [_crate_type,[(_position select 0) + 5,(_position select 1) + 7,0],[],0,"CAN_COLLIDE"];
+_crate call wai_crate_setup;
 
-
-	// Create some Buildings
 //Buildings 
 _baserunover0 = createVehicle ["MAP_R2_RockWall",[(_position select 0) + 10, (_position select 1) + 28,-4.15],[], 0, "CAN_COLLIDE"];
 _baserunover1 = createVehicle ["MAP_R2_RockWall",[(_position select 0) - 23, (_position select 1) + 9,-6.55],[], 0, "CAN_COLLIDE"];
@@ -44,41 +37,37 @@ _baserunover21 = createVehicle ["SKODAWreck",[(_position select 0) - 11, (_posit
 _baserunover22 = createVehicle ["datsun01Wreck", [(_position select 0) - 2, (_position select 1) - 60,-0.02],[], 0, "CAN_COLLIDE"];
 _baserunover23 = createVehicle ["UralWreck", [(_position select 0) - 41.3, (_position select 1) - 26,-0.02],[], 0, "CAN_COLLIDE"];
 
+// Adding buildings to one variable just for tidiness
+_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13,_baserunover14,_baserunover15,_baserunover16,_baserunover17,_baserunover18,_baserunover19,_baserunover20,_baserunover21,_baserunover22,_baserunover23];
 
-	// Adding buildings to one variable just for tidiness
-	_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13,_baserunover14,_baserunover15,_baserunover16,_baserunover17,_baserunover18,_baserunover19,_baserunover20,_baserunover21,_baserunover22,_baserunover23];
-	
-	// Set some directions for our buildings
-	_directions = [0,-96.315,262.32,-29.29,-222.72,-44.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-50.94,151.15,34.54,19.15];
-	{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
+// Set some directions for our buildings
+_directions = [0,-96.315,262.32,-29.29,-222.72,-44.01,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-50.94,151.15,34.54,19.15];
+{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
 
-	// Make buildings flat on terrain surface
-	{ _x setVectorUp surfaceNormal position _x; } count _baserunover;
+// Make buildings flat on terrain surface
+{ _x setVectorUp surfaceNormal position _x; } count _baserunover;
 
-	_num = round (random 3) + 4;
-	[[(_position select 0) + 12, (_position select 1) + 42.5, 0],_num,"extreme",["random","at"],4,"random","TK_INS_Soldier_AT_EP1","random",["bandit",150],_mission] call spawn_group;
-	[[(_position select 0) + 11, (_position select 1) + 41, 0],4,"hard","random",4,"random","TK_Special_Forces_EP1","random","bandit",_mission] call spawn_group;
-	[[(_position select 0) - 12, (_position select 1) - 43, 0],4,"random","random",4,"random","TK_Special_Forces_EP1","random","bandit",_mission] call spawn_group;
-	[[(_position select 0) - 13, (_position select 1) - 43, 0],4,"random","random",4,"random","TK_INS_Soldier_AT_EP1","random","bandit",_mission] call spawn_group;
+//Troops
+_rndnum = round (random 5);
+[[(_position select 0) + 12, (_position select 1) + 42.5, 0],5,"extreme",["random","at"],4,"random","bandit","random",["bandit",150],_mission] call spawn_group;
+[[(_position select 0) + 11, (_position select 1) + 41, 0],5,"hard","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
+[[(_position select 0) - 12, (_position select 1) - 43, 0],5,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
+[[(_position select 0) - 13, (_position select 1) - 43, 0],_rndnum,"random","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
 
-
-	//Condition
-	_complete = [
-		[_mission,_crate],	// mission variable (from line 9) and crate
-		["crate"], 			// Mission objective type (["crate"], or ["kill"], or ["assassinate", _assassinate])
-		[_baserunover], 	// buildings to cleanup after mission is complete, does not include the crate
-		"Cannibals are hiding in a cave...Check your map",	// mission announcement
-		"Survivors secured the Cannibal's Cave",			// mission success
-		"The Cannibal mission timed out and nobody was in the vicinity"	// mission fail
-	] call mission_winorfail;
-
-
-	 
-	if(_complete) then {
-		[_crate,10,8,[2,crate_items_high_value],3,[4,crate_backpacks_large]] call dynamic_crate;
-	};	
-	
-	// End of mission
-	diag_log format["WAI: Mission:[Hero] Cannibal ended at %1 ended",_position];
-	h_missionsrunning = h_missionsrunning - 1;
-};
+// Array of mission variables to send
+[
+	_mission, // Mission number
+	_position, // Position of mission
+	"hard", // Difficulty
+	"Cannibal Cave", // Name of Mission
+	"MainHero", // Mission Type: MainHero or MainBandit
+	true, // show mission marker?
+	true, // make minefields available for this mission
+	_crate,	// crate object info
+	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
+	[_baserunover], // cleanup objects
+	"Cannibals are hiding in a cave...Check your map", // mission announcement
+	"Survivors secured the Cannibal's Cave", // mission success
+	"The Cannibal mission timed out and nobody was in the vicinity", // mission fail
+	[10,8,[2,crate_items_high_value],3,[4,crate_backpacks_large]] // Dynamic crate array
+] call mission_winorfail;
