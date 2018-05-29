@@ -5,7 +5,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 ### Release 2.2.5 (Major Rework) (worldwidesorrow)
 - Due to reports of poor performance on high population servers, this update is mostly code optimization.
-- There are some new features included that are listed in the epochmod.com forum topic.
+- There are some new features included that are listed in the ***epochmod.com forum topic.(https://epochmod.com/forum/topic/45133-release-wai-225/)***
 
 ### Version history
 - 28-05-2018 : Release 2.2.5
