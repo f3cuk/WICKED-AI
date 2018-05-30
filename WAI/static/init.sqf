@@ -1,4 +1,4 @@
-// This variable is used to store data for cleanup and monitoring
+// Do not change this variable. It is used by the static spawns manager.
 wai_static_data = [0,[],[],[]]; // [AI Count, UnitGroups, Vehicles to Monitor, Static gun and AI pair]
 
 if(wai_custom_per_world) then {
