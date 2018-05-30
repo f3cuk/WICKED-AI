@@ -36,8 +36,8 @@ while {true} do
 	_cnt 		= {alive _x} count playableUnits;
 	_currTime 	= diag_tickTime;
 
-	if (isNil "_h_missionTime") then { _h_missionTime = (random((60*(wai_mission_timer select 1)) - (60*(wai_mission_timer select 0))) + (60*(wai_mission_timer select 0))); };
-	if (isNil "_b_missionTime") then { _b_missionTime = (random((60*(wai_mission_timer select 1)) - (60*(wai_mission_timer select 0))) + (60*(wai_mission_timer select 0))); };
+	if (isNil "_h_missionTime") then { _h_missionTime = (random((wai_mission_timer select 1) - (wai_mission_timer select 0)) + (wai_mission_timer select 0)) * 60; };
+	if (isNil "_b_missionTime") then { _b_missionTime = (random((wai_mission_timer select 1) - (wai_mission_timer select 0)) + (wai_mission_timer select 0)) * 60; };
 
 	if((_currTime - _h_startTime >= _h_missionTime) && (h_missionsrunning < wai_hero_limit)) then { _hresult = 1; };
 	if((_currTime - _b_startTime >= _b_missionTime) && (b_missionsrunning < wai_bandit_limit)) then { _bresult = 1; };
