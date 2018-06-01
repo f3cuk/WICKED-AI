@@ -167,8 +167,6 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	
 5. Copy the ***dayz_code*** folder into your mission folder. If you already have this folder, then overwrite remote_message.sqf and verify that IWACsound.ogg and switch_on_off.sqf are in the ***scripts\radio*** directory.
 
-6. Copy ***stringtable.xml*** to your mission folder. If there is already another file called stringtable.xml, then you will have to merge them.
-
 ### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
 	
 1. Extra_Rc - I could not find a public repository of an updated version of extra_rc by maca134, so I made one: ***[Download Here](https://github.com/worldwidesorrow/Extra-Rc/archive/master.zip)*** Here are the install instructions ***[Install Instructions](https://github.com/worldwidesorrow/Extra-Rc/blob/master/README.md)***
