@@ -172,7 +172,7 @@ WAI_MarkerReady = true;
 					_left = false;
 					_acArray = [];
 				};
-				if (diag_tickTime - _claimTime > ac_timeout && !(isNull _closestPlayer)) then {
+				if (diag_tickTime - _claimTime > ac_timeout && !(isNull _closestPlayer) && (_closestPlayer distance _position) > ac_alert_distance) then {
 					[_closestPlayer,_name,"Unclaim"] call wai_AutoClaimAlert; // Send alert to all players
 					_closestPlayer = objNull;
 					_claimed = false;
