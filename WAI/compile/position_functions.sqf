@@ -201,3 +201,22 @@ wai_isClosest = {
 	_closest
 };
 
+wai_checkReturningPlayer = {
+	private["_acArray","_position","_playerUID","_returningPlayer"];
+
+	_position 	= _this select 0;
+	_acArray	= _this select 1;
+	_playerUID	= _acArray select 0;
+	//diag_log format["WAI: PlayerUID %1",_playerUID];
+	_returningPlayer = objNull;
+
+	{
+		if ((isPlayer _x) && (_x distance _position <= ac_alert_distance) && (getplayerUID _x == _playerUID)) then {
+			_returningPlayer = _x;
+		};
+	} count playableUnits;
+	
+
+	_returningPlayer
+};
+
