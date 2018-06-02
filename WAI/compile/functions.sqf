@@ -80,8 +80,12 @@ wai_AutoClaimAlert = {
 	_unit = _this select 0;
 	_missionName = _this select 1;
 	_messageType = _this select 2;
-	_owner = owner _unit;
-	_name = name _unit;
+	if (typeName _unit == "ARRAY") then {
+		_name = _unit select 1;
+	} else {
+		_owner = owner _unit;
+		_name = name _unit;
+	};
 	
 	call
 	{
@@ -93,7 +97,7 @@ wai_AutoClaimAlert = {
 		if (_messageType == "Unclaim") exitWith {_message = format["AutoClaim: %1 has abandoned %2! The marker has been removed.", _name, _missionName];};
 	};
 	
-	if (_messageType == "Claimed" || _messageType == "Unclaim") exitWith {
+	if (_messageType == "Claimed" || _messageType == "Unclaim" || _messageType == "Abandoned") exitWith {
 		RemoteMessage = ["IWAC",_message];
 		publicVariable "RemoteMessage";
 	};
