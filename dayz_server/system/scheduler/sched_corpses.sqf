@@ -1,5 +1,8 @@
 #include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
 
+if (isNil "ai_cleanup_time") then {ai_cleanup_time = -1;};
+if (isNil "wai_debug_mode") then {wai_debug_mode = false;};
+
 sched_co_deleteVehicle = {
 	private "_group";
 	_this removeAllMPEventHandlers "mpkilled";
