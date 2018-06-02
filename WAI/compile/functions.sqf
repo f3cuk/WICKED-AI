@@ -97,7 +97,7 @@ wai_AutoClaimAlert = {
 		if (_messageType == "Unclaim") exitWith {_message = format["AutoClaim: %1 has abandoned %2! The marker has been removed.", _name, _missionName];};
 	};
 	
-	if (_messageType == "Claimed" || _messageType == "Unclaim" || _messageType == "Abandoned") exitWith {
+	if (_messageType == "Claimed" || _messageType == "Unclaim") exitWith {
 		RemoteMessage = ["IWAC",_message];
 		publicVariable "RemoteMessage";
 	};
