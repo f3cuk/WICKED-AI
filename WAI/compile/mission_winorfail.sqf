@@ -294,8 +294,10 @@ WAI_MarkerReady = true;
 		// Remove the mission from the mission count so a new one can spawn
 		if (_missionType == "MainBandit") then {
 			b_missionsrunning = b_missionsrunning - 1;
+			wai_b_starttime = diag_tickTime;
 		} else {
 			h_missionsrunning = h_missionsrunning - 1;
+			wai_h_starttime = diag_tickTime;
 		};
 		
 		// delete mission data if mission clean is turned off.
@@ -389,8 +391,10 @@ WAI_MarkerReady = true;
 		// Remove the mission from the mission count so a new one can spawn
 		if (_missionType == "MainBandit") then {
 			b_missionsrunning = b_missionsrunning - 1;
+			wai_b_starttime = diag_tickTime;
 		} else {
 			h_missionsrunning = h_missionsrunning - 1;
+			wai_h_starttime = diag_tickTime;
 		};
 		
 		// Remove the AI groups
