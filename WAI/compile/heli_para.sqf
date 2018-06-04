@@ -5,7 +5,6 @@ if (!wai_enable_paradrops) exitWith {};
 _position 		= _this select 0;
 _pos_x			= _position select 0;
 _pos_y			= _position select 1;
-//_startingpos 	= _this select 1;
 _triggerdis 	= _this select 1;
 _heli_class 	= _this select 2;
 _paranumber 	= _this select 3;
@@ -20,8 +19,8 @@ _helipatrol 	= _this select 11;
 _aipack 		= "";
 _player_present = false;
 
-if (count _this > 13) then {
-	_mission = _this select 13;
+if (count _this > 12) then {
+	_mission = _this select 12;
 } else {
 	_mission = nil;
 };
