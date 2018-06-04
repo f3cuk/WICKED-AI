@@ -1,7 +1,6 @@
 private ["_start_position","_diag_distance","_rndnum","_mission","_aitype","_aiskin","_skin","_aicskill","_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
 
 _position 			= _this select 0;
-//_startingpos 		= _this select 1;
 _radius 			= _this select 1;
 _wpnum 				= _this select 2;
 _heli_class 		= _this select 3;
@@ -9,8 +8,8 @@ _skill 				= _this select 4;
 _skin				= _this select 5;
 _aitype				= _this select 6;
 
-if (count _this > 8) then {
-	_mission = _this select 8;
+if (count _this > 7) then {
+	_mission = _this select 7;
 } else {
 	_mission = nil;
 };
