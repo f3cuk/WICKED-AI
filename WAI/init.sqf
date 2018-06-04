@@ -50,6 +50,7 @@ if(isNil("DZMSInstalled")) then {
 wai_staticloaded = false;
 WAIconfigloaded	= false;
 wai_markedPos = [];
+wai_static_data = [];
 ai_ground_units	= 0;
 ai_emplacement_units = 0;
 ai_air_units = 0;
