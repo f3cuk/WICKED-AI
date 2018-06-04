@@ -147,7 +147,7 @@ if(wai_keep_vehicles) then {
 			diag_log ("PUBLISH: Created " + (_class) + " with ID " + str(_uid));
 			
 			if (wai_vehicle_message) then {
-				[nil,(_this select 2),rTitleText,"You have claimed this vehicle! It is now saved to the database.","PLAIN",5] call RE;
+				[nil,(_this select 2),"loc",rTitleText,"You have claimed this vehicle! It is now saved to the database.","PLAIN",5] call RE;
 			};
 		};
 	}];
@@ -157,7 +157,7 @@ if(wai_keep_vehicles) then {
 		_vehicle = _this select 0;
 		
 		if (wai_vehicle_message) then {
-			[nil,(_this select 2),rTitleText,"WARNING: This vehicle will be deleted at restart!","PLAIN",5] call RE;
+			[nil,(_this select 2),"loc",rTitleText,"WARNING: This vehicle will be deleted at restart!","PLAIN",5] call RE;
 		};
 		
 		// remove the mission variable so the vehicle does not get deleted during mission clean
