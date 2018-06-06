@@ -49,7 +49,7 @@ _mayor_himself spawn {
 [[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random","Bandit","Bandit",_mission] call vehicle_patrol;
 
 //Heli Paradrop
-[[(_position select 0),(_position select 1),0],400,"UH60M_EP1_DZE","North",[3000,4000],75,0.2,100,10,"Random","Random",4,"Random","Bandit","Random","Bandit",false,_mission] spawn heli_para;
+[[(_position select 0),(_position select 1),0],400,"UH60M_EP1_DZE","North",[3000,4000],150,1.0,100,10,"Random","Random",4,"Random","Bandit","Random","Bandit",false,_mission] spawn heli_para;
 
 //Static mounted guns
 [[
