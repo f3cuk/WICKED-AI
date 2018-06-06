@@ -27,7 +27,7 @@ _rndnum = round (random 5);
 ],"M2StaticMG","Hard","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
 
 //Heli Para Drop
-[[(_position select 0),(_position select 1),0],400,"BAF_Merlin_HC3_D",10,"Random","Random",4,"Random","Bandit","Random","Bandit",false,_mission] spawn heli_para;
+[[(_position select 0),(_position select 1),0],400,"BAF_Merlin_HC3_D","North",[3000,4000],150,1.0,200,10,"Random","Random",4,"Random","Bandit","Random","Bandit",false,_mission] spawn heli_para;
 
 uiSleep 3; // Wait for the ai list to populate so the key on ai option works.
 

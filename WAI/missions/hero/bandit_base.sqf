@@ -45,7 +45,7 @@ _rndnum = round (random 5);
 [[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 //Heli Paradrop
-[[(_position select 0), (_position select 1), 0],400,"UH1H_DZ",10,"Random","Random",4,"Random","Bandit","Random","Bandit",true,_mission] spawn heli_para;
+[[(_position select 0), (_position select 1), 0],400,"UH1H_DZ","North",[3000,4000],150,1.0,200,10,"Random","Random",4,"Random","Bandit","Random","Bandit",true,_mission] spawn heli_para;
 
 // Array of mission variables to send
 [

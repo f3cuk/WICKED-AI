@@ -47,7 +47,7 @@ _president_himself spawn {
 [[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","Random","Hero","Hero",_mission] call vehicle_patrol;
 
 //Heli Paradrop
-[[(_position select 0),(_position select 1),0],400,"UH60M_EP1_DZE",10,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
+[[(_position select 0),(_position select 1),0],400,"UH60M_EP1_DZE","East",[3000,4000],150,1.0,200,10,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
 
 //Static guns
 [[
