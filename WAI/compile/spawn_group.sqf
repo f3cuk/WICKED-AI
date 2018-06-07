@@ -37,6 +37,7 @@ _aipack 			= "";
 _current_time		= time;
 _unarmed			= false;
 
+// If zero ai are chosen exit the script
 if (_unitnumber == 0) exitWith {};
 
 if(_aitype == "Hero") then {
