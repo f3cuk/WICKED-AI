@@ -37,6 +37,8 @@ _aipack 			= "";
 _current_time		= time;
 _unarmed			= false;
 
+if (_unitnumber == 0) exitWith {};
+
 if(_aitype == "Hero") then {
 	_unitGroup	= createGroup RESISTANCE;
 } else {
