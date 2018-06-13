@@ -92,6 +92,7 @@ wai_timeout_distance	= 1000; // if a player is this close to a mission then it w
 
 wai_clean_mission_time	= 30; // time in minutes after a mission is complete to clean mission buildings. Set to -1 to disable mission cleanup.
 wai_clean_mission_crate	= true; // include the mission crate with the mission cleanup. If a player is within 75 meters of the crate the cleanup script will wait. Does not apply to missions that timeout.
+wai_clean_when_clear	= ["Road Block"]; // These mission names will get cleaned instantly overriding wai_clean_mission_time
 
 wai_mission_fuel		= [5,60]; // fuel inside mission spawned vehicles [min%,max%]
 wai_vehicle_damage		= [20,70]; // damages to spawn vehicles with [min%,max%]
