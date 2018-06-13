@@ -318,7 +318,7 @@ WAI_MarkerReady = true;
 				// Continue monitoring AI vehicles until mission clean time is reached.
 				_mission call wai_monitor_ai_vehicles;
 
-				if ((diag_tickTime - _finish_time >= 60*wai_clean_mission_time)) then {
+				if ((diag_tickTime - _finish_time >= 60*wai_clean_mission_time) || ({[_x,_name] call fnc_inString;} count wai_clean_when_clear) != 0) then {
 					
 					// Delete AI vehicles if alive
 					_mission call wai_remove_ai_vehicles;
