@@ -1,4 +1,4 @@
-private ["_starttodrop","_timebtwdrops","_flyinheight","_distance","_heliStartDir","_start_position","_diag_distance","_rndnum","_mission_data","_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
+private ["_rocket","_unarmed","_launcher","_starttodrop","_timebtwdrops","_flyinheight","_distance","_heliStartDir","_start_position","_diag_distance","_rndnum","_mission_data","_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
 if (!wai_enable_paradrops) exitWith {};
 
@@ -30,11 +30,17 @@ if (count _this > 17) then {
 	_mission = nil;
 };
 
+if (typeName _gun == "ARRAY") then {
+	_launcher		= _gun select 1;
+	_gun			= _gun select 0;
+};
+
 _aiweapon 		= [];
 _aigear 		= [];
 _aiskin 		= "";
 _aicskill 		= [];
 _skillarray 	= ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
+_unarmed		= false;
 
 if(wai_debug_mode) then { diag_log "WAI: Paradrop waiting for player"; };
 
@@ -197,18 +203,22 @@ while {(alive _helicopter) && (_drop)} do {
 			_helipos = getPos _helicopter;
 
 			call {
-				if (typeName(_gun) == "SCALAR") then {
+				if(typeName(_gun) == "SCALAR") then {
 					if(_gun == 0) 			exitWith { _aiweapon = ai_wep_random select (floor (random (count ai_wep_random))); };
 					if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
 					if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
 				} else {
 					if(_gun == "random") 	exitWith { _aiweapon = ai_wep_random select (floor (random (count ai_wep_random))); };
+					if(_gun == "unarmed") 	exitWith { _unarmed = true; };
+					_aiweapon = _gun;
 				};
 			};
-			
-			_weapon 	= _aiweapon select (floor (random (count _aiweapon)));
-			_magazine 	= _weapon call find_suitable_ammunition;
 
+			if (!_unarmed) then {
+				_weapon 	= if (typeName (_aiweapon) == "ARRAY") then {_aiweapon select (floor (random (count _aiweapon)))} else {_aiweapon};
+				_magazine 	= _weapon call find_suitable_ammunition;
+			};
+			
 			call {
 				if (typeName(_gear) == "SCALAR") then {
 					if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
@@ -308,6 +318,18 @@ while {(alive _helicopter) && (_drop)} do {
 			} else {
 				wai_static_data set [0, ((wai_static_data select 0) + 1)];
 			};
+		};
+		
+		if (!isNil "_launcher" && wai_use_launchers) then {
+			call {
+				//if (_launcher == "Random") exitWith { _launcher = (ai_launchers_AT + ai_launchers_AA) call BIS_fnc_selectRandom; };
+				if (_launcher == "at") exitWith { _launcher = ai_wep_launchers_AT select (floor (random (count ai_wep_launchers_AT))); };
+				if (_launcher == "aa") exitWith { _launcher = ai_wep_launchers_AA select (floor (random (count ai_wep_launchers_AA))); };
+			};
+			_rocket = _launcher call find_suitable_ammunition;
+			_para addMagazine _rocket;
+			_para addMagazine _rocket;
+			_para addWeapon _launcher;
 		};
 
 		call {
