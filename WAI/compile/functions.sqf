@@ -37,7 +37,7 @@ wai_server_message = {
 	call
 	{
 		if (wai_mission_announce == "Radio") exitWith {
-			RemoteMessage = ["radio","[RADIO] " + _message];
+			RemoteMessage = ["radio",_message];
 			publicVariable "RemoteMessage";
 		};
 		if (wai_mission_announce == "DynamicText") exitWith {
