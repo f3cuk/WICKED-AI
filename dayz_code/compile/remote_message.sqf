@@ -4,8 +4,16 @@ fnc_remote_message = {
 	_type = _this select 0;
 	_message = _this select 1;
 
-	if (["STR_", _message] call fnc_inString) then {
-		_message = localize _message;
+	if (typeName _message == "STRING") then {
+		if (["STR_", _message] call fnc_inString) then {
+			_message = localize _message;
+		};
+	} else {
+		{
+			if (["STR_", _x] call fnc_inString) then {
+				_message set [_forEachIndex, localize _x];
+			};
+		} forEach _message;
 	};
 	
 	if (_type == "radio") exitWith {
