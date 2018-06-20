@@ -6,6 +6,9 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 ### Release 2.2.5 (Major Rework) (worldwidesorrow)
 - Due to reports of poor performance on high population servers, this update is mostly code optimization.
 - There are some new features included that are listed in the ***[epochmod.com forum topic.](https://epochmod.com/forum/topic/45133-release-wai-225/)***
+- Localization solution added. @BiggEgg17
+- Added localization strings to ***[oiad community stringtable](https://github.com/oiad/communityLocalizations/)***
+- Updated Readme for community stringtable dependency
 
 ### Version history
 - 28-05-2018 : Release 2.2.5
@@ -166,6 +169,8 @@ Note: In order for players to receive radio announcements, they must have ItemRa
 	```
 	
 5. Copy the ***dayz_code*** folder into your mission folder. If you already have this folder, then overwrite remote_message.sqf and verify that IWACsound.ogg and switch_on_off.sqf are in the ***scripts\radio*** directory.
+
+6. This mod is dependent on the Epoch community stringtable. Download the stringtable ***[here](https://github.com/oiad/communityLocalizations/)*** and place file stringTable.xml in the root of your mission folder. Repack your mission PBO.
 
 ### Option to turn the radio on and off with extra_rc or deploy anything to disable radio mission announcements.
 	
