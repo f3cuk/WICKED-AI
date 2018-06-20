@@ -61,8 +61,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"STR_CL_HERO_FARM_ANNOUNCE", // mission announcement
-	"STR_CL_HERO_FARM_WIN", // mission success
-	"STR_CL_HERO_FARM_FAIL", // mission fail
+	"STR_CL_GENERAL_FARM_ANNOUNCE", // mission announcement
+	"STR_CL_GENERAL_FARM_WIN", // mission success
+	"STR_CL_GENERAL_FARM_FAIL", // mission fail
 	[9,5,[15,crate_items_crop_raider],3,2] // Dynamic crate array
 ] call mission_winorfail;
