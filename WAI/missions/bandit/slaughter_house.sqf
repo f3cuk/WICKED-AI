@@ -51,8 +51,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Something smells funky at the Old Slaughter House....check your map", // mission announcement
-	"Survivors have secured the Slaughter House", // mission success
-	"Survivors have unearthed a mass grave of heroes...mission failed", // mission fail
+	"STR_BANDIT_SLAUGHTERHOUSE_ANNOUNCE", // mission announcement
+	"STR_BANDIT_SLAUGHTERHOUSE_WIN", // mission success
+	"STR_BANDIT_SLAUGHTERHOUSE_FAIL", // mission fail
 	[8,5,[6,crate_items_chainbullets],3,[2,crate_backpacks_large]] // Dynamic crate array
 ] call mission_winorfail;

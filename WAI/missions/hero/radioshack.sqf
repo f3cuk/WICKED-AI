@@ -58,8 +58,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Bandits set up a radio tower to spread hero propaganda..Check your map", // mission announcement
-	"Survivors secured the radio tower", // mission success
-	"Survivors did not secure the radio tower in time", // mission fail
+	"STR_HERO_RADIO_ANNOUNCE", // mission announcement
+	"STR_HERO_RADIO_WIN", // mission success
+	"STR_HERO_RADIO_FAIL", // mission fail
 	[10,5,30,3,2] // Dynamic crate array
 ] call mission_winorfail;

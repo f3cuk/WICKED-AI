@@ -41,11 +41,12 @@ wai_server_message = {
 			publicVariable "RemoteMessage";
 		};
 		if (wai_mission_announce == "DynamicText") exitWith {
-			RemoteMessage = ["dynamic_text", ["Mission Announcement",_message]];
+			RemoteMessage = ["dynamic_text", ["STR_MISSION_ANNOUNCE",_message]];
 			publicVariable "RemoteMessage";
 		};
 		if (wai_mission_announce == "titleText") exitWith {
-			[nil,nil,rTitleText,_message,"PLAIN",10] call RE;
+			RemoteMessage = ["titleText",_message];
+			publicVariable "RemoteMessage";
 		};
 	};
 };
@@ -54,11 +55,11 @@ wai_server_message = {
 wai_minefield_warning = {
 	private "_owner";
 	_owner = (owner _this);
-	diag_log format["WAI: Minefield Warning Owner %1",_owner];
+	//diag_log format["WAI: Minefield Warning Owner %1",_owner];
 	
 	//RemoteMessage = ["titleCut","WARNING: You are approaching a minefield! Stop and continue on foot."];
 	//(_owner) publicVariableClient "RemoteMessage";
-	RemoteMessage = ["dynamic_text2","WARNING: You are approaching a minefield! Stop and continue on foot."];
+	RemoteMessage = ["dynamic_text2","STR_MINEFIELD_WARNING"];
 	(_owner) publicVariableClient "RemoteMessage";
 };
 
@@ -89,12 +90,12 @@ wai_AutoClaimAlert = {
 	
 	call
 	{
-		if (_messageType == "Start") exitWith {_message = format["AutoClaim: If you want to claim %1, then do not leave the mission area for %2 seconds!",_missionName,ac_delay_time];};
-		if (_messageType == "Stop") exitWith {_message = format["AutoClaim: You did not claim %1",_missionName];};
-		if (_messageType == "Return") exitWith {_message = format["You have left the mission area, you have %1 seconds to return!",ac_timeout];};
-		if (_messageType == "Reclaim") exitWith {_message = "You are back in the mission area.";};
-		if (_messageType == "Claimed") exitWith {_message = format["AutoClaim: %1 has claimed %2! A marker has been placed.", _name, _missionName];};
-		if (_messageType == "Unclaim") exitWith {_message = format["AutoClaim: %1 has abandoned %2! The marker has been removed.", _name, _missionName];};
+		if (_messageType == "Start") exitWith {_message = format["STR_AUTOCLAIM_ANNOUNCE",_missionName,ac_delay_time];};
+		if (_messageType == "Stop") exitWith {_message = format["STR_AUTOCLAIM_NOCLAIM",_missionName];};
+		if (_messageType == "Return") exitWith {_message = format["STR_AUTOCLAIM_RETURN",ac_timeout];};
+		if (_messageType == "Reclaim") exitWith {_message = "STR_AUTOCLAIM_RECLAIM";};
+		if (_messageType == "Claimed") exitWith {_message = format["STR_AUTOCLAIM_CLAIM", _name, _missionName];};
+		if (_messageType == "Unclaim") exitWith {_message = format["STR_AUTOCLAIM_ABANDON", _name, _missionName];};
 	};
 	
 	if (_messageType == "Claimed" || _messageType == "Unclaim") exitWith {

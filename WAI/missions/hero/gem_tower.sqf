@@ -52,8 +52,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"GEM TOWER! Climb up the tower and down the other side to get the loot", // mission announcement
-	"Survivors captured the Gem Tower, HOOAH!!", // mission success
-	"Survivors were unable to capture the Gem Tower", // mission fail
+	"STR_HERO_GEMTOWER_ANNOUNCE", // mission announcement
+	"STR_HERO_GEMTOWER_WIN", // mission success
+	"STR_HERO_GEMTOWER_FAIL", // mission fail
 	[8,5,[4,crate_items_gems],3,2] // Dynamic crate array
 ] call mission_winorfail;

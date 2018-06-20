@@ -38,8 +38,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"A Black Hawk carrying supplies has crashed and bandits are securing the site! Check your map for the location!", // mission announcement
-	"Survivors have secured the crashed Black Hawk!", // mission success
-	"Survivors did not secure the crashed Black Hawk in time", // mission fail
+	"STR_HERO_BHCRASH_ANNOUNCE", // mission announcement
+	"STR_HERO_BHCRASH_WIN", // mission success
+	"STR_HERO_BHCRASH_FAIL", // mission fail
 	[5,5,10,3,2] // Dynamic crate array
 ] call mission_winorfail;

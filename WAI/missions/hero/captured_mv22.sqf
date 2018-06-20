@@ -63,8 +63,8 @@ if(wai_debug_mode) then {
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Bandits have captured a Red Cross MV-22! An informant has advised there are medical supplies, he has updated the map for the location!", // mission announcement
-	"Survivors have secured the MV-22!", // mission success
-	"Survivors did not secure the MV-22 in time", // mission fail
+	"STR_HERO_MV22_ANNOUNCE", // mission announcement
+	"STR_HERO_MV22_WIN", // mission success
+	"STR_HERO_MV22_FAIL", // mission fail
 	[0,0,[80,crate_items_medical],3,1] // Dynamic crate array
 ] call mission_winorfail;

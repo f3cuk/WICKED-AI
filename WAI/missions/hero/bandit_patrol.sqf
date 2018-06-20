@@ -37,8 +37,8 @@ _vehicle = [_crate,_vehclass,_position,_mission] call custom_publish;
 	_crate, // crate object info
 	["kill"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[], // cleanup objects
-	"A bandit scout patrol is checking out a new base location, stop them before they get back and report!", // mission announcement
-	"Survivors have dealt with the scout patrol!", // mission success
-	"Survivors did not deal with the scout patrol in time! A bandit base might appear here soon!", // mission fail
+	"STR_HERO_BANDITPATROL_ANNOUNCE", // mission announcement
+	"STR_HERO_BANDITPATROL_WIN", // mission success
+	"STR_HERO_BANDITPATROL_FAIL", // mission fail
 	[4,8,36,3,2] // Dynamic crate array
 ] call mission_winorfail;

@@ -79,8 +79,8 @@ if(wai_debug_mode) then {
 	_vehicle, // the loot will be spawned in the vehicle
 	["kill"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[], // cleanup objects
-	format["Heroes have started to patrol in %1",(_location select 0)], // mission announcement
-	"Bandits have taken out the hero patrol!", // mission success
-	"Heroes managed to reach their destination", // mission fail
+	format["STR_BANDIT_PATROL_ANNOUNCE",(_location select 0)], // mission announcement
+	"STR_BANDIT_PATROL_WIN", // mission success
+	"STR_BANDIT_PATROL_FAIL", // mission fail
 	[3,0,[2,crate_items_high_value],0,2] // Dynamic crate array
 ] call mission_winorfail;

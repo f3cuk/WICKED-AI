@@ -51,8 +51,8 @@ if(wai_debug_mode) then {
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[], // cleanup objects
-	"A bandit helicopter is taking off with a crate of snipers! Save the cargo and take their chopper!", // mission announcement
-	"Survivors have secured the armed chopper!", // mission success
-	"Survivors did not secure the armed chopper in time", // mission fail
+	"STR_HERO_MILCHOPPER_ANNOUNCE", // mission announcement
+	"STR_HERO_MILCHOPPER_WIN", // mission success
+	"STR_HERO_MILCHOPPER_FAIL", // mission fail
 	[[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2] // Dynamic crate array
 ] call mission_winorfail;

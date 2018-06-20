@@ -66,8 +66,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Bandits have set up a Crack House! Check your map for the location!", // mission announcement
-	"Survivors have secured the Crack House!", // mission success
-	"Survivors did not secure the Crack House in time", // mission fail
+	"STR_HERO_DRUGBUST_ANNOUNCE", // mission announcement
+	"STR_HERO_DRUGBUST_WIN", // mission success
+	"STR_HERO_DRUGBUST_FAIL", // mission fail
 	[5,5,[10,crate_items_crop_raider],3,2] // Dynamic crate array
 ] call mission_winorfail;

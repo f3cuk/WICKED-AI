@@ -66,8 +66,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Police are about to raid a drug dealer! Check your map for the location!", // mission announcement
-	"Bandits have secured the drugs!", // mission success
-	"Bandits did not secure the drugs in time", // mission fail
+	"STR_BANDIT_DRUGBUST_ANNOUNCE", // mission announcement
+	"STR_BANDIT_DRUGBUST_WIN", // mission success
+	"STR_BANDIT_DRUGBUST_FAIL", // mission fail
 	[5,5,[10,crate_items_crop_raider],3,2]
 ] call mission_winorfail;

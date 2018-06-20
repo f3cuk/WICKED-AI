@@ -72,8 +72,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Heroes are hiding something in a junk yard..go check it out", // mission announcement
-	"Survivors have secured the Junk Yard", // mission success
-	"Survivors were unable to clear the Junk Yard....mission failed", // mission fail
+	"STR_BANDIT_JUNKYARD_ANNOUNCE", // mission announcement
+	"STR_BANDIT_JUNKYARD_WIN", // mission success
+	"STR_BANDIT_JUNKYARD_FAIL", // mission fail
 	[14,5,1,3,2] // Dynamic crate array
 ] call mission_winorfail;
