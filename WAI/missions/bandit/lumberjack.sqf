@@ -50,8 +50,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"STR_BANDIT_LUMBERMILL_ANNOUNCE",	// mission announcement
-	"STR_BANDIT_LUMBERMILL_WIN",	// mission success
-	"STR_BANDIT_LUMBERMILL_FAIL", // mission fail
+	"STR_CL_BANDIT_LUMBERMILL_ANNOUNCE",	// mission announcement
+	"STR_CL_BANDIT_LUMBERMILL_WIN",	// mission success
+	"STR_CL_BANDIT_LUMBERMILL_FAIL", // mission fail
 	[6,[8,crate_tools_sniper],[15,crate_items_wood],3,[4,crate_backpacks_large]] // Dynamic crate array
 ] call mission_winorfail;

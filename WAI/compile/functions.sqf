@@ -41,7 +41,7 @@ wai_server_message = {
 			publicVariable "RemoteMessage";
 		};
 		if (wai_mission_announce == "DynamicText") exitWith {
-			RemoteMessage = ["dynamic_text", ["STR_MISSION_ANNOUNCE",_message]];
+			RemoteMessage = ["dynamic_text", ["STR_CL_MISSION_ANNOUNCE",_message]];
 			publicVariable "RemoteMessage";
 		};
 		if (wai_mission_announce == "titleText") exitWith {
@@ -59,7 +59,7 @@ wai_minefield_warning = {
 	
 	//RemoteMessage = ["titleCut","WARNING: You are approaching a minefield! Stop and continue on foot."];
 	//(_owner) publicVariableClient "RemoteMessage";
-	RemoteMessage = ["dynamic_text2","STR_MINEFIELD_WARNING"];
+	RemoteMessage = ["dynamic_text2","STR_CL_MINEFIELD_WARNING"];
 	(_owner) publicVariableClient "RemoteMessage";
 };
 
@@ -90,12 +90,12 @@ wai_AutoClaimAlert = {
 	
 	call
 	{
-		if (_messageType == "Start") exitWith {_message = format["STR_AUTOCLAIM_ANNOUNCE",_missionName,ac_delay_time];};
-		if (_messageType == "Stop") exitWith {_message = format["STR_AUTOCLAIM_NOCLAIM",_missionName];};
-		if (_messageType == "Return") exitWith {_message = format["STR_AUTOCLAIM_RETURN",ac_timeout];};
-		if (_messageType == "Reclaim") exitWith {_message = "STR_AUTOCLAIM_RECLAIM";};
-		if (_messageType == "Claimed") exitWith {_message = format["STR_AUTOCLAIM_CLAIM", _name, _missionName];};
-		if (_messageType == "Unclaim") exitWith {_message = format["STR_AUTOCLAIM_ABANDON", _name, _missionName];};
+		if (_messageType == "Start") exitWith {_message = format["STR_CL_AUTOCLAIM_ANNOUNCE",_missionName,ac_delay_time];};
+		if (_messageType == "Stop") exitWith {_message = format["STR_CL_AUTOCLAIM_NOCLAIM",_missionName];};
+		if (_messageType == "Return") exitWith {_message = format["STR_CL_AUTOCLAIM_RETURN",ac_timeout];};
+		if (_messageType == "Reclaim") exitWith {_message = "STR_CL_AUTOCLAIM_RECLAIM";};
+		if (_messageType == "Claimed") exitWith {_message = format["STR_CL_AUTOCLAIM_CLAIM", _name, _missionName];};
+		if (_messageType == "Unclaim") exitWith {_message = format["STR_CL_AUTOCLAIM_ABANDON", _name, _missionName];};
 	};
 	
 	if (_messageType == "Claimed" || _messageType == "Unclaim") exitWith {

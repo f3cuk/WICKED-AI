@@ -46,8 +46,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["kill"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"STR_HERO_BANDITOUTPOST_ANNOUNCE", // mission announcement
-	"STR_HERO_BANDITOUTPOST_WIN", // mission success
-	"STR_HERO_BANDITOUTPOST_FAIL", // mission fail
+	"STR_CL_HERO_BANDITOUTPOST_ANNOUNCE", // mission announcement
+	"STR_CL_HERO_BANDITOUTPOST_WIN", // mission success
+	"STR_CL_HERO_BANDITOUTPOST_FAIL", // mission fail
 	[10,4,40,2,1] // Dynamic crate array
 ] call mission_winorfail;

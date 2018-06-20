@@ -104,9 +104,9 @@ _this spawn {
 		_wp setWaypointCombatMode "YELLOW";
 
 		if(_waypoint_prev != "") then {
-			_msg = format["STR_PATROL_ARRIVE",_waypoint_prev,(_waypoint select 0)];
+			_msg = format["STR_CL_PATROL_ARRIVE",_waypoint_prev,(_waypoint select 0)];
 		} else {
-			_msg = format["STR_PATROL_MOVE",(_waypoint select 0)];
+			_msg = format["STR_CL_PATROL_MOVE",(_waypoint select 0)];
 		};
 		
 		uiSleep random(10);

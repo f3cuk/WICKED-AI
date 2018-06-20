@@ -51,8 +51,8 @@ _rndnum = round (random 5);
 	_crate,	// mission variable (from line 9) and crate
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"STR_HERO_LUMBER_ANNOUNCE", // mission announcement
-	"STR_HERO_LUMBER_WIN", // mission success
-	"STR_HERO_LUMBER_FAIL", // mission fail
+	"STR_CL_HERO_LUMBER_ANNOUNCE", // mission announcement
+	"STR_CL_HERO_LUMBER_WIN", // mission success
+	"STR_CL_HERO_LUMBER_FAIL", // mission fail
 	[6,[8,crate_tools_sniper],[15,crate_items_wood],3,[2,crate_backpacks_large]] // Dynamic crate array
 ] call mission_winorfail;

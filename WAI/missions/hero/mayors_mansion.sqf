@@ -69,8 +69,8 @@ _mayor_himself spawn {
 	_crate, // crate object info
 	["assassinate",_mayor], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"STR_HERO_MAYOR_ANNOUNCE", // mission announcement
-	"STR_HERO_MAYOR_WIN", // mission success
-	"STR_HERO_MAYOR_FAIL", // mission fail
+	"STR_CL_HERO_MAYOR_ANNOUNCE", // mission announcement
+	"STR_CL_HERO_MAYOR_WIN", // mission success
+	"STR_CL_HERO_MAYOR_FAIL", // mission fail
 	[16,4,0,3,4] // Dynamic crate array
 ] call mission_winorfail;

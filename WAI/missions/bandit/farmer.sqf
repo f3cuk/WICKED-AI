@@ -56,8 +56,8 @@ _vehicle = [_crate,_vehclass,[(_position select 0) -6.5, (_position select 1) +1
 	_crate, // crate object info
 	["kill"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"STR_BANDIT_FARMER_ANNOUNCE", // mission announcement
-	"STR_BANDIT_FARMER_WIN", // mission success
-	"STR_BANDIT_FARMER_FAIL", // mission fail
+	"STR_CL_BANDIT_FARMER_ANNOUNCE", // mission announcement
+	"STR_CL_BANDIT_FARMER_WIN", // mission success
+	"STR_CL_BANDIT_FARMER_FAIL", // mission fail
 	[6,5,[40,crate_items_medical],3,1] // Dynamic crate array
 ] call mission_winorfail;
