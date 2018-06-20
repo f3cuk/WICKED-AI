@@ -22,7 +22,7 @@ if(_count > 4) then {
 
 if (!_position_fixed) then {	
 	while{count _vehpos > 2} do {  
-		_vehpos = [_position,12,_max_distance,10,0,2000,0] call BIS_fnc_findSafePos; // Works better
+		_vehpos = [_position,12,_max_distance,10,0,0.7,0] call BIS_fnc_findSafePos; // Works better
 		//_vehpos = _position findEmptyPosition[20,_max_distance,_class]; 
 		_max_distance = (_max_distance + 10);
 	};
