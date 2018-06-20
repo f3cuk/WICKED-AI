@@ -66,8 +66,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], 	// cleanup objects
-	"STR_CL_BANDIT_CANNIBALCAVE_ANNOUNCE", // mission announcement
-	"STR_CL_BANDIT_CANNIBALCAVE_WIN", // mission success
-	"STR_CL_BANDIT_CANNIBALCAVE_FAIL", // mission fail
+	"STR_CL_GENERAL_CANNIBALCAVE_ANNOUNCE", // mission announcement
+	"STR_CL_GENERAL_CANNIBALCAVE_WIN", // mission success
+	"STR_CL_GENERAL_CANNIBALCAVE_FAIL", // mission fail
 	[10,8,[2,crate_items_high_value],3,[2,crate_backpacks_large]] // Dynamic crate array
 ] call mission_winorfail;
