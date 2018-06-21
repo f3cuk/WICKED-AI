@@ -65,8 +65,8 @@ _rndnum = round (random 5);
 	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"A trader city was abandoned after a bandit raid....Go secure the loot", // mission announcement
-	"Survivors have secured the abandoned trader", // mission success
-	"Survivors did not secure the abandoned trader in time", // mission fail
+	"STR_CL_HERO_ABANDONEDTRADER_ANNOUNCE", // mission announcement
+	"STR_CL_HERO_ABANDONEDTRADER_WIN", // mission success
+	"STR_CL_HERO_ABANDONEDTRADER_FAIL", // mission fail
 	[8,5,15,3,2] // Dynamic crate array
 ] call mission_winorfail;

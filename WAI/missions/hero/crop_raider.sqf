@@ -74,8 +74,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Crooked cops are about to raid the weed crops of a hippy commune...check your map", // mission announcement
-	"Survivors saved the hippy commune", // mission success
-	"Survivors did not stop the bandits in time.", // mission fail
+	"STR_CL_GENERAL_CROPRAIDER_ANNOUNCE", // mission announcement
+	"STR_CL_GENERAL_CROPRAIDER_WIN", // mission success
+	"STR_CL_GENERAL_CROPRAIDER_FAIL", // mission fail
 	[6,5,[15,crate_items_crop_raider],3,3] // Dynamic crate array
 ] call mission_winorfail;

@@ -52,8 +52,8 @@ if(wai_debug_mode) then {
 	_crate,	// mission number and crate
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[], // cleanup objects
-	"Heroes have captured a lot of sniper rifles from the Takistani bandit clan, make your move as a bandit whilst they are planning a getaway", // mission announcement
-	"Bandits have secured the snipers and taken the chopper!", // mission success
-	"Bandits did not secure the sniper rifles in time", // mission fail
+	"STR_CL_BANDIT_EXTRACTION_ANNOUNCE", // mission announcement
+	"STR_CL_BANDIT_EXTRACTION_WIN", // mission success
+	"STR_CL_BANDIT_EXTRACTION_FAIL", // mission fail
 	[[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2] // Dynamic crate array
 ] call mission_winorfail;

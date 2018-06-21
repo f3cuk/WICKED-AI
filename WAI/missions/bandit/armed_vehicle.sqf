@@ -47,8 +47,8 @@ if(wai_debug_mode) then {
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[], // cleanup objects
-	"Heroes have taken an armed vehicle from the bandits! Check your map for the location!", // mission announcement
-	"Bandits have secured the armed vehicle!", // mission success
-	"Bandits did not secure the armed vehicle in time", // mission fail
+	"STR_CL_BANDIT_ARMEDVEHICLE_ANNOUNCE", // mission announcement
+	"STR_CL_BANDIT_ARMEDVEHICLE_WIN", // mission success
+	"STR_CL_BANDIT_ARMEDVEHICLE_FAIL", // mission fail
 	[0,0,[25,crate_items_chainbullets],0,2] // Dynamic crate array
 ] call mission_winorfail;

@@ -57,8 +57,8 @@ if(wai_debug_mode) then {
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[],	// cleanup objects
-	"An Ikea delivery has been hijacked by bandits, take over the convoy and the building supplies are yours!", // mission announcement
-	"Survivors have secured the building supplies!", // mission success
-	"Survivors did not secure the convoy in time", // mission fail
+	"STR_CL_HERO_IKEA_ANNOUNCE", // mission announcement
+	"STR_CL_HERO_IKEA_WIN", // mission success
+	"STR_CL_HERO_IKEA_FAIL", // mission fail
 	[[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4] // Dynamic crate array
 ] call mission_winorfail;

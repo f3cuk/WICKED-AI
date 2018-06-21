@@ -13,7 +13,7 @@ _crate = createVehicle [_crate_type,[(_position select 0) + 2,(_position select 
 _crate call wai_crate_setup;
 
 //Buildings
-_baserunover0 = createVehicle ["RU_WarfareBUAVterminal",[(_position select 0) - 6, (_position select 1) - 15,-0.1],[], 0, "CAN_COLLIDE"];
+_baserunover0 = createVehicle ["TK_WarfareBUAVterminal_EP1",[(_position select 0) - 6, (_position select 1) - 15,-0.1],[], 0, "CAN_COLLIDE"];
 _baserunover1 = createVehicle ["Land_budova4_in",[(_position select 0) - 13, (_position select 1) + 3.5,-0.12],[], 0, "CAN_COLLIDE"];
 _baserunover2 = createVehicle ["Land_Vysilac_FM",[(_position select 0) - 10, (_position select 1) - 7,-0.12],[], 0, "CAN_COLLIDE"];
 _baserunover3 = createVehicle ["MAP_runway_poj_draha",[(_position select 0) + 10, (_position select 1) + 5,0],[], 0, "CAN_COLLIDE"];
@@ -65,8 +65,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Bandits are training drone pilots at a secret airfield...check your map", // mission announcement
-	"Survivors have secured the drones", // mission success
-	"Survivors did not secure the drones...time is up!", // mission fail
+	"STR_CL_HERO_DRONE_ANNOUNCE", // mission announcement
+	"STR_CL_HERO_DRONE_WIN", // mission success
+	"STR_CL_HERO_DRONE_FAIL", // mission fail
 	[10,[8,crate_tools_sniper],[2,crate_items_high_value],3,[2,crate_backpacks_large]] // Dynamic crate array
 ] call mission_winorfail;

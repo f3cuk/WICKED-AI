@@ -61,8 +61,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"A U.N tank column stopped to resupply at an outpost...check your map",	// mission announcement
-	"Survivors have secured the tank column and outpost", // mission success
-	"Survivors were unable to clear the tank column and outpost....mission failed", // mission fail
+	"STR_CL_BANDIT_TANK_ANNOUNCE",	// mission announcement
+	"STR_CL_BANDIT_TANK_WIN", // mission success
+	"STR_CL_BANDIT_TANK_FAIL", // mission fail
 	[12,5,30,3,2] // Dynamic crate array
 ] call mission_winorfail;

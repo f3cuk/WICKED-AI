@@ -55,8 +55,8 @@ _rndnum = round (random 5);
 	_crate,	// mission number and crate
 	["crate"], // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Heroes have obtained a weapon crate. Check your map for the location!", // mission announcement
-	"Bandits have secured the weapon cache!", // mission success
-	"Bandits did not secure the weapon cache in time", // mission fail
+	"STR_CL_BANDIT_WEAPONCACHE_ANNOUNCE", // mission announcement
+	"STR_CL_BANDIT_WEAPONCACHE_WIN", // mission success
+	"STR_CL_BANDIT_WEAPONCACHE_FAIL", // mission fail
 	[10,4,0,3,2] // Dynamic crate array
 ] call mission_winorfail;

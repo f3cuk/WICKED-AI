@@ -69,8 +69,8 @@ _mayor_himself spawn {
 	_crate, // crate object info
 	["assassinate",_mayor], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"The Mayor has gone rogue, go take him and his task force out to claim the black market weapons!", // mission announcement
-	"The rogue mayor has been taken out, who will be the next Mayor of Cherno?", // mission success
-	"Survivors were unable to capture the mansion, time is up", // mission fail
+	"STR_CL_HERO_MAYOR_ANNOUNCE", // mission announcement
+	"STR_CL_HERO_MAYOR_WIN", // mission success
+	"STR_CL_HERO_MAYOR_FAIL", // mission fail
 	[16,4,0,3,4] // Dynamic crate array
 ] call mission_winorfail;

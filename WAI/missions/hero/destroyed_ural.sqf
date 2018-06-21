@@ -33,8 +33,8 @@ _rndnum = round (random 5);
 	_crate, // crate object info
 	["kill"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"Bandits have destroyed a Ural with supplies and are securing the cargo! Check your map for the location!",	// mission announcement
-	"The supplies have been secured by survivors!", // mission success
-	"Survivors did not secure the supplies in time", // mission fail
+	"STR_CL_HERO_URAL_ANNOUNCE",	// mission announcement
+	"STR_CL_HERO_URAL_WIN", // mission success
+	"STR_CL_HERO_URAL_FAIL", // mission fail
 	[4,8,36,3,2] // Dynamic crate array
 ] call mission_winorfail;

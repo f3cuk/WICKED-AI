@@ -104,9 +104,9 @@ _this spawn {
 		_wp setWaypointCombatMode "YELLOW";
 
 		if(_waypoint_prev != "") then {
-			_msg = format["[RADIO] The patrol arrived at %1, heading towards %2",_waypoint_prev,(_waypoint select 0)];
+			_msg = format["STR_CL_PATROL_ARRIVE",_waypoint_prev,(_waypoint select 0)];
 		} else {
-			_msg = format["[RADIO] The patrol is seen moving towards %1",(_waypoint select 0)];
+			_msg = format["STR_CL_PATROL_MOVE",(_waypoint select 0)];
 		};
 		
 		uiSleep random(10);

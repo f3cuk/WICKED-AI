@@ -68,8 +68,8 @@ _president_himself spawn {
 	_crate, // crate object info
 	["assassinate",_president], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[_baserunover], // cleanup objects
-	"The President is in town for a press conference, rumor has it bandits are planning his assassination", // mission announcement
-	"The President has been assassinated, a day of mourning has been announced", // mission success
-	"The President managed to get away from the assassination attempt", // mission fail
+	"STR_CL_BANDIT_PRESIDENT_ANNOUNCE", // mission announcement
+	"STR_CL_BANDIT_PRESIDENT_WIN", // mission success
+	"STR_CL_BANDIT_PRESIDENT_FAIL", // mission fail
 	[0,0,[40,crate_items_president],0,1] // Dynamic crate array
 ] call mission_winorfail;
