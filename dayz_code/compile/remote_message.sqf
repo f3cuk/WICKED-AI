@@ -1,5 +1,5 @@
 fnc_remote_message = {
-	private ["_type","_message"];
+	private ["_type","_message","_params","_messageType"];
 	
 	_type = _this select 0;
 	_message = _this select 1;
