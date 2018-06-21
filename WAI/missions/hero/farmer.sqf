@@ -33,16 +33,16 @@ _directions = [-107,0,20.6,5.9,-41.2,0,0,0,0,15.3,-80.8];
 
 { _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
+//Troops
+_rndnum = round (random 5);
+[[(_position select 0) -17,(_position select 1) +29,0],5,"Easy",["Random","AT"],4,"Random","RU_Villager2","Random","Bandit",_mission] call spawn_group;
+[[(_position select 0) -12,(_position select 1) +20,0],_rndnum,"Random","Random",4,"Random","Citizen2_EP1","Random","Bandit",_mission] call spawn_group;
+
 uiSleep 3; // Wait for the ai list to populate so the key on ai option works.
 
 //Spawn vehicles
 _vehclass = "Tractor";
 _vehicle = [_crate,_vehclass,[(_position select 0) -6.5, (_position select 1) +12.7],_mission,true,46.7] call custom_publish;
-
-//Troops
-_rndnum = round (random 5);
-[[(_position select 0) -17,(_position select 1) +29,0],5,"Easy",["Random","AT"],4,"Random","RU_Villager2","Random","Bandit",_mission] call spawn_group;
-[[(_position select 0) -12,(_position select 1) +20,0],_rndnum,"Random","Random",4,"Random","Citizen2_EP1","Random","Bandit",_mission] call spawn_group;
 
 // Array of mission variables to send
 [
