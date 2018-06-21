@@ -77,10 +77,11 @@ wai_remove_mines = {
 
 // Auto-Claim alert messages
 wai_AutoClaimAlert = {
-	private ["_unit","_owner","_missionName","_messageType","_message","_name"];
+	private ["_unit","_owner","_missionName","_messageType","_message","_name","_params"];
 	_unit = _this select 0;
 	_missionName = _this select 1;
 	_messageType = _this select 2;
+	_params = [];
 	if (typeName _unit == "ARRAY") then {
 		_name = _unit select 1;
 	} else {
@@ -90,20 +91,20 @@ wai_AutoClaimAlert = {
 	
 	call
 	{
-		if (_messageType == "Start") exitWith {_message = format["STR_CL_AUTOCLAIM_ANNOUNCE",_missionName,ac_delay_time];};
-		if (_messageType == "Stop") exitWith {_message = format["STR_CL_AUTOCLAIM_NOCLAIM",_missionName];};
-		if (_messageType == "Return") exitWith {_message = format["STR_CL_AUTOCLAIM_RETURN",ac_timeout];};
-		if (_messageType == "Reclaim") exitWith {_message = "STR_CL_AUTOCLAIM_RECLAIM";};
-		if (_messageType == "Claimed") exitWith {_message = format["STR_CL_AUTOCLAIM_CLAIM", _name, _missionName];};
-		if (_messageType == "Unclaim") exitWith {_message = format["STR_CL_AUTOCLAIM_ABANDON", _name, _missionName];};
+		if (_messageType == "Start") exitWith {_message = "STR_CL_AUTOCLAIM_ANNOUNCE"; _params = [_messageType,_missionName,ac_delay_time];};
+		if (_messageType == "Stop") exitWith {_message = "STR_CL_AUTOCLAIM_NOCLAIM"; _params = [_messageType,_missionName];};
+		if (_messageType == "Return") exitWith {_message = "STR_CL_AUTOCLAIM_RETURN"; _params = [_messageType,ac_timeout];};
+		if (_messageType == "Reclaim") exitWith {_message = "STR_CL_AUTOCLAIM_RECLAIM"; _params = [_messageType];};
+		if (_messageType == "Claimed") exitWith {_message = "STR_CL_AUTOCLAIM_CLAIM"; _params = [_messageType,_name,_missionName];};
+		if (_messageType == "Unclaim") exitWith {_message = "STR_CL_AUTOCLAIM_ABANDON"; _params = [_messageType,_name,_missionName];};
 	};
 	
 	if (_messageType == "Claimed" || _messageType == "Unclaim") exitWith {
-		RemoteMessage = ["IWAC",_message];
+		RemoteMessage = ["IWAC",_message,_params];
 		publicVariable "RemoteMessage";
 	};
 	
-	RemoteMessage = ["IWAC",_message];
+	RemoteMessage = ["IWAC",_message,_params];
 	(_owner) publicVariableClient "RemoteMessage";
 };
 
