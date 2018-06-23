@@ -1,16 +1,17 @@
 fnc_remote_message = {
-	private ["_type","_message","_params","_messageType"];
+	private ["_type","_message","_params"];
 	
 	_type = _this select 0;
 	_message = _this select 1;
-	if ((count _this) > 2) then {
-		_params = _this select 2;
-		_messageType = _params select 0;
-	};
 
 	if (typeName _message == "STRING") then {
 		if (["STR_", _message] call fnc_inString) then {
-			_message = localize _message;
+			if ((count _this) > 2) then {
+				_params = _this select 2;
+				_message = format ([localize _message] + _params);
+			} else {
+				_message = localize _message;
+			};
 		};
 	} else {
 		{
@@ -28,18 +29,10 @@ fnc_remote_message = {
 			};
 		};
 	};
+	
 	if (_type == "IWAC") exitWith {
 		if (player hasWeapon "ItemRadio") then {
 			if (player getVariable["radiostate",true]) then {
-				call
-				{
-					if ((_messageType == "Start") || (_messageType == "Claimed") || (_messageType == "Unclaim")) exitWith {
-						_message = format[_message,(_params select 1),(_params select 2)];
-					};
-					if ((_messageType == "Stop") || (_messageType == "Return")) exitWith {
-						_message = format[_message,(_params select 1)];
-					};
-				};
 				_message call dayz_rollingMessages;
 				playSound "IWAC_Message_Sound";
 			};
