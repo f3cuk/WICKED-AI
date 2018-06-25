@@ -31,23 +31,37 @@ wai_crate_setup = {
 
 // Sends mission announcements to all clients
 wai_server_message = {
-	private "_message";
+	private ["_message","_params"];
 	_message = _this;
+	if (typeName _this == "ARRAY") then {
+		_message = _this select 0;
+		_params = _this select 1;
+	};
 
 	call
 	{
-		if (wai_mission_announce == "Radio") exitWith {
-			RemoteMessage = ["radio",_message];
-			publicVariable "RemoteMessage";
+		if (typeName _this == "ARRAY") then {
+			if (wai_mission_announce == "Radio") exitWith {
+				RemoteMessage = ["radio",_message,_params];
+			};
+			if (wai_mission_announce == "DynamicText") exitWith {
+				RemoteMessage = ["dynamic_text", ["STR_CL_MISSION_ANNOUNCE",_message],_params];
+			};
+			if (wai_mission_announce == "titleText") exitWith {
+				RemoteMessage = ["titleText",_message,_params];
+			};
+		} else {
+			if (wai_mission_announce == "Radio") exitWith {
+				RemoteMessage = ["radio",_message];
+			};
+			if (wai_mission_announce == "DynamicText") exitWith {
+				RemoteMessage = ["dynamic_text", ["STR_CL_MISSION_ANNOUNCE",_message]];
+			};
+			if (wai_mission_announce == "titleText") exitWith {
+				RemoteMessage = ["titleText",_message];
+			};
 		};
-		if (wai_mission_announce == "DynamicText") exitWith {
-			RemoteMessage = ["dynamic_text", ["STR_CL_MISSION_ANNOUNCE",_message]];
-			publicVariable "RemoteMessage";
-		};
-		if (wai_mission_announce == "titleText") exitWith {
-			RemoteMessage = ["titleText",_message];
-			publicVariable "RemoteMessage";
-		};
+		publicVariable "RemoteMessage";
 	};
 };
 
