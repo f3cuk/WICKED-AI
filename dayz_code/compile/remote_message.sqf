@@ -16,7 +16,12 @@ fnc_remote_message = {
 	} else {
 		{
 			if (["STR_", _x] call fnc_inString) then {
-				_message set [_forEachIndex, localize _x];
+				if ((count _this) > 2) then {
+					_params = _this select 2;
+					_message set [_forEachIndex, format ([localize _x] + _params)];
+				} else {
+					_message set [_forEachIndex, localize _x];
+				};
 			};
 		} forEach _message;
 	};
