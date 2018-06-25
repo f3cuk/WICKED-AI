@@ -85,6 +85,9 @@ if(wai_keep_vehicles) then {
 	
 	_vehicle addEventHandler ["GetIn", {
 		_vehicle = _this select 0;
+		_unit = _this select 2;
+		
+		if !(isPlayer _unit) exitWith {};
 		
 		// remove the mission variable so the vehicle does not get deleted during mission clean up
 		_vehicle setVariable ["mission",nil];
