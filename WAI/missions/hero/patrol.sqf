@@ -78,7 +78,7 @@ if(wai_debug_mode) then {
 	_vehicle, // the loot will be spawned in the vehicle
 	["kill"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
 	[],  // cleanup objects
-	format["STR_CL_HERO_PATROL_ANNOUNCE",(_location select 0)], // mission announcement
+	["STR_CL_HERO_PATROL_ANNOUNCE",[(_location select 0)]], // mission announcement
 	"STR_CL_HERO_PATROL_WIN", // mission success
 	"STR_CL_HERO_PATROL_FAIL", // mission fail
 	[3,0,[2,crate_items_high_value],0,2] // Dynamic crate array
