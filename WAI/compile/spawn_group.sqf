@@ -113,7 +113,7 @@ for "_x" from 1 to _unitnumber do {
 		_aiskin = _aiskin select (floor (random (count _aiskin)));
 	};
 	
-	_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN COLLIDE"];
+	_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN_COLLIDE"];
 	[_unit] joinSilent _unitGroup;
 
 	call {
