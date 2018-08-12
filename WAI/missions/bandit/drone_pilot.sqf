@@ -35,7 +35,7 @@ _baserunover16 = createVehicle ["ClutterCutter_EP1",[(_position select 0) - 4, (
 
 _baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13,_baserunover14,_baserunover15,_baserunover16];
 
-_directions = [-153.81,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+_directions = [-153.81,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 { _x setDir (_directions select _forEachIndex) } forEach _baserunover;
 { _x setVectorUp surfaceNormal position _x; } count _baserunover;
 
