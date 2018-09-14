@@ -59,5 +59,5 @@ _vehicle = [_crate,_vehclass,[(_position select 0) -6.5, (_position select 1) +1
 	"STR_CL_BANDIT_FARMER_ANNOUNCE", // mission announcement
 	"STR_CL_BANDIT_FARMER_WIN", // mission success
 	"STR_CL_BANDIT_FARMER_FAIL", // mission fail
-	[6,5,[40,crate_items_medical],3,1] // Dynamic crate array
+	[6,5,[40,crate_items_medical],3,1,[_vehicle]] // Dynamic crate array
 ] call mission_winorfail;
