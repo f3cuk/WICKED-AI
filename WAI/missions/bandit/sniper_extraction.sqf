@@ -55,5 +55,5 @@ if(wai_debug_mode) then {
 	"STR_CL_BANDIT_EXTRACTION_ANNOUNCE", // mission announcement
 	"STR_CL_BANDIT_EXTRACTION_WIN", // mission success
 	"STR_CL_BANDIT_EXTRACTION_FAIL", // mission fail
-	[[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2] // Dynamic crate array
+	[[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2,[_vehicle]] // Dynamic crate array
 ] call mission_winorfail;
