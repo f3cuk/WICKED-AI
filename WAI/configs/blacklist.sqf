@@ -2,10 +2,11 @@
 call {
 	if (toLower worldName == "chernarus") exitWith {wai_blacklist = [
 		[[0,16000,0],[1000,-0,0]],				// Left
-		[[0,16000,0],[16000.0,14580.3,0]]		// Top
+		[[0,16000,0],[16000.0,14580.3,0]],		// Top
+		[getMarkerPos "Tradercitystary",500]	// Prevent missions from spawning within 500 meters of Stary trader
 	];};
 	if (toLower worldName == "namalsk") exitWith {wai_blacklist = [];};
-	if (toLower worldName == "panthera") exitWith {wai_blacklist = [];};
+	if (toLower worldName == "panthera2") exitWith {wai_blacklist = [];};
 	if (toLower worldName == "tavi") exitWith {wai_blacklist = [];};
 	if (toLower worldName == "lingor") exitWith {wai_blacklist = [];};
 	if (toLower worldName == "napf") exitWith {wai_blacklist = [];};
