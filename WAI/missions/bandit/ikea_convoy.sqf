@@ -60,5 +60,5 @@ if(wai_debug_mode) then {
 	"STR_CL_BANDIT_IKEA_ANNOUNCE", // mission announcement
 	"STR_CL_BANDIT_IKEA_WIN", // mission success
 	"STR_CL_BANDIT_IKEA_FAIL", // mission fail
-	[[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4] // Dynamic crate array
+	[[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4,[_vehicle,_vehicle2,_vehicle3]] // Dynamic crate array
 ] call mission_winorfail;
