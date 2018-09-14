@@ -40,5 +40,5 @@ _vehicle = [_crate,_vehclass,_position,_mission] call custom_publish;
 	"STR_CL_HERO_BANDITPATROL_ANNOUNCE", // mission announcement
 	"STR_CL_HERO_BANDITPATROL_WIN", // mission success
 	"STR_CL_HERO_BANDITPATROL_FAIL", // mission fail
-	[4,8,36,3,2] // Dynamic crate array
+	[4,8,36,3,2,[_vehicle]] // Dynamic crate array
 ] call mission_winorfail;
