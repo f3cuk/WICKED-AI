@@ -223,7 +223,6 @@ wai_generate_vehicle_key = {
 				_vehicle setVariable ["CharacterID",_characterID,true];
 			};		
 			if (wai_vehicle_keys == "KeyinCrate") then {
-				_vehicle setVehicleLock "locked";
 				_vehicle setVariable ["CharacterID", _characterID, true];
 				_crate addWeaponCargoGlobal [_keySelected, 1];
 			};			
@@ -242,7 +241,6 @@ wai_generate_vehicle_key = {
 					diag_log format["Key added to %1 for vehicle %2",_unit,_vehicle];
 				};
 			
-				_vehicle setVehicleLock "locked";
 				_vehicle setVariable ["CharacterID",_characterID,true];
 			};
 		} else {
