@@ -66,5 +66,5 @@ if(wai_debug_mode) then {
 	"STR_CL_HERO_MV22_ANNOUNCE", // mission announcement
 	"STR_CL_HERO_MV22_WIN", // mission success
 	"STR_CL_HERO_MV22_FAIL", // mission fail
-	[0,0,[80,crate_items_medical],3,1] // Dynamic crate array
+	[0,0,[80,crate_items_medical],3,1,[_vehicle]] // Dynamic crate array
 ] call mission_winorfail;
