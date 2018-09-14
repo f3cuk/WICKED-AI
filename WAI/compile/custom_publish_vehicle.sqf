@@ -40,6 +40,7 @@ _vehicle setVariable ["mission",_mission];
 clearWeaponCargoGlobal _vehicle;
 clearMagazineCargoGlobal _vehicle;
 _fuel = 0;
+_vehicle setVehicleLock "locked";
 if(wai_debug_mode) then { diag_log(format["WAI: Spawned %1 at %2",str(_class),str(_vehpos)]); };
 
 if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
@@ -77,7 +78,9 @@ if (wai_invincible_vehicles) then {
 if (typeName _crate == "STRING") then {_crate = _vehicle};
 
 // Call function to generate vehicle key
+if !(wai_vehicle_keys == "KeyinCrate") then {
 [_vehicle,_mission,_crate] call wai_generate_vehicle_key;
+};
 
 dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_vehicle];
 
