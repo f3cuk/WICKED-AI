@@ -247,7 +247,7 @@ WAI_MarkerReady = true;
 				_acdot setMarkerColor "ColorBlack";
 				_acdot setMarkerType "mil_objective";
 				if (_left) then {
-					_acdot setMarkerText format["Claim Timeout [%1]",_leftTime];
+					_acdot setMarkerText format["%1 Claim Timeout [%2]",(_acArray select 1),_leftTime];
 				} else {
 					_acdot setMarkerText format["Claimed by %1",(name _closestPlayer)];
 				};
