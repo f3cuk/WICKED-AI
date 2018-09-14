@@ -1,4 +1,4 @@
-private ["_complete","_marker","_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array","_num_pistols","_pistols_array","_pistol","_pistolammo"];
+private ["_crateLoot","_vehicles","_complete","_marker","_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array","_num_pistols","_pistols_array","_pistol","_pistolammo"];
 
 _crate = _this select 0;
 _crateLoot = _this select 1;
@@ -6,6 +6,20 @@ if ((count _this) > 2) then {
 	_complete = _this select 2;
 } else {
 	_complete = nil;
+};
+
+if ((count _crateLoot) > 5) then {
+	_vehicles = _crateLoot select 5;
+	if (wai_vehicle_keys == "KeyinCrate") then {
+		{
+			[_x,nil,_crate] call wai_generate_vehicle_key;
+		} forEach _vehicles;
+	};
+	if (wai_vehicle_keys == "KeyinVehicle" || wai_vehicle_keys == "NoVehicleKey") then {
+		{
+			_x setVehicleLock "unlocked";
+		} forEach _vehicles;
+	};
 };
 
 if !(isNil "_complete") then {
