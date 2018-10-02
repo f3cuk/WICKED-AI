@@ -1,21 +1,17 @@
-if(isServer) then {
+private ["_rndnum","_crate_type","_mission","_position","_crate","_baserunover","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7","_baserunover8","_baserunover9","_baserunover10","_baserunover11","_baserunover12","_baserunover13","_baserunover14","_baserunover15","_baserunover16","_baserunover17","_baserunover18","_baserunover19","_baserunover20","_baserunover21","_baserunover22","_baserunover23","_baserunover24","_baserunover25","_baserunover26","_baserunover27","_baserunover28","_baserunover29","_baserunover30","_baserunover31"];
 
-	private 		["_complete","_crate_type","_mission","_position","_crate","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7","_baserunover8","_baserunover9","_baserunover10","_baserunover11","_baserunover12","_baserunover13","_baserunover14","_baserunover15","_baserunover16","_baserunover17","_baserunover18","_baserunover19","_baserunover20","_baserunover21","_baserunover22","_baserunover23","_baserunover24","_baserunover25","_baserunover26","_baserunover27","_baserunover28","_baserunover29","_baserunover30","_baserunover31"];
+// Get mission number, important we do this early
+_mission = count wai_mission_data -1;
 
-	// Get mission number, important we do this early
-	_mission 		= count wai_mission_data -1;
+_position = [30] call find_position;
 
-	_position		= [30] call find_position;
-	[_mission,_position,"Hard","Junk Yard","MainBandit",true] call mission_init;
-	
-	diag_log 		format["WAI: [Mission:[Bandit] Junk Yard]: Starting... %1",_position];
+diag_log format["WAI: [Mission:[Bandit] Junk Yard]: Starting... %1",_position];
 
-	//Setup the crate
-	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) + 0.2,(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	[_crate] call wai_crate_setup;
+//Setup the crate
+_crate_type = crates_small call BIS_fnc_selectRandom;
+_crate = createVehicle [_crate_type,[(_position select 0) + 0.2,(_position select 1),0], [], 0, "CAN_COLLIDE"];
+_crate call wai_crate_setup;
 
-	//Medical Supply Camp
 //Buildings 
 _baserunover0 = createVehicle ["Mi8Wreck",[(_position select 0) + 31, (_position select 1) - 12.4,-0.12],[], 0, "CAN_COLLIDE"];
 _baserunover1 = createVehicle ["UralWreck",[(_position select 0) - 7, (_position select 1) - 9,-0.04],[], 0, "CAN_COLLIDE"];
@@ -50,33 +46,34 @@ _baserunover29 = createVehicle ["MAP_garbage_paleta",[(_position select 0) - 11,
 _baserunover30 = createVehicle ["Land_Fire_barrel_burning",[(_position select 0) - 13, (_position select 1) - 3,-0.02],[], 0, "CAN_COLLIDE"];
 _baserunover31 = createVehicle ["Land_Fire_barrel_burning", [(_position select 0) + 2, (_position select 1) - 9,-0.02],[], 0, "CAN_COLLIDE"];
 
-	_baserunover 	= [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13,_baserunover14,_baserunover15,_baserunover16,_baserunover17,_baserunover18,_baserunover19,_baserunover20,_baserunover21,_baserunover22,_baserunover23,_baserunover24,_baserunover25,_baserunover26,_baserunover27,_baserunover28,_baserunover29,_baserunover30,_baserunover31];
-	
-	_directions = [0,-49.99,201.46,80.879,44.77,-89,27,162,0,-41,25,53,94,-1.7,-75,-24,0,-99,0,0,0,0,-178,-91,146,108,100,36,93,21,0,0];
-	{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
-	
-	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
+_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13,_baserunover14,_baserunover15,_baserunover16,_baserunover17,_baserunover18,_baserunover19,_baserunover20,_baserunover21,_baserunover22,_baserunover23,_baserunover24,_baserunover25,_baserunover26,_baserunover27,_baserunover28,_baserunover29,_baserunover30,_baserunover31];
 
-	//Troops
-	[[(_position select 0) - 2, (_position select 1) - 5, 0],4,"Hard",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[(_position select 0) - 19, (_position select 1) + 19, 0],4,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[(_position select 0) + 17, (_position select 1) + 21, 0],4,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	
-	//Condition
-	_complete = [
-		[_mission,_crate],				// mission number and crate
-		["crate"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 				// cleanup objects
-		"Heroes are hiding something in a junk yard..go check it out",	// mission announcement
-		"Survivors have secured the Junk Yard",								// mission success
-		"Survivors were unable to clear the Junk Yard....mission failed"							// mission fail
-	] call mission_winorfail;
+_directions = [0,-49.99,201.46,80.879,44.77,-89,27,162,0,-41,25,53,94,-1.7,-75,-24,0,-99,0,0,0,0,-178,-91,146,108,100,36,93,21,0,0];
+{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
 
-	if(_complete) then {
-		[_crate,14,5,1,3,2] call dynamic_crate;
-			};
+{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
-	diag_log format["WAI: [Mission:[Bandit] Junk Yard]: Ended at %1",_position];
+//Troops
+_rndnum = round (random 5);
+[[(_position select 0) - 2, (_position select 1) - 5, 0],5,"Hard",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+[[(_position select 0) - 19, (_position select 1) + 19, 0],5,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+[[(_position select 0) + 17, (_position select 1) + 21, 0],5,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+[[(_position select 0) + 17, (_position select 1) + 21, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
-	b_missionsrunning = b_missionsrunning - 1;
-};
+// Array of mission variables to send
+[
+	_mission, // Mission number
+	_position, // Position of mission
+	"Hard", // Difficulty
+	"Junk Yard", // Name of Mission
+	"MainBandit", // Mission Type: MainHero or MainBandit
+	true, // show mission marker?
+	true, // make minefields available for this mission
+	_crate, // crate object info
+	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
+	[_baserunover], // cleanup objects
+	"STR_CL_BANDIT_JUNKYARD_ANNOUNCE", // mission announcement
+	"STR_CL_BANDIT_JUNKYARD_WIN", // mission success
+	"STR_CL_BANDIT_JUNKYARD_FAIL", // mission fail
+	[14,5,1,3,2] // Dynamic crate array
+] call mission_winorfail;

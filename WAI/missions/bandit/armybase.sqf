@@ -1,22 +1,18 @@
-if(isServer) then {
+private ["_crate_type","_mission","_position","_crate","_baserunover","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7","_baserunover8","_baserunover9","_baserunover10","_baserunover11","_baserunover12","_baserunover13","_baserunover14","_baserunover15","_baserunover16","_baserunover17","_baserunover18","_baserunover19","_baserunover20","_baserunover21","_baserunover22","_baserunover23","_baserunover24","_baserunover25","_baserunover26","_baserunover27","_baserunover28","_baserunover29","_baserunover30","_baserunover31","_baserunover32","_baserunover33","_baserunover34","_baserunover35","_baserunover36","_baserunover37","_baserunover38","_baserunover39","_baserunover40","_baserunover41","_baserunover42"];
 
-	private 		["_complete","_crate_type","_mission","_position","_crate","_baserunover","_baserunover1","_baserunover2"];
+// Get mission number, important we do this early
+_mission = count wai_mission_data -1;
 
-	// Get mission number, important we do this early
-	_mission 		= count wai_mission_data -1;
+_position = [30] call find_position;
 
-	_position		= [30] call find_position;
-	[_mission,_position,"Hard","ARMY Base","MainBandit",true] call mission_init;
-	
-	diag_log 		format["WAI: [Mission:[Bandit] ARMY Base]: Starting... %1",_position];
+diag_log format["WAI: [Mission:[Bandit] ARMY Base]: Starting... %1",_position];
 
-	//Setup the crate
-	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) + 1.2,(_position select 1),0], [], 0, "CAN_COLLIDE"];
-	[_crate] call wai_crate_setup;
+//Setup the crate
+_crate_type = crates_small call BIS_fnc_selectRandom;
+_crate = createVehicle [_crate_type,[(_position select 0) + 1.2,(_position select 1),0], [], 0, "CAN_COLLIDE"];
+_crate call wai_crate_setup;
 
-	//Medical Supply Camp
-//Buildings 
+//Buildings
 _baserunover0 = createVehicle ["WarfareBCamp",[(_position select 0) - 1, (_position select 1) - 12.4,-0.12],[], 0, "CAN_COLLIDE"];
 _baserunover1 = createVehicle ["Base_WarfareBBarrier10xTall",[(_position select 0) + 15, (_position select 1) - 16,-0.64],[], 0, "CAN_COLLIDE"];
 _baserunover2 = createVehicle ["Base_WarfareBBarrier10xTall",[(_position select 0) - 15, (_position select 1) - 16,-0.64],[], 0, "CAN_COLLIDE"];
@@ -61,42 +57,42 @@ _baserunover40 = createVehicle ["MAP_t_pinusN2s",[(_position select 0) + 31, (_p
 _baserunover41 = createVehicle ["MAP_t_pinusS2f",[(_position select 0) + 12, (_position select 1) - 5,-0.02],[], 0, "CAN_COLLIDE"];
 _baserunover42 = createVehicle ["Land_Fire_barrel_burning",[(_position select 0) - 0.01, (_position select 1) - 0.01,-0.02],[], 0, "CAN_COLLIDE"];
 
-	_baserunover 	= [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13,_baserunover14,_baserunover15,_baserunover16,_baserunover17,_baserunover18,_baserunover19,_baserunover20,_baserunover21,_baserunover22,_baserunover23,_baserunover24,_baserunover25,_baserunover26,_baserunover27,_baserunover28,_baserunover29,_baserunover30,_baserunover31,_baserunover32,_baserunover33,_baserunover34,_baserunover35,_baserunover36,_baserunover37,_baserunover38,_baserunover39,_baserunover40,_baserunover41,_baserunover42];
-	
-	_directions = [0,0,0,0,0,0,0,-178.615,0.089,-89.16,-180.55,-179.808,0,0,0,0,-179.832,82.75,0,-71.49,-180.097,0.999,52.43,0,0,0,0,0,-99.19,0,0,-73.36,52.65,0,0,0,0,0,0,0,0,0,0];
-	{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
-	
-	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
+_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13,_baserunover14,_baserunover15,_baserunover16,_baserunover17,_baserunover18,_baserunover19,_baserunover20,_baserunover21,_baserunover22,_baserunover23,_baserunover24,_baserunover25,_baserunover26,_baserunover27,_baserunover28,_baserunover29,_baserunover30,_baserunover31,_baserunover32,_baserunover33,_baserunover34,_baserunover35,_baserunover36,_baserunover37,_baserunover38,_baserunover39,_baserunover40,_baserunover41,_baserunover42];
 
-	//Troops
-	[[(_position select 0) - 12, (_position select 1) + 2, 0],4,"Hard",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[(_position select 0) + 2, (_position select 1) + 2, 0],4,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[(_position select 0) + 14, (_position select 1) - 35, 0],4,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	[[(_position select 0) + 13, (_position select 1) + 35, 0],4,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+_directions = [0,0,0,0,0,0,0,-178.615,0.089,-89.16,-180.55,-179.808,0,0,0,0,-179.832,82.75,0,-71.49,-180.097,0.999,52.43,0,0,0,0,0,-99.19,0,0,-73.36,52.65,0,0,0,0,0,0,0,0,0,0];
+{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
 
-	//Humvee Patrol
-	[[(_position select 0) - 22, (_position select 1) - 56, 0],[(_position select 0) + 22, (_position select 1) + 56, 0],50,2,"HMMWV_Armored","Hard","Hero","Hero",_mission] call vehicle_patrol;
-	 
-	//Static Guns
-	[[[(_position select 0) - 0.01, (_position select 1) + 41, 0]],"M2StaticMG","Hard","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
-	[[[(_position select 0) + 0.1, (_position select 1) - 25, 0]],"M2StaticMG","Hard","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
+{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
 
-	
-	//Condition
-	_complete = [
-		[_mission,_crate],				// mission number and crate
-		["crate"],						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 				// cleanup objects
-		"The ARMY set up a heavily guarded base",	// mission announcement
-		"Survivors have secured the ARMY Base",								// mission success
-		"Survivors were unable to clear the ARMY Base....mission failed"							// mission fail
-	] call mission_winorfail;
+//Troops
+_rndnum = round (random 5);
+[[(_position select 0) - 12, (_position select 1) + 2, 0],5,"Hard",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+[[(_position select 0) + 2, (_position select 1) + 2, 0],5,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+[[(_position select 0) + 14, (_position select 1) - 35, 0],5,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
+[[(_position select 0) + 13, (_position select 1) + 35, 0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 
-	if(_complete) then {
-		[_crate,10,5,10,3,2] call dynamic_crate;
-			};
+//Humvee Patrol
+[[(_position select 0) - 22, (_position select 1) - 56, 0],[(_position select 0) + 22, (_position select 1) + 56, 0],50,2,"HMMWV_Armored","Hard","Hero","Hero",_mission] call vehicle_patrol;
+ 
+//Static Guns
+[[[(_position select 0) - 0.01, (_position select 1) + 41, 0]],"M2StaticMG","Hard","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
+[[[(_position select 0) + 0.1, (_position select 1) - 25, 0]],"M2StaticMG","Hard","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
 
-	diag_log format["WAI: [Mission:[Bandit] ARMY Base]: Ended at %1",_position];
 
-	b_missionsrunning = b_missionsrunning - 1;
-};
+// Array of mission variables to send
+[
+	_mission, // Mission number
+	_position, // Position of mission
+	"Hard", // Difficulty
+	"ARMY Base", // Name of Mission
+	"MainBandit", // Mission Type: MainHero or MainBandit
+	true, // show mission marker?
+	true, // make minefields available for this mission
+	_crate, // crate object info
+	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
+	[_baserunover], // cleanup objects
+	"STR_CL_GENERAL_ARMYBASE_ANNOUNCE", // mission announcement
+	"STR_CL_GENERAL_ARMYBASE_WIN", // mission success
+	"STR_CL_GENERAL_ARMYBASE_FAIL", // mission fail
+	[10,5,10,3,2] // Dynamic crate array
+] call mission_winorfail;

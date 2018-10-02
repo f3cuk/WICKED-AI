@@ -1,4 +1,10 @@
-# Current version 2.2.4
+# Current version 2.2.5
+Type | Description
+------------: | :------------
+`enhancement` | Due to reports of poor performance on high population servers, this update is mostly code optimization.
+`enhancement` | There are some new features included that are listed in the epochmod.com forum topic.
+
+## Version 2.2.4
 Type | Description
 ------------: | :------------
 `enhancement` | Overpoch auto-detect. This version detects the Overwatch mod and adjusts accordingly.
