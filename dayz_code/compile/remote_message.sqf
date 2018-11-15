@@ -1,38 +1,51 @@
-fnc_remote_message = {
-	private ["_type","_message","_params"];
-	
+fnc_localizeMessage = {
 	_type = _this select 0;
 	_message = _this select 1;
 	
-	if (typeName _message == "STRING") then {
-		if (["STR_", _message] call fnc_inString) then {
-			if ((count _this) > 2) then {
-				_params = _this select 2;
-				if (_type == "hint") then {
-					_message = parseText format ([localize _message] + _params);
-				} else {
-					_message = format ([localize _message] + _params);
-				};
-			} else {
-				if (_type == "hint") then {
-					_message = parseText localize _message;
-				} else {
-					_message = localize _message;
-				};
-			};
-		};
-	} else {
+	if (typeName _message == "TEXT") exitWith {_message};
+
+	if ((_type == "event_hint") || (_type == "dynamic_text") || (_type == "ai_killfeed")) then {
 		{
-			if (["STR_", _x] call fnc_inString) then {
-				if ((count _this) > 2) then {
-					_params = _this select 2;
-					_message set [_forEachIndex, format ([localize _x] + _params)];
-				} else {
-					_message set [_forEachIndex, localize _x];
+			_index = _forEachIndex;
+			if (typeName _x == "ARRAY") then {
+				{
+					if (["STR_",_x] call fnc_inString) then {
+						(_message select _index) set [_forEachIndex, localize _x];
+					};
+				} forEach _x;
+				_message set [_forEachIndex, format _x];
+			} else {
+				if (["STR_",_x] call fnc_inString) then {
+					_message set [_index, localize _x];
 				};
 			};
 		} forEach _message;
+	} else {
+		if (typeName _message == "ARRAY") then {
+			if (["STR_",(_message select 0)] call fnc_inString) then {
+				_message set [0, localize (_message select 0)];
+		};
+		_message = format _message;
+		} else {
+			if (["STR_",_message] call fnc_inString) then {
+				_message = localize _message;
+			};
+		};
 	};
+	_message
+};
+
+fnc_remote_message = {
+	private "_vars";
+	
+	_type = _this select 0;
+	_message = _this select 1;
+	if (count _this > 2) then {
+		_vars = _this select 2;
+	};
+	
+	// Checks for localized strings and formats messages that contain arguments
+	_message = [_type,_message] call fnc_localizeMessage;
 	
 	if (_type == "radio") exitWith {
 		if (player hasWeapon "ItemRadio") then {
@@ -55,27 +68,41 @@ fnc_remote_message = {
 	if (_type == "private") exitWith {if(getPlayerUID player == (_message select 0)) then {systemChat (_message select 1);};};
 	if (_type == "global") exitWith {systemChat _message;};
 	if (_type == "hint") exitWith {hint _message;};
+	if (_type == "event_hint") exitWith {hint parseText format["<t align='center' color='%4' shadow='2' size='%5'>%1</t><br/><img size='%6' align='Center' image='%3'/><br/><t align='center' color='%#ffffff'>%2</t>",_message select 0,_message select 1,_vars select 0,_vars select 1,_vars select 2,_vars select 3];};
 	if (_type == "titleCut") exitWith {titleCut [_message,"PLAIN DOWN",3];};
 	if (_type == "titleText") exitWith {titleText [_message, "PLAIN DOWN"]; titleFadeOut 10;};
 	if (_type == "rollingMessages") exitWith {_message call dayz_rollingMessages;};
 	if (_type == "dynamic_text") exitWith {
 		[
-			format["<t size='0.40' color='#FFFFFF' align='center'>%1</t><br /><t size='0.60' color='#d5a040' align='center'>%2</t>",_message select 0,_message select 1],
-			0, // X coordinate
-			-0.25, // Y coordinate
-			10, // Message duration
-			0.5 // fade in
+			format["<t size='%3' color='%4' align='center'>%1</t><br /><t size='%5' color='%6' align='center'>%2</t>",_message select 0,_message select 1,_vars select 0,_vars select 1,_vars select 2,_vars select 3],
+			(_vars select 4), // X coordinate
+			(_vars select 5), // Y coordinate
+			(_vars select 6), // Message duration
+			(_vars select 7) // fade in
 		] spawn BIS_fnc_dynamicText;
 	};
-	if (_type == "dynamic_text2") exitWith {
+	if (_type == "event_hint") exitWith {hint parseText format["<t align='center' color='%4' shadow='2' size='%5'>%1</t><br/><img size='%6' align='Center' image='%3'/><br/><t align='center' color='%#ffffff'>%2</t>",
+		_message select 0, // Title
+		_message select 1, // Announcement
+		_vars select 0, // Image
+		_vars select 1, // Title Color
+		_vars select 2, // Title Size
+		_vars select 3 // Image Size
+	];};
+	if (_type == "ai_killfeed") exitWith {
+		if (isNil "RM_rscLayer") then {RM_rscLayer = 783};
 		[
-			format["<t size='0.60' color='#ff0000' align='center'>%1</t>",_message],
-			0, // X coordinate
-			+0.5, // Y coordinate
-			10, // Message duration
-			0.5 // fade in
+			format["<t size='%5' color='%4' align='left'>%1</t><t size='%5' color='%6' align='left'>%2</t><br /><t size='%5' color='%6' align='left'>%3</t>",_message select 0,_message select 1,_message select 2,_vars select 0,_vars select 1,_vars select 2],
+			(_vars select 3), // X coordinate
+			(_vars select 4), // Y coordinate
+			(_vars select 5), // Message duration
+			(_vars select 6), // fade in
+			-1,
+			RM_rscLayer
 		] spawn BIS_fnc_dynamicText;
+		RM_rscLayer = RM_rscLayer + 1;
+		if (RM_rscLayer == 788) then {RM_rscLayer = nil;};
 	};
 };
 
-"RemoteMessage" addPublicVariableEventHandler {(_this select 1) call fnc_remote_message;};
+"RemoteMessage" addPublicVariableEventHandler {(_this select 1) spawn fnc_remote_message;};

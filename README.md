@@ -1,16 +1,30 @@
-WICKED AI 2.2.5
+WICKED AI 2.2.6
 ==============
 
 Since I really like (read love) the Wicked AI missions and support for them has gone in the latest patches, I decided to dust off the old files and start making these 1.0.6+ compatible. Starting with a few minor bugfixes and some custom loadouts, but quickly turning into a proper redo with awesome help of the - very much alive - mod community!
 
-### Release 2.2.5 (Major Rework) (worldwidesorrow)
-- Due to reports of poor performance on high population servers, this update is mostly code optimization.
-- There are some new features included that are listed in the ***[epochmod.com forum topic.](https://epochmod.com/forum/topic/45133-release-wai-225/)***
-- Localization solution added. @BiggEgg17
-- Added localization strings to ***[oiad community stringtable](https://github.com/oiad/communityLocalizations/)***
-- Updated Readme for community stringtable dependency
+### Release 2.2.6 (worldwidesorrow)
+- Mission objects and crates use compact arrays and functions. Missions can spawn multiple crates.
+- Optional godmode mission objects for servers with overpowered military vehicles. Also disables simulation.
+- New mission C130/MV-22 Armed Vehicle Air Drop added.
+- New multi-crate mission Firestation added.
+- AI and Loot multipliers added so overall AI and loot levels can be adjusted easily with variables in config.sqf
+- AI Killfeed added to "on kill" function - enabled in config.sqf with variable ai_killfeed.
+- effectiveCommander option added so vehicle gunners can get kill and humanity rewards. @Twist
+- Map independent patrol missions. Reworked so they use map locations as waypoints and they only spawn one thread instead of three.
+- Improved use of the mission data variable for modularity.
+- Avoid traders replaced with avoid safezones that uses the built in DZE_SafeZonePosArray in init.sqf. @Twist
+- Some functions that were not being used and are not necessary like isSlope and inDebug removed.
+- Additional parameter for the load ammo function added so armed vehicles can have magazines placed in their gear.
+- Mission vehicles remained locked until the mission is cleared to prevent ninjas.
+- Since Arma has a bad habit of not kicking dead AI out of vehicles, keys will not spawn on AI static gunners or vehicle crew.
+- Killzone Kid's shuffle plus function added for mission array randomization. @oiad
+- BiggEgg's localization solution turned into a function that localizes and formats messages submitted as arrays.
+- The dynamic text option has color-coded mission announcements based on marker color.
+- Additional code auditing and optimization.
 
 ### Version history
+- 15-11-2018 : Release 2.2.6
 - 28-05-2018 : Release 2.2.5
 - 16-02-2018 : Release 2.2.4
 - 04-01-2018 : Release 2.2.3

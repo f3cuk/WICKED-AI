@@ -1,32 +1,25 @@
- // For Reference: wai_static_data = [0,[],[],[]]; [AI Count, UnitGroups, Vehicles to Monitor, Static gun and AI pair]
+ // For Reference: wai_static_data = [0,[],[],[]]; [AI Count, UnitGroups, Vehicles to Monitor, crates]
 
-private ["_unitGroups","_aiVehicles","_staticArray","_timeStamp","_running"];
+private ["_unitGroups","_aiVehicles","_staticArray","_timeStamp","_running","_crates"];
 
 _timeStamp = diag_tickTime;
 _running = true;
 
 // The loop has to wait until there are existing groups to monitor
-waitUntil {uiSleep 1; (count (wai_static_data select 1)) > 0};
+// 10 seconds initial sleep to allow crates array to populate
+waitUntil {uiSleep 10; (count (wai_static_data select 1)) > 0};
+
+// Spawn loot in crates
+_crates = wai_static_data select 3;
+if (count _crates > 0) then {
+	{
+		[(_x select 0),(_x select 1)] call dynamic_crate;
+	} count _crates;
+};
 
 diag_log "WAI: Initializing static missions";
 
 while {_running} do {
-	
-	// Invisible Static Gun Glitch Fix - Runs every 3 minutes - "GetOut" EventHandler forces the AI back onto the static gun immediately.
-	_staticArray = wai_static_data select 3;
-	if ((diag_tickTime - _timeStamp) > 180 && (count _staticArray) > 0) then {
-		{
-			if (typeName _x == "ARRAY") then {
-				private ["_unit","_gun"];
-				_unit = _x select 0;
-				_gun = _x select 1;
-				{
-					_unit action ["getOut", _gun];
-				} count _x;
-			};
-		} forEach _staticArray;
-		_timeStamp = diag_tickTime;
-	};
 
 	// Refuel and Rearm the AI vehicles until they are destroyed
 	_aiVehicles = wai_static_data select 2;
@@ -39,6 +32,17 @@ while {_running} do {
 		} count _aiVehicles;
 	};
 	
+	// Static gun glitch fix
+	if ((diag_tickTime - _timeStamp) > 180 && (count _aiVehicles) > 0) then {
+		{
+			if (_x isKindOf "StaticWeapon") then {
+				(gunner _x) action ["getout",_x];
+			};
+		} forEach _aiVehicles;
+		
+		_timeStamp = diag_tickTime;
+	};
+		
 	_unitGroups = wai_static_data select 1;
 	{
 		// delete empty groups

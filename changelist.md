@@ -1,4 +1,10 @@
-# Current version 2.2.5
+# Current version 2.2.6
+Type | Description
+------------: | :------------
+`enhancement` | Mission objects and crates spawn from compact arrays. Two new missions. Additional code auditing and optimization.
+`enhancement` | New options: Godmode mission objects, ai and loot multipliers, ai killfeed, avoid safezones, Reward vehicle gunners.
+
+## Version 2.2.5
 Type | Description
 ------------: | :------------
 `enhancement` | Due to reports of poor performance on high population servers, this update is mostly code optimization.
