@@ -1,4 +1,4 @@
-private	["_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_vehicle","_vehclass","_crate"];
+private ["_rndnum","_mission","_position"];
 
 // Get mission number, important we do this early
 _mission = count wai_mission_data -1;
@@ -7,45 +7,37 @@ _position = [40] call find_position;
 
 diag_log format["WAI: [Mission:[Hero] Disabled Convoy]: Starting... %1",_position];
 
-//Setup the crate
-_crate_type = crates_large call BIS_fnc_selectRandom;
-_crate = createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
-_crate call wai_crate_setup;
+// Loot
+_loot = [[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4];
+
+//Spawn Crates
+[[
+	[_loot,crates_large,[0,0]]
+],_position,_mission] call wai_spawnCrate;
 
 //Troops
-_rndnum = round (random 5);
-[[_position select 0,_position select 1,0],5,"Hard",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-[[_position select 0,_position select 1,0],5,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-[[_position select 0,_position select 1,0],5,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[_position,5,"Hard",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[_position,5,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[_position,5,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+_rndnum = ceil (random 5);
+[_position,_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+_rndnum = ceil (random 5);
+[_position,_rndnum,"Hard","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 //Static Guns
 [[
-	[(_position select 0) + 25, (_position select 1) + 25, 0],
-	[(_position select 0) - 25, (_position select 1) - 25, 0],
-	[(_position select 0) + 25, (_position select 1) - 25, 0]
+	[(_position select 0) - 30, (_position select 1) + 4, 0],
+	[(_position select 0) + 10, (_position select 1) - 30, 0],
+	[(_position select 0) + 8, (_position select 1) + 30, 0]
 ],"M2StaticMG","Hard","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
 
 //Heli Para Drop
-[[(_position select 0),(_position select 1),0],400,"BAF_Merlin_HC3_D","North",[3000,4000],150,1.0,200,10,"Random","Random",4,"Random","Bandit","Random","Bandit",false,_mission] spawn heli_para;
+[_position,400,"BAF_Merlin_HC3_D","North",[3000,4000],150,1.0,200,10,"Random","Random",4,"Random","Bandit","Random","Bandit",false,_mission] spawn heli_para;
 
-uiSleep 3; // Wait for the ai list to populate so the key on ai option works.
+[cargo_trucks,[(_position select 0) + 19,(_position select 1) + 11],_mission,true,90] call custom_publish;
+[refuel_trucks,[(_position select 0) - 14,(_position select 1) - 14],_mission,true,-90] call custom_publish;
+[military_unarmed,[(_position select 0) - 20,(_position select 1) - 6],_mission,true,-90] call custom_publish;
 
-_vehclass = cargo_trucks call BIS_fnc_selectRandom; // Cargo Truck
-_vehclass2 = refuel_trucks call BIS_fnc_selectRandom; // Refuel Truck
-_vehclass3 = military_unarmed call BIS_fnc_selectRandom; // Military Unarmed
-
-_vehicle = [_crate,_vehclass,_position,_mission] call custom_publish;
-_vehicle2 = [_crate,_vehclass2,_position,_mission] call custom_publish;
-_vehicle3 = [_crate,_vehclass3,_position,_mission] call custom_publish;
-
-if(wai_debug_mode) then {
-	diag_log format["WAI: [Hero] ikea_convoy spawned a %1",_vehclass];
-	diag_log format["WAI: [Hero] ikea_convoy spawned a %1",_vehclass3];
-	diag_log format["WAI: [Hero] ikea_convoy spawned a %1",_vehclass2];
-};
-
-// Array of mission variables to send
 [
 	_mission, // Mission number
 	_position, // Position of mission
@@ -54,11 +46,8 @@ if(wai_debug_mode) then {
 	"MainHero", // Mission Type: MainHero or MainBandit
 	true, // show mission marker?
 	true, // make minefields available for this mission
-	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
-	[],	// cleanup objects
 	"STR_CL_HERO_IKEA_ANNOUNCE", // mission announcement
 	"STR_CL_HERO_IKEA_WIN", // mission success
-	"STR_CL_HERO_IKEA_FAIL", // mission fail
-	[[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4,[_vehicle,_vehicle2,_vehicle3]] // Dynamic crate array
+	"STR_CL_HERO_IKEA_FAIL" // mission fail
 ] call mission_winorfail;

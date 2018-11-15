@@ -1,4 +1,4 @@
-private ["_vehicle","_rndnum","_crate_type","_crate","_mission","_vehname","_position","_vehclass"];
+private ["_rndnum","_mission","_vehname","_vehicle","_position","_vehclass","_loot"];
 
 // Get mission number, important we do this early
 _mission = count wai_mission_data -1;
@@ -11,16 +11,21 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[Hero] Disabled Military Chopper]: Starting... %1",_position];
 
-//Setup the crate
-_crate_type = crates_medium call BIS_fnc_selectRandom;
-_crate = createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
-_crate call wai_crate_setup;
+// Loot
+_loot = [[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2];
+
+//Spawn Crates
+[[
+	[_loot,crates_medium,[0,10]]
+],_position,_mission] call wai_spawnCrate;
 
 //Troops
-_rndnum = round (random 5);
-[[_position select 0,_position select 1,0],5,"Medium",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-[[_position select 0,_position select 1,0],5,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
-[[_position select 0,_position select 1,0],_rndnum,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[_position,5,"Medium",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+[_position,5,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+_rndnum = ceil (random 4);
+[_position,_rndnum,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+_rndnum = ceil (random 4);
+[_position,_rndnum,"Medium","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
 //Static Guns
 [[
@@ -30,16 +35,13 @@ _rndnum = round (random 5);
 	[(_position select 0) - 30, (_position select 1) + 30, 0]
 ],"M2StaticMG","Medium","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
-uiSleep 3; // Wait for the ai list to populate so the key on ai option works.
-
 //Spawn vehicle
-_vehicle = [_crate,_vehclass,_position,_mission] call custom_publish;
+[_vehclass,_position,_mission] call custom_publish;
 
 if(wai_debug_mode) then {
 	diag_log format["WAI: [Hero] disabled_milchopper spawned a %1",_vehname];
 };
 
-// Array of mission variables to send
 [
 	_mission, // Mission number
 	_position, // Position of mission
@@ -48,11 +50,8 @@ if(wai_debug_mode) then {
 	"MainHero", // Mission Type: MainHero or MainBandit
 	true, // show mission marker?
 	true, // make minefields available for this mission
-	_crate,	// crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
-	[], // cleanup objects
 	"STR_CL_HERO_MILCHOPPER_ANNOUNCE", // mission announcement
 	"STR_CL_HERO_MILCHOPPER_WIN", // mission success
-	"STR_CL_HERO_MILCHOPPER_FAIL", // mission fail
-	[[10,ai_wep_sniper],[4,crate_tools_sniper],[4,crate_items_sniper],3,2,[_vehicle]] // Dynamic crate array
+	"STR_CL_HERO_MILCHOPPER_FAIL" // mission fail
 ] call mission_winorfail;

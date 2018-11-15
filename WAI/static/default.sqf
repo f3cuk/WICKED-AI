@@ -138,32 +138,11 @@ Place your paradrop spawns under this line
 
 
 
-
-
 /* Custom Crate Spawns
 
-// To spawn one crate
-_position = [12590.1,9000.81,0]; // Position of the crate
-_crate_type = crates_large call BIS_fnc_selectRandom; // Choose among: crates_small, crates_medium, crates_large
-_crate1 = createVehicle [_crate_type,_position, [], 0, "CAN_COLLIDE"]; // Spawn the crate
-_crate1 call wai_crate_setup; // Setup the crate
-_crateLoot = 
-[
-	0, // Max number of long guns OR [MAX number of long guns,gun_array]
-	0, // Max number of tools OR [MAX number of tools,tool_array]
-	0, // Max number of items OR [MAX number of items,item_array]
-	0, // Max number of pistols OR [MAX number of pistol,pistol_array]
-	0 // Max number of backpacks OR [MAX number of backpacks,backpack_array]
-];
-
-[_crate1,_crateLoot] call dynamic_crate;
-
-// To spawn second crate
 _position = [911.21545,4532.7612,0]; // Position of the crate
-_crate_type = crates_large call BIS_fnc_selectRandom; // Choose among: crates_small, crates_medium, crates_large
-_crate2 = createVehicle [_crate_type,_position, [], 0, "CAN_COLLIDE"]; // Spawn the crate
-_crate2 call wai_crate_setup; // Setup the crate
-_crateLoot = 
+
+_loot = 
 [
 	0, // Max number of long guns OR [MAX number of long guns,gun_array]
 	0, // Max number of tools OR [MAX number of tools,tool_array]
@@ -172,11 +151,21 @@ _crateLoot =
 	0 // Max number of backpacks OR [MAX number of backpacks,backpack_array]
 ];
 
-[_crate2,_crateLoot] call dynamic_crate;
+// Spawn one crate - Best option for static positions because offsets are not needed.
+[[
+	[_loot,crates_large,[0,0]] // [loot variable, crate array, 2d offsets]
+],_position] call wai_spawnCrate;
+
+
+// Multiple crate spawning option
+[[
+	[_loot,"USVehicleBox",[0,0]], // [loot variable, crate classname, 2d offsets]
+	[[0,0,[3,crate_items_crop_raider],0,0],crates_large,[0,0,0]], // [loot variable, crate array, 3d offsets]
+	[[0,0,0,0,0],crates_large,[0,0],60] // [loot array, crate array, 2d offsets, optional direction]
+],_position] call wai_spawnCrate;
 
 Place your crate spawns under this line
 */
-
 
 
 diag_log "WAI: Static mission loaded";

@@ -1,4 +1,4 @@
-private ["_rndnum","_crate_type","_mission","_position","_crate","_baserunover","_baserunover0","_baserunover1","_baserunover2","_baserunover3","_baserunover4","_baserunover5","_baserunover6","_baserunover7","_baserunover8","_baserunover9","_baserunover10","_baserunover11","_baserunover12","_baserunover13"];
+private ["_rndnum","_mission","_position","_loot"];
 
 // Get mission number, important we do this early
 _mission = count wai_mission_data -1;
@@ -7,39 +7,38 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[Hero] Slaughter House]: Starting... %1",_position];
 
-//Setup the crate
-_crate_type = crates_small call BIS_fnc_selectRandom;
-_crate = createVehicle [_crate_type,[(_position select 0) + 2.5,(_position select 1),0], [], 0, "CAN_COLLIDE"];
-_crate call wai_crate_setup;
+// Loot
+_loot = [8,5,[6,crate_items_chainbullets],3,[2,crate_backpacks_large]];
 
-//Buildings 
-_baserunover0 = createVehicle ["Land_aif_tovarna1",[(_position select 0) - 0.01, (_position select 1) - 0.01,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover1 = createVehicle ["Land_stand_meat_EP1",[(_position select 0) - 4, (_position select 1) + 2,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover2 = createVehicle ["Land_stand_meat_EP1",[(_position select 0) - 2, (_position select 1) + 2,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover3 = createVehicle ["Land_stand_meat_EP1", [(_position select 0) + 0.001, (_position select 1) + 2,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover4 = createVehicle ["Land_stand_meat_EP1", [(_position select 0) - 1, (_position select 1) + 2,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover5 = createVehicle ["Land_stand_meat_EP1", [(_position select 0) + 2, (_position select 1) + 2,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover6 = createVehicle ["Land_stand_meat_EP1",[(_position select 0) + 4, (_position select 1) + 2,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover7 = createVehicle ["Mass_grave",[(_position select 0) - 3, (_position select 1) + 12,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover8 = createVehicle ["Mass_grave",[(_position select 0) + 4, (_position select 1) + 12,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover9 = createVehicle ["Mass_grave", [(_position select 0) + 0.01, (_position select 1) - 9,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover10 = createVehicle ["Mass_grave", [(_position select 0) - 0.3, (_position select 1) + 26,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover11 = createVehicle ["Axe_woodblock", [(_position select 0) - 4, (_position select 1) - 14,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover12 = createVehicle ["Land_Table_EP1",[(_position select 0) + 2, (_position select 1) - 2,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover13 = createVehicle ["MAP_icebox",[(_position select 0) - 2, (_position select 1) - 0.01,-0.02],[], 0, "CAN_COLLIDE"];
-_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7,_baserunover8,_baserunover9,_baserunover10,_baserunover11,_baserunover12,_baserunover13];
+//Spawn Crates
+[[
+	[_loot,crates_medium,[2.5,0,.1]]
+],_position,_mission] call wai_spawnCrate;
 
-_directions = [0,0.3693,0.3693,0.3693,0.3693,0.3693,0.3693,0,188,33,0,-25,0,0];
-{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
-
-{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
+// Spawn Objects
+[[
+	["Land_aif_tovarna1",[-0.01,-0.01,-0.02]],
+	["Land_stand_meat_EP1",[-4,2,-0.02],0.3693],
+	["Land_stand_meat_EP1",[-2,2,-0.02],0.3693],
+	["Land_stand_meat_EP1",[0.001,2,-0.02],0.3693],
+	["Land_stand_meat_EP1",[-1,2,-0.02],0.3693],
+	["Land_stand_meat_EP1",[2,2,-0.02],0.3693],
+	["Land_stand_meat_EP1",[4,2,-0.02],0.3693],
+	["Mass_grave",[-3,20,-0.02]],
+	["Mass_grave",[4,18,-0.02]],
+	["Mass_grave",[0,-15,-0.02]],
+	["Axe_woodblock",[-4,-14,-0.02],-25],
+	["Land_Table_EP1",[2,-2,-0.02]],
+	["MAP_icebox",[-2,-0.01,-0.02]]
+],_position,_mission] call wai_spawnObjects;
 
 //Troops
-_rndnum = round (random 5);
 [[(_position select 0) + 9, (_position select 1) - 13, 0],5,"Easy",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+_rndnum = ceil (random 3);
+[[(_position select 0) + 13, (_position select 1) + 15, 0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
+_rndnum = ceil (random 3);
 [[(_position select 0) + 13, (_position select 1) + 15, 0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 
-// Array of mission variables to send
 [
 	_mission, // Mission number
 	_position, // Position of mission
@@ -48,11 +47,8 @@ _rndnum = round (random 5);
 	"MainHero", // Mission Type: MainHero or MainBandit
 	true, // show mission marker?
 	true, // make minefields available for this mission
-	_crate, // crate object info
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
-	[_baserunover], // cleanup objects
 	"STR_CL_GENERAL_SLAUGHTERHOUSE_ANNOUNCE", // mission announcement
 	"STR_CL_GENERAL_SLAUGHTERHOUSE_WIN", // mission success
-	"STR_CL_GENERAL_SLAUGHTERHOUSE_FAIL", // mission fail
-	[10,5,[6,crate_items_chainbullets],3,[2,crate_backpacks_large]] // Dynamic crate array
+	"STR_CL_GENERAL_SLAUGHTERHOUSE_FAIL" // mission fail
 ] call mission_winorfail;

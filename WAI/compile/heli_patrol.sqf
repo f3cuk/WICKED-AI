@@ -43,45 +43,38 @@ if(_aitype == "Hero") then {
 	_unitGroup	= createGroup EAST;
 };
 
-_pilot 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+_pilot = _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 
 [_pilot] joinSilent _unitGroup;
-
-ai_air_units 		= (ai_air_units +1);
 
 // This random number is used to start the helicopter from 3000 to 4000 meters from the mission.
 _rndnum = 3000 + round (random 1000);
 
 _helicopter = createVehicle [_heli_class,[(_position select 0) + _rndnum,(_position select 1),100],[],0,"FLY"];
-//_start_position = position _helicopter;
 _diag_distance = _helicopter distance _position;
 if (wai_debug_mode) then {
 	diag_log format["WAI: the Heli Patrol has started %1 from the mission",_diag_distance];
 };
-_helicopter 		setFuel 1;
-_helicopter 		engineOn true;
-_helicopter 		setVehicleAmmo 1;
-_helicopter 		flyInHeight 150;
-_helicopter 		lock true;
-_helicopter 		addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
+_helicopter setFuel 1;
+_helicopter engineOn true;
+_helicopter setVehicleAmmo 1;
+_helicopter flyInHeight 150;
+_helicopter lock true;
+_helicopter addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
 
-_pilot 				assignAsDriver _helicopter;
-_pilot 				moveInDriver _helicopter;
+_pilot assignAsDriver _helicopter;
+_pilot moveInDriver _helicopter;
 
-_gunner 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
-_gunner 			assignAsGunner _helicopter;
-_gunner 			moveInTurret [_helicopter,[0]];
+_gunner = _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+_gunner assignAsGunner _helicopter;
+_gunner moveInTurret [_helicopter,[0]];
 
-[_gunner] 			joinSilent _unitGroup;
+[_gunner] joinSilent _unitGroup;
 
-ai_air_units 		= (ai_air_units + 1);
-
-_gunner2 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
-_gunner2			assignAsGunner _helicopter;
-_gunner2 			moveInTurret [_helicopter,[1]];
-[_gunner2] 			joinSilent _unitGroup;
-
-ai_air_units 		= (ai_air_units + 1);
+_gunner2 = _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+_gunner2 assignAsGunner _helicopter;
+_gunner2 moveInTurret [_helicopter,[1]];
+[_gunner2] joinSilent _unitGroup;
 
 call {
 	if (_aitype == "Hero") 		exitWith {{ _x setVariable ["Hero",true,false]; _x setVariable ["humanity", ai_remove_humanity];} count [_pilot, _gunner, _gunner2]; };
@@ -90,7 +83,7 @@ call {
 };
 
 {
-	_pilot setSkill [_x,1]
+	_pilot setSkill [_x,1];
 } count _skillarray;
 
 {
@@ -105,18 +98,17 @@ call {
 } count (units _unitgroup);
 
 {
-	_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
+	_x addEventHandler ["Killed",{[_this select 0, _this select 1] call on_kill;}];
 } forEach (units _unitgroup);
 
 dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_helicopter];
 
 if (!isNil "_mission") then {
-	// Add unitGroup to array for mission clean up
 	((wai_mission_data select _mission) select 1) set [count ((wai_mission_data select _mission) select 1), _unitGroup];
 	((wai_mission_data select _mission) select 4) set [count ((wai_mission_data select _mission) select 4), _helicopter];
 } else {
-	(wai_static_data select 1) set [count (wai_static_data select 1), _unitGroup]; // Add unit group to an array for mission clean up
-	(wai_static_data select 2) set [count (wai_static_data select 2), _helicopter];  // added for vehicle monitor
+	(wai_static_data select 1) set [count (wai_static_data select 1), _unitGroup];
+	(wai_static_data select 2) set [count (wai_static_data select 2), _helicopter];
 };
 
 _unitGroup allowFleeing 0;

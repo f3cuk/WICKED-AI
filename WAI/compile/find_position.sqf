@@ -1,9 +1,9 @@
 private ["_i","_traders","_safepos","_validspot","_position"];
 
 if (wai_use_blacklist) then {
-	_safepos = [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0,wai_blacklist];
+	_safepos = [getMarkerPos "center",150,((getMarkerSize "center") select 1),(_this select 0),0,0.4,0,wai_blacklist];
 } else {
-	_safepos = [getMarkerPos "center",0,8500,(_this select 0),0,0.5,0];
+	_safepos = [getMarkerPos "center",150,((getMarkerSize "center") select 1),(_this select 0),0,0.4,0];
 };
 
 _i = 0;
@@ -14,21 +14,18 @@ while {!_validspot} do {
 	_position 	= if (!wai_user_spawnpoints) then {_safepos call BIS_fnc_findSafePos} else {WAI_StaticSpawnPoints call BIS_fnc_selectRandom};
 	_validspot 	= true;
 	
+	// if the count of the selected position is more than two BIS_fnc_findSafePos failed 
+	if ((count _position) > 2) then {
+		_validspot = false;
+	};
+	
 	if (wai_avoid_samespot) then {
 		{
 			if ((_position distance _x) < 200) then {
 				_validspot = false;
 			};
 		} forEach wai_markedPos;
-		//diag_log format["WAI: marked spot array %1",wai_markedPos];
 	};
-	
-	_color = "ColorBlack";
-	if (_position call inDebug) then {
-		_color = "ColorPink";
-		if (wai_debug_mode) then {diag_log "WAI: Invalid Position (Debug)";};
-		_validspot = false;
-	}; 
 
 	if (_validspot && {wai_avoid_missions != 0}) then {
 		{
@@ -38,15 +35,16 @@ while {!_validspot} do {
 			};
 		} count wai_mission_markers;
 	};
-
-	if (_validspot && {wai_avoid_traders != 0}) then {
+	
+	if (_validspot && {wai_avoid_safezones != 0}) then {
 		{
-			if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_traders)) exitWith {
-				if (wai_debug_mode) then {diag_log format ["WAI: Invalid Position (Marker: %1)",_x];};
+			_szPos = _x select 0;
+			if (_position distance _szPos < wai_avoid_safezones) exitWith {
+				if (wai_debug_mode) then {diag_log "WAI: Invalid Position (SafeZone)";};
 				_color = "ColorBrown";
 				_validspot = false;
 			};
-		} count trader_markers;
+		} forEach DZE_SafeZonePosArray;
 	};
 
 	if (_validspot && {wai_avoid_water != 0}) then {
@@ -80,6 +78,14 @@ while {!_validspot} do {
 			_validspot = false;
 		};
 	};
+	
+	if (_validspot && {wai_avoid_plots != 0}) then {
+		if (count (_position nearEntities ["Plastic_Pole_EP1_DZ", wai_avoid_plots]) > 0) then {
+			if (wai_debug_mode) then {diag_log "WAI: Invalid Position (plot)";};
+			_color = "ColorBlack";
+			_validspot = false;
+		};
+	};
 
 	if (!_validspot) then {
 		if (wai_debug_mode) then {
@@ -94,8 +100,6 @@ while {!_validspot} do {
 
 	if (_validspot) then {
 		if (wai_debug_mode) then {diag_log format ["Loop complete, valid position %1 in %2 attempts.",_position,_i];};
-	} else {
-		uiSleep 0.5;
 	};
 };
 

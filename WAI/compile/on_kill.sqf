@@ -2,17 +2,8 @@ private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_un
 
 _unit 		= _this select 0;
 _player 	= _this select 1;
-_type 		= _this select 2;
+//_type 		= _this select 2;
 _launcher 	= secondaryWeapon _unit;
-
-call {
-	if(_type == "ground") 	exitWith { ai_ground_units = (ai_ground_units -1); };
-	if(_type == "air") 		exitWith { ai_air_units = (ai_air_units -1); };
-	if(_type == "vehicle") 	exitWith { ai_vehicle_units = (ai_vehicle_units -1); };
-	if(_type == "static") 	exitWith { ai_emplacement_units = (ai_emplacement_units -1); };
-};
-
-_unit setVariable["missionclean", nil];
 
 _mission = _unit getVariable ["mission", nil];
 	
@@ -26,26 +17,37 @@ if (!isNil "_mission") then {
 
 _unit setVariable ["bodyName","mission_ai",false]; //Only needed on server to prevent immediate cleanup in sched_corpses.sqf
 
-// Add money to ai wallet if enabled
 if (ai_hasMoney && Z_singleCurrency) then {
-	_cash = round(random ai_moneyMultiplier) * 50; // adds money to ai wallets in 50x increments. 
+	_cash = round(random ai_moneyMultiplier) * 50;
 	_unit setVariable[Z_MoneyVariable,_cash ,true];
 };
 
 if(ai_add_skin) then {
-
 	_skin = (typeOf _unit);
 	_skin = "Skin_" + _skin;
 
 	if (isClass (configFile >> "CfgMagazines" >> _skin)) then {
 		[_unit,_skin] call BIS_fnc_invAdd;
 	};
-
 };
 
 if (isPlayer _player) then {
 
 	private ["_banditkills","_humanity","_humankills"];
+	
+	if (ai_reward_veh_gunner) then {
+		_player = (effectiveCommander vehicle _player);
+	};
+	
+	if (ai_killfeed && ai_humanity_gain) then {
+		_aitype = if (_unit getVariable ["Hero", false]) then {"Hero";} else {"Bandit";};
+		_humanityReward = if (_aitype == "Hero") then {format["-%1 Humanity",ai_remove_humanity];} else {format["+%1 Humanity",ai_add_humanity];};
+		_aiColor = if (_aitype == "Hero") then {"#3333ff";} else {"#ff0000";};
+		_params = [_aiColor,"0.50","#FFFFFF",-.4,.2,2,0.5];
+		
+		RemoteMessage = ["ai_killfeed", [_aitype," AI Kill",_humanityReward],_params];
+		(owner _player) publicVariableClient "RemoteMessage";
+	};
 
 	_humanity 		= _player getVariable["humanity",0];
 	_banditkills 	= _player getVariable["banditKills",0];
