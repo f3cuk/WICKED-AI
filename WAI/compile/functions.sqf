@@ -61,6 +61,7 @@ wai_spawnCrate = {
 		};
 		
 		_crate setPos _position;
+		_crate setVariable ["permaLoot",true];
 		clearWeaponCargoGlobal _crate;
 		clearMagazineCargoGlobal _crate;
 		_crate addEventHandler ["HandleDamage", {0}];
