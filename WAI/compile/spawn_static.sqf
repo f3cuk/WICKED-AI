@@ -22,6 +22,7 @@ if ((count _this == 10) OR (count _this == 6)) then {
 	_mission = nil;
 };
 
+//_position2 = [];
 _aiweapon = [];
 _aigear = [];
 _aiskin = "";
@@ -38,6 +39,7 @@ if (!isNil "_mission") then {
 };
 
 {
+	//_position2 = _x;
 
 	call {
 		if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom;};
@@ -55,6 +57,8 @@ if (!isNil "_mission") then {
 
 	_unit = _unitGroup createUnit [_aiskin, [0,0,0], [], 10, "PRIVATE"];
 	
+	//_static = createVehicle [_class, [(_position2 select 0),(_position2 select 1),(_position2 select 2)], [], 0, "CAN_COLLIDE"];
+	//_static setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
 	_static = _class createVehicle _x;
 	_static setPos _x;
 	

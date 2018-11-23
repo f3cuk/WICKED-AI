@@ -1,10 +1,12 @@
 // Updated single location mission example for DayZ Epoch 1.0.6+ by JasonTM. Please review missions in the hero and bandit folders for additional examples.
 
 // Include local variables in this list
-private ["_baserunover","_mission","_directions","_position","_crate","_crate_type","_num"];
+private ["_messages","_missionType","_aiType","_baserunover","_mission","_directions","_position","_crate","_crate_type","_num"];
 
 // Get mission number, important we do this early
 _mission = count wai_mission_data -1;
+_missionType = _this select 0; // Type of mission "MainHero" or "MainBandit"
+_aiType = _this select 1; // Type of AI - opposite of mission type
 
 // Declare your static spawn point. You can also use static positions for your buildings, vehicles, and crate.
 // Normally with the z coordinate you will just use 0 because 0 means that it is on the ground.
@@ -149,19 +151,29 @@ _unitGroup = [[_position select 0, _position select 1, 0],1,"hard","random",4,"r
 [cargo_trucks,_position,_mission] call custom_publish; // with vehicle array, random position, and random direction
 _vehicle = [cargo_trucks,_position,_mission] call custom_publish; // Same as above but saved to variable if necessary
 
+// Mission messages examples -  they go into an array
+"A Mission has spawned, hurry up to claim the loot!",	// mission announcement - this message displays when the mission starts
+"The mission was complete/objective reached",			// mission success - this message displays when the mission is completed by a player
+"The mission timed out and nobody was in the vicinity"	// mission fail - this message displays when a mission times out.
+
+// Example with localized message strings
+_messages = if (_missionType == "MainHero") then {
+	["STR_CL_HERO_MISSIONNAME_ANNOUNCE","STR_CL_HERO_MISSIONNAME_WIN","STR_CL_HERO_MISSIONNAME_FAIL"];
+} else {
+	["STR_CL_BANDIT_MISSIONNAME_ANNOUNCE","STR_CL_BANDIT_MISSIONNAME_WIN","STR_CL_BANDIT_MISSIONNAME_FAIL"];
+};
+
 // Array of options to send to mission_winorfail with non-localized announcements
 [
 	_mission, // Mission Variable - This is a number.
 	_position, // Position of mission
 	"Hard", // Difficulty "Easy", "Medium", "Hard", "Extreme",
 	"Name of Mission", // Name of Mission
-	"MainHero", // Mission Type: MainHero or MainBandit
+	_missionType, // Mission Type: Hero or Bandit
 	true, // show mission marker?
 	true, // make minefields available for this mission?
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup], : crate - you have to get within 20 meters of the crate and kill at least the number of ai defined by variable wai_kill_percent in config.sqf. kill = you have to kill all of the AI. assassinate - you have to kill a special ai (see Mayor's Mansion mission).
-	"A Mission has spawned, hurry up to claim the loot!",	// mission announcement - this message displays when the mission starts
-	"The mission was complete/objective reached",			// mission success - this message displays when the mission is completed by a player
-	"The mission timed out and nobody was in the vicinity"	// mission fail - this message displays when a mission times out.
+	_messages
 ] call mission_winorfail;
 
 
@@ -171,12 +183,10 @@ _vehicle = [cargo_trucks,_position,_mission] call custom_publish; // Same as abo
 	_position, // Position of mission
 	"Hard", // Difficulty
 	"Lunch break Convoy", // Name of Mission
-	"MainBandit", // Mission Type: MainHero or MainBandit
+	_missionType, // Mission Type: Hero or Bandit
 	true, // show mission marker?
 	true, // make minefields available for this mission
 	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
-	"STR_CL_BANDIT_IKEA_ANNOUNCE", // localized mission announcement - this message displays when the mission starts
-	"STR_CL_BANDIT_IKEA_WIN", // localized mission success - this message displays when the mission is completed by a player
-	"STR_CL_BANDIT_IKEA_FAIL" // localized mission fail - this message displays when a mission times out.
+	_messages
 ] call mission_winorfail;
 

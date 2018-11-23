@@ -9,9 +9,9 @@ _showMarker 	= _this select 5;
 _numWaypoints	= _this select 6;
 _locations		= _this select 7;
 _completionType	= _this select 8;
-_msgstart		= _this select 9;
-_msgwin			= _this select 10;
-_msglose		= _this select 11;
+_msgstart		= (_this select 9) select 0;
+_msgwin			= (_this select 9) select 1;
+_msglose		= (_this select 9) select 2;
 _countWP		= [];
 _unitGroup = ((wai_mission_data select _mission) select 1) select 0;
 

@@ -8,9 +8,9 @@ _missionType 	= _this select 4;
 _showMarker 	= _this select 5;
 _enableMines	= _this select 6;
 _completionType	= _this select 7;
-_msgstart		= _this select 8;
-_msgwin			= _this select 9;
-_msglose		= _this select 10;
+_msgstart		= (_this select 8) select 0;
+_msgwin			= (_this select 8) select 1;
+_msglose		= (_this select 8) select 2;
 
 if(wai_debug_mode) then {diag_log "WAI: Starting Mission number " + str _mission;};
 
@@ -29,7 +29,6 @@ _color = call {
 _name = call {
 	if(_missionType == "MainHero") exitWith {"Bandit " + _name;};
 	if(_missionType == "MainBandit") exitWith {"Hero " + _name;};
-	//if(_missionType == "special") exitWith { _name = "[Special] " + _name; };
 };
 
 if(wai_debug_mode) then {diag_log "WAI: Mission Data: " + str wai_mission_data;};
