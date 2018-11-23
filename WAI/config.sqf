@@ -113,8 +113,6 @@ wai_server_fps			= 1; // missions only starts if server FPS is over wai_server_f
 
 wai_kill_percent		= 80; // percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 
-wai_loot_multiplier		= 1; // To increase the loot per mission use a larger number. Be careful. Crates only hold so much loot.
-
 wai_high_value			= true; // enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 wai_high_value_chance	= 10; // chance in percent you find above mentioned item
 
@@ -128,68 +126,39 @@ wai_mission_announce	= "DynamicText"; // Options: "Radio", "DynamicText", "title
 wai_hero_limit			= 1; // define how many hero missions can run at once
 wai_bandit_limit		= 1; // define how many bandit missions can run at once
 
-// Mission Arrays
-wai_hero_missions		= [
-						"patrol",
-						"black_hawk_crash",
-						"armed_vehicle",
-						"bandit_base",
-						"captured_mv22",
-						"ikea_convoy",
-						"medi_camp",
-						"destroyed_ural",
-						"disabled_milchopper",
-						"mayors_mansion",
-						"weapon_cache",
-						"bandit_patrol",
-						"gem_tower",
-						"cannibal_cave",
-						"crop_raider",
-						"drone_pilot",
-						"slaughter_house",
-						"drugbust",
-						"armybase",
-						"abandoned_trader",
-						"lumberjack",
-						"tankcolumn",
-						"macdonald",
-						"radioshack",
-						"junkyard",
-						"bandit_outpost",
-						"farmer",
-						"firestation",
-						"vehicle_drop"
-						];
-wai_bandit_missions		= [
-						"patrol",
-						"armed_vehicle",
-						"black_hawk_crash",
-						"captured_mv22",
-						"broken_down_ural",
-						"hero_base",
-						"ikea_convoy",
-						"medi_camp",
-						"presidents_mansion",
-						"sniper_extraction",
-						"weapon_cache",
-						"gem_tower",
-						"cannibal_cave",
-						"crop_raider",
-						"drone_pilot",
-						"slaughter_house",
-						"drugbust",
-						"armybase",
-						"abandoned_trader",
-						"lumberjack",
-						"tankcolumn",
-						"macdonald",
-						"radioshack",
-						"junkyard",
-						"hero_outpost",
-						"farmer",
-						"firestation",
-						"vehicle_drop"
-						];
+// Mission Array
+wai_missions = [
+	"patrol",
+	"black_hawk_crash",
+	"armed_vehicle",
+	"base",
+	"captured_mv22",
+	"scout_patrol",
+	"ikea_convoy",
+	"medi_camp",
+	"broken_down_ural",
+	"sniper_extraction",
+	"mayors_mansion",
+	"weapon_cache",
+	"gem_tower",
+	"cannibal_cave",
+	"crop_raider",
+	"drone_pilot",
+	"slaughter_house",
+	"drugbust",
+	"armybase",
+	"abandoned_trader",
+	"lumberjack",
+	"presidents_mansion",
+	"tankcolumn",
+	"macdonald",
+	"radioshack",
+	"junkyard",
+	"outpost",
+	"farmer",
+	"firestation",
+	"vehicle_drop"
+];
 
 // Vehicle arrays
 armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Offroad_DSHKM_Gue_DZE","UAZ_MG_TK_EP1_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE"];

@@ -10,11 +10,11 @@ _enableMines	= _this select 6;
 _completionType	= _this select 7;
 _airClass		= _this select 8;
 _vehclass		= _this select 9;
-_msgstart		= _this select 10;
-_msgcrash		= _this select 11;
-_msgdrop		= _this select 12;
-_msgwin			= _this select 13;
-_msglose		= _this select 14;
+_msgstart		= (_this select 10) select 0;
+_msgcrash		= (_this select 10) select 1;
+_msgdrop		= (_this select 10) select 2;
+_msgwin			= (_this select 10) select 3;
+_msglose		= (_this select 10) select 4;
 
 if(wai_debug_mode) then {diag_log "WAI: Starting Mission number " + str _mission;};
 
@@ -266,9 +266,7 @@ WAI_MarkerReady = true;
 		
 		[_vehicle,_vehclass,2] call load_ammo;
 		
-		_loot = [3,0,[2,["ItemBriefcase100oz"]],0,2];
-		
-		[_vehicle,_loot] call dynamic_crate;
+		[_vehicle,Loot_VehicleDrop] call dynamic_crate;
 		
 		if (count _mines > 0) then {
 			_mines call wai_fnc_remove;
