@@ -74,7 +74,7 @@ if(typeName (_loot select 4) == "ARRAY") then {
 
 if(_num_weapons > 0) then {
 	
-	if (WAI_RandomizeLoot) then {
+	if (wai_randomize_loot) then {
 		_num_weapons = (ceil((_num_weapons) / 2) + floor(random (_num_weapons / 2)));
 	};
 	
@@ -93,14 +93,14 @@ if(_num_weapons > 0) then {
 			_weapon = _weapons_array select (floor (random (count _weapons_array)));
 			_ammo = _weapon call find_suitable_ammunition;
 			_crate addWeaponCargoGlobal [_weapon,1];
-			_crate addMagazineCargoGlobal [_ammo, WAI_NumMags];
+			_crate addMagazineCargoGlobal [_ammo, wai_num_mags];
 		};
 	};
 };
 
 if(_num_tools > 0) then {
 
-	if (WAI_RandomizeLoot) then {
+	if (wai_randomize_loot) then {
 		_num_tools	= (ceil((_num_tools) / 2) + floor(random (_num_tools / 2)));
 	};
 
@@ -117,7 +117,7 @@ if(_num_tools > 0) then {
 
 if(_num_items > 0) then {
 
-	if (WAI_RandomizeLoot) then {
+	if (wai_randomize_loot) then {
 		_num_items	= (ceil((_num_items) / 2) + floor(random (_num_items / 2)));
 	};
 	
@@ -149,7 +149,7 @@ if(_num_items > 0) then {
 
 if(_num_pistols > 0) then {
 
-	if (WAI_RandomizeLoot) then {
+	if (wai_randomize_loot) then {
 		_num_pistols = (ceil((_num_pistols) / 2) + floor(random (_num_pistols / 2)));
 	};
 
@@ -157,13 +157,13 @@ if(_num_pistols > 0) then {
 		_pistol = _pistols_array select (floor (random (count _pistols_array)));
 		_pistolammo = _pistol call find_suitable_ammunition;
 		_crate addWeaponCargoGlobal [_pistol,1];
-		_crate addMagazineCargoGlobal [_pistolammo, WAI_NumMags];
+		_crate addMagazineCargoGlobal [_pistolammo, wai_num_mags];
 	};
 };
 
 if(_num_backpacks > 0) then {
 
-	if (WAI_RandomizeLoot) then {
+	if (wai_randomize_loot) then {
 		_num_backpacks	= (ceil((_num_backpacks) / 2) + floor(random (_num_backpacks / 2)));
 	};
 
