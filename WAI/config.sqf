@@ -126,8 +126,40 @@ wai_mission_announce	= "DynamicText"; // Options: "Radio", "DynamicText", "title
 wai_hero_limit			= 1; // define how many hero missions can run at once
 wai_bandit_limit		= 1; // define how many bandit missions can run at once
 
-// Mission Array
-wai_missions = [
+// Mission Arrays
+wai_hero_missions = [
+	"patrol",
+	"black_hawk_crash",
+	"armed_vehicle",
+	"base",
+	"captured_mv22",
+	"scout_patrol",
+	"ikea_convoy",
+	"medi_camp",
+	"broken_down_ural",
+	"sniper_extraction",
+	"mayors_mansion",
+	"weapon_cache",
+	"gem_tower",
+	"cannibal_cave",
+	"crop_raider",
+	"drone_pilot",
+	"slaughter_house",
+	"drugbust",
+	"armybase",
+	"abandoned_trader",
+	"lumberjack",
+	"presidents_mansion",
+	"tankcolumn",
+	"macdonald",
+	"radioshack",
+	"junkyard",
+	"outpost",
+	"farmer",
+	"firestation",
+	"vehicle_drop"
+];
+wai_bandit_missions	= [
 	"patrol",
 	"black_hawk_crash",
 	"armed_vehicle",
