@@ -39,9 +39,9 @@ while {true} do
 			wai_mission_data = wai_mission_data + [[0,[],[],[],[],[],[]]];
 
 			
-			wai_missions = [wai_missions, 100] call KK_fnc_arrayShufflePlus;
-			_mission = wai_missions select 0;
-			//_mission = wai_missions call BIS_fnc_selectRandom;
+			wai_hero_missions = [wai_hero_missions, 100] call KK_fnc_arrayShufflePlus;
+			_mission = wai_hero_missions select 0;
+			//_mission = wai_hero_missions call BIS_fnc_selectRandom;
 			["MainHero","Bandit"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",_mission];
 		};
 
@@ -54,9 +54,9 @@ while {true} do
 			wai_mission_markers set [(count wai_mission_markers), ("MainBandit" + str(count wai_mission_data))];
 			wai_mission_data = wai_mission_data + [[0,[],[],[],[],[],[]]];
 			
-			wai_missions = [wai_missions, 100] call KK_fnc_arrayShufflePlus;
-			_mission = wai_missions select 0;
-			//_mission = wai_missions call BIS_fnc_selectRandom;
+			wai_bandit_missions = [wai_bandit_missions, 100] call KK_fnc_arrayShufflePlus;
+			_mission = wai_bandit_missions select 0;
+			//_mission = wai_bandit_missions call BIS_fnc_selectRandom;
 			["MainBandit","Hero"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",_mission];
 		};	
 	};
