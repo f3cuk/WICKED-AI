@@ -115,8 +115,8 @@ wai_kill_percent		= 80; // percentage of AI players that must be killed at "crat
 
 wai_high_value			= true; // enable the possibility of finding a high value item (defined below crate_items_high_value) inside a crate
 wai_high_value_chance	= 10; // chance in percent you find above mentioned item
-wai_num_mags 			= (3 + floor(random 3)); // Number of magazines per weapon in the crate
-wai_randomize_loot		= false; // Randomizes loot amount in each loot category with guaranteed 50%
+wai_num_mags 			= (3 + round(random 3)); // Number of magazines per weapon in the crate
+wai_minimum_loot		= -1; // Number between .01 and 1. 1 = 100% loot based on loot definitions. To disable the feature set value less than or equal to 0 and you will automatically get 100% loot;
 
 wai_enable_minefield	= false; // enable minefields to better defend missions
 wai_enable_static_guns	= true; // Enables or disables static gun placements at missions that have them.
