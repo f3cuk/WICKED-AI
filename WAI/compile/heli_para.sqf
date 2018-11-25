@@ -304,7 +304,7 @@ while {(alive _helicopter) && (_drop)} do {
 				if (typeName _mission_data == "ARRAY") then {
 					_ainum = _mission_data select 0;
 					wai_mission_data select _mission set [0, (_ainum + 1)];
-					_para setVariable ["mission", _mission, true];
+					_para setVariable ["mission" + dayz_serverKey, _mission, false];
 				};
 			} else {
 				wai_static_data set [0, ((wai_static_data select 0) + 1)];
@@ -324,9 +324,9 @@ while {(alive _helicopter) && (_drop)} do {
 		};
 
 		call {
-			if (_aitype == "Hero") exitWith {{_x setVariable ["Hero",true,true];} count (units _pgroup);};
-			if (_aitype == "Bandit") exitWith {{_x setVariable ["Bandit",true,true];} count (units _pgroup);};
-			if (_aitype == "Special") exitWith {{_x setVariable ["Special",true,true];} count (units _pgroup);};
+			if (_aitype == "Hero") exitWith {{_x setVariable ["Hero",true,false];} count (units _pgroup);};
+			if (_aitype == "Bandit") exitWith {{_x setVariable ["Bandit",true,false];} count (units _pgroup);};
+			if (_aitype == "Special") exitWith {{_x setVariable ["Special",true,false];} count (units _pgroup);};
 		};
 		
 		_drop = false;

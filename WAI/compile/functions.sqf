@@ -158,23 +158,23 @@ wai_fnc_remove = {
 };
 
 wai_remove_vehicles = {
-	private ["_mission","_vehicles"];
-	_mission = _this select 0;
-	_vehicles = _this select 1;
-	
-	{
-		if (_x getVariable ["mission", nil] == _mission) then {
-			deleteVehicle _x;
-		};
-	} count _vehicles;
+    private ["_mission","_vehicles"];
+    _mission = _this select 0;
+    _vehicles = _this select 1;
+    
+    {
+        if (_x getVariable ["mission" + dayz_serverKey, nil] == _mission) then {
+            deleteVehicle _x;
+        };
+    } count _vehicles;
 };
 
 wai_remove_ai = {
-	{
-		if (_x getVariable ["mission", nil] == _this) then {
-			deleteVehicle _x;
-		};
-	} count allUnits;
+    {
+        if (_x getVariable ["mission" + dayz_serverKey, nil] == _this) then {
+            deleteVehicle _x;
+        };
+    } count allUnits;
 };
 
 wai_generate_vehicle_key = {
@@ -214,7 +214,7 @@ wai_generate_vehicle_key = {
 	if (wai_vehicle_keys == "KeyonAI") exitWith {
 		_ailist = [];
 		{
-			if ((_x getVariable ["mission",nil] == _mission) && (_x getVariable ["bodyName",nil] == "mission_ai") && !(_x getVariable ["noKey", false])) then {
+			if ((_x getVariable ["mission" + dayz_serverKey,nil] == _mission) && (_x getVariable ["bodyName",nil] == "mission_ai") && !(_x getVariable ["noKey", false])) then {
 				_ailist set [count _ailist, _x];
 			};
 		} count allDead;

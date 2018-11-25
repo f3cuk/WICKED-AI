@@ -98,13 +98,14 @@ call {
 } forEach (units _unitgroup);
 
 if (!isNil "_mission") then {
-	_vehicle setVariable ["mission",_mission];
+	_vehicle setVariable ["mission" + dayz_serverKey, _mission, false];
+	
 	((wai_mission_data select _mission) select 1) set [count ((wai_mission_data select _mission) select 1), _unitGroup];
 	((wai_mission_data select _mission) select 4) set [count ((wai_mission_data select _mission) select 4), _vehicle];
 	{
 		_ainum = (wai_mission_data select _mission) select 0;
 		wai_mission_data select _mission set [0, (_ainum + 1)];
-		_x setVariable ["mission",_mission];
+		_x setVariable ["mission" + dayz_serverKey, _mission, false];
 		_x setVariable ["noKey",true];
 	} count (crew _vehicle);
 } else {

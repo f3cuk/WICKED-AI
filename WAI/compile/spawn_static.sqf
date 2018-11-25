@@ -180,8 +180,8 @@ if (!isNil "_mission") then {
 		_ainum = (wai_mission_data select _mission) select 0;
 		wai_mission_data select _mission set [0, (_ainum + 1)];
 		((wai_mission_data select _mission) select 4) set [count ((wai_mission_data select _mission) select 4), _static];
-		_static setVariable ["mission",_mission];
-		_unit setVariable ["mission",_mission];
+		_static setVariable ["mission" + dayz_serverKey, _mission, false];
+		_unit setVariable ["mission" + dayz_serverKey, _mission, false];
 	} else {
 		wai_static_data set [0, ((wai_static_data select 0) + 1)];
 		(wai_static_data select 2) set [count (wai_static_data select 2), _static];

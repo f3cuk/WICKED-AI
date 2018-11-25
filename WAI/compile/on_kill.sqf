@@ -5,7 +5,7 @@ _player 	= _this select 1;
 //_type 		= _this select 2;
 _launcher 	= secondaryWeapon _unit;
 
-_mission = _unit getVariable ["mission", nil];
+_mission = _unit getVariable ["mission" + dayz_serverKey, nil];
 	
 if (!isNil "_mission") then {
 	if (typeName(wai_mission_data select _mission) == "ARRAY") then {

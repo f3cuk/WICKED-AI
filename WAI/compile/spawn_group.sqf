@@ -178,7 +178,7 @@ for "_x" from 1 to _unitnumber do {
 
 	if (!isNil "_mission") then {
 		wai_mission_data select _mission set [0, (((wai_mission_data select _mission) select 0) + 1)];
-		_unit setVariable ["mission", _mission, false];
+		_unit setVariable ["mission" + dayz_serverKey, _mission, false];
 	} else {
 		wai_static_data set [0, ((wai_static_data select 0) + 1)];
 	};
