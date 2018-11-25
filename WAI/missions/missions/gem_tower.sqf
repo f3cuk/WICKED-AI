@@ -1,4 +1,4 @@
-private ["_mission","_position","_aiType","_rndnum","_missionType"];
+private ["_mission","_position","_aiType","_rndnum","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [80] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Gem Tower]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_GemTower select 0;} else {Loot_GemTower select 1;};
+
 //Spawn Crates
 [[
-	[Loot_GemTower,crates_medium,[-20,11]]
+	[_loot,crates_medium,[-20,11]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

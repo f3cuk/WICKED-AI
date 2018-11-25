@@ -1,4 +1,4 @@
-private ["_rndnum","_mission","_vehname","_vehicle","_position","_vehclass","_aiType","_messages","_missionType"];
+private ["_rndnum","_mission","_vehname","_vehicle","_position","_vehclass","_aiType","_messages","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -11,9 +11,11 @@ _vehname = getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
 
 diag_log format["WAI: [Mission:[%2] Sniper Extraction]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_Extraction select 0;} else {Loot_Extraction select 1;};
+
 //Spawn Crates
 [[
-	[Loot_Extraction,crates_medium,[0,10]]
+	[_loot,crates_medium,[0,10]]
 ],_position,_mission] call wai_spawnCrate;
 
 //Troops

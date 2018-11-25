@@ -7,9 +7,11 @@ _position = [80] call find_position;
 
 diag_log format["WAI: Mission:[%2] Lumber Mill started at %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_LumberJack select 0;} else {Loot_LumberJack select 1;};
+
 //Spawn Crates
 [[
-	[Loot_LumberJack,crates_large,[5,7]]
+	[_loot,crates_large,[5,7]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

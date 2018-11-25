@@ -1,4 +1,4 @@
-private ["_rndnum","_mission","_position","_aiType"];
+private ["_rndnum","_mission","_position","_aiType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[%2] The Farm]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_MacDonald select 0;} else {Loot_MacDonald select 1;};
+
 //Spawn Crates
 [[
-	[Loot_MacDonald,crates_small,[.02,0,.15]]
+	[_loot,crates_small,[.02,0,.15]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

@@ -1,4 +1,4 @@
-private ["_mission","_position","_rndnum","_loot","_aiType","_messages","_missionType"];
+private ["_mission","_position","_rndnum","_loot","_aiType","_messages","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Captured MV22]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_CapturedMV22 select 0;} else {Loot_CapturedMV22 select 1;};
+
 //Spawn Crates
 [[
-	[Loot_CapturedMV22,"USBasicWeaponsBox",[11.2,12.2,.1]]
+	[_loot,"USBasicWeaponsBox",[11.2,12.2,.1]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

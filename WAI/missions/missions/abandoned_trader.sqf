@@ -1,4 +1,4 @@
-private ["_mission","_position","_rndnum","_messages","_aiType","_missionType"];
+private ["_mission","_position","_rndnum","_messages","_aiType","_missionType","_loot"];
 
 // Get mission number, important we do this early
 _mission = count wai_mission_data -1;
@@ -8,9 +8,11 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Abandoned Trader]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_AbandonedTrader select 0;} else {Loot_AbandonedTrader select 1;};
+
 //Spawn Crates
 [[
-	[Loot_AbandonedTrader,crates_medium,[.3,0]]
+	[_loot,crates_medium,[.3,0]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

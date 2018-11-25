@@ -1,4 +1,4 @@
-private ["_mission","_position","_rndnum","_aiType","_messages","_missionType"];
+private ["_mission","_position","_rndnum","_aiType","_messages","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Weapons Cache]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_WeaponCache select 0;} else {Loot_WeaponCache select 1;};
+
 // Spawn crates
 [[
-	[Loot_WeaponCache,crates_large,[0,0]]
+	[_loot,crates_large,[0,0]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

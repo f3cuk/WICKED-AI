@@ -1,4 +1,4 @@
-private ["_mission","_position","_rndnum","_aiType","_missionType"];
+private ["_mission","_position","_rndnum","_aiType","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [80] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Hippy Commune]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_CropRaider select 0;} else {Loot_CropRaider select 1;};
+
 //Spawn Crates
 [[
-	[Loot_CropRaider,crates_small,[2,0,.1]]
+	[_loot,crates_small,[2,0,.1]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

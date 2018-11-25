@@ -1,4 +1,4 @@
-private ["_rndnum","_mission","_position","_messages","_aiType","_missionType"];
+private ["_rndnum","_mission","_position","_messages","_aiType","_missionType","_loot1","_loot2"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,10 +7,13 @@ _position = [50] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Fire Station]: Starting... %1",_position,_missionType];
 
+_loot1 = if (_missionType == "MainHero") then {Loot_Firestation1 select 0;} else {Loot_Firestation1 select 1;};
+_loot2 = if (_missionType == "MainHero") then {Loot_Firestation2 select 0;} else {Loot_Firestation2 select 1;};
+
 //Spawn Crates
 [[
-	[Loot_Firestation1,crates_large,[-3.6,-4.4],-30],
-	[Loot_Firestation2,crates_large,[2,-1.1],-30]
+	[_loot1,crates_large,[-3.6,-4.4],-30],
+	[_loot2,crates_large,[2,-1.1],-30]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects
