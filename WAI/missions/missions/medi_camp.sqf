@@ -1,4 +1,4 @@
-private ["_rndnum","_mission","_position","_aiType","_messages","_missionType"];
+private ["_rndnum","_mission","_position","_aiType","_messages","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Medical Supply Camp]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_MediCamp select 0;} else {Loot_MediCamp select 1;};
+
 //Spawn Crates
 [[
-	[Loot_MediCamp,"USVehicleBox",[0,0],60]
+	[_loot,"USVehicleBox",[0,0],60]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

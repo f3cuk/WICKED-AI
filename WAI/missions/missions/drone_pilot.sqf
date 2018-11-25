@@ -1,4 +1,4 @@
-private ["_mission","_position","_rndnum","_aiType","_messages","_missionType"];
+private ["_mission","_position","_rndnum","_aiType","_messages","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [80] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Drone Pilot]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_DronePilot select 0;} else {Loot_DronePilot select 1;};
+
 //Spawn Crates
 [[
-	[Loot_DronePilot,crates_large,[2,0]]
+	[_loot,crates_large,[2,0]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

@@ -1,8 +1,10 @@
-private ["_mission","_vehname","_vehicle","_position","_vehclass","_name","_locations","_location","_blacklist","_messages","_missionType"];
+private ["_mission","_vehname","_vehicle","_position","_vehclass","_name","_locations","_location","_blacklist","_messages","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
 _aiType = _this select 1; // Type of AI - opposite of mission type
+
+_loot = if (_missionType == "MainHero") then {Loot_Patrol select 0;} else {Loot_Patrol select 1;};
 
 //Armed Land Vehicle
 _vehclass = armed_vehicle call BIS_fnc_selectRandom;
@@ -32,7 +34,7 @@ _vehicle = [_vehclass,_position,_mission] call custom_publish;
 // load the guns
 [_vehicle,_vehclass] call load_ammo;
 
-((wai_mission_data select _mission) select 3) set [count ((wai_mission_data select _mission) select 3), [_vehicle,Loot_Patrol]];
+((wai_mission_data select _mission) select 3) set [count ((wai_mission_data select _mission) select 3), [_vehicle,_loot]];
 
 if(wai_debug_mode) then {
 	diag_log format["WAI: [%2] patrol spawned a %1",_vehname,_missionType];

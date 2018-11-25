@@ -1,4 +1,4 @@
-private ["_rndnum","_mission","_position","_aiType","_missionType"];
+private ["_rndnum","_mission","_position","_aiType","_missionType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [30] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Slaughter House]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_SlaughterHouse select 0;} else {Loot_SlaughterHouse select 1;};
+
 //Spawn Crates
 [[
-	[Loot_SlaughterHouse,crates_medium,[2.5,0,.1]]
+	[_loot,crates_medium,[2.5,0,.1]]
 ],_position,_mission] call wai_spawnCrate;
 
 // Spawn Objects

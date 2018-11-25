@@ -1,4 +1,4 @@
-private ["_rndnum","_room","_mayor_himself","_mission","_position","_mansion","_mayor","_aiType"];
+private ["_rndnum","_room","_mayor_himself","_mission","_position","_mansion","_mayor","_aiType","_loot"];
 
 _mission = count wai_mission_data -1;
 _missionType = _this select 0; // Type of mission: "MainHero" or "MainBandit"
@@ -7,9 +7,11 @@ _position = [40] call find_position;
 
 diag_log format["WAI: [Mission:[%2] Mayors Mansion]: Starting... %1",_position,_missionType];
 
+_loot = if (_missionType == "MainHero") then {Loot_Mayors select 0;} else {Loot_Mayors select 1;};
+
 //Spawn Crates
 [[
-	[Loot_Mayors,crates_large,[0,0,.25]]
+	[_loot,crates_large,[0,0,.25]]
 ],_position,_mission] call wai_spawnCrate;
  
 // Spawn Objects
