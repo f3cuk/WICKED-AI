@@ -37,7 +37,7 @@ _vehicle setPos _vehpos;
 _vehicle setVectorUp surfaceNormal position _vehicle;
 _vehicle setVariable ["ObjectID","1",true];
 _vehicle setVariable ["CharacterID","1",true]; // Set character ID to non-zero number so players see the red "Vehicle Locked" message
-_vehicle setVariable ["mission",_mission];
+_vehicle setVariable ["mission" + dayz_serverKey,_mission, false];
 clearWeaponCargoGlobal _vehicle;
 clearMagazineCargoGlobal _vehicle;
 _vehicle setVehicleLock "locked";
@@ -84,7 +84,7 @@ if (wai_keep_vehicles) then {
 	_vehicle addEventHandler ["GetIn", {
 		_vehicle = _this select 0;
 		_unit = _this select 2;
-		_vehicle setVariable ["mission", nil];
+		_vehicle setVariable ["mission" + dayz_serverKey,nil];
 		
 		if !(isPlayer _unit) exitWith {};
 		
@@ -148,7 +148,7 @@ if (wai_keep_vehicles) then {
 		
 		if (_vehicle getVariable ["claimed",nil] == "yes") exitWith {};
 		
-		_vehicle setVariable ["mission", nil];
+		_vehicle setVariable ["mission" + dayz_serverKey,nil];
 		_vehicle setVariable ["claimed","yes",false];
 		_vehicle removeAllEventHandlers "HandleDamage";
 		_vehicle addEventHandler ["HandleDamage",{_this call fnc_veh_handleDam}];

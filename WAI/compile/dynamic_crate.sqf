@@ -73,7 +73,7 @@ if(typeName (_loot select 4) == "ARRAY") then {
 };
 
 if(_num_weapons > 0) then {
-
+	
 	if (wai_minimum_loot > 0 && wai_minimum_loot <= 1) then {
 		_num_weapons = (round (_num_weapons*wai_minimum_loot) + round random(_num_weapons*(1 - wai_minimum_loot)));
 	};
