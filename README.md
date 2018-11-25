@@ -8,7 +8,7 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - Optional godmode mission objects for servers with overpowered military vehicles. Also disables simulation.
 - New mission C130/MV-22 Armed Vehicle Air Drop added.
 - New multi-crate mission Firestation added.
-- AI and Loot multipliers added so overall AI and loot levels can be adjusted easily with variables in config.sqf
+- AI multiplier added so overall AI level can be adjusted easily with variables in config.sqf
 - AI Killfeed added to "on kill" function - enabled in config.sqf with variable ai_killfeed.
 - effectiveCommander option added so vehicle gunners can get kill and humanity rewards. @Twist
 - Map independent patrol missions. Reworked so they use map locations as waypoints and they only spawn one thread instead of three.
@@ -19,9 +19,12 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 - Mission vehicles remained locked until the mission is cleared to prevent ninjas.
 - Since Arma has a bad habit of not kicking dead AI out of vehicles, keys will not spawn on AI static gunners or vehicle crew.
 - Killzone Kid's shuffle plus function added for mission array randomization. @oiad
-- BiggEgg's localization solution turned into a function that localizes and formats messages submitted as arrays.
+- BigEgg's localization solution turned into a function that localizes and formats messages submitted as arrays.
 - The dynamic text option has color-coded mission announcements based on marker color.
 - Additional code auditing and optimization.
+- "mission" variable includes server key for security @BigEgg17
+- missions combined into one folder for ease of update
+- configurable minimum loot level in config.sqf
 
 ### Version history
 - 15-11-2018 : Release 2.2.6
@@ -264,3 +267,6 @@ For transparency into our release cycle and in striving to maintain backward com
 
 ### Dev team
 - worldwidesorrow
+- oiad
+- BigEgg17
+
