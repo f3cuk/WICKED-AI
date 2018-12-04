@@ -324,9 +324,9 @@ while {(alive _helicopter) && (_drop)} do {
 		};
 
 		call {
-			if (_aitype == "Hero") exitWith {{_x setVariable ["Hero",true,false];} count (units _pgroup);};
-			if (_aitype == "Bandit") exitWith {{_x setVariable ["Bandit",true,false];} count (units _pgroup);};
-			if (_aitype == "Special") exitWith {{_x setVariable ["Special",true,false];} count (units _pgroup);};
+			if (_aitype == "Hero") exitWith {{_x setVariable ["Hero",true,false];  _x setVariable ["humanity", ai_remove_humanity];} count (units _pgroup);};
+			if (_aitype == "Bandit") exitWith {{_x setVariable ["Bandit",true,false]; _x setVariable ["humanity", ai_add_humanity];} count (units _pgroup);};
+			if (_aitype == "Special") exitWith {{_x setVariable ["Special",true,false]; _x setVariable ["humanity", ai_special_humanity];} count (units _pgroup);};
 		};
 		
 		_drop = false;
