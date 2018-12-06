@@ -16,7 +16,6 @@ _loot = if (_missionType == "MainHero") then {Loot_TankColumn select 0;} else {L
 
 // Spawn Objects
 [[
-	["GUE_WarfareBAircraftFactory",[13.5,2]],
 	["MAP_T34",[2.2,-12],91.28],
 	["MAP_T34",[12.2,-12],92.01],
 	["MAP_T34",[21,-13],108.4],
