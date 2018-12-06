@@ -48,7 +48,7 @@ WAI_MarkerReady = true;
 
 [_position,_mission,_name,_completionType,_color,_showMarker,_airClass,_vehclass,_msgcrash,_msgdrop,_msgwin,_msglose,_enableMines,_missionType,_difficulty,_startPos] spawn {
 
-	private ["_vehMark","_return","_parachute","_vehPos","_vehicle","_aigroup","_speed","_dir","_wp","_msgcrash","_msgdrop","_dropzone","_plane","_pilot","_left","_leftTime","_claimTime","_acArray","_claimed","_acTime","_acdot","_acMarker","_timeStamp","_unitGroups","_playerArray","_enableMines","_aiVehicles","_aiVehArray","_baseclean","_msgwin","_msglose","_bomb","_position","_timeout","_player_near","_complete","_starttime","_timeout_time","_max_ai","_killpercent","_mission","_missionType","_airemain","_text","_name","_completionType","_marker","_dot","_color","_showMarker","_startPos"];
+	private ["_loot","_vehMark","_return","_parachute","_vehPos","_vehicle","_aigroup","_speed","_dir","_wp","_msgcrash","_msgdrop","_dropzone","_plane","_pilot","_left","_leftTime","_claimTime","_acArray","_claimed","_acTime","_acdot","_acMarker","_timeStamp","_unitGroups","_playerArray","_enableMines","_aiVehicles","_aiVehArray","_baseclean","_msgwin","_msglose","_bomb","_position","_timeout","_player_near","_complete","_starttime","_timeout_time","_max_ai","_killpercent","_mission","_missionType","_airemain","_text","_name","_completionType","_marker","_dot","_color","_showMarker","_startPos"];
 
 	_position		= _this select 0;
 	_mission		= _this select 1;
@@ -78,6 +78,7 @@ WAI_MarkerReady = true;
 	_aiVehicles 	= (wai_mission_data select _mission) select 4;
 	_vehicles 		= (wai_mission_data select _mission) select 5;
 	_killpercent 	= _max_ai - (_max_ai * (wai_kill_percent / 100));
+	_loot			= if (_missionType == "MainHero") then {Loot_VehicleDrop select 0;} else {Loot_VehicleDrop select 1;};
 	_playerArray	= [];
 	_timeStamp		= diag_tickTime;
 	_closestPlayer	= objNull;
@@ -266,7 +267,7 @@ WAI_MarkerReady = true;
 		
 		[_vehicle,_vehclass,2] call load_ammo;
 		
-		[_vehicle,Loot_VehicleDrop] call dynamic_crate;
+		[_vehicle,_loot] call dynamic_crate;
 		
 		if (count _mines > 0) then {
 			_mines call wai_fnc_remove;
