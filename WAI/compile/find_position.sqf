@@ -1,4 +1,4 @@
-private ["_i","_traders","_safepos","_validspot","_position"];
+private ["_i","_traders","_safepos","_validspot","_position","_color"];
 
 if (wai_use_blacklist) then {
 	_safepos = [getMarkerPos "center",150,((getMarkerSize "center") select 1),(_this select 0),0,0.4,0,wai_blacklist];
@@ -17,12 +17,14 @@ while {!_validspot} do {
 	// if the count of the selected position is more than two BIS_fnc_findSafePos failed 
 	if ((count _position) > 2) then {
 		_validspot = false;
+		_color = "ColorBlue";
 	};
 	
 	if (wai_avoid_samespot) then {
 		{
 			if ((_position distance _x) < 200) then {
 				_validspot = false;
+				_color = "ColorBlue";
 			};
 		} forEach wai_markedPos;
 	};
@@ -32,6 +34,7 @@ while {!_validspot} do {
 			if (getMarkerColor _x != "" && (_position distance (getMarkerPos _x) < wai_avoid_missions)) exitWith {
 				if (wai_debug_mode) then {diag_log format ["WAI: Invalid Position (Marker: %1)",_x];};
 				_validspot = false;
+				_color = "ColorBlue";
 			};
 		} count wai_mission_markers;
 	};
