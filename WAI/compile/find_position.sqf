@@ -14,10 +14,12 @@ while {!_validspot} do {
 	_position 	= if (!wai_user_spawnpoints) then {_safepos call BIS_fnc_findSafePos} else {WAI_StaticSpawnPoints call BIS_fnc_selectRandom};
 	_validspot 	= true;
 	
-	// if the count of the selected position is more than two BIS_fnc_findSafePos failed 
-	if ((count _position) > 2) then {
-		_validspot = false;
-		_color = "ColorBlue";
+	// if the count of the selected position is more than two BIS_fnc_findSafePos failed
+	if (!wai_user_spawnpoints) then {
+		if ((count _position) > 2) then {
+			_validspot = false;
+			_color = "ColorBlue";
+		};
 	};
 	
 	if (wai_avoid_samespot) then {
