@@ -92,6 +92,7 @@ wai_avoid_plots			= 100; // avoid spawning missions near player plots
 wai_mission_timer		= [5,15]; // time between missions. Default: 5-15 minutes
 wai_mission_timeout		= [15,30]; // time each mission takes to timeout if inactive. Default: 15-30 minutes
 wai_timeout_distance	= 1000; // if a player is this close to a mission then it won't timeout
+wai_cycle_all_missions	= true; // This option cycles through all missions before there are any repeats
 
 wai_clean_mission_time	= 30; // time in minutes after a mission is complete to clean mission buildings. Set to -1 to disable mission cleanup. Default: 30 minutes
 wai_clean_mission_crate	= true; // include the mission crates with the mission cleanup. If a player is within 75 meters of the crates the cleanup script will wait. Does not apply to missions that timeout.
