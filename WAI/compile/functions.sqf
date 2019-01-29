@@ -60,7 +60,12 @@ wai_spawnCrate = {
 			_crate setDir (_x select 3);
 		};
 		
-		_crate setPos _position;
+		if (surfaceIsWater _position) then {
+			_crate setPosASL _position;
+		} else {
+			_crate setPos _position;
+		};
+		
 		_crate setVariable ["permaLoot",true];
 		clearWeaponCargoGlobal _crate;
 		clearMagazineCargoGlobal _crate;

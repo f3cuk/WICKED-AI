@@ -4,8 +4,8 @@ _unitGroup 		= _this select 0;
 _position 		= _this select 1;
 _pos_x 			= _position select 0;
 _pos_y 			= _position select 1;
-//_pos_z 			= _position select 2;
-//_wp_rad 		= 40;
+_pos_z 			= _position select 2;
+_wp_rad 		= 0;
 
 if(count _this > 2) then {
 
@@ -18,6 +18,11 @@ if(count _this > 2) then {
 		if (_skill == "extreme") exitWith {120;};
 		if (_skill == "random") exitWith {random(100);};
 	};
+};
+
+// AI is on a building so limit the movement
+if (_pos_z > 1) then {
+	_wp_rad = 0;
 };
 
 {

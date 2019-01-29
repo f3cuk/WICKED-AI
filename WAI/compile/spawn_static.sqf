@@ -56,7 +56,12 @@ if (!isNil "_mission") then {
 	_unit = _unitGroup createUnit [_aiskin, [0,0,0], [], 10, "PRIVATE"];
 	
 	_static = _class createVehicle _x;
-	_static setPos _x;
+	
+	if (surfaceIsWater _x) then {
+		_static setPosASL _x;
+	} else {
+		_static setPosATL _x;
+	};
 	
 	[_unit] joinSilent _unitGroup;
 

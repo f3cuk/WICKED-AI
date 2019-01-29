@@ -111,7 +111,14 @@ for "_x" from 1 to _unitnumber do {
 		_aiskin = _aiskin select (floor (random (count _aiskin)));
 	};
 	
-	_unit = _unitGroup createUnit [_aiskin,[_pos_x,_pos_y,_pos_z],[],0,"CAN_COLLIDE"];
+	_unit = _unitGroup createUnit [_aiskin,_position,[],0,"CAN_COLLIDE"];
+	
+	if (surfaceIsWater _position) then {
+		_unit setPosASL _position;
+	} else {
+		_unit setPosATL _position;
+	};
+	
 	[_unit] joinSilent _unitGroup;
 
 	call {
@@ -208,9 +215,8 @@ if(_aitype == "Hero") then {
 	_unitGroup setBehaviour ai_bandit_behaviour;
 };
 
-if(_pos_z == 0) then {
-	[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] call group_waypoints;
-};
+[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] call group_waypoints;
+
 
 if(wai_debug_mode) then {diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2",_unitnumber,_position,_aitype];};
 
