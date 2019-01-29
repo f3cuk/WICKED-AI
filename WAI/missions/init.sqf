@@ -1,4 +1,4 @@
-private["_marker","_unitGroup","_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
+private["_marker","_unitGroup","_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission","_heroarray","_banditarray"];
 
 diag_log "WAI: Initializing missions";
 
@@ -37,12 +37,19 @@ while {true} do
 			_hresult = 0;
 			wai_mission_markers set [(count wai_mission_markers), ("MainHero" + str(count wai_mission_data))];
 			wai_mission_data = wai_mission_data + [[0,[],[],[],[],[],[]]];
-
 			
-			wai_hero_missions = [wai_hero_missions, 100] call KK_fnc_arrayShufflePlus;
-			_mission = wai_hero_missions select 0;
-			//_mission = wai_hero_missions call BIS_fnc_selectRandom;
+			if (isNil "_heroarray") then {_heroarray = wai_hero_missions;};
+			
+			if (count _heroarray > 2) then {_heroarray = [_heroarray, 100] call KK_fnc_arrayShufflePlus;};
+			
+			_mission = _heroarray call BIS_fnc_selectRandom;
 			["MainHero","Bandit"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",_mission];
+			
+			if (wai_cycle_all_missions) then {
+				_heroarray = _heroarray - [_mission];
+				//diag_log text format["Hero Array Count : %1", (count _heroarray)];
+				if (count _heroarray == 0) then {_heroarray = nil;};
+			};
 		};
 
 		if (_bresult == 1 && WAI_MarkerReady) then {
@@ -54,10 +61,18 @@ while {true} do
 			wai_mission_markers set [(count wai_mission_markers), ("MainBandit" + str(count wai_mission_data))];
 			wai_mission_data = wai_mission_data + [[0,[],[],[],[],[],[]]];
 			
-			wai_bandit_missions = [wai_bandit_missions, 100] call KK_fnc_arrayShufflePlus;
-			_mission = wai_bandit_missions select 0;
-			//_mission = wai_bandit_missions call BIS_fnc_selectRandom;
+			if (isNil "_banditarray") then {_banditarray = wai_hero_missions;};
+			
+			if (count _banditarray > 2) then {_banditarray = [_banditarray, 100] call KK_fnc_arrayShufflePlus;};
+			
+			_mission = _banditarray call BIS_fnc_selectRandom;
 			["MainBandit","Hero"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",_mission];
+			
+			if (wai_cycle_all_missions) then {
+				_banditarray = _banditarray - [_mission];
+				//diag_log text format["Bandit Array Count: %1", (count _banditarray)];
+				if (count _banditarray == 0) then {_banditarray = nil;};
+			};
 		};	
 	};
 	uiSleep 5;
