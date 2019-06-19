@@ -1,40 +1,58 @@
-// Updated mission example for DayZ Epoch 1.0.6.2. Please review missions in the hero and bandit folder for additional examples.
+// Updated mission example for DayZ Epoch 1.0.6+. Please review missions in the hero and bandit folder for additional examples.
 
 // Include local variables in this list
-private ["_baserunover","_mission","_directions","_position","_crate","_crate_type","_num"];
+private ["_messages","_missionType","_aiType","_mission","_position","_num"];
 
 // Get mission number, important we do this early
 _mission = count wai_mission_data -1;
+_missionType = _this select 0; // Type of mission "MainHero" or "MainBandit"
+_aiType = _this select 1; // Type of AI - opposite of mission type
 
 // Get a safe position 80 meters from the nearest object. You can change this number.
 _position = [80] call find_position;
 
+// Sends a message to the server's rpt file
 diag_log format["WAI: Mission Test Mission started at %1",_position];
 
-//Setup the crate
-_crate_type 	= crates_large call BIS_fnc_selectrandom; // Choose between crates_large, crates_medium, and crates_small
-_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
-_crate call wai_crate_setup; // This function wipes the crate and sets variables. It must be called.
- 
-// Create some Buildings
-_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover1 	= createVehicle ["land_fortified_nest_big",[(_position select 0) + 40, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover2 	= createVehicle ["land_fortified_nest_big",[(_position select 0), (_position select 1) - 40,-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover3 	= createVehicle ["land_fortified_nest_big",[(_position select 0), (_position select 1) + 40,-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover4 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) - 10, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover5 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) + 10, (_position select 1),-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover6 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0), (_position select 1) - 10,-0.2],[], 0, "CAN_COLLIDE"];
-_baserunover7 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0), (_position select 1) + 10,-0.2],[], 0, "CAN_COLLIDE"];
+// Crate Spawning Format - [loot, position, crate type(array or class name), [x-offset, y-offset,z-coordinate(optional)],direction(optional)]
+// Multiple crates can be spawned. See Firestation mission for example.
+// See lines 203-205 in config.sqf for crate classname arrays
 
-// Adding buildings to one variable just for tidiness
-_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7];
+// Dynamic loot array example
+// Parameters:	0: _crate
+//				1: Max number of long guns OR [MAX number of long guns,gun_array]
+//				2: Max number of tools OR [MAX number of tools,tool_array]
+//				3: Max number of items OR [MAX number of items,item_array]
+//				4: Max number of pistols OR [MAX number of pistol,pistol_array]
+//				5: Max number of backpacks OR [MAX number of backpacks,backpack_array]
+//[16,[8,crate_tools_sniper],[3,crate_items_high_value],3,[4,crate_backpacks_large]] - example of calling custom arrays instead of default
 
-// Set some directions for our buildings
-_directions = [90,270,0,180,0,180,270,90];
-{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
+// Save loot array to a variable
+_loot = [[1,crate_weapons_buildables],[4,crate_tools_buildable],[30,crate_items_buildables],3,4];
 
-// Make buildings flat on terrain surface
-{ _x setVectorUp surfaceNormal position _x; } count _baserunover;
+//Spawn Crate with loot variable in first position.
+[[
+	[_loot,crates_large,[0,0]] // [loot variable, crate array, 2d offsets]
+],_position,_mission] call wai_spawnCrate;
+
+//Spawn Crate with fixed classname and loot array not previously save to variable. It works either way.
+[[
+	[[8,5,15,3,2],"USBasicWeaponsBox",[.3,0,-.01],30] // [[loot array, crate classname, 3d offests], direction]
+],_position,_mission] call wai_spawnCrate;
+
+// Mission object Spawning Format - [class name, [x-offset, y-offset,z-offset(optional)],direction(optional)]
+// Offsets are modifications to the [x,y,z] coordinates relative to the [0,0,0] mission center position.
+// If no z-coordinate or direction are provided, then the function will set them to 0.
+_baserunover = [[
+	["land_fortified_nest_big",[-40,0],90],
+	["land_fortified_nest_big",[40,0],270],
+	["land_fortified_nest_big",[0,-40]],
+	["land_fortified_nest_big",[0,40],180],
+	["Land_Fort_Watchtower",[-10,0]],
+	["Land_Fort_Watchtower",[10,0],180],
+	["Land_Fort_Watchtower",[0,-10],270],
+	["Land_Fort_Watchtower",[0,10],90]
+],_position,_mission] call wai_spawnObjects;
 
 // Group Spawn Examples
 // Parameters:	0: Position
@@ -48,7 +66,7 @@ _directions = [90,270,0,180,0,180,270,90];
 //				6: Skin ("Hero","bandit","random","special" or "classname")
 //				7: Gear (0:ai_gear0, 1:ai_gear1, 2:ai_gear2, 3:ai_gear3, 4:ai_gear4 or "random")
 //				8: AI Type ("bandit","Hero","special" or ["type", #] format to overwrite default gain amount) ***Used to determine humanity gain or loss***
-//				9: Mission variable from line 9 (_mission)
+//				9: Mission variable from line 7 (_mission)
 _num = round (random 3) + 4;
 [[_position select 0, _position select 1, 0],_num,"extreme",["random","at"],4,"random","bandit","random",["bandit",150],_mission] call spawn_group;
 [[_position select 0, _position select 1, 0],4,"hard","random",4,"random","bandit","random","bandit",_mission] call spawn_group;
@@ -66,11 +84,11 @@ _num = round (random 3) + 4;
 //				5: Unit Skill ("easy","medium","hard","extreme" or "random")
 //				6: Skin ("Hero","bandit","random","special" or "classname")
 //				7: AI Type ("bandit","Hero" or "special") ***Used to determine humanity gain or loss***
-//				8: Mission Variable
+//				8: Mission Variable from line 7 (_mission)
 [[(_position select 0) + 100, _position select 1, 0],[(_position select 0) + 100, _position select 1, 0],50,2,"HMMWV_Armored","random","bandit","bandit",_mission] call vehicle_patrol;
  
 // Static Turret Examples
-// Parameters:	0: Spawn position
+// Parameters:	0: Spawn positions
 //				1: Classname ("classname" or "random" to pick from ai_static_weapons)
 //				2: Unit Skill ("easy","medium","hard","extreme" or "random") ***NO effect if ai_static_skills = true;***
 //				3: Skin ("Hero","bandit","random","special" or "classname")
@@ -79,67 +97,88 @@ _num = round (random 3) + 4;
 //				6: Magazine Count ***NO effect if ai_static_useweapon = false;***
 //				7: Backpack ("random" or "classname") ***NO effect if ai_static_useweapon = false;***
 //				8: Gear (0:ai_gear0, 1:ai_gear1, 2:ai_gear2, 3:ai_gear3, 4:ai_gear4 or "random") ***NO effect if ai_static_useweapon = false;***
-//				9: Mission variable from line 9 (_mission)
+//				9: Mission variable from line 7 (_mission)
 };
-[[[(_position select 0) - 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
-[[[(_position select 0) + 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
-[[[(_position select 0) + 10, (_position select 1) + 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
-[[[(_position select 0) - 10, (_position select 1) - 10, 0]],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
+[[
+	[(_position select 0) - 10, (_position select 1) + 10, 0],
+	[(_position select 0) + 10, (_position select 1) - 10, 0],
+	[(_position select 0) + 10, (_position select 1) + 10, 0],
+	[(_position select 0) - 10, (_position select 1) - 10, 0]
+],"M2StaticMG","easy","bandit","bandit",0,2,"random","random",_mission] call spawn_static;
 
 // Heli Paradrop Example
 // Parameters:	0: Paradrop position
-//				1: Spawn position
-//				2: Trigger radius
-//				3: Vehicle classname
-//				4: Amount of paratroopers
-//				5: Unit Skill ("easy","medium","hard","extreme" or "random") ***NO effect if ai_static_skills = true;***
-//				6: Gun (0:ai_wep_assault 1:ai_wep_machine 2:ai_wep_sniper or "random")
-//				7: Magazine Count
-//				8: Backpack ("random" or "classname")
-//				9: Skin ("Hero","bandit","random","special" or "classname")
-//				10: Gear (0:ai_gear0, 1:ai_gear1, 2:ai_gear2, 3:ai_gear3, 4:ai_gear4 or "random")
-//				11: AI Type ("bandit","Hero" or "special") ***Used to determine humanity gain or loss***
-//				12: Heli stay and fight after troop deployment? (true or false)
-//				13: Mission variable from line 9 (_mission)
-[[(_position select 0), (_position select 1), 0],[0,0,0],400,"UH1H_DZ",10,"random","random",4,"random","bandit","random","bandit",true,_mission] spawn heli_para;
+//				1: Trigger radius
+//				2: Vehicle classname
+//				3: Direction of approach for the helicopter. Options: "North","South","East","West"
+//				4: Random distance from the mission the helicopter should start. [min distance, max distance].
+//				5: Fly in height of the helicopter. Be careful that the height is not too low or the AI might die when they hit the ground
+//				6: Time in seconds between each deployed paratrooper. Higher number means paradropped AI will be more spread apart. Time of 0 means they all jump out rapidly.
+//				7: Distance from the mission the helicopter should start dropping paratroopers
+//				8: Amount of paratroopers
+//				9: Unit Skill ("easy","medium","hard","extreme" or "random") ***NO effect if ai_static_skills = true;***
+//				10: Gun (0:ai_wep_assault 1:ai_wep_machine 2:ai_wep_sniper or "random")
+//				11: Magazine Count
+//				12: Backpack ("random" or "classname")
+//				13: Skin ("Hero","bandit","random","special" or "classname")
+//				14: Gear (0:ai_gear0, 1:ai_gear1, 2:ai_gear2, 3:ai_gear3, 4:ai_gear4 or "random")
+//				15: AI Type ("bandit","Hero" or "special") ***Used to determine humanity gain or loss***
+//				16: Heli stay and fight after troop deployment? (true or false)
+//				17: Mission variable from line 7 (_mission)
+
+[_position,400,"UH60M_EP1_DZE","East",[3000,4000],150,1.0,200,10,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
 
 // Assassination target example
 // This is the same as normal group spawns but we assign it to a variable instead for use in the trigger below (if there are multiple units in this group you'll need to kill them all)
 _unitGroup = [[_position select 0, _position select 1, 0],1,"hard","random",4,"random","special","random","bandit",_mission] call spawn_group;
 
-uiSleep 3; // If you are not spawning vehicles in below then you can remove this sleep. It is included to make sure the AI list has enough time to populate for the KeyonAI vehicle key option.
+// Spawn Mission Vehicle Example
+// Parameters:	0: Classname or Array from config.sqf
+//				1: Position
+//				2: Mission variable
+//				3: Fixed vehicle position? If false the mission will pick a random position for the vehicle
+//				4: Optional direction. If no number provided the mission will select a random direction
 
-//Spawn vehicles Option
-_vehclass = armed_vehicle call BIS_fnc_selectRandom; // selects a vehicle from an array in config.sqf. (see lines 236-242 in config.sqf for other arrays)
-//_vehclass = "MV22_DZ"; You can also declare a static vehicle classname like this instead.
-_vehicle = [_crate,_vehclass,_position,_mission] call custom_publish; // spawns a vehicle at a random location near the mission.
-_vehicle2 = [_crate,_vehclass,[0,0,0],_mission,true] call custom_publish; // This option allows you to declare a static position.
-_vehicle3 = [_crate,_vehclass,[0,0,0],_mission,true,_direction] call custom_publish; // This option allows you to declare a static position and define a direction.
+["MV22_DZ",[(_position select 0) - 20.5,(_position select 1) - 5.2,0], _mission,true,-82.5] call custom_publish; // with declared vehicle class, optional fixed position, and optional direction
+[cargo_trucks,_position,_mission] call custom_publish; // with vehicle array, random position, and random direction
+_vehicle = [cargo_trucks,_position,_mission] call custom_publish; // Same as above but saved to variable if necessary
 
-// Array of mission variables to send
+// Mission messages examples -  they go into an array
+"A Mission has spawned, hurry up to claim the loot!",	// mission announcement - this message displays when the mission starts
+"The mission was complete/objective reached",			// mission success - this message displays when the mission is completed by a player
+"The mission timed out and nobody was in the vicinity"	// mission fail - this message displays when a mission times out.
+
+// Example with localized message strings
+_messages = if (_missionType == "MainHero") then {
+	["STR_CL_HERO_MISSIONNAME_ANNOUNCE","STR_CL_HERO_MISSIONNAME_WIN","STR_CL_HERO_MISSIONNAME_FAIL"];
+} else {
+	["STR_CL_BANDIT_MISSIONNAME_ANNOUNCE","STR_CL_BANDIT_MISSIONNAME_WIN","STR_CL_BANDIT_MISSIONNAME_FAIL"];
+};
+
+// Array of options to send to mission_winorfail with non-localized announcements
 [
 	_mission, // Mission Variable - This is a number.
 	_position, // Position of mission
 	"Hard", // Difficulty "Easy", "Medium", "Hard", "Extreme",
 	"Name of Mission", // Name of Mission
-	"MainHero", // Mission Type: MainHero or MainBandit
+	_missionType, // Mission Type: MainHero or MainBandit
 	true, // show mission marker?
 	true, // make minefields available for this mission?
-	_crate,	// crate object info
-	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup], : crate - you have to get within 20 meters of the crate and kill at least the number of ai defined by variable wai_kill_percent in config.sqf. kill = you have to kill all of the AI. assassinate - you have to kill a special ai (see Mayor's Mansion mission). 
-	[_baserunover], // buildings to cleanup after mission is complete, does not include the crate. An array is expected. If you place the objects in an array above, then you don't need the brackets.
-	"A Mission has spawned, hurry up to claim the loot!",	// mission announcement - this message displays when the mission starts
-	"The mission was complete/objective reached",			// mission success - this message displays when the mission is completed by a player
-	"The mission timed out and nobody was in the vicinity"	// mission fail - this message displays when a mission times out.
-	[0,0,0,0,0] // Dynamic crate array. Example below.
+	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup], : crate - you have to get within 20 meters of the crate and kill at least the number of ai defined by variable wai_kill_percent in config.sqf. kill = you have to kill all of the AI. assassinate - you have to kill a special ai (see Mayor's Mansion mission).
+	_messages
 ] call mission_winorfail;
 
-// Dynamic Crate Example
-// Parameters:	0: _crate
-//				1: Max number of long guns OR [MAX number of long guns,gun_array]
-//				2: Max number of tools OR [MAX number of tools,tool_array]
-//				3: Max number of items OR [MAX number of items,item_array]
-//				4: Max number of pistols OR [MAX number of pistol,pistol_array]
-//				5: Max number of backpacks OR [MAX number of backpacks,backpack_array]
-//[16,[8,crate_tools_sniper],[3,crate_items_high_value],3,[4,crate_backpacks_large]] - example of calling custom arrays instead of default
+
+// Array of options to send to mission_winorfail with localized announcements. You have to create localized strings in the community stringtable for this to work
+[
+	_mission, // Mission number
+	_position, // Position of mission
+	"Hard", // Difficulty
+	"Lunch break Convoy", // Name of Mission
+	_missionType, // Mission Type: MainHero or MainBandit
+	true, // show mission marker?
+	true, // make minefields available for this mission
+	["crate"], // Completion type: ["crate"], ["kill"], or ["assassinate", _unitGroup],
+	_messages
+] call mission_winorfail;
 

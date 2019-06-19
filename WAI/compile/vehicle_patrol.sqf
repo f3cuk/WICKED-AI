@@ -55,8 +55,6 @@ call {
 	if (_aitype == "special") 	exitWith {_pilot setVariable ["Special",true,false]; _pilot setVariable ["humanity", ai_special_humanity];};
 };
 
-ai_vehicle_units = (ai_vehicle_units + 1);
-
 _vehicle = createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
 _vehicle setFuel 1;
 _vehicle engineOn true;
@@ -85,8 +83,6 @@ call {
 	_gunner setSkill [(_x select 0),(_x select 1)];
 } count _aicskill;
 
-ai_vehicle_units = (ai_vehicle_units + 1);
-
 {
 	_pilot setSkill [_x,1]
 } count _skillarray;
@@ -102,20 +98,20 @@ ai_vehicle_units = (ai_vehicle_units + 1);
 } forEach (units _unitgroup);
 
 if (!isNil "_mission") then {
-	_vehicle setVariable ["missionclean","vehicle"];
-	_vehicle setVariable ["mission",_mission];
-	// Add unit group to an array for mission clean up
+	_vehicle setVariable ["mission" + dayz_serverKey, _mission, false];
+	
 	((wai_mission_data select _mission) select 1) set [count ((wai_mission_data select _mission) select 1), _unitGroup];
-	((wai_mission_data select _mission) select 4) set [count ((wai_mission_data select _mission) select 4), _vehicle]; // added for vehicle monitor
+	((wai_mission_data select _mission) select 4) set [count ((wai_mission_data select _mission) select 4), _vehicle];
 	{
 		_ainum = (wai_mission_data select _mission) select 0;
 		wai_mission_data select _mission set [0, (_ainum + 1)];
-		_x setVariable ["mission",_mission]; 
+		_x setVariable ["mission" + dayz_serverKey, _mission, false];
+		_x setVariable ["noKey",true];
 	} count (crew _vehicle);
 } else {
 	{wai_static_data set [0, ((wai_static_data select 0) + 1)];} count (crew _vehicle);
-	(wai_static_data select 1) set [count (wai_static_data select 1), _unitGroup]; // Add unit group to an array for mission clean up
-	(wai_static_data select 2) set [count (wai_static_data select 2), _vehicle];  // added for vehicle monitor
+	(wai_static_data select 1) set [count (wai_static_data select 1), _unitGroup];
+	(wai_static_data select 2) set [count (wai_static_data select 2), _vehicle];
 };
 
 _unitGroup allowFleeing 0;
@@ -143,5 +139,5 @@ _wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100]
 _wp setWaypointType "CYCLE";
 _wp setWaypointCompletionRadius 200;
 
-_unitGroup // why does it return the group variable?
+_unitGroup
 

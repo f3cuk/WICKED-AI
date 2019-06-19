@@ -1,7 +1,6 @@
 #include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
 
 if (isNil "ai_cleanup_time") then {ai_cleanup_time = -1;};
-if (isNil "wai_debug_mode") then {wai_debug_mode = false;};
 
 sched_co_deleteVehicle = {
 	private "_group";
@@ -159,9 +158,7 @@ sched_corpses = {
 			};
 		};
 	} forEach allDead;
-	if(wai_debug_mode) then {
-		diag_log format["Sched_Corpses: deleted %1 dead ai bodies",_delQtyAI]; // used for testing WAI
-	};
+
 	_delQtyAnimal = 0;
 	{
 		_animal = _x;

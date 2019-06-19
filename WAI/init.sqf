@@ -14,10 +14,12 @@ dynamic_crate = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\com
 static_spawn_manager = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\static_spawn_manager.sqf";
 find_position = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\find_position.sqf";
 load_ammo = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\load_ammo.sqf";
-patrol = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\patrol.sqf";
+patrol_winorfail = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\patrol_winorfail.sqf";
 mission_winorfail = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_winorfail.sqf";
 minefield = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";
 custom_publish = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\custom_publish_vehicle.sqf";
+wai_spawnObjects = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\spawn_objects.sqf";
+wai_air_drop = compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\airdrop_winorfail.sqf";
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\position_functions.sqf";
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\functions.sqf";
@@ -50,36 +52,31 @@ if(isNil("DZMSInstalled")) then {
 wai_staticloaded = false;
 WAIconfigloaded	= false;
 wai_markedPos = [];
-wai_static_data = [];
-ai_ground_units	= 0;
-ai_emplacement_units = 0;
-ai_air_units = 0;
-ai_vehicle_units = 0;
+wai_static_data = [0,[],[],[]]; // [AI Count, UnitGroups, Vehicles to Monitor, Crates]
 
-//Load Configs
-ExecVM "\z\addons\dayz_server\WAI\config.sqf";
+execVM "\z\addons\dayz_server\WAI\config.sqf";
 waitUntil {WAIconfigloaded};
-
 diag_log "WAI: AI Config File Loaded";
 
-// Load the Overwatch Configs if the Overwatch Mod is detected
+execVM "\z\addons\dayz_server\WAI\configs\mission_loot.sqf";
+
 if (WAI_Overpoch) then {
-	ExecVM "\z\addons\dayz_server\WAI\configs\overwatch.sqf";
+	execVM "\z\addons\dayz_server\WAI\configs\overwatch.sqf";
 };
 
 if (wai_user_spawnpoints) then {
-	ExecVM "\z\addons\dayz_server\WAI\configs\spawnpoints.sqf";
+	execVM "\z\addons\dayz_server\WAI\configs\spawnpoints.sqf";
 };
 
 if (wai_use_blacklist) then {
-	ExecVM "\z\addons\dayz_server\WAI\configs\blacklist.sqf";
+	execVM "\z\addons\dayz_server\WAI\configs\blacklist.sqf";
 };
 
 if(wai_static_missions) then {
-	ExecVM "\z\addons\dayz_server\WAI\static\init.sqf";
+	execVM "\z\addons\dayz_server\WAI\static\init.sqf";
 	waitUntil {wai_staticloaded};
 };
 
 if (wai_mission_system) then {
-	ExecVM "\z\addons\dayz_server\WAI\missions\init.sqf";
+	execVM "\z\addons\dayz_server\WAI\missions\init.sqf";
 };

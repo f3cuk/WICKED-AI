@@ -1,4 +1,5 @@
-// Assign parameters passed from mission array to local variables
+private ["_mission","_position","_difficulty","_name","_missionType","_showMarker","_enableMines","_completionType","_msgstart","_msgwin","_msglose","_mines"];
+
 _mission		= _this select 0;
 _position 		= _this select 1;
 _difficulty 	= _this select 2;
@@ -6,77 +7,51 @@ _name			= _this select 3;
 _missionType 	= _this select 4;
 _showMarker 	= _this select 5;
 _enableMines	= _this select 6;
-_crate			= _this select 7;
-_completionType	= _this select 8;
-_baseclean		= _this select 9;
-_msgstart		= _this select 10;
-_msgwin			= _this select 11;
-_msglose		= _this select 12;
-_crateLoot 		= _this select 13;
+_completionType	= _this select 7;
+_msgstart		= (_this select 8) select 0;
+_msgwin			= (_this select 8) select 1;
+_msglose		= (_this select 8) select 2;
 
-// Initialize additional local variables
-_minefieldRadius = 0;
-_color		= "";
-_mines		= nil;
+if(wai_debug_mode) then {diag_log "WAI: Starting Mission number " + str _mission;};
 
-if(wai_debug_mode) then { diag_log("WAI: Starting Mission number " + str(_mission)); };
-
-// If minefield enabled, spawn the mines and set the radius used for vehicle detection
 if(wai_enable_minefield && _enableMines) then {
-	call {
-		if(_difficulty == "easy") exitWith {_mines = [_position,20,37,20] call minefield; _minefieldRadius = 37;};
-		if(_difficulty == "medium") exitWith {_mines = [_position,35,52,50] call minefield; _minefieldRadius = 52;};
-		if(_difficulty == "hard") exitWith {_mines = [_position,50,75,100] call minefield; _minefieldRadius = 75;};
-		if(_difficulty == "extreme") exitWith {_mines = [_position,60,90,150] call minefield; _minefieldRadius = 90;};
-	};
-	
-	// add mines to WAI mission data array, third parameter
+	_mines = [_position,50,75,100] call minefield;
 	wai_mission_data select _mission set [2, _mines];
 };
 
-// Set the marker color based on difficulty
-call {
-	if(_difficulty == "easy") exitWith {_color = "ColorGreen"};
-	if(_difficulty == "medium") exitWith {_color = "ColorYellow"};
-	if(_difficulty == "hard") exitWith {_color = "ColorRed"};
-	if(_difficulty == "extreme") exitWith {_color = "ColorBlack"};
-	_color = _difficulty;
+_color = call {
+	if(_difficulty == "Easy") exitWith {"ColorGreen"};
+	if(_difficulty == "Medium") exitWith {"ColorYellow"};
+	if(_difficulty == "Hard") exitWith {"ColorRed"};
+	if(_difficulty == "Extreme") exitWith {"ColorBlack"};
 };
 
-// Set the name of the mission based on type (used in mission markers)
-call {
-	if(_missionType == "MainHero") exitWith { _name = "[Bandits] " + _name; };
-	if(_missionType == "MainBandit") exitWith { _name = "[Heroes] " + _name; };
-	//if(_missionType == "special") exitWith { _name = "[Special] " + _name; };
+_name = call {
+	if(_missionType == "MainHero") exitWith {"Bandit " + _name;};
+	if(_missionType == "MainBandit") exitWith {"Hero " + _name;};
 };
 
-if(wai_debug_mode) then { diag_log("WAI: Mission Data: " + str(wai_mission_data)); };
+if(wai_debug_mode) then {diag_log "WAI: Mission Data: " + str wai_mission_data;};
 
-// Send mission announcement to clients
-_msgstart call wai_server_message;
+[_difficulty,_msgstart] call wai_server_message;
 
-// Let other missions spawn
 WAI_MarkerReady = true;
 
-// Spawn the mission thread
-[_position,_minefieldRadius,_mission,_name,_completionType,_color,_crateLoot,_crate,_showMarker,_msgwin,_msglose,_baseclean,_enableMines,_missionType] spawn {
+[_position,_mission,_name,_completionType,_color,_showMarker,_msgwin,_msglose,_enableMines,_missionType,_difficulty] spawn {
 
 	private ["_left","_leftTime","_claimTime","_acArray","_claimed","_acTime","_acdot","_acMarker","_timeStamp","_unitGroups","_playerArray","_enableMines","_aiVehicles","_aiVehArray","_baseclean","_msgwin","_msglose","_bomb","_position","_minefieldRadius","_timeout","_player_near","_complete","_starttime","_timeout_time","_max_ai","_killpercent","_mission","_missionType","_airemain","_text","_name","_completionType","_marker","_dot","_objectivetarget","_color","_crateLoot","_crate","_showMarker","_cleanunits"];
 
 	_position			= _this select 0;
-	_minefieldRadius 	= _this select 1;
-	_mission			= _this select 2;
-	_name				= _this select 3;
-	_completionType		= _this select 4;
-	_color				= _this select 5;
-	_crateLoot			= _this select 6;
-	_crate				= _this select 7; // this variable is the vehicle if patrol mission
-	_showMarker			= _this select 8;
-	_msgwin				= _this select 9;
-	_msglose			= _this select 10;
-	_baseclean			= _this select 11;
-	_enableMines		= _this select 12;
-	_missionType		= _this select 13;
+	_mission			= _this select 1;
+	_name				= _this select 2;
+	_completionType		= _this select 3;
+	_color				= _this select 4;
+	_showMarker			= _this select 5;
+	_msgwin				= _this select 6;
+	_msglose			= _this select 7;
+	_enableMines		= _this select 8;
+	_missionType		= _this select 9;
+	_difficulty			= _this select 10;
 	
 	_timeout 			= false;
 	_player_near		= false;
@@ -84,9 +59,14 @@ WAI_MarkerReady = true;
 	_starttime 			= diag_tickTime;
 	_timeout_time		= (random((wai_mission_timeout select 1) - (wai_mission_timeout select 0)) + (wai_mission_timeout select 0)) * 60;
 	_max_ai				= (wai_mission_data select _mission) select 0;
+	_unitGroups 		= (wai_mission_data select _mission) select 1;
+	_mines 				= (wai_mission_data select _mission) select 2;
+	_crates 			= (wai_mission_data select _mission) select 3;
+	_aiVehicles 		= (wai_mission_data select _mission) select 4;
+	_vehicles 			= (wai_mission_data select _mission) select 5;
+	_baseclean 			= (wai_mission_data select _mission) select 6;
 	_killpercent 		= _max_ai - (_max_ai * (wai_kill_percent / 100));
 	_playerArray		= [];
-	_unitGroups			= [];
 	_timeStamp			= diag_tickTime;
 	_closestPlayer		= objNull;
 	_acArray			= [];
@@ -96,132 +76,48 @@ WAI_MarkerReady = true;
 	_left				= false;
 	_leftTime			= 0;
 	
-	// Start the mission loop
 	while {!_timeout && !_complete} do {
 		
-		// Minefield functionality if enabled
-		if (wai_enable_minefield && _enableMines) then {
+		if (count _mines > 0) then {
 			{
-				// Warn player that they are approaching minefield: default is 200 meters from the edge of the minefield
-				if((isPlayer _x) && (vehicle _x != _x) && (vehicle _x distance _position < (_minefieldRadius + 200)) && !(_x in _playerArray)) then {
+				if((isPlayer _x) && (vehicle _x != _x) && (vehicle _x distance _position < 275) && !(_x in _playerArray)) then {
 					_x call wai_minefield_warning;
-					// add player to array so it only sends the message once to each client
 					_playerArray set [count _playerArray, _x];
-					
 				};
 				
-				// If the player is in a vehicle and gets within the minefield radius, an explosion occurs at vehicle location
-				if((isPlayer _x) && (vehicle _x != _x) && (vehicle _x distance _position < _minefieldRadius) && (alive _x) && ((([vehicle _x] call FNC_GetPos) select 2) < 1)) then {
+				if((isPlayer _x) && (vehicle _x != _x) && (vehicle _x distance _position < 75) && (alive _x) && ((([vehicle _x] call FNC_GetPos) select 2) < 1)) then {
 					_bomb = "Bo_GBU12_lgb" createVehicle ([vehicle _x] call FNC_GetPos);
 					uiSleep 3;
 					deleteVehicle _bomb;
-					//{deleteVehicle _x;} forEach nearestObjects [_position, ["Mine"],4];
 				};
 			} count playableUnits;
 		};
 		
-		// Invisible Static Gun Glitch Fix - Runs every 3 minutes - "GetOut" EventHandler forces the AI back onto the static gun immediately.
-		_staticArray = ((wai_mission_data select _mission) select 3);
-		if ((diag_tickTime - _timeStamp) > 180 && (count _staticArray) > 0) then {
+		if ((diag_tickTime - _timeStamp) > 180 && (count _aiVehicles) > 0) then {
 			{
-				if (typeName _x == "ARRAY") then {
-					private ["_unit","_gun"];
-					_unit = _x select 0;
-					_gun = _x select 1;
-					{
-						_unit action ["getOut", _gun];
-					} count _x;
+				if (_x isKindOf "StaticWeapon") then {
+					(gunner _x) action ["getout",_x];
 				};
-			} forEach _staticArray;
+			} forEach _aiVehicles;
+			
 			_timeStamp = diag_tickTime;
 		};
 		
-		// Auto Claim functionality if enabled
 		if (use_wai_autoclaim && _showMarker) then {
-			
-			if (!_claimed) then {
-			
-				// Find the closest player and send an alert
-				if (isNull _closestPlayer) then {
-					_closestPlayer = _position call wai_isClosest; // Find the closest player
-					[_closestPlayer,_name,"Start"] call wai_AutoClaimAlert; // Send alert
-					_claimTime = diag_tickTime; // Set the time variable for countdown
-				};
-				
-				// After the delay time, check player's location and either claim or not claim
-				if ((diag_tickTime - _claimTime) > ac_delay_time) then {
-					if ((_closestPlayer distance _position) > ac_alert_distance) then {
-						[_closestPlayer,_name,"Stop"] call wai_AutoClaimAlert; // Send alert to player who is closest
-						_closestPlayer = objNull; // Set to default
-						_acArray = []; // Set to default
-					} else {
-						_claimed = true;
-						[_closestPlayer,_name,"Claimed"] call wai_AutoClaimAlert; // Send alert to all players
-						_acArray = [getplayerUID _closestPlayer, name _closestPlayer]; // Add player UID and name to array
-					};
-				};
-			};
-			
-			if (_claimed) then {
-				
-				// Used in the marker when a player has left the mission area
-				_leftTime = round (ac_timeout - (diag_tickTime - _claimTime));
-				
-				// If the player dies at the mission, change marker to countdown and set player variable to null
-				if ((!alive _closestPlayer) && !_left) then {
-					_closestPlayer = objNull; // Set the variable to null to prevent null player errors
-					_claimTime = diag_tickTime; // Set the time for countdown
-					_left = true; // Changes the marker to countdown
-				};
-				
-				// Check to see if the dead player has returned to the mission
-				if (isNull _closestPlayer) then {
-					_closestPlayer = [_position,_acArray] call wai_checkReturningPlayer;
-				};
-				
-				// Notify the player that he/she is outside the mission area
-				if (!(isNull _closestPlayer) && ((_closestPlayer distance _position) > ac_alert_distance) && !_left) then {
-					[_closestPlayer,_name,"Return"] call wai_AutoClaimAlert;
-					_claimTime = diag_tickTime; // Set the time for the countdown
-					_left = true; // Set the mission marker to countdown
-				};
-				
-				// If the player returns to the mission before the clock runs out then change the marker
-				if (!(isNull _closestPlayer) && ((_closestPlayer distance _position) < ac_alert_distance) && _left) then {
-					[_closestPlayer,_name,"Reclaim"] call wai_AutoClaimAlert;
-					_left = false; // Change the mission marker back to claim
-				};
-				
-				// If the player lets the clock run out, then set the mission to unclaimed and set the variables to default
-				// Player left the server
-				if ((isNull _closestPlayer) && ((diag_tickTime - _claimTime) > ac_timeout)) then {
-					[_acArray ,_name,"Unclaim"] call wai_AutoClaimAlert; // Send alert to all players
-					_claimed = false;
-					_left = false;
-					_acArray = [];
-				} else {
-					// Player is alive but did not return to the mission
-					if (((diag_tickTime - _claimTime) > ac_timeout) && ((_closestPlayer distance _position) > ac_alert_distance)) then {
-						[_closestPlayer,_name,"Unclaim"] call wai_AutoClaimAlert; // Send alert to all players
-						_closestPlayer = objNull;
-						_claimed = false;
-						_left = false;
-						_acArray = [];
-						
-					};
-				};
-			};
+			#include "\z\addons\dayz_server\WAI\compile\auto_claim.sqf"	
 		};
 		
-		// AI vehicle monitor
-		_mission call wai_monitor_ai_vehicles;
+		if (count _aiVehicles > 0) then {
+			_aiVehicles call wai_monitor_ai_vehicles;
+		};
 		
-		// JIP Mission Marker
 		if (_showMarker) then {
 			if (ai_show_count) then {
-			_aiCount	= (wai_mission_data select _mission) select 0;
-			_text	= format["%1 [%2 Remaining]",_name,_aiCount];
-			} else {_text = _name};
+				_aiCount = (wai_mission_data select _mission) select 0;
+				_text = format["%1 (%2 A.I.)",_name,_aiCount];
+			} else {
+				_text = _name;
+			};
 
 			_marker = createMarker [_missionType + str(_mission), _position];
 			_marker setMarkerColor _color;
@@ -240,70 +136,64 @@ WAI_MarkerReady = true;
 				_acMarker setMarkerBrush "Border";
 				_acMarker setMarkerColor "ColorRed";
 				_acMarker setMarkerSize [ac_alert_distance,ac_alert_distance];
-			};
 			
-			if (use_wai_autoclaim && _claimed) then {
-				_acdot = createMarker [_missionType + str(_mission) + "autodot", [(_position select 0) + 100, (_position select 1) + 100]];
-				_acdot setMarkerColor "ColorBlack";
-				_acdot setMarkerType "mil_objective";
-				if (_left) then {
-					_acdot setMarkerText format["%1 Claim Timeout [%2]",(_acArray select 1),_leftTime];
-				} else {
-					_acdot setMarkerText format["Claimed by %1",(name _closestPlayer)];
+				if (_claimed) then {
+					_acdot = createMarker [_missionType + str(_mission) + "autodot", [(_position select 0) + 100, (_position select 1) + 100]];
+					_acdot setMarkerColor "ColorBlack";
+					_acdot setMarkerType "mil_objective";
+					if (_left) then {
+						_acdot setMarkerText format["%1 Claim Timeout [%2]",(_acArray select 1),_leftTime];
+					} else {
+						_acdot setMarkerText format["Claimed by %1",(name _closestPlayer)];
+					};
 				};
 			};
 			
-			// Make the entire loop sleep for 2 seconds
 			uiSleep 2;
-			
-			// Delete mission markers so they can be recreated when the loop cycles
 			deleteMarker _marker;
 			deleteMarker _dot;
 			if (!isNil "_acMarker") then {deleteMarker _acMarker;};
 			if (!isNil "_acdot") then {deleteMarker _acdot;};
 		} else {
-			// Make the entire loop sleep for 2 seconds if show marker is false
 			uiSleep 2;
 		};
 		
-		// Check for mission timeout
 		_player_near = [_position,wai_timeout_distance] call isNearPlayer;
+		
 		if (diag_tickTime - _starttime >= _timeout_time && !_player_near) then {
 			_timeout = true;
 		} else {
-			//If player is near, reset the start time.
 			if (_player_near) then {_starttime = diag_tickTime;};
 		};
 		
-		// Check to see if the mission is complete
 		_complete = [_mission,_completionType,_killpercent,_position] call wai_completion_check;
 		
 	};
 
 	if (_complete) then {
 		
-		// Spawn loot in the mission crate
-		[_crate,_crateLoot,_complete] call dynamic_crate;
+		if (count _vehicles > 0) then {
+			{
+				[_x,_mission,_crates] call wai_generate_vehicle_key;
+			} count _vehicles;
+		};
 		
-		// Delete mines if enabled
-		if (wai_enable_minefield && _enableMines) then {_mission call wai_remove_mines;};
+		{
+			[(_x select 0),(_x select 1),_complete] call dynamic_crate;
+		} count _crates;
 		
-		// Send "win" message to clients
-		_msgwin call wai_server_message;
+		if (count _mines > 0) then {
+			_mines call wai_fnc_remove;
+		};
 		
-		// Remove the mission from the mission count so a new one can spawn
+		[_difficulty,_msgwin] call wai_server_message;
+		
 		if (_missionType == "MainBandit") then {
 			b_missionsrunning = b_missionsrunning - 1;
 			wai_b_starttime = diag_tickTime;
 		} else {
 			h_missionsrunning = h_missionsrunning - 1;
 			wai_h_starttime = diag_tickTime;
-		};
-		
-		// delete mission data if mission clean is turned off.
-		if (wai_clean_mission_time <= 0) then {
-			wai_mission_markers = wai_mission_markers - [(_missionType + str(_mission))];
-			wai_mission_data set [_mission, -1];
 		};
 		
 		diag_log format["WAI: [Mission: %1]: Ended at %2",_name,_position];
@@ -315,80 +205,84 @@ WAI_MarkerReady = true;
 			
 			while {!_cleaned} do {
 				
-				// Continue monitoring AI vehicles until mission clean time is reached.
-				_mission call wai_monitor_ai_vehicles;
+				uiSleep 3;
+				
+				if (count _aiVehicles > 0) then {
+					_aiVehicles call wai_monitor_ai_vehicles;
+				};
 
 				if ((diag_tickTime - _finish_time >= 60*wai_clean_mission_time) || ({[_x,_name] call fnc_inString;} count wai_clean_when_clear) != 0) then {
 					
-					// Delete AI vehicles if alive
-					_mission call wai_remove_ai_vehicles;
+					if (count _aiVehicles > 0) then {
+						_aiVehicles call wai_fnc_remove;
+					};
 					
-					// Remove remaining AI and mission vehicles
-					_mission call wai_remove_alive;
+					_mission call wai_remove_ai;
 					
-					// Delete Buildings
-					if(count _baseclean > 0) then {_baseclean call wai_remove_buildings;};
+					if (count _vehicles > 0) then {
+						[_mission,_vehicles] call wai_remove_vehicles;
+					};
+					
+					if (count _baseclean > 0) then {
+						_baseclean call wai_fnc_remove;
+					};
+					
+					{
+						if (count units _x == 0) then {
+							deleteGroup _x;
+						};
+					} forEach _unitGroups;
+					
+					wai_mission_markers = wai_mission_markers - [(_missionType + str(_mission))];
+					wai_mission_data set [_mission, -1];
 					
 					if (wai_clean_mission_crate) then {
-						// Check player proximity to the crate
+
 						_playernear = [_position,75] call isNearPlayer;
 						
-						// Do not delete the crate if there is a player within 75 meters - probably still looting
 						if (!_playernear) then {
-							// This check prevents deleting mission vehicles if they are used to spawn loot.
-							if (typeOf(_crate) in (crates_large + crates_medium + crates_small)) then {
-								deleteVehicle _crate;
-							};
-							
-							// Remove the AI groups
-							_unitGroups = (wai_mission_data select _mission) select 1;
-							{if (count units _x == 0) then {deleteGroup _x}} forEach _unitGroups;
-	
-							// Remove the remaining mission data
-							wai_mission_markers = wai_mission_markers - [(_missionType + str(_mission))];
-							wai_mission_data set [_mission, -1];
+							{
+								if ((typeOf (_x select 0)) in (crates_large + crates_medium + crates_small)) then {
+									deleteVehicle (_x select 0);
+								};
+							} count _crates;
 							
 							_cleaned = true;
 						};
 					} else {
-						
-						// Remove the AI groups
-						_unitGroups = (wai_mission_data select _mission) select 1;
-						{if (count units _x == 0) then {deleteGroup _x}} forEach _unitGroups;
-	
-						// Remove the remaining mission data
-						wai_mission_markers = wai_mission_markers - [(_missionType + str(_mission))];
-						wai_mission_data set [_mission, -1];
-						
 						_cleaned = true;
 					};
 				};
-				uiSleep 3;
 			};
 		};
 	};
 
 	if (_timeout) then {
 		
-		// Remove Mines
-		_mission call wai_remove_mines;
+		if (count _mines > 0) then {
+			_mines call wai_fnc_remove;
+		};
 		
-		// Delete the mission crate
-		deleteVehicle _crate;
+		{
+			deleteVehicle (_x select 0);
+		} count _crates;
 		
-		// Remove AI vehicles
-		_mission call wai_remove_ai_vehicles;
+		if (count _aiVehicles > 0) then {
+			_aiVehicles call wai_fnc_remove;
+		};
 		
-		// Remove alive AI and mission vehicles
-		_mission call wai_remove_alive;
+		_mission call wai_remove_ai;
 		
-		// Remove Buildings
-		if(count _baseclean > 0) then {_baseclean call wai_remove_buildings;};
+		if (count _vehicles > 0) then {
+			[_mission,_vehicles] call wai_remove_vehicles;
+		};
 		
-		// Send mission timeout message to clients
-		_msglose call wai_server_message;
+		if (count _baseclean > 0) then {
+			_baseclean call wai_fnc_remove;
+		};
 		
-		// Remove the mission from the mission count so a new one can spawn
+		[_difficulty,_msglose] call wai_server_message;
+		
 		if (_missionType == "MainBandit") then {
 			b_missionsrunning = b_missionsrunning - 1;
 			wai_b_starttime = diag_tickTime;
@@ -397,11 +291,12 @@ WAI_MarkerReady = true;
 			wai_h_starttime = diag_tickTime;
 		};
 		
-		// Remove the AI groups
-		_unitGroups = (wai_mission_data select _mission) select 1;
-		{if (count units _x == 0) then {deleteGroup _x}} forEach _unitGroups;
+		{
+			if (count units _x == 0) then {
+				deleteGroup _x;
+			};
+		} forEach _unitGroups;
 	
-		// Remove the remaining mission data
 		wai_mission_markers = wai_mission_markers - [(_missionType + str(_mission))];
 		wai_mission_data set [_mission, -1];
 		
