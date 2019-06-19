@@ -1,4 +1,4 @@
-private ["_i","_traders","_safepos","_validspot","_position","_color"];
+private ["_i","_traders","_safepos","_validspot","_position","_color","_markers"];
 
 if (wai_use_blacklist) then {
 	_safepos = [getMarkerPos "center",150,((getMarkerSize "center") select 1),(_this select 0),0,0.4,0,wai_blacklist];
@@ -30,6 +30,9 @@ while {!_validspot} do {
 			};
 		} forEach wai_markedPos;
 	};
+	
+	// If DZMS installed, include the markers
+	_markers = if (!isNil "DZMSMarkers") then {DZMSMarkers + wai_mission_markers} else {wai_mission_markers};
 
 	if (_validspot && {wai_avoid_missions != 0}) then {
 		{
@@ -38,7 +41,7 @@ while {!_validspot} do {
 				_validspot = false;
 				_color = "ColorBlue";
 			};
-		} count wai_mission_markers;
+		} count _markers;
 	};
 	
 	if (_validspot && {wai_avoid_safezones != 0}) then {
