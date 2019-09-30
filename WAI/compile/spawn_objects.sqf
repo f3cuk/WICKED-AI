@@ -1,6 +1,6 @@
 // This is a modified version of the DayZ Epoch file fn_spawnObjects.sqf used to spawn WAI mission objects.
 
-private ["_offset","_fires","_position","_object","_objects","_type","_pos","_mission"];
+private ["_offset","_fires","_position","_object","_objects","_type","_pos","_mission","_destructables"];
 
 _objects = _this select 0;
 _pos = _this select 1;
@@ -18,6 +18,13 @@ _fires = [
 	"Land_Fire_barrel",
 	"Land_Fire_barrel_burning",
 	"Misc_TyreHeap"
+];
+
+// Override god mode on these objects so they can be destroyed if wai_godmode_objects enabled.
+_destructables = [
+	"Gold_Vein_DZE",
+	"Iron_Vein_DZE",
+	"Silver_Vein_DZE"
 ];
 
 {
@@ -43,8 +50,10 @@ _fires = [
 	_object setVectorUp surfaceNormal position _object;
 	
 	if (wai_godmode_objects) then {
-		_object addEventHandler ["HandleDamage",{0}];
-		if !(_type in _fires) then {_object enableSimulation false;};
+		if !(_object in _destructables) then {
+			_object addEventHandler ["HandleDamage",{0}];
+			if !(_type in _fires) then {_object enableSimulation false;};
+		};
 	};
 	
 	((wai_mission_data select _mission) select 6) set [count ((wai_mission_data select _mission) select 6), _object];
