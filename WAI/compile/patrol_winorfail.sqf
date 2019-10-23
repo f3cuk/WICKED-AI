@@ -15,7 +15,7 @@ _msglose		= (_this select 9) select 2;
 _countWP		= [];
 _unitGroup = ((wai_mission_data select _mission) select 1) select 0;
 
-if (wai_debug_mode) then {diag_log "WAI: Starting Mission number " + str _mission;};
+if(wai_debug_mode) then {diag_log format["WAI: Starting Mission number %1",_mission];};
 
 _color = call {
 	if (_difficulty == "Easy") exitWith {"ColorGreen"};
@@ -42,8 +42,6 @@ for "_i" from 0 to _numWaypoints - 1 do {
 	_wp setWaypointCombatMode "YELLOW";
 	_wp setWaypointCompletionRadius 300;
 };
-
-if (wai_debug_mode) then {diag_log "WAI: Mission Data: " + str wai_mission_data;};
 
 [_difficulty,_msgstart] call wai_server_message;
 
