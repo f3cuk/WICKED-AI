@@ -12,7 +12,7 @@ ai_show_count		 = false; //this will show the ai count in the mission markers.
 ai_hasMoney			 = false; //If you have ZSC installed then setting this to true will place random amounts of coins in 50 coin increments in ai wallets.
 ai_moneyMultiplier	 = 200; //This value is multiplied by 50 to set the max amount of ZSC coins in AI wallets. ex. 200x50=10000 max coins.
 ai_clear_body		 = false; // instantly clear bodies
-ai_cleanup_time		 = 3; // time to clear bodies in minutes. Set to -1 to disable AI cleanup.
+ai_cleanup_time		 = 30; // time to clear bodies in minutes. Set to -1 to disable AI cleanup.
 ai_clean_roadkill	 = false; // clean bodies that are roadkills
 ai_rk_damageweapon	 = 0; // percentage of chance a roadkill will destroy weapon AI is carrying
 ai_bandit_combatmode = "RED"; // combat mode of bandit AI
