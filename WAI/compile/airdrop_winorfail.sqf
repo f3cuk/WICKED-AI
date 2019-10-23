@@ -16,7 +16,7 @@ _msgdrop		= (_this select 10) select 2;
 _msgwin			= (_this select 10) select 3;
 _msglose		= (_this select 10) select 4;
 
-if(wai_debug_mode) then {diag_log "WAI: Starting Mission number " + str _mission;};
+if(wai_debug_mode) then {diag_log format["WAI: Starting Mission number %1",_mission];};
 
 if(wai_enable_minefield && _enableMines) then {
 	_mines = [_position,50,75,100] call minefield;
@@ -39,8 +39,6 @@ _startDist = 10000; // increase this to delay the time it takes for the plane to
 _PorM = if (random 1 > .5) then {"+"} else {"-"};
 _PorM2 = if (random 1 > .5) then {"+"} else {"-"};
 _startPos = call compile format ["[(%1 select 0) %2 %4,(%1 select 1) %3 %4, 300]",_position,_PorM,_PorM2,_startDist];
-
-if(wai_debug_mode) then {diag_log "WAI: Mission Data: " + str wai_mission_data;};
 
 [_difficulty,_msgstart] call wai_server_message;
 
