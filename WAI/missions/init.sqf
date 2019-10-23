@@ -54,7 +54,7 @@ while {true} do
 				};
 			};
 			
-			["MainHero","Bandit"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",_mission];
+			["MainHero","Bandit"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",(_mission select 0)];
 		};
 
 		if (_bresult == 1 && WAI_MarkerReady) then {
@@ -84,7 +84,7 @@ while {true} do
 				};
 			};
 			
-			["MainBandit","Hero"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",_mission];
+			["MainBandit","Hero"] execVM format ["\z\addons\dayz_server\WAI\missions\missions\%1.sqf",(_mission select 0)];
 		};	
 	};
 	uiSleep 5;
