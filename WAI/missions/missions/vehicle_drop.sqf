@@ -24,7 +24,7 @@ _rndnum = ceil (random 4);
 [_position,_rndnum,"Medium","Random",3,"Random",_aiType,"Random",_aiType,_mission] call spawn_group;
 
 if(wai_debug_mode) then {
-	diag_log format["WAI: [%3] %1 Vehicle Drop spawned a %2",_airName_vehname,_missionType];
+	diag_log format["WAI: [%3] %1 Vehicle Drop spawned a %2",_airName,_vehname,_missionType];
 };
 
 _messages = if (_missionType == "MainHero") then {
