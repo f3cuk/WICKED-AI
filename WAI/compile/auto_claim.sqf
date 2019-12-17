@@ -51,6 +51,15 @@
 					_left = false; // Change the mission marker back to claim
 				};
 				
+				// Warn other players in mission area
+				{
+					if(!(_x in (units group _closestPlayer)) && ((_x distance _position) < ac_alert_distance )) then {
+						//warn
+						RemoteMessage = ["rollingMessages", format["You are in %1's mission. Ask %1 for permission!",_acArray select 1] ];
+						(owner _x) publicVariableClient "RemoteMessage";
+					};
+				} forEach playableUnits;
+				
 				// If the player lets the clock run out, then set the mission to unclaimed and set the variables to default
 				// Player left the server
 				if ((isNull _closestPlayer) && ((diag_tickTime - _claimTime) > ac_timeout)) then {
