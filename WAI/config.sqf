@@ -12,7 +12,7 @@ ai_show_count		 = false; //this will show the ai count in the mission markers.
 ai_hasMoney			 = false; //If you have ZSC installed then setting this to true will place random amounts of coins in 50 coin increments in ai wallets.
 ai_moneyMultiplier	 = 200; //This value is multiplied by 50 to set the max amount of ZSC coins in AI wallets. ex. 200x50=10000 max coins.
 ai_clear_body		 = false; // instantly clear bodies
-ai_cleanup_time		 = 3; // time to clear bodies in minutes. Set to -1 to disable AI cleanup.
+ai_cleanup_time		 = 30; // time to clear bodies in minutes. Set to -1 to disable AI cleanup.
 ai_clean_roadkill	 = false; // clean bodies that are roadkills
 ai_rk_damageweapon	 = 0; // percentage of chance a roadkill will destroy weapon AI is carrying
 ai_bandit_combatmode = "RED"; // combat mode of bandit AI
@@ -92,7 +92,6 @@ wai_avoid_plots			= 100; // avoid spawning missions near player plots
 wai_mission_timer		= [5,15]; // time between missions. Default: 5-15 minutes
 wai_mission_timeout		= [15,30]; // time each mission takes to timeout if inactive. Default: 15-30 minutes
 wai_timeout_distance	= 1000; // if a player is this close to a mission then it won't timeout
-wai_cycle_all_missions	= true; // This option cycles through all missions before there are any repeats
 
 wai_clean_mission_time	= 30; // time in minutes after a mission is complete to clean mission buildings. Set to -1 to disable mission cleanup. Default: 30 minutes
 wai_clean_mission_crate	= true; // include the mission crates with the mission cleanup. If a player is within 75 meters of the crates the cleanup script will wait. Does not apply to missions that timeout.
@@ -130,69 +129,71 @@ wai_hero_limit			= 1; // define how many hero missions can run at once
 wai_bandit_limit		= 1; // define how many bandit missions can run at once
 
 // Mission Arrays
+// [mission name, chance to spawn] Chance to spawn is 0-1. Example - If you only want your mission to have a 25% chance to spawn enter .25
 wai_hero_missions = [
-	"patrol",
-	"black_hawk_crash",
-	"armed_vehicle",
-	"base",
-	"captured_mv22",
-	"scout_patrol",
-	"ikea_convoy",
-	"medi_camp",
-	"broken_down_ural",
-	"sniper_extraction",
-	"mayors_mansion",
-	"weapon_cache",
-	"gem_tower",
-	"cannibal_cave",
-	"crop_raider",
-	"drone_pilot",
-	"slaughter_house",
-	"drugbust",
-	"armybase",
-	"abandoned_trader",
-	"lumberjack",
-	"presidents_mansion",
-	"tankcolumn",
-	"macdonald",
-	"radioshack",
-	"junkyard",
-	"outpost",
-	"farmer",
-	"firestation",
-	"vehicle_drop"
+	["patrol",1],
+	["black_hawk_crash",1],
+	["armed_vehicle",1],
+	["base",1],
+	["captured_mv22",1],
+	["scout_patrol",1],
+	["ikea_convoy",1],
+	["medi_camp",1],
+	["broken_down_ural",1],
+	["sniper_extraction",1],
+	["mayors_mansion",1],
+	["weapon_cache",1],
+	["gem_tower",1],
+	["cannibal_cave",1],
+	["crop_raider",1],
+	["drone_pilot",1],
+	["slaughter_house",1],
+	["drugbust",1],
+	["armybase",1],
+	["abandoned_trader",1],
+	["lumberjack",1],
+	["presidents_mansion",1],
+	["tankcolumn",1],
+	["macdonald",1],
+	["radioshack",1],
+	["junkyard",1],
+	["outpost",1],
+	["farmer",1],
+	["firestation",1],
+	["vehicle_drop",1]
 ];
+
 wai_bandit_missions	= [
-	"patrol",
-	"black_hawk_crash",
-	"armed_vehicle",
-	"base",
-	"captured_mv22",
-	"scout_patrol",
-	"ikea_convoy",
-	"medi_camp",
-	"broken_down_ural",
-	"sniper_extraction",
-	"mayors_mansion",
-	"weapon_cache",
-	"gem_tower",
-	"cannibal_cave",
-	"crop_raider",
-	"drone_pilot",
-	"slaughter_house",
-	"drugbust",
-	"armybase",
-	"abandoned_trader",
-	"lumberjack",
-	"presidents_mansion",
-	"tankcolumn",
-	"macdonald",
-	"radioshack",
-	"junkyard",
-	"outpost",
-	"farmer",
-	"firestation",
-	"vehicle_drop"
+	["patrol",1],
+	["black_hawk_crash",1],
+	["armed_vehicle",1],
+	["base",1],
+	["captured_mv22",1],
+	["scout_patrol",1],
+	["ikea_convoy",1],
+	["medi_camp",1],
+	["broken_down_ural",1],
+	["sniper_extraction",1],
+	["mayors_mansion",1],
+	["weapon_cache",1],
+	["gem_tower",1],
+	["cannibal_cave",1],
+	["crop_raider",1],
+	["drone_pilot",1],
+	["slaughter_house",1],
+	["drugbust",1],
+	["armybase",1],
+	["abandoned_trader",1],
+	["lumberjack",1],
+	["presidents_mansion",1],
+	["tankcolumn",1],
+	["macdonald",1],
+	["radioshack",1],
+	["junkyard",1],
+	["outpost",1],
+	["farmer",1],
+	["firestation",1],
+	["vehicle_drop",1]
 ];
 
 // Vehicle arrays

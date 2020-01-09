@@ -195,7 +195,7 @@ wai_generate_vehicle_key = {
 	};
 	
 	_keyColor = DZE_keyColors call BIS_fnc_selectRandom;
-	_keyNumber = (floor(random 2500)) + 1;
+	_keyNumber = (ceil(random 2500)) + 1;
 	_keySelected = format["ItemKey%1%2",_keyColor,_keyNumber];
 	_isKeyOK = isClass(configFile >> "CfgWeapons" >> _keySelected);
 	_characterID = str(getNumber(configFile >> "CfgWeapons" >> _keySelected >> "keyid"));

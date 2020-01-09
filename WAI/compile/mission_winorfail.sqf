@@ -12,7 +12,7 @@ _msgstart		= (_this select 8) select 0;
 _msgwin			= (_this select 8) select 1;
 _msglose		= (_this select 8) select 2;
 
-if(wai_debug_mode) then {diag_log "WAI: Starting Mission number " + str _mission;};
+if(wai_debug_mode) then {diag_log format["WAI: Starting Mission number %1",_mission];};
 
 if(wai_enable_minefield && _enableMines) then {
 	_mines = [_position,50,75,100] call minefield;
@@ -30,8 +30,6 @@ _name = call {
 	if(_missionType == "MainHero") exitWith {"Bandit " + _name;};
 	if(_missionType == "MainBandit") exitWith {"Hero " + _name;};
 };
-
-if(wai_debug_mode) then {diag_log "WAI: Mission Data: " + str wai_mission_data;};
 
 [_difficulty,_msgstart] call wai_server_message;
 

@@ -24,7 +24,8 @@ _fires = [
 _destructables = [
 	"Gold_Vein_DZE",
 	"Iron_Vein_DZE",
-	"Silver_Vein_DZE"
+	"Silver_Vein_DZE",
+	"Supply_Crate_DZE"
 ];
 
 {
