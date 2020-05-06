@@ -208,6 +208,10 @@ while {(alive _helicopter) && (_drop)} do {
 
 			if (!_unarmed) then {
 				_weapon = if (typeName (_aiweapon) == "ARRAY") then {_aiweapon select (floor (random (count _aiweapon)))} else {_aiweapon};
+				if !(isClass (configFile >> "CfgWeapons" >> _weapon)) then {
+					diag_log text format ["WAI Error: Weapon classname (%1) is not valid!",_weapon];
+					_weapon = "M16A2_DZ"; // Replace with known good classname.
+				};
 				_magazine = _weapon call find_suitable_ammunition;
 			};
 			
