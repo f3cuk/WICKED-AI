@@ -99,6 +99,10 @@ if (!isNil "_mission") then {
 		};
 
 		_weapon 	= _aiweapon call BIS_fnc_selectRandom;
+		if !(isClass (configFile >> "CfgWeapons" >> _weapon)) then {
+			diag_log text format ["WAI Error: Weapon classname (%1) is not valid!",_weapon];
+			_weapon = "M16A2_DZ"; // Replace with known good classname.
+		};
 		_magazine 	= _weapon call find_suitable_ammunition;
 		
 		_aigear = call {
