@@ -51,7 +51,7 @@ _destructables = [
 	_object setVectorUp surfaceNormal position _object;
 	
 	if (wai_godmode_objects) then {
-		if !(_object in _destructables) then {
+		if !(_type in _destructables) then {
 			_object addEventHandler ["HandleDamage",{0}];
 			if !(_type in _fires) then {_object enableSimulation false;};
 		};
