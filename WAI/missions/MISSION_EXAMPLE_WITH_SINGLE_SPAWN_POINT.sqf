@@ -105,7 +105,7 @@ _num = round (random 3) + 4;
 //				7: Backpack ("random" or "classname") ***NO effect if ai_static_useweapon = false;***
 //				8: Gear (0:ai_gear0, 1:ai_gear1, 2:ai_gear2, 3:ai_gear3, 4:ai_gear4 or "random") ***NO effect if ai_static_useweapon = false;***
 //				9: Mission variable from line 7 (_mission)
-};
+
 [[
 	[(_position select 0) - 10, (_position select 1) + 10, 0],
 	[(_position select 0) + 10, (_position select 1) - 10, 0],
