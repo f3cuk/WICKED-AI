@@ -16,6 +16,7 @@
 					} else {
 						_claimed = true;
 						[_closestPlayer,_name,"Claimed"] call wai_AutoClaimAlert; // Send alert to all players
+						diag_log text format ["WAI Auto Claim: mission %1 has been claimed by %2",_name,(name _closestPlayer)];
 						_acArray = [getplayerUID _closestPlayer, name _closestPlayer]; // Add player UID and name to array
 					};
 				};
