@@ -100,7 +100,7 @@ if (wai_keep_vehicles) then {
 		_array = [];
 		
 		{
-			_hit = [_vehicle,_x] call object_getHit;
+			_hit = ([_vehicle,_x] call object_getHit) select 0; //Update for 1.0.7
 			_selection = getText (configFile >> "CfgVehicles" >> (typeOf _vehicle) >> "HitPoints" >> _x >> "name");
 			if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
 			if (wai_debug_mode) then {diag_log format ["Section Part: %1, Dmg: %2",_selection,_hit];};
