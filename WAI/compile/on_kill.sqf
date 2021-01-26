@@ -19,7 +19,7 @@ _unit setVariable ["bodyName","mission_ai",false]; //Only needed on server to pr
 
 if (ai_hasMoney && Z_singleCurrency) then {
 	_cash = round(random ai_moneyMultiplier) * 50;
-	_unit setVariable[Z_MoneyVariable,_cash ,true];
+	_unit setVariable["cashMoney",_cash ,true];
 };
 
 if(ai_add_skin) then {
