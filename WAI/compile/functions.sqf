@@ -1,19 +1,3 @@
-KK_fnc_arrayShufflePlus = {
-    private ["_arr","_cnt","_el1","_indx","_el2"];
-    _arr = _this select 0;
-    _cnt = count _arr - 1;
-    _el1 = _arr select _cnt;
-    _arr resize _cnt;
-    for "_i" from 1 to (_this select 1) do {
-        _indx = floor random _cnt;
-        _el2 = _arr select _indx;
-        _arr set [_indx, _el1];
-        _el1 = _el2;
-    };
-    _arr set [_cnt, _el1];
-    _arr
-};
-
 find_suitable_ammunition = {
 
 	private["_weapon","_result","_ammoArray"];
@@ -22,12 +6,8 @@ find_suitable_ammunition = {
 	_weapon = _this;
 	_ammoArray = getArray (configFile >> "cfgWeapons" >> _weapon >> "magazines");
 
-	if (count _ammoArray > 0) then {
-		_result = _ammoArray select 0;
-		call {
-			if (_result == "20Rnd_556x45_Stanag") exitWith { _result = "30Rnd_556x45_Stanag"; };
-		};
-	};
+	if (count _ammoArray > 0) then {_result = _ammoArray select 0;};
+	if (typeName _result == "BOOL") then {diag_log format["WAI: Cannot find magazine for weapon - %1.",_weapon];};
 	_result
 };
 
