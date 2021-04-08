@@ -7,7 +7,6 @@ wai_use_blacklist	 = true; // You can edit the blacklist per map in file WAI\con
 /* END GENERAL CONFIG */
 	
 /* AI CONFIG */
-ai_multiplier		 = 1; // To increase the number of ai per mission use a larger number. Be careful. Tons of ai affect server performance.
 ai_show_count		 = false; //this will show the ai count in the mission markers.
 ai_hasMoney			 = false; //If you have ZSC installed then setting this to true will place random amounts of coins in 50 coin increments in ai wallets.
 ai_moneyMultiplier	 = 200; //This value is multiplied by 50 to set the max amount of ZSC coins in AI wallets. ex. 200x50=10000 max coins.

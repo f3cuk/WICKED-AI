@@ -36,10 +36,6 @@ _aicskill = [];
 _aipack = "";
 _unarmed = false;
 
-if !(ai_multiplier < 0) then {
-	_unitnumber = round (_unitnumber * ai_multiplier);
-};
-
 // If zero ai are chosen exit the script
 if (_unitnumber == 0) exitWith {};
 
