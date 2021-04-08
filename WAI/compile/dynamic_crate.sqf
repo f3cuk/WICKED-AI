@@ -74,10 +74,6 @@ if(typeName (_loot select 4) == "ARRAY") then {
 
 if(_num_weapons > 0) then {
 	
-	if (wai_minimum_loot > 0 && wai_minimum_loot <= 1) then {
-		_num_weapons = (round (_num_weapons*wai_minimum_loot) + round random(_num_weapons*(1 - wai_minimum_loot)));
-	};
-	
 	if (_multiArrWep) then {
 
 		for "_i" from 1 to _num_weapons do {
@@ -85,7 +81,7 @@ if(_num_weapons > 0) then {
 			_weapon = _weapons_array select (floor (random (count _weapons_array)));
 			_ammo = _weapon call find_suitable_ammunition;
 			_crate addWeaponCargoGlobal [_weapon,1];
-			_crate addMagazineCargoGlobal [_ammo, wai_num_mags];
+			_crate addMagazineCargoGlobal [_ammo, (round(random((wai_num_mags select 1) - (wai_num_mags select 0))) + (wai_num_mags select 0))];
 		};
 	} else {
 		
@@ -93,16 +89,12 @@ if(_num_weapons > 0) then {
 			_weapon = _weapons_array select (floor (random (count _weapons_array)));
 			_ammo = _weapon call find_suitable_ammunition;
 			_crate addWeaponCargoGlobal [_weapon,1];
-			_crate addMagazineCargoGlobal [_ammo, wai_num_mags];
+			_crate addMagazineCargoGlobal [_ammo, (round(random((wai_num_mags select 1) - (wai_num_mags select 0))) + (wai_num_mags select 0))];
 		};
 	};
 };
 
 if(_num_tools > 0) then {
-
-	if (wai_minimum_loot > 0 && wai_minimum_loot <= 1) then {
-		_num_tools = (round (_num_tools*wai_minimum_loot) + round random(_num_tools*(1 - wai_minimum_loot)));
-	};
 
 	for "_i" from 1 to _num_tools do {
 		_tool = _tool_array select (floor (random (count _tool_array)));
@@ -116,10 +108,6 @@ if(_num_tools > 0) then {
 };
 
 if(_num_items > 0) then {
-
-	if (wai_minimum_loot > 0 && wai_minimum_loot <= 1) then {
-		_num_items = (round (_num_items*wai_minimum_loot) + round random(_num_items*(1 - wai_minimum_loot)));
-	};
 	
 	if (_multiArrItem) then {
 		
@@ -149,15 +137,11 @@ if(_num_items > 0) then {
 
 if(_num_pistols > 0) then {
 
-	if (wai_minimum_loot > 0 && wai_minimum_loot <= 1) then {
-		_num_pistols = (round (_num_pistols*wai_minimum_loot) + round random(_num_pistols*(1 - wai_minimum_loot)));
-	};
-
 	for "_i" from 1 to _num_pistols do {
 		_pistol = _pistols_array select (floor (random (count _pistols_array)));
 		_pistolammo = _pistol call find_suitable_ammunition;
 		_crate addWeaponCargoGlobal [_pistol,1];
-		_crate addMagazineCargoGlobal [_pistolammo, wai_num_mags];
+		_crate addMagazineCargoGlobal [_pistolammo, (round(random((wai_num_mags select 1) - (wai_num_mags select 0))) + (wai_num_mags select 0))];
 	};
 };
 
@@ -174,7 +158,7 @@ if(_num_backpacks > 0) then {
 	};
 };
 
-if(wai_high_value) then {
+if (wai_high_value_chance > 0) then {
 
 	if(random 100 < wai_high_value_chance) then {
 		_item = crate_items_high_value select (floor (random (count crate_items_high_value)));
