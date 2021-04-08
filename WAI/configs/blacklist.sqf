@@ -1,19 +1,17 @@
 
-call {
-    if (toLower worldName == "chernarus") exitWith {wai_blacklist = [
+wai_blacklist = call {
+    if (toLower worldName == "chernarus") exitWith {[
 		[[0,16000,0],[1000,-0,0]],	// Left edge of map
         [[0,16000,0],[16000.0,14580.3,0]] // Top edge of map
     ];};
-    if (toLower worldName == "namalsk") exitWith {wai_blacklist = [];};
-    if (toLower worldName == "panthera2") exitWith {wai_blacklist = [
+    if (toLower worldName == "panthera2") exitWith {[
 		[[235,686,0],[758,160,0]] // Debug Island
 	];};
-    if (toLower worldName == "tavi") exitWith {wai_blacklist = [];};
-    if (toLower worldName == "lingor") exitWith {wai_blacklist = [];};
-    if (toLower worldName == "napf") exitWith {wai_blacklist = [];};
-    if (toLower worldName == "smd_sahrani_a2") exitWith {wai_blacklist = [];};
-    if (toLower worldName == "sauerland") exitWith {wai_blacklist = [];};
-    wai_blacklist = []; diag_log "You are on an unsupported map! No blacklist available."; //default if nothing above matches
+    [];
 };
 
-diag_log "WAI: blacklist Loaded";
+if (count wai_blacklist > 0) then {
+	diag_log "WAI: blacklist Loaded";
+} else {
+	diag_log "WAI: You are on an unsupported map! No blacklist available.";
+};
