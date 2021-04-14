@@ -11,7 +11,7 @@ _multiArrWep = false;
 if !(isNil "_complete") then {
 	if (typeOf _crate in (crates_large + crates_medium + crates_small)) then {
 		if (wai_crates_smoke && sunOrMoon == 1) then {
-			_marker = "smokeShellPurple" createVehicle getPosATL _crate;
+			_marker = wai_crates_smoke_color createVehicle getPosATL _crate;
 			_marker setPosATL (getPosATL _crate);
 			_marker attachTo [_crate,[0,0,0]];
 		};
