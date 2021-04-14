@@ -43,7 +43,7 @@ if (isPlayer _player) then {
 		_aitype = if (_unit getVariable ["Hero", false]) then {"Hero";} else {"Bandit";};
 		_humanityReward = if (_aitype == "Hero") then {format["-%1 Humanity",ai_remove_humanity];} else {format["+%1 Humanity",ai_add_humanity];};
 		_aiColor = if (_aitype == "Hero") then {"#3333ff";} else {"#ff0000";};
-		_params = [_aiColor,"0.50","#FFFFFF",-.4,.2,2,0.5];
+		_params = [_aiColor,"0.50","#FFFFFF",-.4,.2,ai_killfeedTimer,0,0.5];
 		
 		RemoteMessage = ["ai_killfeed", [_aitype," AI Kill",_humanityReward],_params];
 		(owner _player) publicVariableClient "RemoteMessage";
