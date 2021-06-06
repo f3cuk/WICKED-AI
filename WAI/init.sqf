@@ -1,5 +1,3 @@
-waitUntil{uiSleep 1; initialized};
-
 WAI_Overpoch = isClass (configFile >> "CfgWeapons" >> "USSR_cheytacM200");
 
 // Compile all Functions
@@ -49,34 +47,31 @@ if(isNil("DZMSInstalled")) then {
 	RESISTANCE setFriend [WEST,0];	
 };
 
-wai_staticloaded = false;
 WAIconfigloaded	= false;
 wai_markedPos = [];
 wai_static_data = [0,[],[],[]]; // [AI Count, UnitGroups, Vehicles to Monitor, Crates]
+WAI_MarkerReady		= true;
+wai_mission_data	= [];
+h_missionsrunning	= 0;
+b_missionsrunning	= 0;
+wai_h_starttime 	= diag_tickTime;
+wai_b_starttime 	= diag_tickTime;
 
-execVM "\z\addons\dayz_server\WAI\config.sqf";
-waitUntil {WAIconfigloaded};
-diag_log "WAI: AI Config File Loaded";
-
-execVM "\z\addons\dayz_server\WAI\configs\mission_loot.sqf";
+call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\config.sqf";
+call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\configs\mission_loot.sqf";
 
 if (WAI_Overpoch) then {
-	execVM "\z\addons\dayz_server\WAI\configs\overwatch.sqf";
+	call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\configs\overwatch.sqf";
 };
 
 if (wai_user_spawnpoints) then {
-	execVM "\z\addons\dayz_server\WAI\configs\spawnpoints.sqf";
+	call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\configs\spawnpoints.sqf";
 };
 
 if (wai_use_blacklist) then {
-	execVM "\z\addons\dayz_server\WAI\configs\blacklist.sqf";
+	call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\configs\blacklist.sqf";
 };
 
 if(wai_static_missions) then {
-	execVM "\z\addons\dayz_server\WAI\static\init.sqf";
-	waitUntil {wai_staticloaded};
-};
-
-if (wai_mission_system) then {
-	execVM "\z\addons\dayz_server\WAI\missions\init.sqf";
+	 execVM "\z\addons\dayz_server\WAI\static\init.sqf";
 };

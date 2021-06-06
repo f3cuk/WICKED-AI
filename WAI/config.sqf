@@ -96,8 +96,6 @@ ai_add_skin			 = true; // adds unit skin to inventory on death. Should set to fa
 /* END AI CONFIG */
 
 /* WAI MISSIONS CONFIG */
-wai_mission_system		= true; // use built in mission system
-
 wai_mission_markers		= ["DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker"]; // List of DZMS mission markers to check
 wai_avoid_samespot		= false; // Checks to see that a selected mission spawn point has not been used already - 200m check.
 wai_avoid_missions		= 750; // avoid spawning missions this close to other missions, these are defined in wai_mission_markers

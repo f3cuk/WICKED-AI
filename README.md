@@ -68,20 +68,41 @@ Since I really like (read love) the Wicked AI missions and support for them has 
 
 2. Extract the downloaded folder to your desktop and open it
 3. Go to your server pbo and unpack it.
-4. Navigate to the new ***dayz_server*** folder and copy the WAI folder into this folder.
-5. Navigate to directory ***dayz_server\system\scheduler*** and replace sched_corpses.sqf with the one from the download.
-6. Navigate to the ***system*** folder and open server_monitor.sqf
+4. Copy the WAI folder into the ***dayz_server*** folder.
+5. Navigate to directory ***dayz_server\system\scheduler*** and replace ***sched_corpses.sqf*** with the one from the download.
+6. Copy over file ***sched_wai.sqf*** to the same folder.
+7. Open file ***sched_init.sqf***.
 
-	Find this code at the bottom of the file:
-
+	Find this line:
+	
 	```sqf
-	allowConnection = true;	
+	call compile preprocessFileLineNumbers (PATH+"sched_safetyVehicle.sqf");
 	```
 	
-	And add the following line ***above*** it:
+	Place this line directly below it:
 	
 	```sqf
-	execVM "\z\addons\dayz_server\WAI\init.sqf";
+	call compile preprocessFileLineNumbers (PATH+"sched_wai.sqf");
+	```
+	
+	Find this line:
+	
+	```sqf
+	[ 300,	 	336,	sched_lootpiles_5m,         sched_lootpiles_5m_init ],
+	```
+	
+	Place this line directly below it:
+	
+	```sqf
+	[ 90,		60,		sched_wai,					sched_wai_init ],
+	```
+	
+6. Navigate to the ***init*** folder and open ***server_functions.sqf***
+
+	Place this line at the very bottom of the file.
+	
+	```sqf
+	call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\init.sqf";
 	```
 
 7. Repack your server PBO.
