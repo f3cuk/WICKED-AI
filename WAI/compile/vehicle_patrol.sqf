@@ -1,38 +1,33 @@
-private ["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
-
 if (!wai_enable_patrols) exitWith {};
-
-_position		= _this select 0;
-_startingpos	= _this select 1;
-_radius			= _this select 2;
-_wpnum			= _this select 3;
-_veh_class		= _this select 4;
-_skill			= _this select 5;
-_skin			= _this select 6;
-_aitype			= _this select 7;
-
+local _position	= _this select 0;
+local _startingpos = _this select 1;
+local _radius = _this select 2;
+local _wpnum = _this select 3;
+local _veh_class = _this select 4;
+local _skill = _this select 5;
+local _skin	= _this select 6;
+local _aitype = _this select 7;
+local _mission = nil;
 if (count _this > 8) then {
 	_mission = _this select 8;
-} else {
-	_mission = nil;
+};
+local _unitGroup = grpNull;
+local _wp = [];
+
+local _aicskill = call {
+	if(_skill == "easy") 		exitWith {ai_skill_easy;};
+	if(_skill == "medium") 		exitWith {ai_skill_medium;};
+	if(_skill == "hard") 		exitWith {ai_skill_hard;};
+	if(_skill == "extreme") 	exitWith {ai_skill_extreme;};
+	if(_skill == "random") 		exitWith {ai_skill_random call BIS_fnc_selectRandom;};
+	ai_skill_random call BIS_fnc_selectRandom;
 };
 
-_skillarray = ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
-
-call {
-	if(_skill == "easy") 		exitWith { _aicskill = ai_skill_easy; };
-	if(_skill == "medium") 		exitWith { _aicskill = ai_skill_medium; };
-	if(_skill == "hard") 		exitWith { _aicskill = ai_skill_hard; };
-	if(_skill == "extreme") 	exitWith { _aicskill = ai_skill_extreme; };
-	if(_skill == "random") 		exitWith { _aicskill = ai_skill_random call BIS_fnc_selectRandom; };
-	_aicskill = ai_skill_random call BIS_fnc_selectRandom;
-};
-
-call {
-	if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-	if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-	if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-	if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+local _aiskin = call {
+	if(_skin == "random") 	exitWith {ai_all_skin call BIS_fnc_selectRandom;};
+	if(_skin == "hero") 	exitWith {ai_hero_skin call BIS_fnc_selectRandom;};
+	if(_skin == "bandit") 	exitWith {ai_bandit_skin call BIS_fnc_selectRandom;};
+	if(_skin == "special") 	exitWith {ai_special_skin call BIS_fnc_selectRandom;};
 	_aiskin = _skin;
 };
 
@@ -46,46 +41,56 @@ if(_aitype == "Hero") then {
 	_unitGroup	= createGroup EAST;
 };
 
-_pilot = _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
-[_pilot] joinSilent _unitGroup;
+local _driver = _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+[_driver] joinSilent _unitGroup;
 
 call {
-	if (_aitype == "hero") 		exitWith {_pilot setVariable ["Hero",true,false]; _pilot setVariable ["humanity", ai_remove_humanity];};
-	if (_aitype == "bandit") 	exitWith {_pilot setVariable ["Bandit",true,false]; _pilot setVariable ["humanity", ai_add_humanity];};
-	if (_aitype == "special") 	exitWith {_pilot setVariable ["Special",true,false]; _pilot setVariable ["humanity", ai_special_humanity];};
+	if (_aitype == "hero") exitWith {_driver setVariable ["Hero",true,false]; _driver setVariable ["humanity", ai_remove_humanity];};
+	if (_aitype == "bandit") exitWith {_driver setVariable ["Bandit",true,false]; _driver setVariable ["humanity", ai_add_humanity];};
+	if (_aitype == "special") exitWith {_driver setVariable ["Special",true,false]; _driver setVariable ["humanity", ai_special_humanity];};
 };
 
-_vehicle = createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
+local _vehicle = createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
 _vehicle setFuel 1;
 _vehicle engineOn true;
 _vehicle setVehicleAmmo 1;
-_vehicle addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
 _vehicle allowCrewInImmobile true; 
 _vehicle lock true;
+_vehicle addEventHandler ["GetOut",{
+	local _veh = _this select 0;
+	local _role = _this select 1;
+	local _unit = _this select 2;
+	if (_role == "driver") then {
+		_unit moveInDriver _veh;
+	} else {
+		_unit moveInTurret [_veh,[0]];
+	};
+}];
 
 dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_vehicle];
 
-_pilot assignAsDriver _vehicle;
-_pilot moveInDriver _vehicle;
+_driver assignAsDriver _vehicle;
+_driver moveInDriver _vehicle;
 
-_gunner = _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+local _gunner = _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
 _gunner assignAsGunner _vehicle;
 _gunner moveInTurret [_vehicle,[0]];
 [_gunner] joinSilent _unitGroup;
 
+[_driver, _gunner] orderGetIn true;
+
 call {
-	if (_aitype == "hero") 		exitWith {_gunner setVariable ["Hero",true,false]; _gunner setVariable ["humanity", ai_remove_humanity];};
-	if (_aitype == "bandit") 	exitWith {_gunner setVariable ["Bandit",true,false]; _gunner setVariable ["humanity", ai_add_humanity];};
-	if (_aitype == "special") 	exitWith {_gunner setVariable ["Special",true,false]; _gunner setVariable ["humanity", ai_special_humanity];};
+	if (_aitype == "hero") exitWith {_gunner setVariable ["Hero",true,false]; _gunner setVariable ["humanity", ai_remove_humanity];};
+	if (_aitype == "bandit") exitWith {_gunner setVariable ["Bandit",true,false]; _gunner setVariable ["humanity", ai_add_humanity];};
+	if (_aitype == "special") exitWith {_gunner setVariable ["Special",true,false]; _gunner setVariable ["humanity", ai_special_humanity];};
 };
 
 {
 	_gunner setSkill [(_x select 0),(_x select 1)];
 } count _aicskill;
-
 {
-	_pilot setSkill [_x,1]
-} count _skillarray;
+	_driver setSkill [_x,1];
+} count ["aimingAccuracy","aimingShake","aimingSpeed","endurance","spotDistance","spotTime","courage","reloadSpeed","commanding","general"];
 
 {
 	_x addWeapon "Makarov_DZ";
