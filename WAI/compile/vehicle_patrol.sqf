@@ -28,7 +28,7 @@ local _aiskin = call {
 	if(_skin == "hero") 	exitWith {ai_hero_skin call BIS_fnc_selectRandom;};
 	if(_skin == "bandit") 	exitWith {ai_bandit_skin call BIS_fnc_selectRandom;};
 	if(_skin == "special") 	exitWith {ai_special_skin call BIS_fnc_selectRandom;};
-	_aiskin = _skin;
+	_skin;
 };
 
 if(typeName _aiskin == "ARRAY") then {
