@@ -9,7 +9,7 @@
 				
 				// After the delay time, check player's location and either claim or not claim
 				if ((diag_tickTime - _claimTime) > ac_delay_time) then {
-					if ((_closestPlayer distance _position) > ac_alert_distance) then {
+					if ((_closestPlayer distance _position) > ac_alert_distance || {!alive _closestPlayer}) then {
 						[_closestPlayer,_name,"Stop"] call wai_AutoClaimAlert; // Send alert to player who is closest
 						_closestPlayer = objNull; // Set to default
 						_acArray = []; // Set to default
