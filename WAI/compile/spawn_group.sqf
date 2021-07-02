@@ -215,6 +215,8 @@ if(_aitype == "Hero") then {
 	_unitGroup setBehaviour ai_bandit_behaviour;
 };
 
+_unitGroup allowFleeing 0;
+
 [_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] call group_waypoints;
 
 
