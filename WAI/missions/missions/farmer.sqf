@@ -37,7 +37,7 @@ _rndnum = ceil (random 3);
 [[(_position select 0) -17,(_position select 1) +29,0],_rndnum,"Easy",["Random","AT"],4,"Random","RU_Villager2","Random",_aiType,_mission] call spawn_group;
 
 //Spawn vehicles
-["Tractor",[(_position select 0) -6.5, (_position select 1) +12.7],_mission,true,46.7] call custom_publish;
+["Tractor_DZE",[(_position select 0) -6.5, (_position select 1) +12.7],_mission,true,46.7] call custom_publish;
 
 _messages = if (_missionType == "MainHero") then {
 	["STR_CL_HERO_FARMER_ANNOUNCE","STR_CL_HERO_FARMER_WIN","STR_CL_HERO_FARMER_FAIL"];
